@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/row_cartlist_cvContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_3sdp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardCornerRadius="@dimen/_3sdp"
+    app:cardElevation="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/row_cartlist_ivProImg"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginEnd="@dimen/_5sdp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/row_cartlist_tvNameType" android:textSize="@dimen/_10sdp"
+                style="@style/ganaral_primarystyle" android:textAllCaps="true" android:textStyle="bold"  />
+
+            <TextView
+                android:id="@+id/row_cartlist_tvName"
+                style="@style/ganaral_primarystyle" />
+
+            <TextView
+                android:id="@+id/row_cartlist_tvKg"
+                style="@style/ganaral_greystyle"
+                android:paddingTop="@dimen/_2sdp"
+                android:paddingBottom="@dimen/_2sdp" />
+
+            <TextView
+                android:id="@+id/row_cartlist_tvPrice"
+                style="@style/ganaral_greystyle" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <CheckBox
+        android:id="@+id/userCheckedItemList"
+        android:layout_width="51dp"
+        android:layout_height="45dp"
+        android:layout_gravity="end"
+        android:padding="@dimen/_5sdp"
+        android:src="@drawable/ic_dustbin" />
+
+
+    <!--<ImageView-->
+    <!--android:id="@+id/row_cartlist_ivDelete"-->
+    <!--android:layout_width="51dp"-->
+    <!--android:layout_height="45dp"-->
+    <!--android:layout_gravity="end"-->
+    <!--android:padding="@dimen/_5sdp"-->
+    <!--android:src="@drawable/ic_dustbin" />-->
+</android.support.v7.widget.CardView>

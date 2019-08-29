@@ -1,0 +1,308 @@
+package com.sharpflux.shetkarimaza.fragment;
+
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
+import android.util.Base64;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.activities.SelfieActivity;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class ThirdFragment extends Fragment {
+
+    TextInputEditText accountname, bankname, branchcode, accno, ifsc;
+
+    ImageView check,adhar;
+
+    ImageView currentImageView = null;
+
+    private static final String IMAGE_DIRECTORY = "/demonuts";
+
+    private int GALLERY = 1, CAMERA = 2;
+
+    Integer REQUEST_CAMERA=1, SELECT_FILE=0;
+
+    ImageView adhar_image,cheque_image;
+
+    public String ImageUrl;
+
+    public String ImageUrl1;
+
+    Button submitButton;
+
+    Bundle bundle;
+
+    String address="", city="", district="", state="", companyname="",
+            license="", companyregnno="", gstno=""
+            ,name = "", registrationTypeId = "",
+            registrationCategoryId = "", gender = "", mobile = "", alternateMobile = "", email = "";
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view =inflater.inflate(R.layout.fragment_third, container, false);
+
+        bundle = getArguments();
+
+        if (bundle != null) {
+            name = bundle.getString("Name");
+            registrationTypeId = bundle.getString("RegistrationTypeId");
+            registrationCategoryId = bundle.getString("RegistrationCategoryId");
+            gender = bundle.getString("Gender");
+            mobile = bundle.getString("Mobile");
+            alternateMobile = bundle.getString("AlternateMobile");
+            email = bundle.getString("Email");
+            address = bundle.getString("address");
+            city = bundle.getString("city");
+            district = bundle.getString("district");
+            state = bundle.getString("state");
+            companyname = bundle.getString("companyname");
+            license = bundle.getString("license");
+            companyregnno = bundle.getString("companyregnno");
+            gstno = bundle.getString("gstno");
+        }
+
+
+
+        submitButton=view.findViewById(R.id.thirdbtnnext);
+
+        accountname=view.findViewById(R.id.edtaccholder);
+        bankname=view.findViewById(R.id.edtbankname);
+        branchcode=view.findViewById(R.id.edtbranchcode);
+
+        accno=view.findViewById(R.id.edtaccno);
+        ifsc=view.findViewById(R.id.edtifsc);
+
+        cheque_image=view.findViewById(R.id.cheque_imageView);
+        adhar_image=view.findViewById(R.id.adhar_imageView);
+
+       /* check=view.findViewById(R.id.imageviewcamcheck);
+        adhar=view.findViewById(R.id.imageviewcampancard);*/
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+                String accountnamee = accountname.getText().toString();
+
+                String banknamee = bankname.getText().toString();
+
+                String branchcodee= branchcode.getText().toString();
+
+                String accnoe = accno.getText().toString();
+                String ifsce= ifsc.getText().toString();
+
+
+
+                if (TextUtils.isEmpty(accountnamee)) {
+                    accountname.setError("Please enter your name");
+                    accountname.requestFocus();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(banknamee)) {
+                    bankname.setError("Please enter your bank name");
+                    bankname.requestFocus();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(branchcodee)) {
+                    branchcode.setError("Please enter your branch code");
+                    branchcode.requestFocus();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(accnoe)) {
+                    accno.setError("Please enter your account number");
+                    accno.requestFocus();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(ifsce)) {
+                    ifsc.setError("Please enter your ifsc code");
+                    ifsc.requestFocus();
+                    return;
+                }
+
+
+
+                Intent intent = new Intent(getContext(), SelfieActivity.class);
+                intent.putExtra("Name", name);
+                intent.putExtra("RegistrationTypeId", registrationTypeId);
+
+                intent.putExtra("RegistrationCategoryId", registrationCategoryId);
+                intent.putExtra("Gender", gender);
+
+                intent.putExtra("Mobile", mobile);
+                intent.putExtra("AlternateMobile", alternateMobile);
+
+                intent.putExtra("Email", email);
+                intent.putExtra("address", address);
+
+                intent.putExtra("city", city);
+                intent.putExtra("district", district);
+
+                intent.putExtra("state", state);
+                intent.putExtra("companyname", companyname);
+
+                intent.putExtra("license", license);
+                intent.putExtra("companyregnno", companyregnno);
+
+                intent.putExtra("gstno", gstno);
+
+                ///
+                intent.putExtra("accountname", accountname.getText().toString());
+                intent.putExtra("bankname", bankname.getText().toString());
+
+                intent.putExtra("branchcode", branchcode.getText().toString());
+                intent.putExtra("accno", accno.getText().toString());
+
+                intent.putExtra("ifsc", ifsc.getText().toString());
+                intent.putExtra("check", "");
+
+                intent.putExtra("adhar", "");
+
+                startActivity(intent);
+            }
+        });
+
+
+
+        cheque_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentImageView=(ImageView) view;
+                showPictureDialog();
+            }
+        });
+
+
+        adhar_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentImageView=(ImageView) view;
+                showPictureDialog();
+            }
+        });
+        return view;
+    }
+
+    private void showPictureDialog() {
+        final CharSequence[] items={"Camera","Gallary","Cancel"};
+        AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
+        builder.setTitle("Add Image");
+
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+                if(items[i].equals("Camera")){
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, REQUEST_CAMERA);
+                }
+
+                else if(items[i].equals("Gallary")){
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);//
+                    startActivityForResult(Intent.createChooser(intent, "Select File"),SELECT_FILE);
+                }
+
+                else if(items[i].equals("Cancel"))
+                {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK) {
+
+            if (requestCode == SELECT_FILE)
+                onSelectFromGalleryResult(data);
+
+            else if (requestCode == REQUEST_CAMERA)
+                onCaptureImageResult(data);
+        }
+
+
+    }
+
+    private void onSelectFromGalleryResult(Intent data) {
+        Bitmap bm=null;
+        if (data != null) {
+            try {
+                bm = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), data.getData());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        currentImageView.setImageBitmap(bm);
+        }/*else
+        {
+            Glide.with(getContext()).load(R.drawable.err_image_name).into(currentImageView);
+            Log.e("Please select image", "nothing Selected: ");
+        }*/
+    }
+
+    private void onCaptureImageResult(Intent data) {
+        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+
+        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+        ImageUrl= Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);
+        File destination = new File(Environment.getExternalStorageDirectory(),
+                System.currentTimeMillis() + ".jpg");
+
+        FileOutputStream fo;
+
+        try {
+            destination.createNewFile();
+            fo = new FileOutputStream(destination);
+            fo.write(bytes.toByteArray());
+            fo.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
+        currentImageView.setImageBitmap(imageBitmap);
+
+    }
+
+
+}
+
+
+
+

@@ -1,0 +1,210 @@
+<resources>
+    <string name="app_name">मेरा किसान</string>
+    <string name="title_activity_home">होम एक्टिविटी</string>
+    <string name="navigation_drawer_open">नेविगेशन दराज खोलें</string>
+    <string name="navigation_drawer_close">नेविगेशन ड्रावर बंद करें</string>
+    <string name="nav_header_title">अँड्रॉइड स्टुडिओ</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">नेविगेशन हेडर</string>
+    <string name="action_settings">सेटिंग्स</string>
+
+    <string name="menu_home">होम</string>
+    <string name="menu_address">पता</string>
+    <string name="menu_shopping">मेरी गाड़ी</string>
+    <string name="menu_list">मेरा आदेश</string>
+    <string name="menu_share">शेयर</string>
+    <string name="menu_logout">लोग आउट</string>
+    <string name="menu_notification">अधिसूचना</string>
+    <string name="menu_aboutus">हमारे बारे में</string>
+
+
+    <string name="tab1">कॉल</string>
+    <string name="tab2">बातचीत</string>
+    <string name="tab3">संपर्क</string>
+    <string name="action_search">खोज</string>
+    <string name="action_chat">बातचीत</string>
+    <string name="action_new_group">नया समूह</string>
+    <string name="action_new_broadcast">नया प्रसारण</string>
+    <string name="action_whatsapp_web">व्हाट्सएप वेब</string>
+    <string name="action_starred_messages">तारांकित संदेश</string>
+    <string name="action_status">स्थिति</string>
+
+    <string name="action_clear_call_log">कॉल लॉग साफ़ करें</string>
+    <string name="action_calls">कॉल</string>
+    <string name="action_refresh">ताज़ा करना</string>
+    <string name="action_contacts">संपर्क</string>
+    <string name="action_without_icon">बिना आइकॉन के</string>
+    <string name="action_with_icon">आइकन के साथ</string>
+    <string name="action_custom">कस्टम टैब</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">हैलो खाली टुकड़ा</string>
+
+
+    <string name="buyer">क्रेता</string>
+    <string name="seller">विक्रेता</string>
+
+    //login signup
+    <string name="firstname">First Name</string>
+    <string name="middlename">Middle Name</string>
+    <string name="username">उपयोगकर्ता नाम</string>
+    <string name="password">पासवर्ड</string>
+    <string name="cpassword">पासवर्ड की पुष्टि कीजिये</string>
+    <string name="login">लॉग इन करें</string>
+    <string name="signup">साइन अप करें</string>
+    <string name="forgotpassword">पासवर्ड भूल गए?</string>
+    <string name="loginwith">या साथ लॉगिन करें</string>
+    <string name="newhere">यहाँ नये?</string>
+    <string name="signuphere">पंजी यहॉ करे!</string>
+    <string name="lastname">Last Name</string>
+    <string name="mobnum">मोबाइल नंबर</string>
+    <string name="alreadyhaveacc">पहले से ही खाता है?</string>
+    <string name="loginphere">यहां साइन इन करो!</string>
+
+
+    //Seller Form
+    <string name="seller_name">नाम*</string>
+    <string name="seller_variety">वैराइटी*</string>
+    <string name="seller_age_days">आयु (दिन)*</string>
+    <string name="seller_available_month">उपलब्ध (महीने)*</string>
+    <string name="seller_available_quality">उपलब्ध गुणवत्ता*</string>
+    <string name="seller_available_quantity">उपलब्ध मात्रा*</string>
+    <string name="seller_expected_price">अपेक्षित मूल्य*</string>
+    <string name="seller_upload_price">तश्वीरें अपलोड करो</string>
+    <string name="seller_upload_videos">वीडियो अपलोड करें</string>
+    <string name="seller_submit">जमा करें</string>
+
+    <string name="productdetail">अपने उत्पाद विवरण शामिल करें!</string>
+    <string name="selfie">Include your picture here!</string>
+
+    <string name="totalprice">Total price of your product</string>
+
+
+
+    //forget
+    <string name="forget_password">पासवर्ड भूल गए</string>
+    <string name="forget_email">ईमेल</string>
+    <string name="forget_submit">जमा करें</string>
+    <string name="forget_already_have_account">पहले से ही खाता है?</string>
+    <string name="forget_sign_in">दाखिल करना!</string>
+
+    //welcome
+    <string name="welcome_skip">छोड़ें!</string>
+    <string name="welcome_fresh_fruits_and_veggies">ताजा फल और सब्जियाँ</string>
+    <string name="welcome_enjoy_easy_way_ordering">आसान तरीका ऑर्डर करने का आनंद लें</string>
+
+
+    //Registration
+    <string name="registration_type">पंजीकरण प्रकार*</string>
+    <string name="registration_category">पंजीकरण श्रेणी *</string>
+    <string name="name">अपना पूरा नाम लिखे*</string>
+    <string name="mobile_no">मोबाइल नंबर*</string>
+    <string name="email_id">ईमेल आईडी</string>
+    <string name="gender">लिंग*</string>
+    <string name="address">पता</string>
+    <string name="Cityorvillage">शहर / गाँव</string>
+    <string name="Name_of_Taluka">तहसील का नाम</string>
+    <string name="dist">जिला</string>
+    <string name="state">राज्य</string>
+    <string name="company_name">कंपनी का नाम / फर्म का नाम</string>
+    <string name="Landlin_no">लैंडलाइन नंबर.</string>
+    <string name="APMC_licance">एपीएमसी लाइसेंस</string>
+    <string name="Company_Regin_no">कंपनी क्षेत्र संख्या</string>
+    <string name="GST_no">जीएसटी संख्या.</string>
+    <string name="next">अगला</string>
+    <string name="account_holder_name">खाताधारक का नाम पासबुक के अनुसार</string>
+    <string name="bank_name">बैंक का नाम (केवल राष्ट्रकृत बैंक)</string>
+    <string name="branch_code">शाखा क्र्मांक</string>
+    <string name="account_no">खाता क्रमांक</string>
+    <string name="IFSC_code">आयएफएससी कोड</string>
+    <string name="adhar_card">अधार कार्ड की कॉपी / Pancard</string>
+    <string name="canclled_check">रद्द चेक की कॉपी</string>
+    <string name="Submuit">जमा करें</string>
+
+    <string name="whatareyouoffering">आप क्या दे रहे हैं?</string>
+
+    <string name="includemoredetails">कुछ विवरण शामिल करें!</string>
+
+    <string name="recyclermoredetails">अधिक विवरण देखें</string>
+
+    <string name="grapes">अंगूर</string>
+    <string name="leaf">पत्ती</string>
+    <string name="apple">सेब</string>
+    <string name="pineaple">अनानस</string>
+    <string name="guava">अमरूद</string>
+
+
+    <string name="kg">0Kg</string>
+    <string name="title">सेब</string>
+    <string name="price">$5</string>
+    <string name="description_data">An apple is a sweet, edible fruit produced by an apple tree (Malus pumila). Apple trees are cultivated worldwide and are the most widely grown species in the genus Malus.</string>
+
+    <string name="call">CALL</string>
+    <string name="cancel">Cancel</string>
+    <string name="seller_available_unit">Unit</string>
+
+    <string name="string_internet_connection_not_available">Internet Connection Not Available</string>
+    <string name="string_some_thing_wrong">Something went wrong.</string>
+    <string name="internal_storage">Internal storage</string>
+    <string name="chooser_title">Choose Files</string>
+
+    <string name="productimages">Upload product images here!*</string>
+    <string name="completeregiseration">Complete Your Regsteration here!*</string>
+
+    <string name="language">भाषा बदले</string>
+    <string name="AlternateMob">वैकल्पिक मोबाइल नंबर दर्ज करें*</string>
+
+    //selfie
+
+    <string name="important_notice">Important Notice:</string>
+    <string name="aadhaar_selfie_warning">Please take a neat and formal selfie in a well lit environment, just like a passport photograph.</string>
+    <string name="profile_photo_caption">Please tap here to take a selfie</string>
+    <string name="profile_take_image_button_text">Take a Selfie</string>
+    <string name="profile_retake_image_button_text">Retake Selfie</string>
+
+    <string name="done">Done</string>
+    <string name="selfie_instructions_title">Important instructions for selfie:</string>
+    <string name="action_continue">Continue</string>
+
+    <!-- TODO: Remove or change this placeholder text -->-->
+    <string name="selfi_string_1">Selfie should be bright with your face clearly visible.</string>
+    <string name="selfi_string_2">Bad/dark light selfie will not be accepted.</string>
+    <string name="selfi_string_3">Sit or stand and then take a selfie.</string>
+    <string name="selfi_string_4">Do not take a selfie while lying down on the bed.</string>
+    <string name="selfi_string_5">Take a selfie wearing a t-shirt/shirt.</string>
+    <string name="selfi_string_6">Hello blank fragment</string>
+    <string name="farmaddress">Enter Farms address*</string>
+    <string name="farmssurveyno">Survey No.*</string>
+    <string name="botonicalname">Enter Botanical Name*</string>
+
+
+    <string name="collapsed">collapsed: %s</string>
+    <string name="expanded">expanded: %s</string>
+    <string name="clear_all">Clear all</string>
+
+    <!-- Change Password -->
+
+    <string name="current_password">CURRENT PASSWORD</string>
+    <string name="confirm_password">CONFIRM PASSWORD</string>
+    <string name="update_password">UPDATE PASSWORD</string>
+    <string name="new_password">NEW PASSWORD</string>
+
+    <string name="reset_password">RESET PASSWORD</string>
+    <string name="reset_password_button">Reset Password</string>
+    <string name="netwrokr_error">No internet connection!</string>
+    <string name="enter_your_registered">Enter your registered mobile number to verify the OTP code</string>
+    <!-- OTP Verification -->
+
+    <string name="otp_verification">OTP VERIFICATION</string>
+    <string name="otp_code_has_been_sent">OTP code has been sent to your registered mobile number. Please verify the code. </string>
+    <string name="enter_otp_code">Enter OTP Code</string>
+    <string name="verify">verify</string>
+    <string name="resendOtp">Resend OTP</string>
+
+    <string name="txtExit">You want to add product in list</string>
+    <string name="txtYes">Yes</string>
+    <string name="txtNo">No</string>
+
+    <string name="list_added_item">List of Added Items</string>
+
+</resources>

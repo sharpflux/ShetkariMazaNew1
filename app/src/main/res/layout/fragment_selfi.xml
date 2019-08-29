@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SelfiFragment"
+    android:orientation="vertical">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/txt_instruction_tittle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Important instructions for selfie:"
+            android:fontFamily="@font/sfpro_display_bold"
+            android:textSize="20dp"
+            android:padding="5dp"
+            />
+
+        <TextView
+            android:id="@+id/txt_string_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+           android:text="Selfie should be bright with your face clearly visible."
+            android:fontFamily="@font/sfpro_display_medium"
+            android:padding="5dp"
+            android:drawableLeft="@drawable/ic_check_circle_black_24dp"
+            />
+
+        <TextView
+            android:id="@+id/txt_string_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Bad/dark light selfie will not be accepted."
+            android:fontFamily="@font/sfpro_display_medium"
+            android:padding="5dp"
+            android:drawableLeft="@drawable/ic_check_circle_black_24dp"
+
+            />
+
+        <TextView
+            android:id="@+id/txt_string_3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Sit or stand and then take a selfie."
+            android:fontFamily="@font/sfpro_display_medium"
+            android:padding="5dp"
+            android:drawableLeft="@drawable/ic_check_circle_black_24dp"
+
+            />
+
+        <TextView
+            android:id="@+id/txt_string_4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Do not take a selfie while lying down on the bed."
+            android:fontFamily="@font/sfpro_display_medium"
+            android:padding="5dp"
+            android:drawableLeft="@drawable/ic_check_circle_black_24dp"/>
+
+        <TextView
+            android:id="@+id/txt_string_5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Take a selfie wearing a t-shirt/shirt."
+            android:fontFamily="@font/sfpro_display_medium"
+            android:padding="5dp"
+            android:drawableLeft="@drawable/ic_check_circle_black_24dp"
+            />
+
+    </LinearLayout>
+
+
+</LinearLayout>

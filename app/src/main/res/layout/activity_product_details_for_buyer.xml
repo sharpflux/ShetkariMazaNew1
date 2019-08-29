@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:orientation="vertical"
+    android:background="@drawable/background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <ScrollView
+        android:background="@drawable/background"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/fragment_product_details_rlSlider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_100sdp">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="376dp"
+                    android:layout_height="300dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="0dp"
+                    app:layout_constraintBottom_toTopOf="@+id/tvTitleOne"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.578"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_skip"
+                    app:layout_constraintVertical_bias="0.0">
+
+                </android.support.v4.view.ViewPager>
+
+                <LinearLayout
+                    android:id="@+id/SliderDots"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/viewPager"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </RelativeLayout>
+            <android.support.v7.widget.CardView
+                android:focusable="true"
+                android:clickable="true"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_200sdp"
+                android:layout_margin="@dimen/_10sdp"
+                app:cardBackgroundColor="@color/white_tranceparent"
+                app:cardCornerRadius="@dimen/_5sdp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:padding="@dimen/_12sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_160sdp">
+                    <TextView
+                        android:fontFamily="@font/sfpro_display_bold"
+                        android:id="@+id/fragment_product_details_tvTitle"
+                        style="@style/ganaral_primarystyle"
+                        android:text="@string/title"/>
+
+                    <TextView
+                        android:fontFamily="@font/sfpro_display_bold"
+                        android:id="@+id/fragment_product_details_tvPrice"
+                        android:paddingTop="@dimen/_3sdp"
+                        android:text="@string/price"
+                        style="@style/ganaral_greystyle"/>
+
+                    <TextView
+                        android:fontFamily="@font/sfpro_display_medium"
+                        android:id="@+id/fragment_product_details_tvDescription"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_110sdp"
+                        android:paddingTop="@dimen/_3sdp"
+                        android:text="@string/description_data"
+                        android:textColor="@color/signup_lable_color"
+                        android:textSize="@dimen/_10sdp" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <Button
+            android:fontFamily="@font/sfpro_display_bold"
+            android:id="@+id/btnCall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:height="60dp"
+            android:background="@drawable/btn_plain"
+            android:text="@string/call"
+            android:textColor="@android:color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>

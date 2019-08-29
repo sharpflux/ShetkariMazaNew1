@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    tools:context=".filters.FilterActivity">
+
+    <View
+        android:id="@+id/viewSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dip"
+        android:background="@color/uiv3_divider_color" />
+
+    <LinearLayout
+        android:id="@+id/progressBarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/viewSeparator"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+       <!-- <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@android:style/Widget.ProgressBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_12" />-->
+
+
+       <!-- <TextView
+            android:id="@+id/product_count_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_normal"
+            android:layout_marginRight="@dimen/margin_normal"
+            android:layout_toRightOf="@id/progress_bar"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingTop="@dimen/dimen_10"
+            android:textSize="@dimen/primary_text_size" />-->
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/progressBarView"
+       android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/padding_normal"
+        android:paddingBottom="@dimen/padding_normal">
+
+
+        <Button
+            android:id="@+id/btnAdd"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:padding="@dimen/padding_small"
+            android:text="View List"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/primary_text_size" />
+
+
+
+        <Button
+            android:id="@+id/btnAddMore"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/back_btnapply"
+            android:gravity="center"
+            android:padding="@dimen/padding_small"
+            android:text="Add"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:layout_marginLeft="10dp"
+            android:textSize="@dimen/primary_text_size" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

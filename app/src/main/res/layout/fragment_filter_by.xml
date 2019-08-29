@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:id="@+id/fragment_order_list_llContainer"
+    android:background="@drawable/backgroundlogo"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rcvFilter"
+        android:visibility="visible"
+        android:layout_width="fill_parent"
+        android:layout_height="0.0dip"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_weight="1.0" />
+
+</LinearLayout>

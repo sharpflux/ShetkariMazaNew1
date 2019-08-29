@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   >
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:fontFamily="@font/sfpro_display_medium"
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:layout_gravity="center"
+            android:text="Upload Multiple Files"
+            android:textSize="15dp"
+            android:textColor="@color/colorBlack"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginBottom="10dp">
+            <Button
+                android:id="@+id/btnChoose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/back_btnapply"
+                android:gravity="center"
+                android:padding="@dimen/padding_small"
+                android:text="Choose Images"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:layout_marginLeft="10dp"
+                android:textSize="@dimen/primary_text_size" />
+           <!-- <Button
+
+
+                android:textAllCaps="false"
+                android:fontFamily="@font/sfpro_display_bold"
+                android:id="@+id/btnUpload"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit"
+                android:text="Upload here"/>-->
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+        </LinearLayout>
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/listView"
+            android:numColumns="4"
+            android:layout_weight="1">
+        </GridView>
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

@@ -1,0 +1,210 @@
+<resources>
+    <string name="app_name">ShetkariMaza</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_address">Address</string>
+    <string name="menu_shopping">My Cart</string>
+    <string name="menu_list">My Order</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_logout">Logout</string>
+    <string name="menu_notification">Notification</string>
+    <string name="menu_aboutus">About Us</string>
+
+
+    <string name="tab1">CALLS</string>
+    <string name="tab2">CHATS</string>
+    <string name="tab3">CONTACTS</string>
+    <string name="action_search">Search</string>
+    <string name="action_chat">Chat</string>
+    <string name="action_new_group">New Group</string>
+    <string name="action_new_broadcast">New broadcast</string>
+    <string name="action_whatsapp_web">WhatsApp Web</string>
+    <string name="action_starred_messages">Starred messages</string>
+    <string name="action_status">Status</string>
+
+    <string name="action_clear_call_log">Clear call log</string>
+    <string name="action_calls">Calls</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_contacts">Contacts</string>
+    <string name="action_without_icon">Without Icon</string>
+    <string name="action_with_icon">With Icon</string>
+    <string name="action_custom">Custom Tab</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="buyer">Buyer</string>
+    <string name="seller">Seller</string>
+
+    //login signup
+    <string name="firstname">First Name</string>
+    <string name="middlename">Middle Name</string>
+
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="cpassword">Confirm Password</string>
+    <string name="login">Log In</string>
+    <string name="signup">Sign Up</string>
+    <string name="forgotpassword">Forgot password?</string>
+    <string name="loginwith">Or Login With</string>
+    <string name="newhere">New Here?</string>
+    <string name="signuphere">New User Register</string>
+    <string name="lastname">Last Name</string>
+    <string name="mobnum">Mobile Number</string>
+    <string name="alreadyhaveacc">Already have account?</string>
+    <string name="loginphere">Old User LogIn</string>
+
+    //Seller Form
+    <string name="seller_name">Name/Botanical Name*</string>
+    <string name="seller_variety">Variety*</string>
+    <string name="seller_age_days">Age(Days)*</string>
+    <string name="seller_available_month">Available(Months)*</string>
+    <string name="seller_available_quality">Available Quality*</string>
+    <string name="seller_available_quantity">Available Quantity*</string>
+    <string name="seller_expected_price">Expected Price per Unit*</string>
+    <string name="seller_upload_price">Upload Images</string>
+    <string name="seller_upload_videos">Upload Videos</string>
+    <string name="seller_submit">Submit</string>
+    <string name="selfie">Include your picture here!</string>
+    <string name="productdetail">Include your product details!</string>
+
+
+    //forget
+    <string name="forget_password">Forgot Password</string>
+    <string name="forget_email">Email</string>
+    <string name="forget_submit">Submit</string>
+    <string name="forget_already_have_account">Already have account?</string>
+    <string name="forget_sign_in">Sign In!</string>
+
+    //welcome
+    <string name="welcome_skip">Skip!</string>
+    <string name="welcome_fresh_fruits_and_veggies">Fresh Fruits And Veggies</string>
+    <string name="welcome_enjoy_easy_way_ordering">Enjoy Easy Way Ordering</string>
+
+
+    //////////////////////////////////////////
+    <string name="registration_type">Registration Type*</string>
+    <string name="registration_category">Registration Category*</string>
+    <string name="name">Enter your full name*</string>
+    <string name="mobile_no">Mobile number*</string>
+    <string name="email_id">Email id</string>
+    <string name="gender">Gender*</string>
+    <string name="address">Address*</string>
+    <string name="Cityorvillage">City / Village*</string>
+    <string name="Name_of_Taluka">Name of Taluka*</string>
+    <string name="dist">Dist*</string>
+    <string name="state">State*</string>
+    <string name="company_name">Company name / Firm name*</string>
+    <string name="Landlin_no">Landline No.</string>
+    <string name="APMC_licance">APMC license No*</string>
+    <string name="Company_Regin_no">Company Register number*</string>
+    <string name="GST_no">GST No.*</string>
+    <string name="next">Next</string>
+    <string name="account_holder_name">Bank Account name as per passbook*</string>
+    <string name="bank_name">Name of Bank(Nationallised bank only)*</string>
+    <string name="branch_code">Branch code*</string>
+    <string name="account_no">Account no*</string>
+    <string name="IFSC_code">IFSC code*</string>
+    <string name="adhar_card">Upload Copy  of Adhar card / Pancard*</string>
+    <string name="canclled_check">Upload Copy  of cancelled cheque*</string>
+    <string name="Submuit">Submit</string>
+
+
+    <string name="whatareyouoffering">What are you Offering ?</string>
+
+    <string name="includemoredetails">Include some details!</string>
+
+    <string name="recyclermoredetails">See more details</string>
+    /////fruits
+    <string name="grapes">Grapes</string>
+    <string name="leaf">Leaf</string>
+    <string name="apple">Apple</string>
+    <string name="pineaple">Pineaple</string>
+    <string name="guava">Guava</string>
+    <string name="kg">0Kg</string>
+    <string name="title">Apple</string>
+    <string name="price">$5</string>
+    <string name="description_data">An apple is a sweet, edible fruit produced by an apple tree (Malus pumila). Apple trees are cultivated worldwide and are the most widely grown species in the genus Malus.</string>
+
+    <string name="call">CALL</string>
+    <string name="cancel">Cancel</string>
+    <string name="seller_available_unit">Select Unit*</string>
+
+    <string name="string_internet_connection_not_available">Internet Connection Not Available</string>
+    <string name="string_some_thing_wrong">Something went wrong.</string>
+    <string name="internal_storage">Internal storage</string>
+    <string name="chooser_title">Choose Files</string>
+
+    <string name="productimages">Upload product images here!*</string>
+
+    <string name="completeregiseration">Complete Your Regsteration here!*</string>
+
+    <string name="language">Change Language</string>
+
+    <string name="AlternateMob">Enter Alternate Mobile Number</string>
+    <string name="totalprice">Total price</string>
+    //selfie
+
+    //selfie
+
+    <string name="important_notice">Important Notice:</string>
+    <string name="aadhaar_selfie_warning">Please take a neat and formal selfie in a well lit environment, just like a passport photograph.</string>
+    <string name="profile_photo_caption">Please tap here to take a selfie</string>
+    <string name="profile_take_image_button_text">Take a Selfie</string>
+    <string name="profile_retake_image_button_text">Retake Selfie</string>
+
+    <string name="done">Done</string>
+    <string name="selfie_instructions_title">Important instructions for selfie:</string>
+    <string name="action_continue">Continue</string>
+
+    <!-- TODO: Remove or change this placeholder text -->-->
+    <string name="selfi_string_1">Selfie should be bright with your face clearly visible.</string>
+    <string name="selfi_string_2">Bad/dark light selfie will not be accepted.</string>
+    <string name="selfi_string_3">Sit or stand and then take a selfie.</string>
+    <string name="selfi_string_4">Do not take a selfie while lying down on the bed.</string>
+    <string name="selfi_string_5">Take a selfie wearing a t-shirt/shirt.</string>
+    <string name="selfi_string_6">Hello blank fragment</string>
+
+    <string name="farmaddress">Enter Farms address*</string>
+    <string name="farmssurveyno">Survey No.*/Address</string>
+
+    <string name="botonicalname">Enter Botanical Name*</string>
+
+    <string name="collapsed">collapsed: %s</string>
+    <string name="expanded">expanded: %s</string>
+    <string name="clear_all">Clear all</string>
+
+    <!-- Change Password -->
+
+    <string name="current_password">CURRENT PASSWORD</string>
+    <string name="confirm_password">CONFIRM PASSWORD</string>
+    <string name="update_password">UPDATE PASSWORD</string>
+    <string name="new_password">NEW PASSWORD</string>
+    <string name="reset_password">RESET PASSWORD</string>
+    <string name="reset_password_button">Reset Password</string>
+    <string name="netwrokr_error">No internet connection!</string>
+    <string name="enter_your_registered">Enter your registered mobile number to verify the OTP code</string>
+
+    <!-- OTP Verification -->
+
+    <string name="otp_verification">OTP VERIFICATION</string>
+    <string name="otp_code_has_been_sent">OTP code has been sent to your registered mobile number. Please verify the code. </string>
+    <string name="enter_otp_code">Enter OTP Code</string>
+    <string name="verify">verify</string>
+    <string name="resendOtp">Resend OTP</string>
+    <string name="txtExit">You want to add product in list</string>
+    <string name="txtYes">Yes</string>
+    <string name="txtNo">No</string>
+
+    <string name="list_added_item">ProductList</string>
+
+
+</resources>

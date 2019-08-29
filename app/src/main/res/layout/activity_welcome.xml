@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.WelcomeActivity"
+    android:background="@drawable/backgroundlogo">
+
+    <Button
+        android:textColor="#008000"
+        android:id="@+id/btn_skip"
+        android:background="@null"
+        android:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome_skip"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        />
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="376dp"
+        android:layout_height="482dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="8dp">
+
+    </android.support.v4.view.ViewPager>
+
+    <TextView
+        android:id="@+id/tvTitleOne"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/viewPager"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="25dp"
+        android:text="@string/welcome_fresh_fruits_and_veggies"
+        android:textAllCaps="true"
+        android:textColor="#4CAF50"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvDesOne"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTitleOne"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="6dp"
+        android:padding="3dp"
+        android:text="@string/welcome_enjoy_easy_way_ordering"
+        android:textAlignment="center"
+        android:textColor="#bebebe" />
+
+    <LinearLayout
+        android:id="@+id/SliderDots"
+        android:layout_marginTop="600dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+
+
+</RelativeLayout>

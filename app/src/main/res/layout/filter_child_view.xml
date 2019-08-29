@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:padding="15dp">
+
+    <android.support.v7.widget.AppCompatCheckedTextView
+        android:id="@+id/tv_movies"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:background="?selectableItemBackground"
+        android:checkMark="@drawable/ic_check_box_outline_blank_black_24dp"
+        android:clickable="true"
+        android:text="gfhfjhbsnbndbsn"
+        android:fontFamily="@font/sfpro_display_medium"
+        android:gravity="center|left"
+        android:minHeight="?android:listPreferredItemHeightSmall"
+        android:paddingLeft="@dimen/padding_mini"
+        android:paddingRight="@dimen/padding_mini"
+        android:textColor="@color/grey_4a"
+        android:textSize="@dimen/primary_text_size" />
+
+
+
+</LinearLayout>

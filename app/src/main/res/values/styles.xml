@@ -1,0 +1,254 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorGray</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="SellerDarkAppTheme" parent="Theme.AppCompat.Light.DarkActionBar"
+        >
+        <item name="android:fontFamily">@font/sfpro_display_regular</item>
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
+    <style name="tab_item">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="AppBarOverlay" parent="Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="elevation">0dp</item>
+    </style>
+
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="ToolBarStyle">
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <item name="android:textColorSecondary">@android:color/black</item>
+        <item name="actionMenuTextColor">@android:color/black</item>
+    </style>
+
+
+    <style name="ganaral_primarystyle">
+
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+
+    <style name="ganaral_primarystylesale">
+        <item name="android:background">@drawable/edit</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLines">1</item>
+    </style>
+    <style name="ganaral_greystyle">
+        <item name="android:textSize"> 14dp</item>
+        <item name="android:textColor">@color/signup_lable_color</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+
+    //toolbar
+
+    <!-- Base application theme. -->
+    <style name="ToolbarAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <!-- <item name="android:icon">@drawable/ic_keyboard_arrow_left_black_24dp</item>-->
+        <item name="android:homeAsUpIndicator">@drawable/ic_keyboard_arrow_left_black_24dp</item>
+    </style>
+
+    <!-- for tab -->
+    <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabTextAppearance">@style/MyCustomTextAppearance</item>
+    </style>
+
+    <style name="MyCustomTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/sfpro_display_bold</item>
+
+    </style>
+
+    <!--  <style name="tab_text" parent="@android:style/TextAppearance.Widget.TabWidget">
+          <item name="android:fontFamily">@font/sfpro_display_bold</item>
+      </style>-->
+
+    <style name="DefaultScrollBar.FormScrollBar" parent="@style/DefaultScrollBar">
+        <item name="android:background">@color/white</item>
+        <item name="android:focusable">true</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:fillViewport">true</item>
+    </style>
+    <style name="FormButtonLayout">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">@dimen/default_button_height</item>
+    </style>
+    <style name="AppTheme.FormPopupOverlay" parent="@style/AppTheme.PopupOverlay">
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/green</item>
+    </style>
+    <style name="AppTheme.PopupOverlay2" parent="@style/ThemeOverlay.AppCompat.Light">
+        <item name="android:actionOverflowButtonStyle">@style/ActionBarOverflow</item>
+        <item name="actionOverflowButtonStyle">@style/ActionBarOverflow</item>
+    </style>
+    <style name="ActionBarOverflow" parent="@android:style/Widget.Holo.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_format_list_bulleted_white_24dp</item>
+    </style>
+
+
+    <style name="DefaultScrollBar">
+        <item name="android:scrollbarStyle">insideOverlay</item>
+        <item name="android:fillViewport">true</item>
+    </style>
+
+    <style name="FormBanner">
+        <item name="android:background">@color/transparent</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">200.0dip</item>
+        <item name="android:layout_marginBottom">0.0dip</item>
+    </style>
+
+    <style name="FormButton"
+        parent="@style/ProceedButton.Solid.NoDrawable">
+        <item name="android:layout_marginTop">10.0dip</item>
+        <item name="android:layout_marginBottom">0.0dip</item>
+        <item name="android:layout_alignParentBottom">true</item>
+
+    </style>
+    <style name="ProceedButton.Solid.NoDrawable"
+        parent="@style/ProceedButton.Solid">
+        <item name="android:paddingLeft">@dimen/default_margin</item>
+        <item name="android:paddingRight">@dimen/default_margin</item>
+        <item name="android:drawableLeft">@null</item>
+        <item name="android:drawableRight">@null</item>
+        <item name="android:drawablePadding">0.0dip</item>
+
+    </style>
+    <style name="ProceedButton.Solid"
+        parent="@style/ProceedButton">
+        <item name="android:textColor">@drawable/text_button_solid</item>
+        <item name="android:background">@drawable/bg_button_solid</item>
+        <item name="android:paddingRight">5.0dip</item>
+    </style>
+
+    <style name="ProceedButton">
+        <item name="android:textSize">17.0sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">20.0dip</item>
+        <item name="android:paddingTop">5.0dip</item>
+        <item name="android:paddingRight">12.0dip</item>
+        <item name="android:paddingBottom">5.0dip</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">@dimen/default_button_height</item>
+        <item name="android:text">@string/next</item>
+        <item name="android:drawableRight">@drawable/ic_arrow_forward_white_24dp</item>
+        <item name="android:drawablePadding">0.0dip</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+    <style name="CMDashboardProceedButton" parent="@style/ProceedButton.Solid">
+        <item name="android:textColor">@color/green</item>
+    </style>
+
+    <style name="ProceedButton.Hollow.NoDrawable.Inverted.Rounded" parent="@style/ProceedButton.Hollow.NoDrawable.Inverted">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:background">@drawable/bg_button_hollow_light_rounded</item>
+        <item name="android:drawableRight">@null</item>
+        <item name="android:drawablePadding">0.0dip</item>
+    </style>
+
+    <style name="FormContainer">
+        <item name="android:background">@color/white</item>
+        <item name="android:paddingLeft">@dimen/default_margin</item>
+        <item name="android:paddingTop">@dimen/default_margin</item>
+        <item name="android:paddingRight">@dimen/default_margin</item>
+        <item name="android:paddingBottom">@dimen/small_margin</item>
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="CameraIcon">
+        <item name="android:background">@color/transparent</item>
+        <item name="android:layout_width">48.0dip</item>
+        <item name="android:layout_height">48.0dip</item>
+        <item name="android:layout_marginTop">5.0dip</item>
+        <item name="android:layout_marginRight">5.0dip</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="srcCompat">@drawable/ic_camera</item>
+    </style>
+
+    <style name="ProceedButton.Hollow.NoDrawable.Inverted" parent="@style/ProceedButton.Hollow.NoDrawable">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:background">@drawable/bg_button_hollow_light</item>
+        <item name="android:drawableRight">@null</item>
+        <item name="android:drawablePadding">0.0dip</item>
+    </style>
+
+    <style name="ProceedButton.Hollow.NoDrawable" parent="@style/ProceedButton.Hollow">
+        <item name="android:paddingLeft">@dimen/default_margin</item>
+        <item name="android:paddingRight">@dimen/default_margin</item>
+        <item name="android:drawableLeft">@null</item>
+        <item name="android:drawableRight">@null</item>
+        <item name="android:drawablePadding">0.0dip</item>
+    </style>
+    <style name="ProceedButton.Hollow" parent="@style/ProceedButton">
+        <item name="android:textColor">@drawable/text_button_hollow</item>
+        <item name="android:background">@drawable/bg_button_hollow</item>
+        <item name="android:drawableRight">@drawable/ic_arrow_forward_black_24dp</item>
+    </style>
+
+
+    <style name="SortOptionButtonStyle" parent="@style/Base.Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:button">@drawable/radio_button_drawable</item>
+    </style>
+
+    <style name="BaseAppTheme.Tab.TextStyle.Filter" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="fontFamily">@font/sfpro_display_bold</item>
+    </style>
+
+    <!--Floating EditText-->
+    <style name="TextLabel" parent="Widget.Design.TextInputLayout">
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">@color/lightGrey</item>
+        <item name="android:textSize">13.5dp</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">@color/lightGrey</item>
+        <item name="colorControlNormal">@color/black</item>
+        <item name="colorControlActivated">@color/lightGrey</item>
+    </style>
+
+</resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="horizontal"
+    android:id="@+id/sort_layout"
+    android:background="?selectableItemBackground"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <android.support.v7.widget.AppCompatCheckedTextView
+        android:textSize="@dimen/primary_text_size"
+        android:textColor="@color/grey_4a"
+        android:fontFamily="@font/sfpro_display_medium"
+        android:gravity="center|left"
+        android:id="@+id/sort_name"
+        android:background="?selectableItemBackground"
+        android:paddingLeft="@dimen/padding_mini"
+        android:paddingRight="@dimen/padding_mini"
+        android:clickable="true"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:checkMark="?android:listChoiceIndicatorMultiple"
+        android:minHeight="?android:listPreferredItemHeightSmall" />
+</RelativeLayout>
