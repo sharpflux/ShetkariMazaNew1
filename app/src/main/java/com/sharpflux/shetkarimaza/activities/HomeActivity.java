@@ -88,10 +88,13 @@ public class HomeActivity extends AppCompatActivity
 
         header = navigationView.getHeaderView(0);
 
-        if (!SharedPrefManager.getInstance(this).isLoggedIn()) {
+        finish();
+        startActivity(new Intent(this, ChooseActivity.class));
+
+      /*  if (!SharedPrefManager.getInstance(this).isLoggedIn()) {
             finish();
             startActivity(new Intent(this, TabLayoutLogRegActivity.class));
-        }
+        }*/
 
         /*if (!SharedPrefManager.getInstance(this).isCompleteRegistration()) {
             finish();

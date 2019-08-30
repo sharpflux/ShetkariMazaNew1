@@ -122,6 +122,10 @@ public class ThirdFragment extends Fragment {
                 String accnoe = accno.getText().toString();
                 String ifsce = ifsc.getText().toString();
 
+                String adhartv = tvAdhar.getText().toString();
+                String chequetv = tvCheque.getText().toString();
+
+
 
                 if (TextUtils.isEmpty(accountnamee)) {
                     accountname.setError("Please enter your name");
@@ -153,7 +157,17 @@ public class ThirdFragment extends Fragment {
                     return;
                 }
 
+                if (TextUtils.isEmpty(adhartv)) {
+                    btn_adharimage.setError("Please enter your account number");
+                    btn_adharimage.requestFocus();
+                    return;
+                }
 
+                if (TextUtils.isEmpty(chequetv)) {
+                    btn_chequeimage.setError("Please enter your ifsc code");
+                    btn_chequeimage.requestFocus();
+                    return;
+                }
                 Intent intent = new Intent(getContext(), SelfieActivity.class);
                 intent.putExtra("Name", name);
                 intent.putExtra("RegistrationTypeId", registrationTypeId);
@@ -201,7 +215,7 @@ public class ThirdFragment extends Fragment {
                 //currentImageView=(ImageView) view;
                 ImageType="Cheque";
                 showPictureDialog();
-
+                tvCheque.setText("cheque");
 
             }
         });
@@ -213,6 +227,7 @@ public class ThirdFragment extends Fragment {
                 //currentImageView=(ImageView) view;
                 ImageType="Aadhar";
                 showPictureDialog();
+                tvAdhar.setText("adhar");
 
             }
         });
