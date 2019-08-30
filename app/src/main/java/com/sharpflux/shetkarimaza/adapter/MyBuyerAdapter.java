@@ -6,26 +6,35 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.filters.FilterActivity;
+import com.sharpflux.shetkarimaza.filters.SubCategoryFilter;
 import com.sharpflux.shetkarimaza.model.SellOptions;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class MyBuyerAdapter extends RecyclerView.Adapter<FlowerViewHolder> {
+public class MyBuyerAdapter extends RecyclerView.Adapter<FlowerViewHolder> implements Filterable {
 
     private Context mContext;
-    private List<SellOptions> mList;
+
     public String id;
     private static int currentPosition = 0;
+
+    private List<SellOptions> mList;
+    private List<SellOptions> exampleListFull;
 
     public MyBuyerAdapter(Context mContext, List<SellOptions> mList) {
         this.mContext = mContext;
         this.mList = mList;
+        exampleListFull = new ArrayList<>(mList);
+
     }
 
     @Override
@@ -37,7 +46,6 @@ public class MyBuyerAdapter extends RecyclerView.Adapter<FlowerViewHolder> {
     @Override
     public void onBindViewHolder(final FlowerViewHolder holder, final int position) {
         Picasso.get().load(mList.get(position).getImage()).resize(300, 300).into(holder.mImage);
-
         holder.mTitle.setText(mList.get(position).getProductlist());
         holder.ItemTypeId=mList.get(position).getProductId();
     }
@@ -46,6 +54,44 @@ public class MyBuyerAdapter extends RecyclerView.Adapter<FlowerViewHolder> {
     public int getItemCount() {
         return mList.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+
+    private Filter exampleFilter = new Filter() {
+
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<SellOptions> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(exampleListFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (SellOptions item : exampleListFull) {
+                    if (item.getProductlist().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults results) {
+            mList.clear();
+            mList.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
 }
 
 class FlowerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -53,6 +99,7 @@ class FlowerViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
     ImageView mImage;
     TextView mTitle;
     String ItemTypeId;
+    List<SubCategoryFilter> mlist;
 
     FlowerViewHolder(View itemView) {
         super(itemView);

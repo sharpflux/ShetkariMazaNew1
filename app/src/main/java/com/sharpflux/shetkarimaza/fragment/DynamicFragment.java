@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -40,6 +41,8 @@ public class DynamicFragment extends Fragment {
     List<SellOptions> productlist;
     RecyclerView mRecyclerView;
     String CategoryId="1";
+    SearchView searchView;
+    MyBuyerAdapter myAdapter;
     public static DynamicFragment newInstance() {
         return new DynamicFragment();
     }
@@ -60,6 +63,7 @@ public class DynamicFragment extends Fragment {
         mRecyclerView.setLayoutManager(mGridLayoutManager);
 
         CategoryId=  String.valueOf(getArguments().getString("CategoryId"));
+        searchView = view.findViewById(R.id.searchViewHome);
 
 
         productlist = new ArrayList<>();
@@ -96,8 +100,24 @@ public class DynamicFragment extends Fragment {
                                 } else {
                                     Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                                 }
-                                MyBuyerAdapter myAdapter = new MyBuyerAdapter(getContext(), productlist);
+                               myAdapter = new MyBuyerAdapter(getContext(), productlist);
                                 mRecyclerView.setAdapter(myAdapter);
+
+                                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                                    @Override
+                                    public boolean onQueryTextSubmit(String query) {
+
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public boolean onQueryTextChange(String newText) {
+
+                                        myAdapter.getFilter().filter(newText);
+                                        return false;
+
+                                    }
+                                });
 
 
                             }
