@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -18,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.sharpflux.shetkarimaza.R;
@@ -33,35 +36,37 @@ public class ThirdFragment extends Fragment {
 
     TextInputEditText accountname, bankname, branchcode, accno, ifsc;
 
-    ImageView check,adhar;
+    // ImageView check,adhar;
 
     ImageView currentImageView = null;
+    Bitmap imageBitmap;
+
+    TextView tvAdhar, tvCheque;
 
     private static final String IMAGE_DIRECTORY = "/demonuts";
 
     private int GALLERY = 1, CAMERA = 2;
 
-    Integer REQUEST_CAMERA=1, SELECT_FILE=0;
+    Integer REQUEST_CAMERA = 1, SELECT_FILE = 0;
 
-    ImageView adhar_image,cheque_image;
+    ImageView adhar_image, cheque_image;
 
-    public String ImageUrl;
+    public String ChequeImageBlob,AdharImageBlob,ImageType;
 
     public String ImageUrl1;
 
-    Button submitButton;
+    Button submitButton, btn_chequeimage, btn_adharimage;
 
     Bundle bundle;
 
-    String address="", city="", district="", state="", companyname="",
-            license="", companyregnno="", gstno=""
-            ,name = "", registrationTypeId = "",
+    String address = "", city = "", district = "", state = "", companyname = "",
+            license = "", companyregnno = "", gstno = "", name = "", registrationTypeId = "",
             registrationCategoryId = "", gender = "", mobile = "", alternateMobile = "", email = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =inflater.inflate(R.layout.fragment_third, container, false);
+        View view = inflater.inflate(R.layout.fragment_third, container, false);
 
         bundle = getArguments();
 
@@ -83,38 +88,39 @@ public class ThirdFragment extends Fragment {
             gstno = bundle.getString("gstno");
         }
 
+        submitButton = view.findViewById(R.id.thirdbtnnext);
+
+        accountname = view.findViewById(R.id.edtaccholder);
+
+        bankname = view.findViewById(R.id.edtbankname);
+        branchcode = view.findViewById(R.id.edtbranchcode);
+
+        btn_chequeimage = view.findViewById(R.id.btn_chequeimage);
+        btn_adharimage = view.findViewById(R.id.btn_adharimage);
 
 
-        submitButton=view.findViewById(R.id.thirdbtnnext);
+        accno = view.findViewById(R.id.edtaccno);
+        ifsc = view.findViewById(R.id.edtifsc);
 
-        accountname=view.findViewById(R.id.edtaccholder);
-        bankname=view.findViewById(R.id.edtbankname);
-        branchcode=view.findViewById(R.id.edtbranchcode);
+        cheque_image = view.findViewById(R.id.cheque_imageView);
+        adhar_image = view.findViewById(R.id.adhar_imageView);
 
-        accno=view.findViewById(R.id.edtaccno);
-        ifsc=view.findViewById(R.id.edtifsc);
-
-        cheque_image=view.findViewById(R.id.cheque_imageView);
-        adhar_image=view.findViewById(R.id.adhar_imageView);
-
-       /* check=view.findViewById(R.id.imageviewcamcheck);
-        adhar=view.findViewById(R.id.imageviewcampancard);*/
+        tvCheque = view.findViewById(R.id.hideImageTvCheque);
+        tvAdhar = view.findViewById(R.id.hideImageTvAdhar);
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
-
                 String accountnamee = accountname.getText().toString();
 
                 String banknamee = bankname.getText().toString();
 
-                String branchcodee= branchcode.getText().toString();
+                String branchcodee = branchcode.getText().toString();
 
                 String accnoe = accno.getText().toString();
-                String ifsce= ifsc.getText().toString();
-
+                String ifsce = ifsc.getText().toString();
 
 
                 if (TextUtils.isEmpty(accountnamee)) {
@@ -146,7 +152,6 @@ public class ThirdFragment extends Fragment {
                     ifsc.requestFocus();
                     return;
                 }
-
 
 
                 Intent intent = new Intent(getContext(), SelfieActivity.class);
@@ -181,57 +186,56 @@ public class ThirdFragment extends Fragment {
                 intent.putExtra("accno", accno.getText().toString());
 
                 intent.putExtra("ifsc", ifsc.getText().toString());
-                intent.putExtra("check", "");
+                intent.putExtra("check", ChequeImageBlob);
 
-                intent.putExtra("adhar", "");
+                intent.putExtra("adhar", AdharImageBlob);
 
                 startActivity(intent);
             }
         });
 
 
-
-        cheque_image.setOnClickListener(new View.OnClickListener() {
+        btn_chequeimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                currentImageView=(ImageView) view;
+                //currentImageView=(ImageView) view;
+                ImageType="Cheque";
                 showPictureDialog();
+
+
             }
         });
 
 
-        adhar_image.setOnClickListener(new View.OnClickListener() {
+        btn_adharimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                currentImageView=(ImageView) view;
+                //currentImageView=(ImageView) view;
+                ImageType="Aadhar";
                 showPictureDialog();
+
             }
         });
         return view;
     }
 
     private void showPictureDialog() {
-        final CharSequence[] items={"Camera","Gallary","Cancel"};
-        AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
+        final CharSequence[] items = {"Camera", "Gallary", "Cancel"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Add Image");
 
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
-                if(items[i].equals("Camera")){
+                if (items[i].equals("Camera")) {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(intent, REQUEST_CAMERA);
-                }
-
-                else if(items[i].equals("Gallary")){
+                } else if (items[i].equals("Gallary")) {
                     Intent intent = new Intent();
                     intent.setType("image/*");
                     intent.setAction(Intent.ACTION_GET_CONTENT);//
-                    startActivityForResult(Intent.createChooser(intent, "Select File"),SELECT_FILE);
-                }
-
-                else if(items[i].equals("Cancel"))
-                {
+                    startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
+                } else if (items[i].equals("Cancel")) {
                     dialog.dismiss();
                 }
             }
@@ -257,28 +261,58 @@ public class ThirdFragment extends Fragment {
     }
 
     private void onSelectFromGalleryResult(Intent data) {
-        Bitmap bm=null;
+        Bitmap bm = null;
         if (data != null) {
             try {
                 bm = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), data.getData());
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            Bitmap newBitmap = Bitmap.createBitmap(bm.getWidth(), bm.getHeight(), bm.getConfig());
+            Canvas canvas = new Canvas(newBitmap);
+            canvas.drawColor(Color.WHITE);
+            canvas.drawBitmap(bm, 0, 0, null);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            newBitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
 
-        currentImageView.setImageBitmap(bm);
-        }/*else
-        {
-            Glide.with(getContext()).load(R.drawable.err_image_name).into(currentImageView);
-            Log.e("Please select image", "nothing Selected: ");
-        }*/
+            if(ImageType=="Cheque"){
+                ChequeImageBlob = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
+            }
+            if(ImageType=="Aadhar"){
+                AdharImageBlob = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
+            }
+
+            if(ImageType=="Cheque"){
+
+                cheque_image.setImageBitmap(bm);
+            }
+            if(ImageType=="Aadhar"){
+
+                adhar_image.setImageBitmap(bm);
+            }
+
+        }
     }
 
     private void onCaptureImageResult(Intent data) {
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 
-        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-        ImageUrl= Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);
+
+        Bitmap newBitmap = Bitmap.createBitmap(thumbnail.getWidth(), thumbnail.getHeight(), thumbnail.getConfig());
+        Canvas canvas = new Canvas(newBitmap);
+        canvas.drawColor(Color.WHITE);
+        canvas.drawBitmap(thumbnail, 0, 0, null);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        newBitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
+
+        if(ImageType=="Cheque"){
+            ChequeImageBlob = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
+        }
+        if(ImageType=="Aadhar"){
+            AdharImageBlob = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
+        }
+
         File destination = new File(Environment.getExternalStorageDirectory(),
                 System.currentTimeMillis() + ".jpg");
 
@@ -295,9 +329,15 @@ public class ThirdFragment extends Fragment {
             e.printStackTrace();
         }
 
-        Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
-        currentImageView.setImageBitmap(imageBitmap);
 
+        if(ImageType=="Cheque"){
+        imageBitmap = (Bitmap) data.getExtras().get("data");
+        cheque_image.setImageBitmap(imageBitmap);
+        }
+        if(ImageType=="Aadhar"){
+            imageBitmap = (Bitmap) data.getExtras().get("data");
+            adhar_image.setImageBitmap(imageBitmap);
+        }
     }
 
 

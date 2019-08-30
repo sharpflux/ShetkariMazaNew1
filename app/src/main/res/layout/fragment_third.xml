@@ -144,6 +144,13 @@
                     android:background="@drawable/bg_dotted_border_accent"
                     android:padding="1.0dip">
 
+                    <TextView
+                        android:id="@+id/hideImageTvCheque"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:visibility="gone" />
+
                     <ImageView
                         android:id="@+id/cheque_imageView"
                         android:layout_width="match_parent"
@@ -187,6 +194,13 @@
                     android:layout_marginBottom="@dimen/default_margin"
                     android:background="@drawable/bg_dotted_border_accent"
                     android:padding="1.0dip">
+
+                    <TextView
+                        android:id="@+id/hideImageTvAdhar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/adhar_imageView"
