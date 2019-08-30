@@ -58,7 +58,7 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        searchView = findViewById(R.id.searchViewHome);
+       // searchView = findViewById(R.id.searchViewHome);
 
         saleButton = findViewById(R.id.saleButton);
         myLocale = getResources().getConfiguration().locale;

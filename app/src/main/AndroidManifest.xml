@@ -69,12 +69,14 @@
             android:name=".activities.SellerActivity"
             android:noHistory="true"
             android:parentActivityName=".activities.HomeActivity"
+            android:label="@string/productdetail"
             android:theme="@style/SellerDarkAppTheme" />
         <activity android:name=".activities.ChooseActivity" />
         <activity android:name=".activities.WelcomeActivity" />
         <activity
             android:name=".activities.HomeActivity"
             android:screenOrientation="portrait"
+            android:label=""
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.ForgotPasswordActivity" />
         <activity android:name=".activities.SelectLanguageActivity" />
