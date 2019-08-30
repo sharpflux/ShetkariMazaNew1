@@ -157,17 +157,19 @@ public class ThirdFragment extends Fragment {
                     return;
                 }
 
-                if (TextUtils.isEmpty(adhartv)) {
-                    btn_adharimage.setError("Please enter your account number");
-                    btn_adharimage.requestFocus();
-                    return;
-                }
 
                 if (TextUtils.isEmpty(chequetv)) {
                     btn_chequeimage.setError("Please enter your ifsc code");
                     btn_chequeimage.requestFocus();
                     return;
                 }
+
+                if (TextUtils.isEmpty(adhartv)) {
+                    btn_adharimage.setError("Please enter your account number");
+                    btn_adharimage.requestFocus();
+                    return;
+                }
+
                 Intent intent = new Intent(getContext(), SelfieActivity.class);
                 intent.putExtra("Name", name);
                 intent.putExtra("RegistrationTypeId", registrationTypeId);
