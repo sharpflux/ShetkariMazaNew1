@@ -25,7 +25,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private ImageView[] dots;
     Button btn_skip;
 
-    //Hello from Aparna//
+    //Hello from Aparna////
 
 
     @Override
