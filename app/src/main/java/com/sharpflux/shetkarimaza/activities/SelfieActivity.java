@@ -13,11 +13,13 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -45,6 +47,7 @@ import java.util.Map;
 
 public class SelfieActivity extends AppCompatActivity {
 
+    TextView hideImageTvSelfie;
     Button btn_take_selfie ;
     ImageView img_banner_profile_placeholder ;
     Intent intent ;
@@ -70,6 +73,7 @@ public class SelfieActivity extends AppCompatActivity {
         setContentView(R.layout.activity_selfie);
 
         btn_submit = findViewById(R.id.btnFormSubmit);
+        hideImageTvSelfie = findViewById(R.id.hideImageTvSelfie);
 
         User user = SharedPrefManager.getInstance(this).getUser();
         userid = (Integer) user.getId();
@@ -96,9 +100,7 @@ public class SelfieActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 SelecteImages();
-               /* Intent photoPickerIntent= new Intent(Intent.ACTION_PICK);
-                photoPickerIntent.setType("image/*");
-                startActivityForResult(photoPickerIntent,SELECT_PHOTO);*/
+                hideImageTvSelfie.setText("selfie");
             }
         });
 
@@ -106,6 +108,15 @@ public class SelfieActivity extends AppCompatActivity {
     }
 
     public void saveOrderDetails() {
+
+        String adhartv = hideImageTvSelfie.getText().toString();
+
+        if (TextUtils.isEmpty(adhartv)) {
+            btn_take_selfie.setError("Please upload copy of adhar");
+            btn_take_selfie.requestFocus();
+            return;
+        }
+
 
         iin = getIntent();
         bundle = iin.getExtras();

@@ -122,9 +122,9 @@ public class ThirdFragment extends Fragment {
                 String accnoe = accno.getText().toString();
                 String ifsce = ifsc.getText().toString();
 
-                String adhartv = tvAdhar.getText().toString();
-                String chequetv = tvCheque.getText().toString();
 
+                String chequetv = tvCheque.getText().toString();
+                String adhartv = tvAdhar.getText().toString();
 
 
                 if (TextUtils.isEmpty(accountnamee)) {
@@ -159,13 +159,13 @@ public class ThirdFragment extends Fragment {
 
 
                 if (TextUtils.isEmpty(chequetv)) {
-                    btn_chequeimage.setError("Please enter your ifsc code");
+                    btn_chequeimage.setError("Please upload copy of cheque");
                     btn_chequeimage.requestFocus();
                     return;
                 }
 
                 if (TextUtils.isEmpty(adhartv)) {
-                    btn_adharimage.setError("Please enter your account number");
+                    btn_adharimage.setError("Please upload copy of adhar");
                     btn_adharimage.requestFocus();
                     return;
                 }
