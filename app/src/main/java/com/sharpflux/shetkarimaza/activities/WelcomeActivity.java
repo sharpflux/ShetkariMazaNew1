@@ -24,7 +24,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private int dotscount;
     private ImageView[] dots;
     Button btn_skip;
-
+//Hello from Aparna
 
 
     @Override
@@ -32,7 +32,7 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sample2);
 
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
+
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         SliderDots = (LinearLayout) findViewById(R.id.SliderDots);
         final TextView tvTitleOne=findViewById(R.id.tvTitleOne);
