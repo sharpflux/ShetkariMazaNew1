@@ -98,6 +98,8 @@ public class DynamicFragment extends Fragment {
                                 }
                                 MyBuyerAdapter myAdapter = new MyBuyerAdapter(getContext(), productlist);
                                 mRecyclerView.setAdapter(myAdapter);
+
+
                             }
 
                         } catch (JSONException e) {

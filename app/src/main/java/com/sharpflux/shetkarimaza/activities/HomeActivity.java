@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,13 +50,15 @@ public class HomeActivity extends AppCompatActivity
     private ViewPager viewPager;
     Button saleButton;
     TextView navBarName, navMobileNumber;
-
+    SearchView searchView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        searchView = findViewById(R.id.searchViewHome);
 
         saleButton = findViewById(R.id.saleButton);
         myLocale = getResources().getConfiguration().locale;
