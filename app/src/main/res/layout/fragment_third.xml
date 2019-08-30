@@ -134,19 +134,6 @@
                 android:layout_marginTop="5dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/btn_upload_cheque"
-                    android:layout_width="match_parent"
-                    android:layout_height="40.0dip"
-                    android:layout_gravity="center"
-                    android:drawablePadding="0.0dip"
-                    android:fontFamily="@font/sfpro_display_bold"
-                    android:minWidth="150.0dip"
-                    android:paddingLeft="@dimen/small_margin"
-                    android:paddingRight="@dimen/small_margin"
-                    android:text="@string/canclled_check"
-                    android:textAlignment="center"
-                    android:textSize="16dp" />
 
                 <FrameLayout
                     android:layout_width="300dp"
@@ -165,30 +152,32 @@
                         android:src="@drawable/camera_selfie" />
 
                 </FrameLayout>
+
+                <Button
+                    android:id="@+id/btn_chequeimage"
+                    android:paddingLeft="@dimen/small_margin"
+                    android:paddingRight="@dimen/small_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40.0dip"
+                    android:minWidth="150.0dip"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/canclled_check"
+                    android:drawableLeft="@drawable/ic_photo_camera_black_24dp"
+                    android:drawablePadding="0.0dip"
+                    android:layout_below="@id/imageView"
+                    android:layout_gravity="center"
+                    android:background="@drawable/btn_plain"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:layout_marginBottom="20dp"
                 android:orientation="vertical">
-
-
-                <TextView
-                    android:id="@+id/btn_adhar_upload"
-                    android:layout_width="match_parent"
-                    android:layout_height="40.0dip"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="@dimen/default_margin"
-                    android:drawablePadding="0.0dip"
-                    android:fontFamily="@font/sfpro_display_bold"
-                    android:minWidth="150.0dip"
-                    android:paddingLeft="@dimen/small_margin"
-                    android:paddingRight="@dimen/small_margin"
-                    android:text="@string/adhar_card"
-                    android:textAlignment="center"
-                    android:textSize="16dp" />
-
 
                 <FrameLayout
                     android:layout_width="300dp"
@@ -207,6 +196,24 @@
                         android:src="@drawable/camera_selfie" />
 
                 </FrameLayout>
+
+                <Button
+                    android:id="@+id/btn_adharimage"
+                    android:paddingLeft="@dimen/small_margin"
+                    android:paddingRight="@dimen/small_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40.0dip"
+                    android:minWidth="150.0dip"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/adhar_card"
+                    android:drawableLeft="@drawable/ic_photo_camera_black_24dp"
+                    android:drawablePadding="0.0dip"
+                    android:layout_below="@id/imageView"
+                    android:layout_gravity="center"
+                    android:background="@drawable/btn_plain"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    />
 
             </LinearLayout>
 
