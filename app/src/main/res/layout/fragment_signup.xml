@@ -115,7 +115,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_vertical">
+                            android:gravity="center_vertical"
+                            android:background="@drawable/edit">
 
                             <com.hbb20.CountryCodePicker
                                 android:id="@+id/ccp"
@@ -129,11 +130,11 @@
                                 android:id="@+id/emobnum"
                                 android:fontFamily="@font/sfpro_display_medium"
                                 android:padding="8dp"
-                                android:background="@drawable/edit"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentTop="true"
                                 android:hint="@string/mobile_no"
+                                android:background="@null"
                                 android:inputType="phone"
                                 android:singleLine="true" />
                         </LinearLayout>
