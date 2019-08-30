@@ -74,7 +74,6 @@
         <activity android:name=".activities.WelcomeActivity" />
         <activity
             android:name=".activities.HomeActivity"
-            android:label="@string/title_activity_home"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.ForgotPasswordActivity" />
