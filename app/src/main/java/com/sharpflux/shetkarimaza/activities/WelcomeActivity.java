@@ -25,7 +25,6 @@ public class WelcomeActivity extends AppCompatActivity {
     private ImageView[] dots;
     Button btn_skip;
 
-/////////hhggcgfdsddfgh
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
