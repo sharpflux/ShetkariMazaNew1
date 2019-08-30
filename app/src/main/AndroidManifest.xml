@@ -77,7 +77,6 @@
             android:name=".activities.HomeActivity"
             android:label=""
             android:screenOrientation="portrait"
-            android:label=""
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.ForgotPasswordActivity" />
         <activity android:name=".activities.SelectLanguageActivity" />

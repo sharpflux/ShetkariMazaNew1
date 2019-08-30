@@ -86,6 +86,7 @@ public class VarietyFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent in = new Intent(getContext(), HomeActivity.class);
+                startActivity(in);
             }
         });
 
