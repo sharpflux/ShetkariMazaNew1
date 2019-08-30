@@ -27,12 +27,10 @@ public class WelcomeActivity extends AppCompatActivity {
 
     //Hello from Aparna////
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sample2);
-
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         SliderDots = (LinearLayout) findViewById(R.id.SliderDots);
