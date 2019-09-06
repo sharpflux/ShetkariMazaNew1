@@ -17,4 +17,5 @@ public class URLs {
     public  static  final  String URL_DISTRICT="http://apimaza.supergo.in/api/District/GetDistrict?States=";
     public static final String URL_OTP="http://admin.supergo.in/Utilities/OTPGenerate";
     public static final String URL_TALUKA="http://apimaza.supergo.in/api/Talukas/GetTalukas?Districts=";
+    public static final String URL_RESETPASS="";
 }

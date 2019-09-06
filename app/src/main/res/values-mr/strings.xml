@@ -45,8 +45,8 @@
     <string name="seller">विक्रेता</string>
 
     //login signup
-    <string name="firstname">First Name</string>
-    <string name="middlename">Middle Name</string>
+    <string name="firstname">पहिले नाव</string>
+    <string name="middlename">मधले नाव</string>
     <string name="username">वापरकर्तानाव</string>
     <string name="password">संकेतशब्द</string>
     <string name="cpassword">ुष्टी संकेतशब्द</string>
@@ -56,7 +56,7 @@
     <string name="loginwith">किंवा लॉग इन सह</string>
     <string name="newhere">येथे नवीन?</string>
     <string name="signuphere">येथे साइन अप करा!</string>
-    <string name="lastname">Last Name</string>
+    <string name="lastname">आडनाव</string>
     <string name="mobnum">मोबाइल नंबर</string>
     <string name="alreadyhaveacc">आधीच खाते आहे?</string>
     <string name="loginphere">येथे साइन इन करा!</string>
@@ -75,7 +75,7 @@
     <string name="totalprice">Total price of your product</string>
 
     <string name="productdetail">तुमचे उत्पादन तपशील समाविष्ट करा!</string>
-    <string name="selfie">Include your picture here!</string>
+    <string name="selfie">येथे आपले चित्र समाविष्ट करा!</string>
 
     //forget
     <string name="forget_password">पासवर्ड विसरला</string>
@@ -155,54 +155,54 @@
 
     //selfie
 
-    <string name="important_notice">Important Notice:</string>
-    <string name="aadhaar_selfie_warning">Please take a neat and formal selfie in a well lit environment, just like a passport photograph.</string>
-    <string name="profile_photo_caption">Please tap here to take a selfie</string>
-    <string name="profile_take_image_button_text">Take a Selfie</string>
-    <string name="profile_retake_image_button_text">Retake Selfie</string>
+    <string name="important_notice">महत्वाची सूचना:</string>
+    <string name="aadhaar_selfie_warning">कृपया पासपोर्टच्या छायाचित्रांप्रमाणेच, व्यवस्थित पेटलेल्या ठिकाणी स्वच्छ आणि औपचारिक सेल्फी घ्या.</string>
+    <string name="profile_photo_caption">कृपया सेल्फी घेण्यासाठी येथे टॅप करा</string>
+    <string name="profile_take_image_button_text">सेल्फी घ्या</string>
+    <string name="profile_retake_image_button_text">सेल्फी रीटेक करा</string>
 
-    <string name="done">Done</string>
-    <string name="selfie_instructions_title">Important instructions for selfie:</string>
-    <string name="action_continue">Continue</string>
+    <string name="done">पूर्ण झाले</string>
+    <string name="selfie_instructions_title">सेल्फीसाठी महत्त्वपूर्ण सूचनाः</string>
+    <string name="action_continue">सुरू</string>
 
     <!-- TODO: Remove or change this placeholder text -->-->
-    <string name="selfi_string_1">Selfie should be bright with your face clearly visible.</string>
-    <string name="selfi_string_2">Bad/dark light selfie will not be accepted.</string>
-    <string name="selfi_string_3">Sit or stand and then take a selfie.</string>
-    <string name="selfi_string_4">Do not take a selfie while lying down on the bed.</string>
-    <string name="selfi_string_5">Take a selfie wearing a t-shirt/shirt.</string>
-    <string name="selfi_string_6">Hello blank fragment</string>
-    <string name="farmaddress">Enter Farms address*</string>
-    <string name="farmssurveyno">Survey No.*</string>
-    <string name="botonicalname">Enter Botanical Name*</string>
+    <string name="selfi_string_1">आपला चेहरा स्पष्ट दिसण्यासह सेल्फी चमकदार असावी.</string>
+    <string name="selfi_string_2">खराब / डार्क लाइट सेल्फी स्वीकारली जाणार नाही.</string>
+    <string name="selfi_string_3">बसून / उभे राहून सेल्फी घ्या.</string>
+    <string name="selfi_string_4">पलंगावर झोपून सेल्फी घेऊ नका.</string>
+    <string name="selfi_string_5">टी-शर्ट / शर्ट परिधान करुन सेल्फी घ्या.</string>
+    <string name="selfi_string_6">हॅलो रिक्त तुकडा</string>
+    <string name="farmaddress">फार्मचा पत्ता प्रविष्ट करा*</string>
+    <string name="farmssurveyno">सर्व्हे क्र.*</string>
+    <string name="botonicalname">बोटॅनिकल नाव प्रविष्ट करा*</string>
 
 
-    <string name="collapsed">collapsed: %s</string>
-    <string name="expanded">expanded: %s</string>
-    <string name="clear_all">Clear all</string>
+    <string name="collapsed">कोसळली: %s</string>
+    <string name="expanded">विस्तारित: %s</string>
+    <string name="clear_all">सर्व साफ करा</string>
 
     <!-- Change Password -->
 
-    <string name="current_password">CURRENT PASSWORD</string>
-    <string name="confirm_password">CONFIRM PASSWORD</string>
-    <string name="update_password">UPDATE PASSWORD</string>
-    <string name="new_password">NEW PASSWORD</string>
+    <string name="current_password">सध्याचा गुप्त शब्द</string>
+    <string name="confirm_password">पुष्टीकरण संकेतशब्द</string>
+    <string name="update_password">पासवर्ड अद्यतनित करा</string>
+    <string name="new_password">नवीन संकेतशब्द</string>
 
-    <string name="reset_password">RESET PASSWORD</string>
-    <string name="reset_password_button">Reset Password</string>
-    <string name="netwrokr_error">No internet connection!</string>
-    <string name="enter_your_registered">Enter your registered mobile number to verify the OTP code</string>
+    <string name="reset_password">पासवर्ड रीसेट करा</string>
+    <string name="reset_password_button">संकेतशब्द रीसेट करा</string>
+    <string name="netwrokr_error">इंटरनेट कनेक्शन नाही!</string>
+    <string name="enter_your_registered">ओटीपी कोड सत्यापित करण्यासाठी आपला नोंदणीकृत मोबाइल नंबर प्रविष्ट करा</string>
     <!-- OTP Verification -->
 
-    <string name="otp_verification">OTP VERIFICATION</string>
-    <string name="otp_code_has_been_sent">OTP code has been sent to your registered mobile number. Please verify the code. </string>
-    <string name="enter_otp_code">Enter OTP Code</string>
-    <string name="verify">verify</string>
-    <string name="resendOtp">Resend OTP</string>
+    <string name="otp_verification">ओटीपी सत्यापन</string>
+    <string name="otp_code_has_been_sent">आपल्या नोंदणीकृत मोबाइल क्रमांकावर ओटीपी कोड पाठविला गेला आहे. कृपया कोड सत्यापित करा. </string>
+    <string name="enter_otp_code">ओटीपी कोड प्रविष्ट करा</string>
+    <string name="verify">सत्यापित करा</string>
+    <string name="resendOtp">ओटीपी पुन्हा पाठवा</string>
 
-    <string name="txtExit">You want to add product in list</string>
-    <string name="txtYes">Yes</string>
-    <string name="txtNo">No</string>
+    <string name="txtExit">आपल्याला सूचीत उत्पादन जोडायचे आहे</string>
+    <string name="txtYes">होय</string>
+    <string name="txtNo">नाही</string>
 
-    <string name="list_added_item">List of Added Items</string>
+    <string name="list_added_item">जोडलेल्या वस्तूंची यादी</string>
 </resources>

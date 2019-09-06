@@ -139,72 +139,72 @@
     <string name="price">$5</string>
     <string name="description_data">An apple is a sweet, edible fruit produced by an apple tree (Malus pumila). Apple trees are cultivated worldwide and are the most widely grown species in the genus Malus.</string>
 
-    <string name="call">CALL</string>
-    <string name="cancel">Cancel</string>
-    <string name="seller_available_unit">Unit</string>
+    <string name="call">कॉल</string>
+    <string name="cancel">रद्द करना</string>
+    <string name="seller_available_unit">इकाई</string>
 
-    <string name="string_internet_connection_not_available">Internet Connection Not Available</string>
-    <string name="string_some_thing_wrong">Something went wrong.</string>
-    <string name="internal_storage">Internal storage</string>
-    <string name="chooser_title">Choose Files</string>
+    <string name="string_internet_connection_not_available">इंटरनेट कनेक्शन उपलब्ध नहीं है</string>
+    <string name="string_some_thing_wrong">कुछ गलत हो गया.</string>
+    <string name="internal_storage">आंतरिक स्टोरेज</string>
+    <string name="chooser_title">फ़ाइलों का चयन करें</string>
 
-    <string name="productimages">Upload product images here!*</string>
-    <string name="completeregiseration">Complete Your Regsteration here!*</string>
+    <string name="productimages">यहां उत्पाद छवियां अपलोड करें! *</string>
+    <string name="completeregiseration">यहाँ अपना नियम पूरा करें! *</string>
 
     <string name="language">भाषा बदले</string>
     <string name="AlternateMob">वैकल्पिक मोबाइल नंबर दर्ज करें*</string>
 
     //selfie
 
-    <string name="important_notice">Important Notice:</string>
-    <string name="aadhaar_selfie_warning">Please take a neat and formal selfie in a well lit environment, just like a passport photograph.</string>
-    <string name="profile_photo_caption">Please tap here to take a selfie</string>
-    <string name="profile_take_image_button_text">Take a Selfie</string>
-    <string name="profile_retake_image_button_text">Retake Selfie</string>
+    <string name="important_notice">महत्वपूर्ण सूचना:</string>
+    <string name="aadhaar_selfie_warning">कृपया पासपोर्ट फोटो की तरह एक अच्छी तरह से जलाए गए वातावरण में एक साफ और औपचारिक सेल्फी लें।</string>
+    <string name="profile_photo_caption">सेल्फी लेने के लिए यहां टैप करें</string>
+    <string name="profile_take_image_button_text">एक स्वफ़ोटो ले</string>
+    <string name="profile_retake_image_button_text">सेल्फी लेना</string>
 
-    <string name="done">Done</string>
-    <string name="selfie_instructions_title">Important instructions for selfie:</string>
-    <string name="action_continue">Continue</string>
+    <string name="done">पूर्ण</string>
+    <string name="selfie_instructions_title">सेल्फी के लिए महत्वपूर्ण निर्देश:</string>
+    <string name="action_continue">जारी रहना</string>
 
     <!-- TODO: Remove or change this placeholder text -->-->
-    <string name="selfi_string_1">Selfie should be bright with your face clearly visible.</string>
-    <string name="selfi_string_2">Bad/dark light selfie will not be accepted.</string>
-    <string name="selfi_string_3">Sit or stand and then take a selfie.</string>
-    <string name="selfi_string_4">Do not take a selfie while lying down on the bed.</string>
-    <string name="selfi_string_5">Take a selfie wearing a t-shirt/shirt.</string>
-    <string name="selfi_string_6">Hello blank fragment</string>
-    <string name="farmaddress">Enter Farms address*</string>
-    <string name="farmssurveyno">Survey No.*</string>
-    <string name="botonicalname">Enter Botanical Name*</string>
+    <string name="selfi_string_1">आपके चेहरे के साथ सेल्फी स्पष्ट रूप से दिखाई देनी चाहिए।</string>
+    <string name="selfi_string_2">खराब / डार्क लाइट सेल्फी स्वीकार नहीं की जाएगी.</string>
+    <string name="selfi_string_3">बैठो या खड़े रहो और फिर एक सेल्फी लो।</string>
+    <string name="selfi_string_4">बिस्तर पर लेटते हुए सेल्फी न लें.</string>
+    <string name="selfi_string_5">टीशर्ट / शर्ट पहने सेल्फी लें।</string>
+    <string name="selfi_string_6">हैलो खाली टुकड़ा</string>
+    <string name="farmaddress">फार्म का पता दर्ज करें *</string>
+    <string name="farmssurveyno">सर्वे नं *</string>
+    <string name="botonicalname">वानस्पतिक नाम दर्ज करें *</string>
 
 
-    <string name="collapsed">collapsed: %s</string>
-    <string name="expanded">expanded: %s</string>
-    <string name="clear_all">Clear all</string>
+    <string name="collapsed">ढह: %s</string>
+    <string name="expanded">विस्तार: %s</string>
+    <string name="clear_all">सभी साफ करें</string>
 
     <!-- Change Password -->
 
-    <string name="current_password">CURRENT PASSWORD</string>
-    <string name="confirm_password">CONFIRM PASSWORD</string>
-    <string name="update_password">UPDATE PASSWORD</string>
-    <string name="new_password">NEW PASSWORD</string>
+    <string name="current_password">वर्तमान पासवर्ड</string>
+    <string name="confirm_password">पासवर्ड की पुष्टि कीजिये</string>
+    <string name="update_password">अद्यतन पासवर्ड</string>
+    <string name="new_password">नया पासवर्ड</string>
 
-    <string name="reset_password">RESET PASSWORD</string>
-    <string name="reset_password_button">Reset Password</string>
-    <string name="netwrokr_error">No internet connection!</string>
-    <string name="enter_your_registered">Enter your registered mobile number to verify the OTP code</string>
+    <string name="reset_password">पासवर्ड रीसेट</string>
+    <string name="reset_password_button">पासवर्ड रीसेट</string>
+    <string name="netwrokr_error">कोई इंटरनेट कनेक्शन नहीं!</string>
+    <string name="enter_your_registered">OTP कोड को सत्यापित करने के लिए अपना पंजीकृत मोबाइल नंबर दर्ज करें</string>
     <!-- OTP Verification -->
 
-    <string name="otp_verification">OTP VERIFICATION</string>
-    <string name="otp_code_has_been_sent">OTP code has been sent to your registered mobile number. Please verify the code. </string>
-    <string name="enter_otp_code">Enter OTP Code</string>
-    <string name="verify">verify</string>
-    <string name="resendOtp">Resend OTP</string>
+    <string name="otp_verification">OTP सत्यापन</string>
+    <string name="otp_code_has_been_sent">आपके पंजीकृत मोबाइल नंबर पर ओटीपी कोड भेजा गया है। कृपया कोड सत्यापित करें। </string>
+    <string name="enter_otp_code">OTP कोड दर्ज करें</string>
+    <string name="verify">सत्यापित करें</string>
+    <string name="resendOtp">OTP को फिर से भेजें</string>
 
-    <string name="txtExit">You want to add product in list</string>
-    <string name="txtYes">Yes</string>
-    <string name="txtNo">No</string>
+    <string name="txtExit">आप सूची में उत्पाद जोड़ना चाहते हैं</string>
+    <string name="txtYes">हाँ</string>
+    <string name="txtNo">नहीं</string>
 
-    <string name="list_added_item">List of Added Items</string>
+    <string name="list_added_item">जोड़े गए आइटमों की सूची</string>
 
 </resources>

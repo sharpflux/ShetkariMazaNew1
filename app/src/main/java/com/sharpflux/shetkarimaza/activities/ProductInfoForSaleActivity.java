@@ -858,11 +858,9 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 else if (params[0].toString() == "Unit")
                     fetcher.loadList("MeasurementType", edtUnit, URLs.URL_UNIT + "?Language=" + myLocale, "MeasurementId", hidMeasurementId, "", "");
                 else if (params[0].toString() == "state")
-                    fetcher.loadList("StatesName", edtstate, URLs.URL_STATE + "?StatesID=15&Language=en", "StatesID", hideStateId, "", "");
-
+                    fetcher.loadList("StatesName", edtstate, URLs.URL_STATE + "?Language=" + myLocale, "StatesID", hideStateId, "", "");
                 else if (params[0].toString() == "district")
                     fetcher.loadList("DistrictName", edtdistrict, URLs.URL_DISTRICT + hideStateId.getText()+"," + "&Language=en", "DistrictId", hideDistrictId, "", "");
-
                 else if (params[0].toString() == "taluka")
                     fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText()+"," + "&Language=en", "TalukasId", hideTalukaId, "", "");
                 Thread.sleep(1000);

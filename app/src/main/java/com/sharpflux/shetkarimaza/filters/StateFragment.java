@@ -30,6 +30,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class StateFragment extends Fragment {
@@ -37,7 +38,7 @@ public class StateFragment extends Fragment {
     LinearLayoutManager layoutManager;
     ArrayList<SubCategoryFilter> productlist;
     Button btn_next,btn_back;
-
+    Locale myLocale;
     String VarityId="",QualityId="", DistrictId="",itemTypeId="";
     StringBuilder state_builder_id;
     String StateIds;
@@ -51,7 +52,7 @@ public class StateFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_state, container, false);
-
+        myLocale = getResources().getConfiguration().locale;
         recyclerView = view.findViewById(R.id.rcv_vriety);
         productlist = new ArrayList<>();
 
@@ -137,7 +138,7 @@ public class StateFragment extends Fragment {
     private void SetDynamicDATA() {
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_STATE + "?StatesID=15&Language=en",
+                URLs.URL_STATE +"?Language="+myLocale,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
