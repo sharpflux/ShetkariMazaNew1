@@ -371,7 +371,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfpro_display_medium"
-                    android:hint="Enter your village Name*"
+                    android:hint="@string/enter_your_village_Name"
                     android:inputType="none"
                     android:textSize="15dp" />
             </android.support.design.widget.TextInputLayout>
@@ -388,13 +388,57 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfpro_display_medium"
-                    android:hint="Enter your area in hector*"
+                    android:hint="@string/enter_your_area_in_hector"
                     android:inputType="number"
                     android:textSize="15dp" />
             </android.support.design.widget.TextInputLayout>
 
+            <FrameLayout
 
-<include layout="@layout/activity_upload_multiple_images"/>
+                android:id="@+id/pane_banner_profile_placeholder"
+                android:background="@drawable/bg_dotted_border_accent"
+                android:padding="1.0dip"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginBottom="@dimen/default_margin"
+                android:layout_below="@id/pane_selfie_disclaimer"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="300dp"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/imageView" />
+
+
+                <TextView
+                    android:id="@+id/hideImageTvSelfie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:visibility="gone" />
+
+            </FrameLayout>
+
+            <Button
+                android:id="@+id/btn_take_selfie"
+                android:paddingLeft="@dimen/small_margin"
+                android:paddingRight="@dimen/small_margin"
+                android:layout_width="wrap_content"
+                android:layout_height="40.0dip"
+                android:layout_marginBottom="@dimen/default_margin"
+                android:minWidth="150.0dip"
+                android:text="@string/take_photo"
+                android:drawableLeft="@drawable/ic_photo_camera_black_24dp"
+                android:drawablePadding="0.0dip"
+                android:layout_below="@id/pane_banner_profile_placeholder"
+                android:layout_gravity="center"
+                style="@style/ProceedButton.Solid.NoDrawable" />
+
+
+
+            <!--<include layout="@layout/activity_upload_multiple_images"/>-->
 
 
 

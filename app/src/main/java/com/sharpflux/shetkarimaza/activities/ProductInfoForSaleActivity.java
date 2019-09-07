@@ -99,10 +99,13 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
 
     private Button btnAdd,btnAddMore;
+    ImageView img_banner_profile_placeholder ;
     private TextInputEditText edtTotalamt,edtproductType, edtdistrict, edtstate, edtproductVariety, edtDays, edtavailablityInMonths, edtAQuality, edtAQuantity, edtUnit, edtExpectedPrice, edttaluka, edtaddres, edtvillage, edtareahector;
     ImageView imageviewcam1,imageviewcam2,imageviewcam3,imageviewcam4;
     ArrayList<Product> list;
     Product sellOptions;
+    Button btn_take_selfie ;
+    TextView hideImageTvSelfie;
     private CustomRecyclerViewDialog customDialog;
     public static String DATEFORMATTED = "";
     private DatePickerDialog.OnDateSetListener mDateSetListener;
@@ -192,6 +195,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         hideStateId = findViewById(R.id.hideStateId);
         hideDistrictId = findViewById(R.id.hideDistrictId);
         hideTalukaId = findViewById(R.id.hideTalukaId);
+        hideImageTvSelfie = findViewById(R.id.hideImageTvSelfie);
 
         //edt
         edtproductType = findViewById(R.id.name_edit);
@@ -211,40 +215,29 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         edttaluka = findViewById(R.id.edtTal);
         edtvillage = findViewById(R.id.edtvillage);
         edtareahector = findViewById(R.id.edthector);
+        btn_take_selfie =findViewById(R.id.btn_take_selfie);
+        img_banner_profile_placeholder = (ImageView)findViewById(R.id.imageView);
 
-      //imageviewcam1 = findViewById(R.id.imageviewcam);
-        /*imageviewcam2 = findViewById(R.id.imageView2);
-        imageviewcam3 = findViewById(R.id.imageView3);
-        imageviewcam4 = findViewById(R.id.imageView4);*/
+
+
         btnAdd = findViewById(R.id.btnAdd);
         btnAddMore= findViewById(R.id.btnAddMore);
 
-        //hidNameId = findViewById(R.id.hidNameId);
+
 
         parentView = findViewById(R.id.parent_layout);
         listView = findViewById(R.id.listView);
-      //  mProgressBar = findViewById(R.id.progressBar);
 
-        btnChoose = findViewById(R.id.btnChoose);
-        btnChoose.setOnClickListener(new View.OnClickListener() {
+        EnableRuntimePermission();
+        btn_take_selfie.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                // Display the file chooser dialog
-                if (askForPermission())
-                    showChooser();
+            public void onClick(View view) {
+
+                SelecteImages();
+                hideImageTvSelfie.setText("selfie");
             }
         });
 
-        /*btnUpload = findViewById(R.id.btnUpload);
-        btnUpload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent in = new Intent(ProductInfoForSaleActivity.this,ProductInfoForSaleActivity.class);
-                startActivity(in);
-                //uploadImagesToServer();
-            }
-        });*/
 
         arrayList = new ArrayList<>();
 
@@ -269,7 +262,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
 
         fetcher = new DataFetcher(sellOptions, customDialog, list, ProductInfoForSaleActivity.this);
-        //list.clear();
+
 
 
         edtTotalamt.setOnClickListener(new View.OnClickListener() {
@@ -576,113 +569,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     }
 
 
-    private void showChooser() {
-        // Use the GET_CONTENT intent from the utility class
-        Intent target = FileUtils.createGetContentIntent();
-        // Create the chooser Intent
-        Intent intent = Intent.createChooser(
-                target, getString(R.string.chooser_title));
-        try {
-            startActivityForResult(intent, REQUEST_CODE);
-        } catch (ActivityNotFoundException e) {
-            // The reason for the existence of aFileChooser
-        }
-    }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case REQUEST_CODE:
-                // If the file selection was successful
-                if (resultCode == RESULT_OK) {
-
-                    builder.append("<Assign>");
-
-                    if(data.getClipData() != null) {
-                        int count = data.getClipData().getItemCount();
-                        int currentItem = 0;
-
-                        while(currentItem < count) {
-                            Uri imageUri = data.getClipData().getItemAt(currentItem).getUri();
-                            //do something with the image (save it to some directory or whatever you need to do with it here)
-                            currentItem = currentItem + 1;
-                            Log.d("Uri Selected", imageUri.toString());
-                            try {
-                                // Get the file path from the URI
-                                String path = FileUtils.getPath(this, imageUri);
-                                Log.d("Multiple File Selected", path);
-
-
-                                Bitmap thumbnail =  BitmapFactory.decodeFile(path);
-                                //ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-
-                               // thumbnail.compress(Bitmap.CompressFormat.JPEG, 20, bytes);
-                               // String  ImageUrl= Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);
-
-
-
-                                Bitmap newBitmap = Bitmap.createBitmap(thumbnail.getWidth(), thumbnail.getHeight(), thumbnail.getConfig());
-                                Canvas canvas = new Canvas(newBitmap);
-                                canvas.drawColor(Color.WHITE);
-                                canvas.drawBitmap(thumbnail, 0, 0, null);
-                                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                                newBitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream);
-                                String  ImageUrl= Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
-
-
-                                builder.append("<ImageBase"+currentItem+">" + ImageUrl + "</ImageBase"+currentItem+">");
-
-
-                                arrayList.add(imageUri);
-                                MyAdapter mAdapter = new MyAdapter(ProductInfoForSaleActivity.this, arrayList,ImagesList);
-                                listView.setAdapter(mAdapter);
-
-                            } catch (Exception e) {
-                                Log.e(TAG, "File select error", e);
-                            }
-                        }
-
-                    } else if(data.getData() != null) {
-                        //do something with the image (save it to some directory or whatever you need to do with it here)
-                        final Uri uri = data.getData();
-                        Log.i(TAG, "Uri = " + uri.toString());
-                        try {
-                            // Get the file path from the URI
-                            final String path = FileUtils.getPath(this, uri);
-                            Log.d("Single File Selected", path);
-                            Bitmap thumbnail =  BitmapFactory.decodeFile(path);
-                           // ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-
-                           // thumbnail.compress(Bitmap.CompressFormat.JPEG, 20, bytes);
-                            //String  ImageUrl= Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);
-
-
-                            Bitmap newBitmap = Bitmap.createBitmap(thumbnail.getWidth(), thumbnail.getHeight(), thumbnail.getConfig());
-                            Canvas canvas = new Canvas(newBitmap);
-                            canvas.drawColor(Color.WHITE);
-                            canvas.drawBitmap(thumbnail, 0, 0, null);
-                            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                            newBitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream);
-                            String  ImageUrl= Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
-
-
-
-                            builder.append("<ImageBase1>" + ImageUrl + "</ImageBase1>");
-
-                            arrayList.add(uri);
-                            MyAdapter mAdapter = new MyAdapter(ProductInfoForSaleActivity.this, arrayList,ImagesList);
-                            listView.setAdapter(mAdapter);
-
-                        } catch (Exception e) {
-                            Log.e(TAG, "File select error", e);
-                        }
-                    }
-                }
-                builder.append("</Assign>");
-                break;
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 
 
 
@@ -711,82 +598,8 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     }
 
 
-    private boolean askForPermission() {
-        int currentAPIVersion = Build.VERSION.SDK_INT;
-        if (currentAPIVersion >= Build.VERSION_CODES.M) {
-            int hasCallPermission = ContextCompat.checkSelfPermission(ProductInfoForSaleActivity.this,
-                    Manifest.permission.READ_EXTERNAL_STORAGE);
-            if (hasCallPermission != PackageManager.PERMISSION_GRANTED) {
-                // Ask for permission
-                // need to request permission
-                if (ActivityCompat.shouldShowRequestPermissionRationale(ProductInfoForSaleActivity.this,
-                        Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                    // explain
-                    showMessageOKCancel(
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    ActivityCompat.requestPermissions(ProductInfoForSaleActivity.this,
-                                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                                            REQUEST_CODE_ASK_PERMISSIONS);
-                                }
-                            });
-                    // if denied then working here
-                } else {
-                    // Request for permission
-                    ActivityCompat.requestPermissions(ProductInfoForSaleActivity.this,
-                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                            REQUEST_CODE_ASK_PERMISSIONS);
-                }
 
-                return false;
-            } else {
-                // permission granted and calling function working
-                return true;
-            }
-        } else {
-            return true;
-        }
-    }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_CODE_ASK_PERMISSIONS:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Permission Granted
-                    showChooser();
-                } else {
-                    // Permission Denied
-                    Toast.makeText(ProductInfoForSaleActivity.this, "Permission Denied!", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-    }
-
-    private void showMessageOKCancel(DialogInterface.OnClickListener okListener) {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(ProductInfoForSaleActivity.this);
-        final AlertDialog dialog = builder.setMessage("You need to grant access to Read External Storage")
-                .setPositiveButton("OK", okListener)
-                .setNegativeButton("Cancel", null)
-                .create();
-
-        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface arg0) {
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(
-                        ContextCompat.getColor(ProductInfoForSaleActivity.this, android.R.color.holo_blue_light));
-                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(
-                        ContextCompat.getColor(ProductInfoForSaleActivity.this, android.R.color.holo_red_light));
-            }
-        });
-
-        dialog.show();
-
-    }
 
 
     @Override
@@ -852,7 +665,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 if (params[0].toString() == "ItemName")
                     fetcher.loadList("ItemName", edtproductType, URLs.URL_NAME + "?CategoryId=" + ProductId + "&Language=" + myLocale, "ItemTypeId", hidItemTypeId, "CategoryId", ProductId);
                 else if (params[0].toString() == "Variety")
-                    fetcher.loadList("VarietyName", edtproductVariety, URLs.URL_VARIATY + hidItemTypeId.getText(), "VarietyId", hidVarietyId, "", "");
+                    fetcher.loadList("VarietyName", edtproductVariety, URLs.URL_VARIATY + hidItemTypeId.getText()+  "&Language="+ myLocale, "VarietyId", hidVarietyId, "", "");
                 else if (params[0].toString() == "Quality")
                     fetcher.loadList("QualityType", edtAQuality, URLs.URL_QUALITY + "?Language=" + myLocale, "QualityId", hidQualityId, "", "");
                 else if (params[0].toString() == "Unit")
@@ -860,9 +673,9 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 else if (params[0].toString() == "state")
                     fetcher.loadList("StatesName", edtstate, URLs.URL_STATE + "?Language=" + myLocale, "StatesID", hideStateId, "", "");
                 else if (params[0].toString() == "district")
-                    fetcher.loadList("DistrictName", edtdistrict, URLs.URL_DISTRICT + hideStateId.getText()+"," + "&Language=en", "DistrictId", hideDistrictId, "", "");
+                    fetcher.loadList("DistrictName", edtdistrict, URLs.URL_DISTRICT + hideStateId.getText()+ "&Language=" + myLocale, "DistrictId", hideDistrictId, "", "");
                 else if (params[0].toString() == "taluka")
-                    fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText()+"," + "&Language=en", "TalukasId", hideTalukaId, "", "");
+                    fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText()+"&Language=" + myLocale,  "TalukasId", hideTalukaId, "", "");
                 Thread.sleep(1000);
 
                 resp = "Slept for " + params[0] + " seconds";
@@ -912,7 +725,90 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         }
     }
 
-   /* @Override
+    private void SelecteImages(){
+
+        final CharSequence[] items={"Camera","Gallary","Cancel"};
+        AlertDialog.Builder builder=new AlertDialog.Builder(ProductInfoForSaleActivity.this);
+        builder.setTitle("Add Image");
+
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+                if(items[i].equals("Camera")){
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, REQUEST_CAMERA);
+                }
+
+                else if(items[i].equals("Gallary")){
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);//
+                    startActivityForResult(Intent.createChooser(intent, "Select File"),SELECT_FILE);
+                }
+
+                else if(items[i].equals("Cancel"))
+                {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, requestCode,data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == SELECT_FILE)
+                onSelectFromGalleryResult(data);
+            else if (requestCode == REQUEST_CAMERA)
+                onCaptureImageResult(data);
+        }
+
+    }
+
+    private void onSelectFromGalleryResult(Intent data) {
+        Bitmap bm=null;
+        if (data != null) {
+            try {
+                bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        img_banner_profile_placeholder.setImageBitmap(bm);
+    }
+
+    private void onCaptureImageResult(Intent data) {
+        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+
+        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+        ImageUrl= Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);
+        File destination = new File(Environment.getExternalStorageDirectory(),
+                System.currentTimeMillis() + ".jpg");
+
+        FileOutputStream fo;
+
+        try {
+            destination.createNewFile();
+            fo = new FileOutputStream(destination);
+            fo.write(bytes.toByteArray());
+            fo.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // img_banner_profile_placeholder.setImageBitmap(thumbnail);
+
+        Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
+        img_banner_profile_placeholder.setImageBitmap(imageBitmap);
+
+    }
+
+
+
+    @Override
     public void onRequestPermissionsResult(int RC, String per[], int[] PResult) {
 
         switch (RC) {
@@ -931,5 +827,5 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 break;
         }
     }
-*/
+
 }

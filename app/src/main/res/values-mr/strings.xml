@@ -33,7 +33,7 @@
     <string name="action_calls">कॉल</string>
     <string name="action_refresh">रीफ्रेश करा</string>
     <string name="action_contacts">संपर्क</string>
-    <string name="action_without_icon">Without Icon</string>
+    <string name="action_without_icon">चिन्हाशिवाय</string>
     <string name="action_with_icon">न चिन्ह </string>
     <string name="action_custom">सानुकूल टॅब</string>
 
@@ -72,7 +72,7 @@
     <string name="seller_upload_price">प्रतिमा अपलोड करा</string>
     <string name="seller_upload_videos">व्हिडिओ अपलोड करा</string>
     <string name="seller_submit">सबमिट करा</string>
-    <string name="totalprice">Total price of your product</string>
+    <string name="totalprice">आपल्या उत्पादनाची एकूण किंमत</string>
 
     <string name="productdetail">तुमचे उत्पादन तपशील समाविष्ट करा!</string>
     <string name="selfie">येथे आपले चित्र समाविष्ट करा!</string>
@@ -205,4 +205,26 @@
     <string name="txtNo">नाही</string>
 
     <string name="list_added_item">जोडलेल्या वस्तूंची यादी</string>
+    <string name="enter_your_village_Name">आपल्या गावाचे नाव प्रविष्ट करा *</string>
+    <string name="enter_your_area_in_hector">हेक्टर मध्ये आपले क्षेत्र प्रविष्ट करा *</string>
+    <string name="upload_multiple_files">एकाधिक फायली अपलोड करा</string>
+    <string name="choose_images">प्रतिमा निवडा</string>
+    <string name="view_list">सूची पहा</string>
+    <string name="add">जोडा</string>
+    <string name="take_photo">फोटो घ्या</string>
+    <string name="sell">विक्री करा</string>
+    <string name="click_here_to_sale_your">आपली विक्री करण्यासाठी येथे क्लिक करा</string>
+    <string name="search_here">येथे शोधा</string>
+    <string name="price_low_to_high">किंमत कमी ते उच्च</string>
+    <string name="price_high_to_low">किंमत उच्च ते कमी</string>
+    <string name="click_here_to_choose_variety">विविधता / फिल्टर बाय विविधता निवडण्यासाठी येथे क्लिक करा</string>
+    <string name="click_here_to_choose_quality">गुणवत्तेनुसार गुणवत्ता / फिल्टर निवडण्यासाठी येथे क्लिक करा</string>
+    <string name="click_here_to_choose_state">राज्य / राज्यानुसार फिल्टर निवडण्यासाठी येथे क्लिक करा</string>
+    <string name="click_here_to_choose_district">जिल्हा / जिल्हा निवडून जिल्हा निवडण्यासाठी येथे क्लिक करा</string>
+    <string name="click_here_to_choose_taluka">तालुका / तालुका फिल्टर निवडण्यासाठी येथे क्लिक करा</string>
+    <string name="back">मागे</string>
+
+
+
+
 </resources>

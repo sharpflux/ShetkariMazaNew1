@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:layout_gravity="center"
-            android:text="Upload Multiple Files"
+            android:text="@string/upload_multiple_files"
             android:textSize="15dp"
             android:textColor="@color/colorBlack"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
@@ -32,7 +32,7 @@
                 android:background="@drawable/back_btnapply"
                 android:gravity="center"
                 android:padding="@dimen/padding_small"
-                android:text="Choose Images"
+                android:text="@string/choose_images"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:layout_marginLeft="10dp"

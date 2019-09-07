@@ -205,6 +205,26 @@
     <string name="txtNo">No</string>
 
     <string name="list_added_item">ProductList</string>
+    <string name="enter_your_village_Name">Enter your village Name*</string>
+    <string name="enter_your_area_in_hector">Enter your area in hector*</string>
+    <string name="upload_multiple_files">Upload Multiple Files</string>
+    <string name="choose_images">Choose Images</string>
+    <string name="view_list">View List</string>
+    <string name="add">Add</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="sell">SELL</string>
+    <string name="click_here_to_sale_your">Click here to sale your </string>
+    <string name="search_here">Search Here</string>
+    <string name="price_low_to_high">Price low to high</string>
+    <string name="price_high_to_low">Price high to low</string>
+    <string name="click_here_to_choose_variety">click here to Choose variety/Filter By Variety</string>
+    <string name="click_here_to_choose_quality">click here to Choose quality/Filter By quality</string>
+    <string name="click_here_to_choose_state">click here to Choose State/Filter By State</string>
+    <string name="click_here_to_choose_district">click here to Choose District/Filter By District</string>
+    <string name="click_here_to_choose_taluka">click here to Choose Taluka/Filter By Taluka</string>
+    <string name="back">Back</string>
+
+
 
 
 </resources>

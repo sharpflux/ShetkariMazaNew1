@@ -31,6 +31,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class DistrictFragment extends Fragment {
@@ -40,7 +41,7 @@ public class DistrictFragment extends Fragment {
     LinearLayoutManager layoutManager;
     ArrayList<SubCategoryFilter> productlist;
     Button btn_next,btn_back;
-    String stateId;
+    String StateId= "";
     TextView hideDistrictId;
     StringBuilder district_builder_id;
     String districtIds;
@@ -48,6 +49,7 @@ public class DistrictFragment extends Fragment {
     String VarityId="",QualityId="",itemTypeId="";
     SearchView searchView;
     VarietyAdapter myAdapter;
+    Locale myLocale;
 
 
     @Override
@@ -55,6 +57,7 @@ public class DistrictFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_district, container, false);
+        myLocale = getResources().getConfiguration().locale;
 
         recyclerView = view.findViewById(R.id.rcv_vriety);
         btn_next = view.findViewById(R.id.btnnextDistrict);
@@ -73,7 +76,7 @@ public class DistrictFragment extends Fragment {
         extras = getArguments();
 
         if (extras != null) {
-            stateId=extras.getString("StateId");
+            StateId=extras.getString("StateId");
             VarityId = extras.getString("VarietyId");
             QualityId = extras.getString("QualityId");
             itemTypeId=extras.getString("ItemTypeId");
@@ -152,7 +155,7 @@ public class DistrictFragment extends Fragment {
     private void SetDynamicDATA() {
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_DISTRICT+stateId+"&Language=en",
+                URLs.URL_DISTRICT + StateId +"&Language="+ myLocale,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

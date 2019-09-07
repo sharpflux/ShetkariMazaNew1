@@ -36,6 +36,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class VarietyFragment extends Fragment {
@@ -51,6 +52,7 @@ public class VarietyFragment extends Fragment {
     DataAdapter dataAdapter;
     SearchView searchView;
     VarietyAdapter myAdapter;
+    Locale myLocale;
     public VarietyFragment() {
 
     }
@@ -62,6 +64,7 @@ public class VarietyFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_variety, container, false);
+        myLocale = getResources().getConfiguration().locale;
 
         recyclerView = view.findViewById(R.id.rcv_vriety);
         btn_next = view.findViewById(R.id.btnnextVariety);
@@ -124,7 +127,7 @@ public class VarietyFragment extends Fragment {
     private void SetDynamicDATA() {
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_VARIATY + itemTypeId,
+                URLs.URL_VARIATY + itemTypeId +"&Language="+ myLocale,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

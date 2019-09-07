@@ -14,7 +14,7 @@
         android:id="@+id/tvTitleOne"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="click here to Choose State/Filter By State"
+        android:text="@string/click_here_to_choose_state"
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textColor="#4CAF50"
@@ -26,7 +26,7 @@
         android:id="@+id/searchViewState"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:queryHint="Search Here"
+        android:queryHint="@string/search_here"
         android:iconifiedByDefault="false"
         android:layout_alignParentTop="true"
         />
@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="20dp"
-            android:text="Back"
+            android:text="@string/back"
 
             />
 
@@ -103,7 +103,7 @@
             android:textAllCaps="true"
             android:textStyle="bold"
             android:height="40dp"
-            android:text="Next"
+            android:text="@string/next"
             android:textColor="@android:color/white" />
 
 

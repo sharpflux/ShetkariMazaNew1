@@ -65,7 +65,7 @@
             android:gravity="center"
             android:layout_marginRight="10dp"
             android:padding="@dimen/padding_small"
-            android:text="View List"
+            android:text="@string/view_list"
             android:textAllCaps="true"
             android:textColor="@color/black"
             android:textSize="@dimen/primary_text_size" />
@@ -79,7 +79,7 @@
             android:background="@drawable/back_btnapply"
             android:gravity="center"
             android:padding="@dimen/padding_small"
-            android:text="Add"
+            android:text="@string/add"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:layout_marginLeft="10dp"

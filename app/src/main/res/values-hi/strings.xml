@@ -45,8 +45,8 @@
     <string name="seller">विक्रेता</string>
 
     //login signup
-    <string name="firstname">First Name</string>
-    <string name="middlename">Middle Name</string>
+    <string name="firstname">पहला नाम</string>
+    <string name="middlename">मध्य नाम</string>
     <string name="username">उपयोगकर्ता नाम</string>
     <string name="password">पासवर्ड</string>
     <string name="cpassword">पासवर्ड की पुष्टि कीजिये</string>
@@ -75,9 +75,9 @@
     <string name="seller_submit">जमा करें</string>
 
     <string name="productdetail">अपने उत्पाद विवरण शामिल करें!</string>
-    <string name="selfie">Include your picture here!</string>
+    <string name="selfie">अपनी तस्वीर यहाँ शामिल करें!</string>
 
-    <string name="totalprice">Total price of your product</string>
+    <string name="totalprice">आपके उत्पाद की कुल कीमत</string>
 
 
 
@@ -206,5 +206,26 @@
     <string name="txtNo">नहीं</string>
 
     <string name="list_added_item">जोड़े गए आइटमों की सूची</string>
+    <string name="enter_your_village_Name">अपना गाँव का नाम दर्ज करें *</string>
+    <string name="enter_your_area_in_hector">हेक्टर में अपना क्षेत्र दर्ज करें *</string>
+    <string name="upload_multiple_files">एकाधिक फ़ाइलें अपलोड करें</string>
+    <string name="choose_images">छवियाँ चुनें</string>
+    <string name="view_list">सूची देखें</string>
+    <string name="add">जोड़ना</string>
+    <string name="take_photo">फोटो लो</string>
+    <string name="sell">बेचना</string>
+    <string name="click_here_to_sale_your">अपनी बिक्री के लिए यहां क्लिक करें </string>
+    <string name="search_here">यहाँ ढूँढे</string>
+    <string name="price_low_to_high">कीमतों का उतार - चढ़ाव</string>
+    <string name="price_high_to_low">कीमत ऊंची से नीची</string>
+    <string name="click_here_to_choose_variety">विविधता चुनने के लिए यहां क्लिक करें / विविधता से फ़िल्टर करें</string>
+    <string name="click_here_to_choose_quality">गुणवत्ता चुनने के लिए यहां क्लिक करें / गुणवत्ता के अनुसार फ़िल्टर करें</string>
+    <string name="click_here_to_choose_state">स्टेट को चुनने के लिए यहां क्लिक करें</string>
+    <string name="click_here_to_choose_district">जिला चुनने के लिए यहां क्लिक करें</string>
+    <string name="click_here_to_choose_taluka">तालुका / फ़िल्टर बाय तालुका चुनने के लिए यहाँ क्लिक करें</string>
+    <string name="back">वापस</string>
+
+
+
 
 </resources>

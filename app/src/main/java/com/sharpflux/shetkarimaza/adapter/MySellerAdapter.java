@@ -39,7 +39,6 @@ public class MySellerAdapter extends RecyclerView.Adapter<SellerViewHolder > {
 
         Picasso.get().load(sellOptions.get(position).getImage()).into(holder.mImage);
         holder.mTitle.setText(sellOptions.get(position).getProductlist());
-
         holder.ProductId=sellOptions.get(position).getProductId();
 
     }
