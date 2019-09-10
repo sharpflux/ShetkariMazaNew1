@@ -66,9 +66,9 @@ class SimilarListViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     @Override
     public void onClick(View v) {
-        Context context=v.getContext();
+        /*Context context=v.getContext();
         Intent intent;
         intent =  new Intent(context, ProductDetailsForBuyerActivity.class);
-        context.startActivity(intent);
+        context.startActivity(intent);*/
     }
 }/////

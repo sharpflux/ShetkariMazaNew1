@@ -14,6 +14,8 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.model.SaveProductInfo;
+import com.sharpflux.shetkarimaza.sqlite.UserInfoDBManager;
 
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
@@ -29,16 +31,16 @@ public class MyCursorAdapter extends SimpleCursorAdapter {
     private Cursor c;
     private Context context;
     String xmlImg;
+    ImageView row_cartlist_ivDelete;
+    private UserInfoDBManager userInfoDBManager = null;
     public MyCursorAdapter(Context context, int layout, Cursor c, String[] from, int[] to) {
         super(context, layout, c, from, to);
         this.c = c;
         this.context = context;
     }
 
-
-
     @Override
-    public View getView(int pos, View inView, ViewGroup parent) {
+    public View getView(final int pos, View inView, ViewGroup parent) {
 
         View v = inView;
         if (v == null) {
@@ -54,10 +56,19 @@ public class MyCursorAdapter extends SimpleCursorAdapter {
         xmlImg = this.c.getString(this.c.getColumnIndex("imagename"));
         Document doc = convertStringToXMLDocument( xmlImg );
         ImageView iv = (ImageView) v.findViewById(R.id.row_cartlist_ivProImg);
+        ImageView row_cartlist_ivDelete = (ImageView) v.findViewById(R.id.row_cartlist_ivDelete);
+        row_cartlist_ivDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         Bitmap bitmap;
-        if(doc!=null) {
+        if(xmlImg!=null) {
             try {
-                byte[] imgbytes = Base64.decode(doc.getFirstChild().getTextContent(), Base64.DEFAULT);
+                //byte[] imgbytes = Base64.decode(doc.getFirstChild().getTextContent(), Base64.DEFAULT);
+                byte[] imgbytes = Base64.decode(xmlImg, Base64.DEFAULT);
                 bitmap = BitmapFactory.decodeByteArray(imgbytes, 0, imgbytes.length);
                 iv.setImageBitmap(bitmap);
             }

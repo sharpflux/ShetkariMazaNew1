@@ -74,17 +74,17 @@ public class AddListActivity extends AppCompatActivity {
     private TextView userAccountListEmptyTextView = null;
 
     private SimpleCursorAdapter listViewDataAdapter = null;
-    ProgressDialog mProgressDialog ;
+    ProgressDialog mProgressDialog;
     Document doc;
     String xmlImg;
-    Bitmap bitmap ;
+    Bitmap bitmap;
     ImageView ImgageAddList;
-    private  String fromColumnArr[] = {UserInfoDBManager.productType, UserInfoDBManager.productVariety, UserInfoDBManager.quality, UserInfoDBManager.expectedPrice};
-
-    private final int toViewIdArr[] = {R.id.user_account_list_item_id, R.id.user_account_list_item_user_name, R.id.user_account_list_item_password, R.id.user_account_list_item_email };
+    private String fromColumnArr[] = {UserInfoDBManager.productType, UserInfoDBManager.productVariety, UserInfoDBManager.quality, UserInfoDBManager.expectedPrice};
+    CheckBox itemCheckbox;
+    private final int toViewIdArr[] = {R.id.user_account_list_item_id, R.id.user_account_list_item_user_name, R.id.user_account_list_item_password, R.id.user_account_list_item_email};
 
     // Store user checked account DTO.
-    private List<SaveProductInfo> userCheckedItemList = new ArrayList<SaveProductInfo>();
+    private List<SaveProductInfo> userCheckedItemList ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,10 +108,7 @@ public class AddListActivity extends AppCompatActivity {
         // Progress dialog message
         mProgressDialog.setMessage("Please wait, we are saving your data...");
 
-
-
-
-
+        userCheckedItemList = new ArrayList<SaveProductInfo>();
 
         Bundle bundle = getIntent().getExtras();
 
@@ -138,8 +135,9 @@ public class AddListActivity extends AppCompatActivity {
         userInfoDBManager.open();
         Cursor cursor = userInfoDBManager.getAllAccountCursor();
 
-        listViewDataAdapter = new MyCursorAdapter(this, R.layout.activity_user_account_list_view_item, cursor, fromColumnArr, toViewIdArr);
-
+        listViewDataAdapter =
+                new MyCursorAdapter(this, R.layout.activity_user_account_list_view_item,
+                        cursor, fromColumnArr, toViewIdArr);
 
 
         // Set simple cursor adapter to list view.
@@ -157,7 +155,7 @@ public class AddListActivity extends AppCompatActivity {
                 sqcursor = (SQLiteCursor) clickItemObject;
 
                 // Get row column data.
-             //   int rowId = sqcursor.getInt(sqcursor.getColumnIndex(UserInfoDBManager.TABLE_ACCOUNT_COLUMN_ID));
+                //   int rowId = sqcursor.getInt(sqcursor.getColumnIndex(UserInfoDBManager.TABLE_ACCOUNT_COLUMN_ID));
                 String producttype = sqcursor.getString(sqcursor.getColumnIndex(UserInfoDBManager.productType));
                 String productvarity = sqcursor.getString(sqcursor.getColumnIndex(UserInfoDBManager.productVariety));
                 String quality = sqcursor.getString(sqcursor.getColumnIndex(UserInfoDBManager.quality));
@@ -174,7 +172,7 @@ public class AddListActivity extends AppCompatActivity {
                 userAccountDto.setImagename(image);
 
                 // Get checkbox object.
-                CheckBox itemCheckbox = (CheckBox) view.findViewById(R.id.user_account_list_item_checkbox);
+                itemCheckbox = (CheckBox) view.findViewById(R.id.user_account_list_item_checkbox);
                 boolean checkboxChecked = false;
                 if (itemCheckbox.isChecked()) {
                     itemCheckbox.setChecked(false);
@@ -188,7 +186,7 @@ public class AddListActivity extends AppCompatActivity {
                 addCheckListItem(userAccountDto, checkboxChecked);
 
                 // Show user select list view item id.
-                Toast.makeText(getApplicationContext(), "Select id : " + getUserCheckedItemIds(), Toast.LENGTH_SHORT).show();
+              Toast.makeText(getApplicationContext(), "Select id : " + getUserCheckedItemIds(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -196,8 +194,10 @@ public class AddListActivity extends AppCompatActivity {
         btnsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 AsyncTaskRunner runner = new AsyncTaskRunner();
                 runner.execute("Submit");
+
             }
         });
     }
@@ -216,29 +216,29 @@ public class AddListActivity extends AppCompatActivity {
 
         return retBuf.toString().trim();
     }
-    private static Document convertStringToXMLDocument(String xmlString)
-    {
+
+    private static Document convertStringToXMLDocument(String xmlString) {
         //Parser that produces DOM object trees from XML content
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
         //API to obtain DOM Document instance
         DocumentBuilder builder = null;
-        try
-        {
+        try {
             //Create DocumentBuilder with default configuration
             builder = factory.newDocumentBuilder();
 
             //Parse the content to Document object
             Document doc = builder.parse(new InputSource(new StringReader(xmlString)));
             return doc;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
+
     private void addCheckListItem(SaveProductInfo userAccountDto, boolean add) {
+
+
         if (userCheckedItemList != null) {
             boolean accountExist = false;
             int existPosition = -1;
@@ -287,8 +287,10 @@ public class AddListActivity extends AppCompatActivity {
             startActivity(in);
 
 
-        }  else if (itemId == R.id.menu_delete) {
+        } else if (itemId == R.id.menu_delete) {
+
             if (userCheckedItemList != null) {
+
                 int size = userCheckedItemList.size();
 
                 if (size == 0) {
@@ -309,20 +311,21 @@ public class AddListActivity extends AppCompatActivity {
                     ///Toast.makeText(this, "Please select at least one row to delete.", Toast.LENGTH_SHORT).show();
                 } else {
                     for (int i = 0; i < size; i++) {
+
                         SaveProductInfo tmpDto = userCheckedItemList.get(i);
+
                         userInfoDBManager.deleteAccount(tmpDto.getId());
 
                         userCheckedItemList.remove(i);
 
                         size = userCheckedItemList.size();
+
                         i--;
                     }
-
 
                     listViewDataAdapter = new SimpleCursorAdapter(this, R.layout.activity_user_account_list_view_item, cursor, fromColumnArr, toViewIdArr, CursorAdapter.FLAG_AUTO_REQUERY);
 
                     userAccountListView.setAdapter(listViewDataAdapter);
-
 
                 }
             }
@@ -342,7 +345,6 @@ public class AddListActivity extends AppCompatActivity {
 
     private void submitToDb() {
         cursor = userInfoDBManager.getAllAccountCursor();
-
 
 
         array = new JSONArray();
@@ -439,7 +441,7 @@ public class AddListActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             // execution of result of Long time consuming operation
-           // mProgressDialog.dismiss();
+            // mProgressDialog.dismiss();
 
             // finalResult.setText(result);
         }
