@@ -32,6 +32,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
     Button submitBtnTv;
     AlertDialog.Builder builder;
     Bundle bundle;
+    Integer UserId;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -59,7 +60,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
     private void userReset() {
         Intent intent = getIntent();
-        String UserId = intent.getStringExtra("UserId");
+        final String UserId = intent.getStringExtra("UserId");
         final String newpass = passwordEt.getText().toString();
         final String confirmpass = confirmPassEt.getText().toString();
 
@@ -100,8 +101,8 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
                                             .setNegativeButton("OK", new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dialog, int id) {
-                                                    //  Action for 'NO' Button
                                                     Intent i = new Intent(ResetPasswordActivity.this, LoginFragment.class);
+                                                    i.putExtra("UserId", UserId.toString());
                                                     startActivity(i);
                                                 }
                                             });
@@ -141,7 +142,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                //  params.put("UserId", UserId);
                  params.put("Passwords", newpass);
-
+                params.put("UserId", UserId);
 
                 return params;
             }

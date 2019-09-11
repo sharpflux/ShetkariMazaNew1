@@ -36,40 +36,33 @@ public class OtpActivity extends AppCompatActivity {
 
         }
 
-        if (bundle != null) {
-            enterOTPCodeEt.setText(bundle.getString("otp"));
-
-
-            verifyButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    enteredOtp = enterOTPCodeEt.getText().toString();
-                    if (otp.equals(enteredOtp)) {
-                        Intent in = new Intent(OtpActivity.this, ResetPasswordActivity.class);
-                        in.putExtra("UserId", UserId.toString());
-                        startActivity(in);
-                    }
-                    else
-                    {
-                        builder.setMessage("Enter valid otp")
-                                .setCancelable(false)
-
-                                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        //  Action for 'NO' Button
-                                        dialog.cancel();
-
-                                    }
-                                });
-
-                        AlertDialog alert = builder.create();
-                        alert.setTitle("Enter valid otp");
-                        alert.show();
-                    }
+        verifyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                enteredOtp = enterOTPCodeEt.getText().toString();
+                if (otp.equals(enteredOtp)) {
+                    Intent in = new Intent(OtpActivity.this, ResetPasswordActivity.class);
+                    in.putExtra("UserId", UserId.toString());
+                    startActivity(in);
                 }
-            });
-        }
+                else
+                {
+                    builder.setMessage("Enter valid otp")
+                            .setCancelable(false)
+
+                            .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    //  Action for 'NO' Button
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alert = builder.create();
+                    alert.setTitle("Enter valid otp");
+                    alert.show();
+                }
+            }
+        });
     }
 }
 

@@ -24,6 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity;
 import com.sharpflux.shetkarimaza.activities.HomeActivity;
 import com.sharpflux.shetkarimaza.adapter.DataAdapter;
 import com.sharpflux.shetkarimaza.volley.URLs;
@@ -44,8 +45,8 @@ public class VarietyFragment extends Fragment {
     private RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     ArrayList<SubCategoryFilter> productlist;
-    Button btn_next, btn_back;
-    String itemTypeId = "", VarityId;
+    Button btn_next, btn_back,btnFilterData;
+    String itemTypeId = "";
     Bundle extras;
     StringBuilder varity_builder_id;
     TextView errortv;
@@ -69,6 +70,7 @@ public class VarietyFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rcv_vriety);
         btn_next = view.findViewById(R.id.btnnextVariety);
         btn_back = view.findViewById(R.id.btnbackVariety);
+        btnFilterData = view.findViewById(R.id.btnFilterData);
         //errortv = view.findViewById(R.id.errortv);
 
         productlist = new ArrayList<>();
@@ -113,6 +115,15 @@ public class VarietyFragment extends Fragment {
                 mfragment.setArguments(extras);
                 transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
                 transection.commit();
+
+            }
+        });
+        btnFilterData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getContext(), AllSimilarDataActivity.class);
+                startActivity(intent);
 
             }
         });

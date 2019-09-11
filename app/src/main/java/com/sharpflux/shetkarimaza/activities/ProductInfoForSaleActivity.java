@@ -277,7 +277,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 double priceperunit =Double.parseDouble(expectedPrice);
 
                 double total =quant*priceperunit;
-                edtTotalamt.setText(total+"");
+                edtTotalamt.setText(total+"₹");
             }
         });
         edtavailablityInMonths.setOnClickListener(new View.OnClickListener() {
@@ -673,9 +673,9 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 else if (params[0].toString() == "state")
                     fetcher.loadList("StatesName", edtstate, URLs.URL_STATE + "?Language=" + myLocale, "StatesID", hideStateId, "", "");
                 else if (params[0].toString() == "district")
-                    fetcher.loadList("DistrictName", edtdistrict, URLs.URL_DISTRICT + hideStateId.getText()+ "&Language=" + myLocale, "DistrictId", hideDistrictId, "", "");
+                    fetcher.loadList("DistrictName", edtdistrict, URLs.URL_DISTRICT + hideStateId.getText()+ ",&Language=" + myLocale, "DistrictId", hideDistrictId, "", "");
                 else if (params[0].toString() == "taluka")
-                    fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText()+"&Language=" + myLocale,  "TalukasId", hideTalukaId, "", "");
+                    fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText()+",&Language=" + myLocale,  "TalukasId", hideTalukaId, "", "");
                 Thread.sleep(1000);
 
                 resp = "Slept for " + params[0] + " seconds";

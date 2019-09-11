@@ -1,6 +1,7 @@
 package com.sharpflux.shetkarimaza.filters;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
@@ -37,11 +39,11 @@ public class StateFragment extends Fragment {
     private RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     ArrayList<SubCategoryFilter> productlist;
-    Button btn_next,btn_back;
+    Button btn_next,btn_back,btnFilterData;
     Locale myLocale;
-    String VarityId="",QualityId="", DistrictId="",itemTypeId="";
+    String VarityId="",QualityId="", DistrictId="",itemTypeId="",StatesID="";
     StringBuilder state_builder_id;
-    String StateIds;
+    String StateIds="";
     Bundle extras;
     SearchView searchView;
     VarietyAdapter myAdapter;
@@ -61,8 +63,9 @@ public class StateFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        btn_next = view.findViewById(R.id.btnnextState);
-        btn_back = view.findViewById(R.id.btnbackState);
+        btn_next = view.findViewById(R.id.btnnextVariety);
+        btn_back = view.findViewById(R.id.btnbackVariety);
+        btnFilterData = view.findViewById(R.id.btnbackVariety);
 
         searchView = view.findViewById(R.id.searchViewState);
 
@@ -72,12 +75,12 @@ public class StateFragment extends Fragment {
         if (extras != null) {
 
             VarityId = extras.getString("VarietyId");
-            DistrictId = extras.getString("DistrictId");
             QualityId = extras.getString("QualityId");
             itemTypeId=extras.getString("ItemTypeId");
+
         }
 
-        StateIds="";
+
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,18 +104,14 @@ public class StateFragment extends Fragment {
                     SubCategoryFilter filter = productlist.get(i);
                     if (filter.getSelected()) {
                         state_builder_id.append(filter.getId() + ",");
-                        StateIds=StateIds+filter.getId() + ",";
-
                     }
                 }
                 extras = new Bundle();
-
                 if (extras != null) {
                     extras.putString("VarietyId",VarityId);
                     extras.putString("QualityId",QualityId);
-                    extras.putString("StateId",state_builder_id.toString());
+                    extras.putString("StatesID",state_builder_id.toString());
                     extras.putString("ItemTypeId",itemTypeId);
-
                 }
 
                 FragmentTransaction transection=getFragmentManager().beginTransaction();
@@ -125,6 +124,25 @@ public class StateFragment extends Fragment {
 
             }
         });
+
+        btnFilterData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        btnFilterData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getContext(), AllSimilarDataActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+
 
         AsyncTaskRunner runner = new AsyncTaskRunner();
         String sleepTime = "500";
@@ -156,6 +174,8 @@ public class StateFragment extends Fragment {
                                                             userJson.getString("StatesName"));
 
                                     productlist.add(sellOptions);
+
+                                    StatesID = userJson.getString("StatesID");
                                 } else {
                                     Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                                 }

@@ -2,6 +2,7 @@ package com.sharpflux.shetkarimaza.filters;
 
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
@@ -40,7 +42,7 @@ public class QualityFragment extends Fragment {
     private RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     ArrayList<SubCategoryFilter> productlist;
-    Button btn_next,btn_back;
+    Button btn_next,btn_back,btnFilterData;
     String VarityId="",itemTypeId="";
     Bundle extras;
     Locale myLocale;
@@ -62,8 +64,9 @@ public class QualityFragment extends Fragment {
         myLocale = getResources().getConfiguration().locale;
 
         recyclerView = view.findViewById(R.id.rcv_quality);
-        btn_next = view.findViewById(R.id.btnnextQuality);
-        btn_back = view.findViewById(R.id.btnbackQuality);
+        btn_next = view.findViewById(R.id.btnnextVariety);
+        btn_back = view.findViewById(R.id.btnbackVariety);
+        btnFilterData = view.findViewById(R.id.btnFilterData);
 
         productlist = new ArrayList<>();
         layoutManager = new LinearLayoutManager(getContext());
@@ -130,6 +133,18 @@ public class QualityFragment extends Fragment {
                 mfragment.setArguments(extras);
                 transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
                 transection.commit();
+
+            }
+        });
+
+
+
+        btnFilterData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getContext(), AllSimilarDataActivity.class);
+                startActivity(intent);
 
             }
         });

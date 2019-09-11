@@ -3,6 +3,7 @@ package com.sharpflux.shetkarimaza.activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -16,6 +17,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.filters.VarietyFragment;
+import com.sharpflux.shetkarimaza.fragment.LoginFragment;
 import com.sharpflux.shetkarimaza.utils.CommonUtils;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
@@ -58,39 +61,46 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             return;
         }
         //if everything is fine
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_OTP,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_RESETPASS,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+
                         try {
+
                             //converting response to json object
-                            JSONObject obj = new JSONObject(response);
+                            final JSONObject obj = new JSONObject(response);
+
                             //if no error in response
                             if (!obj.getBoolean("error")) {
-                                Intent in = new Intent(ForgotPasswordActivity.this,
-                                        OtpActivity.class);
 
-                                in.putExtra("otp",obj.getString("OTP"));
-                                in.putExtra("UserId",obj.getInt("UserId"));
-                                startActivity(in);
+                                if (obj.getString("message").equals("Success")) {
+                                    builder.setMessage("Password Sucessfully updated")
+                                            .setCancelable(false)
+
+                                            .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    //  Action for 'NO' Button
+                                                 Intent i = new Intent(ForgotPasswordActivity.this,LoginFragment.class);
+                                                    try {
+                                                        i.putExtra("otp",obj.getString("OTPMobileNo"));
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                    try {
+                                                        i.putExtra("UserId",obj.getInt("UserId"));
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                    startActivity(i);
+                                                }
+                                            });
+
+                                    AlertDialog alert = builder.create();
+                                    alert.setTitle("Success");
+                                    alert.show();
+                                }
                             }
-                            else{
-                                builder.setMessage(obj.getString("message"))
-                                        .setCancelable(false)
-
-                                        .setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-                                                //  Action for 'NO' Button
-                                                dialog.cancel();
-
-                                            }
-                                        });
-
-                                AlertDialog alert = builder.create();
-                                alert.setTitle("Error");
-                                alert.show();
-                            }
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -99,7 +109,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        builder.setMessage(error.getMessage())
+                        /*builder.setMessage(error.getMessage())
                                 .setCancelable(false)
 
                                 .setNegativeButton("OK", new DialogInterface.OnClickListener() {
@@ -112,14 +122,14 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
                         AlertDialog alert = builder.create();
                         alert.setTitle("Error");
-                        alert.show();
+                        alert.show();*/
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("OTPMobileNo", mobNo);
-                params.put("OTPType", "OTP");
+                params.put("otp", "OTPMobileNo");
                 return params;
             }
         };

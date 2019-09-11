@@ -14,8 +14,8 @@ public class URLs {
     public static final String URL_SAVEPRODUCTDETAILS = "http://apimaza.supergo.in/api/RequestAPI/request";
     public static  final String URL_REQESTS="http://apimaza.supergo.in/api/request/RequestsGET";
     public static final String URL_STATE=" http://apimaza.supergo.in/api/States/GETSTATE";
-    public static  final String URL_DISTRICT="http://apimaza.supergo.in/api/District/Get_DistrictAPI?StatesID=";
-    public static final String URL_OTP="http://admin.supergo.in/Utilities/OTPGenerate";
-    public static final String URL_TALUKA="http://apimaza.supergo.in/api/Talukas/Get_TalukaAPI?DistrictId=";
-    public static final String URL_RESETPASS="";
+    public static  final String URL_DISTRICT="http://apimaza.supergo.in/Api/DistrictMultiple/Get_DistrictMultiple?StatesID=";
+    public static final String URL_OTP="http://apimaza.supergo.in/User_Authentication/OTPGenerate";
+    public static final String URL_TALUKA="http://apimaza.supergo.in/Api/GetMultipleTalukasApi/GetMultipleTalukas?DistrictsID=";
+    public static final String URL_RESETPASS="http://apimaza.supergo.in/api/UserUpdatePasswordAPI/UpdatePasswordApi";
 }

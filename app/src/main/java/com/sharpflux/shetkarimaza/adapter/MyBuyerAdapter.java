@@ -3,6 +3,7 @@ package com.sharpflux.shetkarimaza.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,9 +46,19 @@ public class MyBuyerAdapter extends RecyclerView.Adapter<FlowerViewHolder> imple
 
     @Override
     public void onBindViewHolder(final FlowerViewHolder holder, final int position) {
-        Picasso.get().load(mList.get(position).getImage()).resize(300, 300).into(holder.mImage);
-        holder.mTitle.setText(mList.get(position).getProductlist());
-        holder.ItemTypeId=mList.get(position).getProductId();
+        //Log.d("Image Path", mList.get(position).getImage());
+        try {
+            if (mList.get(position).getImage() != null) {
+                Picasso.get().load(mList.get(position).getImage()).resize(300, 300).into(holder.mImage);
+                holder.mTitle.setText(mList.get(position).getProductlist());
+                holder.ItemTypeId = mList.get(position).getProductId();
+            }
+        }
+        catch(Exception d){
+
+        }
+
+
     }
 
     @Override

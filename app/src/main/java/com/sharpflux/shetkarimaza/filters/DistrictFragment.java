@@ -1,6 +1,7 @@
 package com.sharpflux.shetkarimaza.filters;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
@@ -40,13 +42,13 @@ public class DistrictFragment extends Fragment {
     private RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     ArrayList<SubCategoryFilter> productlist;
-    Button btn_next,btn_back;
-    String StateId= "";
+    Button btn_next,btn_back,btnFilterData;
+    String stateId= "";
     TextView hideDistrictId;
     StringBuilder district_builder_id;
     String districtIds;
     Bundle extras;
-    String VarityId="",QualityId="",itemTypeId="";
+    String VarityId="",QualityId="",itemTypeId="",StatesID="";
     SearchView searchView;
     VarietyAdapter myAdapter;
     Locale myLocale;
@@ -60,8 +62,9 @@ public class DistrictFragment extends Fragment {
         myLocale = getResources().getConfiguration().locale;
 
         recyclerView = view.findViewById(R.id.rcv_vriety);
-        btn_next = view.findViewById(R.id.btnnextDistrict);
-        btn_back = view.findViewById(R.id.btnbackDistrict);
+        btn_next = view.findViewById(R.id.btnnextVariety);
+        btn_back = view.findViewById(R.id.btnbackVariety);
+        btnFilterData= view.findViewById(R.id.btnbackVariety);
 
 
         district_builder_id = new StringBuilder();
@@ -76,7 +79,7 @@ public class DistrictFragment extends Fragment {
         extras = getArguments();
 
         if (extras != null) {
-            StateId=extras.getString("StateId");
+            StatesID=extras.getString("StatesID");
             VarityId = extras.getString("VarietyId");
             QualityId = extras.getString("QualityId");
             itemTypeId=extras.getString("ItemTypeId");
@@ -116,7 +119,7 @@ public class DistrictFragment extends Fragment {
                     SubCategoryFilter filter = productlist.get(i);
                     if (filter.getSelected()) {
                         district_builder_id.append(filter.getId() + ",");
-                        districtIds=districtIds+filter.getId() + ",";
+                        districtIds = districtIds + filter.getId() + ",";
 
                     }
                 }
@@ -125,10 +128,11 @@ public class DistrictFragment extends Fragment {
                 extras = new Bundle();
 
                 if (extras != null) {
-                    extras.putString("VarietyId",VarityId);
-                    extras.putString("QualityId",QualityId);
-                    extras.putString("DistrictId",district_builder_id.toString());
-                    extras.putString("ItemTypeId",itemTypeId);
+                    extras.putString("VarietyId", VarityId);
+                    extras.putString("QualityId", QualityId);
+                    extras.putString("DistrictId", district_builder_id.toString());
+                    extras.putString("ItemTypeId", itemTypeId);
+                    extras.putString("StatesID", StatesID);
 
 
                 }
@@ -136,13 +140,26 @@ public class DistrictFragment extends Fragment {
                 TalukaFragment mfragment = new TalukaFragment();
 
 
-
                 mfragment.setArguments(extras);
 
                 transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
                 transection.commit();
-      }
+            }
         });
+
+        btnFilterData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getContext(), AllSimilarDataActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+
+
+
 
         AsyncTaskRunner runner = new AsyncTaskRunner();
         String sleepTime = "500";
@@ -154,8 +171,9 @@ public class DistrictFragment extends Fragment {
 
     private void SetDynamicDATA() {
 
+        String states=StatesID;
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_DISTRICT + StateId +"&Language="+ myLocale,
+                URLs.URL_DISTRICT + StatesID +"&Language="+ myLocale,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
