@@ -53,20 +53,22 @@
     </LinearLayout>
 
 
-    <CheckBox
+<!--    <CheckBox
         android:id="@+id/userCheckedItemList"
         android:layout_width="51dp"
         android:layout_height="45dp"
         android:layout_gravity="end"
         android:padding="@dimen/_5sdp"
-        android:src="@drawable/ic_dustbin" />
+        android:src="@drawable/ic_dustbin" />-->
 
 
-    <!--<ImageView-->
-    <!--android:id="@+id/row_cartlist_ivDelete"-->
-    <!--android:layout_width="51dp"-->
-    <!--android:layout_height="45dp"-->
-    <!--android:layout_gravity="end"-->
-    <!--android:padding="@dimen/_5sdp"-->
-    <!--android:src="@drawable/ic_dustbin" />-->
+    <ImageView
+        android:id="@+id/row_cartlist_ivDelete"
+        android:layout_width="54dp"
+        android:layout_height="58dp"
+        android:layout_gravity="end"
+        android:padding="@dimen/_5sdp"
+        android:src="@drawable/ic_delete_forever"
+
+        />
 </android.support.v7.widget.CardView>

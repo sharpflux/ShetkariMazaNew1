@@ -484,7 +484,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                         userInfoDBManager.insertAccount(productType,hidItemTypeId.getText().toString(), productVariety,hidVarietyId.getText().toString(),
                                 quality,hidQualityId.getText().toString(),quantity, unit, hidMeasurementId.getText().toString(), expectedPrice,
                                 days, availablityInMonths, address, state, hideStateId.getText().toString(),
-                                district, hideDistrictId.getText().toString(), taluka, hideTalukaId.getText().toString(), villagenam, areaheactor, builder.toString());
+                                district, hideDistrictId.getText().toString(), taluka, hideTalukaId.getText().toString(), villagenam, areaheactor, ImageUrl);
 
 
                     } else {
@@ -770,7 +770,10 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         Bitmap bm=null;
         if (data != null) {
             try {
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
                 bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
+                ImageUrl= Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);
+                bm.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
             } catch (IOException e) {
                 e.printStackTrace();
             }
