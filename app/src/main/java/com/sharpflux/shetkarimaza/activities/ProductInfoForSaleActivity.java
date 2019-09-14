@@ -28,6 +28,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -43,6 +44,7 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
@@ -61,6 +63,7 @@ import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -79,6 +82,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -86,7 +90,6 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -98,26 +101,28 @@ import static com.sharpflux.shetkarimaza.sqlite.UserInfoDBManager.productType;
 public class ProductInfoForSaleActivity extends AppCompatActivity {
 
 
-    private Button btnAdd,btnAddMore;
-    ImageView img_banner_profile_placeholder ;
-    private TextInputEditText edtTotalamt,edtproductType, edtdistrict, edtstate, edtproductVariety, edtDays, edtavailablityInMonths, edtAQuality, edtAQuantity, edtUnit, edtExpectedPrice, edttaluka, edtaddres, edtvillage, edtareahector;
-    ImageView imageviewcam1,imageviewcam2,imageviewcam3,imageviewcam4;
+    ImageView img_banner_profile_placeholder;
+
+    private TextInputEditText edtTotalamt, edtproductType, edtdistrict, edtstate, edtproductVariety,
+            edtDays, edtavailablityInMonths, edtAQuality, edtAQuantity, edtUnit, edtExpectedPrice,
+            edttaluka, edtaddres, edtvillage, edtareahector;
+    ImageView imageviewcam1, imageviewcam2, imageviewcam3, imageviewcam4;
     ArrayList<Product> list;
     Product sellOptions;
-    Button btn_take_selfie ;
+    Button btn_take_selfie, btnFormSubmit, btnAdd, btnAddMore;
     TextView hideImageTvSelfie;
     private CustomRecyclerViewDialog customDialog;
     public static String DATEFORMATTED = "";
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private Date date1;
     DataFetcher fetcher;
-    TextView hidItemTypeId, hidVarietyId, hidQualityId, hidMeasurementId, hideStateId, hideDistrictId, hideTalukaId;
+    TextView hidItemTypeId, hidVarietyId, hidQualityId, hidMeasurementId, hideStateId, hideDistrictId, hideTalukaId,hideRequstId;
     Locale myLocale;
-    String ProductId, productTypeId,productVarietyId,qualityId,unitId,monthId,stateId,districtId,talukaId;
+    String ProductId, productTypeId, productVarietyId, qualityId, unitId, monthId, stateId, districtId, talukaId;
     String StateId;
     private String UserId;
     private Integer userid;
-
+    ProgressDialog mProgressDialog;
     public String ImageUrl;
     private static final String TAG = ProductInfoForSaleActivity.class.getSimpleName();
     private static final int REQUEST_CODE = 6384;
@@ -125,15 +130,15 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
     private View parentView;
     private GridView listView;
-   // private ProgressBar mProgressBar;
+    // private ProgressBar mProgressBar;
     private Button btnChoose;
-     int  c=0;
+    int c = 0;
 
     private ArrayList<Uri> arrayList;
-    private  ArrayList<String> ImagesList;
+    private ArrayList<String> ImagesList;
     StringBuilder builder;
 
-    Integer REQUEST_CAMERA=1, SELECT_FILE=0;
+    Integer REQUEST_CAMERA = 1, SELECT_FILE = 0;
 
     private UserInfoDBManager userInfoDBManager = null;
 
@@ -169,18 +174,19 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     int year;
     int month;
     int day;
+    Bundle extras;
 
     public String ClickedImage;
-    public String ImageUrl1,ImageUrl2,ImageUrl3,ImageUrl4;
+    public String ImageUrl1, ImageUrl2, ImageUrl3, ImageUrl4;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_info_for_sale);
-        builder= new StringBuilder();
+        builder = new StringBuilder();
         builder.append("<?xml version=\"1.0\" ?>");
-        ClickedImage="";
+        ClickedImage = "";
 
 
         User user = SharedPrefManager.getInstance(this).getUser();
@@ -196,6 +202,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         hideDistrictId = findViewById(R.id.hideDistrictId);
         hideTalukaId = findViewById(R.id.hideTalukaId);
         hideImageTvSelfie = findViewById(R.id.hideImageTvSelfie);
+        hideRequstId = findViewById(R.id.hideRequstId);
 
         //edt
         edtproductType = findViewById(R.id.name_edit);
@@ -215,14 +222,20 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         edttaluka = findViewById(R.id.edtTal);
         edtvillage = findViewById(R.id.edtvillage);
         edtareahector = findViewById(R.id.edthector);
-        btn_take_selfie =findViewById(R.id.btn_take_selfie);
-        img_banner_profile_placeholder = (ImageView)findViewById(R.id.imageView);
-
-
+        btn_take_selfie = findViewById(R.id.btn_take_selfie);
+        img_banner_profile_placeholder = (ImageView) findViewById(R.id.imageView);
+        btnFormSubmit = findViewById(R.id.btnFormSubmit);
+        mProgressDialog = new ProgressDialog(ProductInfoForSaleActivity.this);
+        mProgressDialog.setIndeterminate(false);
+        // Progress dialog horizontal style
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        // Progress dialog title
+        mProgressDialog.setTitle("Saving data");
+        // Progress dialog message
+        mProgressDialog.setMessage("Please wait, we are saving your data...");
 
         btnAdd = findViewById(R.id.btnAdd);
-        btnAddMore= findViewById(R.id.btnAddMore);
-
+        btnAddMore = findViewById(R.id.btnAddMore);
 
 
         parentView = findViewById(R.id.parent_layout);
@@ -248,36 +261,32 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
         }
 
-        if(ProductId.equals("15"))
+     /*  if(ProductId.equals("15"))
         {
             edtDays.setVisibility(View.VISIBLE);
-        }
+        }*/
 
         list = new ArrayList<Product>();
 
         myLocale = getResources().getConfiguration().locale;
 
 
-
-
-
         fetcher = new DataFetcher(sellOptions, customDialog, list, ProductInfoForSaleActivity.this);
-
 
 
         edtTotalamt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String quantity = edtAQuantity.getText().toString();
-                double quant=Double.parseDouble(quantity);
+                double quant = Double.parseDouble(quantity);
 
                 String unit = edtUnit.getText().toString();
 
                 String expectedPrice = edtExpectedPrice.getText().toString();
-                double priceperunit =Double.parseDouble(expectedPrice);
+                double priceperunit = Double.parseDouble(expectedPrice);
 
-                double total =quant*priceperunit;
-                edtTotalamt.setText(total+"₹");
+                double total = quant * priceperunit;
+                edtTotalamt.setText(total + "₹");
             }
         });
         edtavailablityInMonths.setOnClickListener(new View.OnClickListener() {
@@ -376,7 +385,67 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         userInfoDBManager = new UserInfoDBManager(getApplicationContext());
         userInfoDBManager.open();
 
+        extras = getIntent().getExtras();
+        if (extras != null) {
+            String ItemName = extras.getString("ItemName");
+            edtproductType.setText(ItemName);
+            String VarietyName = extras.getString("VarietyName");
+            edtproductVariety.setText(VarietyName);
+            String QualityType = extras.getString("QualityType");
+            edtAQuality.setText(QualityType);
+            String AvailableQuantity = extras.getString("AvailableQuantity");
+            edtAQuantity.setText(AvailableQuantity);
+            String MeasurementType = extras.getString("MeasurementType");
+            edtUnit.setText(MeasurementType);
+            String ExpectedPrice = extras.getString("ExpectedPrice");
+            edtExpectedPrice.setText(ExpectedPrice);
+            String AvailableMonths = extras.getString("AvailableMonths");
+            edtavailablityInMonths.setText(AvailableMonths);
+            String FarmAddress = extras.getString("FarmAddress");
+            edtaddres.setText(FarmAddress);
+            String StatesName = extras.getString("StatesName");
+            edtstate.setText(StatesName);
+            String DistrictName = extras.getString("DistrictName");
+            edtdistrict.setText(DistrictName);
+            String TalukaName = extras.getString("TalukaName");
+            edttaluka.setText(TalukaName);
+            String VillageName = extras.getString("VillageName");
+            edtvillage.setText(VillageName);
+            String Hector = extras.getString("Hector");
+            edtareahector.setText(Hector);
+            String ItemTypeId = extras.getString("ItemTypeId");
+            hidItemTypeId.setText(ItemTypeId);
+            String VarietyId = extras.getString("VarietyId");
+            hidVarietyId.setText(VarietyId);
+            String QualityId = extras.getString("QualityId");
+            hidQualityId.setText(QualityId);
+            String MeasurementId = extras.getString("MeasurementId");
+            hidMeasurementId.setText(MeasurementId);
+            String StateId = extras.getString("StateId");
+            hideStateId.setText(StateId);
+            String DistrictId = extras.getString("DistrictId");
+            hideDistrictId.setText(DistrictId);
+            String TalukaId = extras.getString("TalukaId");
+            hideTalukaId.setText(TalukaId);
+            String RequstId = extras.getString("RequstId");
+            hideRequstId.setText(RequstId);
 
+            if (extras.getString("Type") != null) {
+                btnFormSubmit.setVisibility(View.VISIBLE);
+                btnAdd.setVisibility(View.GONE);
+                btnAddMore.setVisibility(View.GONE);
+            }
+
+        }
+
+        btnFormSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AsyncTaskRunner runner = new AsyncTaskRunner();
+                String sleepTime = "Update";
+                runner.execute(sleepTime);
+            }
+        });
 
         btnAddMore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -481,8 +550,8 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
                     if (userId == -1) {
                         // Insert new user account.
-                        userInfoDBManager.insertAccount(productType,hidItemTypeId.getText().toString(), productVariety,hidVarietyId.getText().toString(),
-                                quality,hidQualityId.getText().toString(),quantity, unit, hidMeasurementId.getText().toString(), expectedPrice,
+                        userInfoDBManager.insertAccount(productType, hidItemTypeId.getText().toString(), productVariety, hidVarietyId.getText().toString(),
+                                quality, hidQualityId.getText().toString(), quantity, unit, hidMeasurementId.getText().toString(), expectedPrice,
                                 days, availablityInMonths, address, state, hideStateId.getText().toString(),
                                 district, hideDistrictId.getText().toString(), taluka, hideTalukaId.getText().toString(), villagenam, areaheactor, ImageUrl);
 
@@ -526,10 +595,10 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                             startUserAccountListIntent.putExtra("qualityId", hidQualityId.getText().toString());
 
                             //startUserAccountListIntent.putExtra("monthId", edtavailablityInMonths.getText().toString());
-                            startUserAccountListIntent.putExtra("unitId",   hidMeasurementId.getText().toString());
-                            startUserAccountListIntent.putExtra("stateId",    hideStateId.getText().toString());
-                            startUserAccountListIntent.putExtra("districtId",   hideDistrictId.getText().toString());
-                            startUserAccountListIntent.putExtra("talukaId",    hideTalukaId.getText().toString());
+                            startUserAccountListIntent.putExtra("unitId", hidMeasurementId.getText().toString());
+                            startUserAccountListIntent.putExtra("stateId", hideStateId.getText().toString());
+                            startUserAccountListIntent.putExtra("districtId", hideDistrictId.getText().toString());
+                            startUserAccountListIntent.putExtra("talukaId", hideTalukaId.getText().toString());
 
                             startActivity(startUserAccountListIntent);
 
@@ -569,11 +638,6 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
     @NonNull
     private RequestBody createPartFromString(String descriptionString) {
         return RequestBody.create(
@@ -596,10 +660,6 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         // MultipartBody.Part is used to send also the actual file name
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
     }
-
-
-
-
 
 
     @Override
@@ -665,7 +725,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 if (params[0].toString() == "ItemName")
                     fetcher.loadList("ItemName", edtproductType, URLs.URL_NAME + "?CategoryId=" + ProductId + "&Language=" + myLocale, "ItemTypeId", hidItemTypeId, "CategoryId", ProductId);
                 else if (params[0].toString() == "Variety")
-                    fetcher.loadList("VarietyName", edtproductVariety, URLs.URL_VARIATY + hidItemTypeId.getText()+  "&Language="+ myLocale, "VarietyId", hidVarietyId, "", "");
+                    fetcher.loadList("VarietyName", edtproductVariety, URLs.URL_VARIATY + hidItemTypeId.getText() + "&Language=" + myLocale, "VarietyId", hidVarietyId, "", "");
                 else if (params[0].toString() == "Quality")
                     fetcher.loadList("QualityType", edtAQuality, URLs.URL_QUALITY + "?Language=" + myLocale, "QualityId", hidQualityId, "", "");
                 else if (params[0].toString() == "Unit")
@@ -673,9 +733,13 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 else if (params[0].toString() == "state")
                     fetcher.loadList("StatesName", edtstate, URLs.URL_STATE + "?Language=" + myLocale, "StatesID", hideStateId, "", "");
                 else if (params[0].toString() == "district")
-                    fetcher.loadList("DistrictName", edtdistrict, URLs.URL_DISTRICT + hideStateId.getText()+ ",&Language=" + myLocale, "DistrictId", hideDistrictId, "", "");
+                    fetcher.loadList("DistrictName", edtdistrict, URLs.URL_DISTRICT + hideStateId.getText() + ",&Language=" + myLocale, "DistrictId", hideDistrictId, "", "");
                 else if (params[0].toString() == "taluka")
-                    fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText()+",&Language=" + myLocale,  "TalukasId", hideTalukaId, "", "");
+                    fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText() + ",&Language=" + myLocale, "TalukasId", hideTalukaId, "", "");
+
+                else if (params[0].toString() == "Update") {
+                   submitToDb();
+                }
                 Thread.sleep(1000);
 
                 resp = "Slept for " + params[0] + " seconds";
@@ -709,45 +773,38 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
     }
 
-    public void EnableRuntimePermission(){
+    public void EnableRuntimePermission() {
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(ProductInfoForSaleActivity.this,
-                Manifest.permission.CAMERA))
-        {
+                Manifest.permission.CAMERA)) {
 
-            Toast.makeText(ProductInfoForSaleActivity.this,"CAMERA permission allows us to Access CAMERA app", Toast.LENGTH_LONG).show();
 
         } else {
 
-            ActivityCompat.requestPermissions(ProductInfoForSaleActivity.this,new String[]{
+            ActivityCompat.requestPermissions(ProductInfoForSaleActivity.this, new String[]{
                     Manifest.permission.CAMERA}, RequestPermissionCode);
 
         }
     }
 
-    private void SelecteImages(){
+    private void SelecteImages() {
 
-        final CharSequence[] items={"Camera","Gallary","Cancel"};
-        AlertDialog.Builder builder=new AlertDialog.Builder(ProductInfoForSaleActivity.this);
+        final CharSequence[] items = {"Camera", "Gallary", "Cancel"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(ProductInfoForSaleActivity.this);
         builder.setTitle("Add Image");
 
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
-                if(items[i].equals("Camera")){
+                if (items[i].equals("Camera")) {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(intent, REQUEST_CAMERA);
-                }
-
-                else if(items[i].equals("Gallary")){
+                } else if (items[i].equals("Gallary")) {
                     Intent intent = new Intent();
                     intent.setType("image/*");
                     intent.setAction(Intent.ACTION_GET_CONTENT);//
-                    startActivityForResult(Intent.createChooser(intent, "Select File"),SELECT_FILE);
-                }
-
-                else if(items[i].equals("Cancel"))
-                {
+                    startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
+                } else if (items[i].equals("Cancel")) {
                     dialog.dismiss();
                 }
             }
@@ -756,7 +813,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, requestCode,data);
+        super.onActivityResult(requestCode, requestCode, data);
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == SELECT_FILE)
                 onSelectFromGalleryResult(data);
@@ -767,12 +824,12 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     }
 
     private void onSelectFromGalleryResult(Intent data) {
-        Bitmap bm=null;
+        Bitmap bm = null;
         if (data != null) {
             try {
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
                 bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
-                ImageUrl= Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);
+                ImageUrl = Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);
                 bm.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -786,7 +843,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 
         thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-        ImageUrl= Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);
+        ImageUrl = Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);
         File destination = new File(Environment.getExternalStorageDirectory(),
                 System.currentTimeMillis() + ".jpg");
 
@@ -810,7 +867,6 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     public void onRequestPermissionsResult(int RC, String per[], int[] PResult) {
 
@@ -820,15 +876,79 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
                 if (PResult.length > 0 && PResult[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    Toast.makeText(ProductInfoForSaleActivity.this,"Permission Granted, Now your application can access CAMERA.", Toast.LENGTH_LONG).show();
+                 //   Toast.makeText(ProductInfoForSaleActivity.this, "Permission Granted, Now your application can access CAMERA.", Toast.LENGTH_LONG).show();
 
                 } else {
 
-                    Toast.makeText(ProductInfoForSaleActivity.this,"Permission Canceled, Now your application cannot access CAMERA.", Toast.LENGTH_LONG).show();
+                   // Toast.makeText(ProductInfoForSaleActivity.this, "Permission Canceled, Now your application cannot access CAMERA.", Toast.LENGTH_LONG).show();
 
                 }
                 break;
         }
     }
 
+
+    private void submitToDb() {
+
+                builder.append("<Parent>");
+                builder.append("<Assign>");
+                builder.append("<RequestId>" + "RequstId" + "</Id>");
+                builder.append("<UserId>" + UserId + "</UserId>");
+                builder.append("<productTypeId>" + hidItemTypeId.getText() + "</productTypeId>");
+                builder.append("<productVarietyId>" + hidVarietyId.getText() + "</productVarietyId>");
+                builder.append("<qualityId>" + hidQualityId.getText() + "</qualityId>");
+                builder.append("<quantity>" + edtAQuantity.getText() + "</quantity>");
+                builder.append("<unitId>" +edtUnit.getText() + "</unitId>");
+                builder.append("<expectedPrice>" + edtExpectedPrice.getText() + "</expectedPrice>");
+                builder.append("<days>" +"0" + "</days>");
+                builder.append("<availablityInMonths>" + edtavailablityInMonths.getText() + "</availablityInMonths>");
+                builder.append("<address>" + edtaddres.getText() + "</address>");
+                builder.append("<stateId>" + hideStateId.getText() + "</stateId>");
+                builder.append("<districtId>" + hideDistrictId.getText() + "</districtId>");
+                builder.append("<talukaId>" +hideTalukaId.getText() + "</talukaId>");
+                builder.append("<villagenam>" + edtvillage.getText()+ "</villagenam>");
+                builder.append("<areaheactor>" + edtareahector.getText()+ "</areaheactor>");
+                builder.append("<imagename>" + "" + "</imagename>");
+                builder.append("</Assign>");
+                builder.append("</Parent>");
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_SAVEPRODUCTDETAILS,
+                new com.android.volley.Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ProductInfoForSaleActivity.this);
+                        builder.setCancelable(false);
+                        mProgressDialog.dismiss();
+                        builder.setMessage("Data submitted successfully");
+                        userInfoDBManager.deleteAll();
+                        builder.setIcon(R.drawable.ic_check_circle);
+                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //if user pressed "yes", then he is allowed to exit from application
+                                dialog.cancel();
+                            }
+                        });
+
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Toast.makeText(ProductInfoForSaleActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("xmlData", builder.toString());
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(ProductInfoForSaleActivity.this).addToRequestQueue(stringRequest);
+
+    }
 }

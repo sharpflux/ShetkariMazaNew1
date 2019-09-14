@@ -36,10 +36,11 @@ public class SimilarListAdapter extends RecyclerView.Adapter<SimilarListViewHold
 
     @Override
     public void onBindViewHolder(final SimilarListViewHolder holder, final int position) {
-        Picasso.get().load(mlist.get(position).getImageId()).resize(300, 300).into(holder.mImage);
+        Picasso.get().load(mlist.get(position).getImageUrl()).resize(300, 300).into(holder.mImage);
         holder.mName.setText(mlist.get(position).getName());
-        holder.mPrice.setText(mlist.get(position).getPrice());
-        holder.mQuantity.setText(mlist.get(position).getQuantity());
+        holder.row_cartlist_tvKg.setText(mlist.get(position).getVarietyName());
+        holder.mPrice.setText(mlist.get(position).getPrice().toString());
+        holder.mQuantity.setText(mlist.get(position).getQuantity().toString());
     }
 
     @Override
@@ -51,7 +52,7 @@ public class SimilarListAdapter extends RecyclerView.Adapter<SimilarListViewHold
 class SimilarListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
     ImageView mImage;
-    TextView mName,mPrice,mQuantity;
+    TextView mName,mPrice,mQuantity,row_cartlist_tvKg;
 
     SimilarListViewHolder(View itemView) {
         super(itemView);
@@ -59,8 +60,8 @@ class SimilarListViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         mImage = itemView.findViewById(R.id.row_cartlist_ivProImg);
         mName = itemView.findViewById(R.id.row_cartlist_tvName);
         mPrice = itemView.findViewById(R.id.row_cartlist_tvPrice);
-        mQuantity = itemView.findViewById(R.id.row_cartlist_tvKg);
-
+        mQuantity = itemView.findViewById(R.id.row_cartlist_tvQuantity);
+        row_cartlist_tvKg = itemView.findViewById(R.id.row_cartlist_tvKg);
         itemView.setOnClickListener(this);
     }
 

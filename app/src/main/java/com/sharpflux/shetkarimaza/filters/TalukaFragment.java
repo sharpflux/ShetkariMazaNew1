@@ -133,6 +133,11 @@ public class TalukaFragment extends Fragment {
             public void onClick(View view) {
 
                 Intent intent = new Intent(getContext(), AllSimilarDataActivity.class);
+                intent.putExtra("ItemTypeId",itemTypeId);
+                intent.putExtra("VarietyId",VarityId);
+                intent.putExtra("QualityId",QualityId);
+                intent.putExtra("DistrictId", DistrictId);
+                intent.putExtra("TalukaId",taluka_builder_id.toString());
                 startActivity(intent);
 
             }

@@ -125,18 +125,16 @@ public class StateFragment extends Fragment {
             }
         });
 
-        btnFilterData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
 
         btnFilterData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent intent = new Intent(getContext(), AllSimilarDataActivity.class);
+                intent.putExtra("ItemTypeId",itemTypeId);
+                intent.putExtra("VarietyId",VarityId);
+                intent.putExtra("QualityId",QualityId);
+                intent.putExtra("StatesID",state_builder_id.toString());
                 startActivity(intent);
 
             }

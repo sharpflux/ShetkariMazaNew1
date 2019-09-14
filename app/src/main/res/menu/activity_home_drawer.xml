@@ -17,7 +17,7 @@
             android:icon="@drawable/ic_location"
             android:title="@string/menu_address" />
         <item
-            android:id="@+id/nav_tool"
+            android:id="@+id/nav_edit"
             android:icon="@drawable/ic_order_list"
             android:title="@string/edit" />
 

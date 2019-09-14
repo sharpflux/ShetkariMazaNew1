@@ -33,8 +33,8 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/row_cartlist_tvNameType" android:textSize="@dimen/_10sdp"
-                style="@style/ganaral_primarystyle" android:textAllCaps="true" android:textStyle="bold"  />
+                android:id="@+id/row_cartlist_tvNameType" style="@style/ganaral_primarystyle"
+                android:textAllCaps="true" android:textSize="@dimen/_10sdp" android:textStyle="bold"  />
 
             <TextView
                 android:id="@+id/row_cartlist_tvName"

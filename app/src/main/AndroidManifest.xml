@@ -27,7 +27,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.EditOrUpdateActivity"></activity>
+        <activity android:name=".activities.EditRequestActivity"
+            android:label="Edit"
+            android:theme="@style/SellerDarkAppTheme"
+            android:parentActivityName=".activities.HomeActivity"/>
         <activity
             android:name=".activities.AddListActivity"
             android:label="@string/list_added_item"

@@ -121,8 +121,17 @@ public class VarietyFragment extends Fragment {
         btnFilterData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                for (int i = 0; i < productlist.size(); i++) {
+                    SubCategoryFilter filter = productlist.get(i);
+                    if (filter.getSelected()) {
+                        varity_builder_id.append(filter.getId() + ",");
+                    }
+                }
                 Intent intent = new Intent(getContext(), AllSimilarDataActivity.class);
+               /* intent.putExtra("TalukaId","0");
+                   intent.putExtra("QualityId","0");*/
+                intent.putExtra("ItemTypeId",itemTypeId);
+                intent.putExtra("VarietyId",varity_builder_id.toString());
                 startActivity(intent);
 
             }

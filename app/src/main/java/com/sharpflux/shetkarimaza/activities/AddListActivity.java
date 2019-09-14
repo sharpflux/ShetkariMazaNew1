@@ -369,9 +369,9 @@ public class AddListActivity extends AppCompatActivity {
                 builder.append("<talukaId>" + cursor.getString(19) + "</talukaId>");
                 builder.append("<villagenam>" + cursor.getString(20) + "</villagenam>");
                 builder.append("<areaheactor>" + cursor.getString(21) + "</areaheactor>");
-                builder.append("<imagename>" + cursor.getString(22).replaceAll("\\<\\?xml(.+?)\\?\\>", "").trim() + "</imagename>");
+                builder.append("<imagename>" + cursor.getString(22) + "</imagename>");
                 builder.append("</Assign>");
-
+                //cursor.getString(22).replaceAll("\\<\\?xml(.+?)\\?\\>", "").trim()
             }
 
         }

@@ -129,4 +129,7 @@
     <color name="uiv3_divider_color">#ffb6b6b6</color>
     <color name="bottom_cart_indicator">#ff4a4a4a</color>
 
+    <color name="colorDisableHover">#7C7C7C</color>
+    <color name="colorDisable">#424242</color>
+
 </resources>

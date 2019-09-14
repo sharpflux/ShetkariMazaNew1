@@ -18,4 +18,5 @@ public class URLs {
     public static final String URL_OTP="http://apimaza.supergo.in/User_Authentication/OTPGenerate";
     public static final String URL_TALUKA="http://apimaza.supergo.in/Api/GetMultipleTalukasApi/GetMultipleTalukas?DistrictsID=";
     public static final String URL_RESETPASS="http://apimaza.supergo.in/api/UserUpdatePasswordAPI/UpdatePasswordApi";
+    public static final String URL_ORDERDETAILS="http://apimaza.supergo.in/api/RequestAPI/GETRequestsApi?StartIndex=1&PageSize=500&UserId=";
 }

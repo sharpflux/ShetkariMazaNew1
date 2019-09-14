@@ -152,6 +152,11 @@ public class DistrictFragment extends Fragment {
             public void onClick(View view) {
 
                 Intent intent = new Intent(getContext(), AllSimilarDataActivity.class);
+                intent.putExtra("ItemTypeId",itemTypeId);
+                intent.putExtra("VarietyId",VarityId);
+                intent.putExtra("QualityId",QualityId);
+                intent.putExtra("StatesID",StatesID);
+                intent.putExtra("DistrictId", district_builder_id.toString());
                 startActivity(intent);
 
             }

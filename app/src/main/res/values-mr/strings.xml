@@ -223,11 +223,12 @@
     <string name="click_here_to_choose_district">जिल्हा / जिल्हा निवडून जिल्हा निवडण्यासाठी येथे क्लिक करा</string>
     <string name="click_here_to_choose_taluka">तालुका / तालुका फिल्टर निवडण्यासाठी येथे क्लिक करा</string>
     <string name="back">मागे</string>
-    <string name="delete">Delete</string>
-    <string name="communicate">Communicate</string>
-    <string name="select_data">Select Data</string>
-    <string name="edit">Edit</string>
-    <string name="guide_your_rate_here"><u>Guide your rate here!</u></string>
+    <string name="delete">हटवा</string>
+    <string name="communicate">संवाद</string>
+    <string name="select_data">डेटा निवडा</string>
+    <string name="edit">सुधारणे</string>
+    <string name="guide_your_rate_here"><u>येथे आपला दर मार्गदर्शन करा!</u></string>
+    <string name="update">Update</string>
 
 
 

@@ -34,14 +34,15 @@ public class AllSimilarDataActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     List<SimilarList> productlist;
     Bundle bundle;
-    String   TalukaId="",VarityId="",QualityId="",ItemTypeId="";
+    String TalukaId = "", VarityId = "", QualityId = "", ItemTypeId = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_similar_data);
 
-        recyclerView =findViewById(R.id.similar_rvProductList);
-        productlist=new ArrayList<>();
+        recyclerView = findViewById(R.id.similar_rvProductList);
+        productlist = new ArrayList<>();
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -57,25 +58,25 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
     private void SetDynamicDATA() {
 
-        bundle=getIntent().getExtras();
+        bundle = getIntent().getExtras();
         bundle.getString("ItemTypeId");
         if (bundle != null) {
-            ItemTypeId=bundle.getString("ItemTypeId");
+            ItemTypeId = bundle.getString("ItemTypeId");
             TalukaId = bundle.getString("TalukaId");
             VarityId = bundle.getString("VarietyId");
             QualityId = bundle.getString("QualityId");
         }
-        if(bundle!=null){
+        if (bundle != null) {
 
-            if(TalukaId.equals(""))
-                TalukaId="0";
-            if(VarityId.equals(""))
-                VarityId="0";
-            if(QualityId.equals(""))
-                QualityId="0";
+            if (TalukaId.equals(""))
+                TalukaId = "0";
+            if (VarityId.equals(""))
+                VarityId = "0";
+            if (QualityId.equals(""))
+                QualityId = "0";
 
             StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                    URLs.URL_REQESTS+"?StartIndex=1&PageSize=50&ItemTypeId="+ItemTypeId+"&VarityId="+VarityId+"&StateId=0&DistrictId=0&QualityId="+QualityId+"&TalukaId="+TalukaId,
+                    URLs.URL_REQESTS + "?StartIndex=1&PageSize=50&ItemTypeId=" + ItemTypeId + "&VarityId=" + VarityId + "&StateId=0&DistrictId=0&QualityId=" + QualityId + "&TalukaId=" + TalukaId,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -87,10 +88,30 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                                     if (!userJson.getBoolean("error")) {
                                         SimilarList sellOptions;
                                         sellOptions = new SimilarList
-                                                (userJson.getString("ImageUrl"),
+                                                (
+                                                        userJson.getString("ImageUrl"),
                                                         userJson.getString("ItemName"),
                                                         userJson.getString("VarietyName"),
-                                                        "₹"+String.valueOf(  userJson.getDouble("ExpectedPrice"))
+                                                        String.valueOf(userJson.getDouble("AvailableQuantity")),
+                                                        "₹" + String.valueOf(userJson.getDouble("ExpectedPrice")),
+                                                        "",
+                                                        "",
+                                                        "",
+                                                        "",
+                                                        "",
+                                                        "",
+                                                        "",
+                                                        "",
+                                                        "",
+                                                        "",
+                                                        "",
+                                                        "",
+                                                        "",
+                                                        "",
+                                                        "",
+                                                        "",
+                                                        "0"
+
                                                 );
 
                                         productlist.add(sellOptions);
@@ -125,7 +146,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         }
     }
 
-    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
+    class AsyncTaskRunner extends AsyncTask<String, String, String> {
 
         private String resp;
         ProgressDialog progressDialog;

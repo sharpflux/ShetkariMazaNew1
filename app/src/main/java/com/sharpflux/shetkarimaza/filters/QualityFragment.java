@@ -144,6 +144,9 @@ public class QualityFragment extends Fragment {
             public void onClick(View view) {
 
                 Intent intent = new Intent(getContext(), AllSimilarDataActivity.class);
+                intent.putExtra("ItemTypeId",itemTypeId);
+                intent.putExtra("VarietyId",VarityId);
+                intent.putExtra("QualityId",quality_builder_id.toString());
                 startActivity(intent);
 
             }

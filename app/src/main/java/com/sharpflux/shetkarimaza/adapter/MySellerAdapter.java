@@ -58,6 +58,7 @@ class SellerViewHolder extends RecyclerView.ViewHolder  implements View.OnClickL
     ImageView mImage;
     TextView mTitle;
 
+
     String ProductId;
 
 
