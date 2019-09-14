@@ -353,6 +353,7 @@ public class AddListActivity extends AppCompatActivity {
             cursor.moveToPosition(-1);
             while (cursor.moveToNext()) {
                 builder.append("<Assign>");
+                builder.append("<RequestId>" + 0 + "</RequestId>");
                 builder.append("<Id>" + cursor.getString(0) + "</Id>");
                 builder.append("<UserId>" + UserId + "</UserId>");
                 builder.append("<productTypeId>" + cursor.getString(2) + "</productTypeId>");

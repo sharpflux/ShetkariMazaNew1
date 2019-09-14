@@ -64,7 +64,7 @@ public class DistrictFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rcv_vriety);
         btn_next = view.findViewById(R.id.btnnextVariety);
         btn_back = view.findViewById(R.id.btnbackVariety);
-        btnFilterData= view.findViewById(R.id.btnbackVariety);
+        btnFilterData= view.findViewById(R.id.btnFilterData);
 
 
         district_builder_id = new StringBuilder();

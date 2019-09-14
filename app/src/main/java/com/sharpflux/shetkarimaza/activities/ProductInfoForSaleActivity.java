@@ -110,7 +110,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     ArrayList<Product> list;
     Product sellOptions;
     Button btn_take_selfie, btnFormSubmit, btnAdd, btnAddMore;
-    TextView hideImageTvSelfie;
+    TextView hideImageTvSelfie,tv_rate;
     private CustomRecyclerViewDialog customDialog;
     public static String DATEFORMATTED = "";
     private DatePickerDialog.OnDateSetListener mDateSetListener;
@@ -236,6 +236,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
         btnAdd = findViewById(R.id.btnAdd);
         btnAddMore = findViewById(R.id.btnAddMore);
+        tv_rate = findViewById(R.id.tv_rate);
 
 
         parentView = findViewById(R.id.parent_layout);
@@ -364,6 +365,23 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
         });
 
+        btnFormSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AsyncTaskRunner runner = new AsyncTaskRunner();
+                String sleepTime = "Update";
+                runner.execute(sleepTime);
+            }
+        });
+        tv_rate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AsyncTaskRunner runner = new AsyncTaskRunner();
+                String sleepTime = "Rates";
+                runner.execute(sleepTime);
+            }
+        });
+
 
         // Get input extra user account data from UserAccountListViewActivity activity.
         Intent intent = getIntent();
@@ -438,14 +456,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
         }
 
-        btnFormSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AsyncTaskRunner runner = new AsyncTaskRunner();
-                String sleepTime = "Update";
-                runner.execute(sleepTime);
-            }
-        });
+
 
         btnAddMore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -740,6 +751,9 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 else if (params[0].toString() == "Update") {
                    submitToDb();
                 }
+
+             //   else if (params[0].toString() == "Rates")
+               //     fetcher.loadList("Rates", tv_rate, URLs.URL_RATE + hideDistrictId.getText() + ",&Language=" + myLocale, "TalukasId", hideTalukaId, "", "");
                 Thread.sleep(1000);
 
                 resp = "Slept for " + params[0] + " seconds";

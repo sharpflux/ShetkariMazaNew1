@@ -43,7 +43,7 @@ public class TalukaFragment extends Fragment {
     LinearLayoutManager layoutManager;
     ArrayList<SubCategoryFilter> productlist;
     Button btn_next,btn_back,btnFilterData;
-    String  DistrictId="", TalukaId="",VarityId="",QualityId="",itemTypeId="";
+    String  DistrictId="", TalukaId="",VarityId="",QualityId="",itemTypeId="",StatesID="";
     Bundle extras;
     StringBuilder taluka_builder_id = new StringBuilder();
     SearchView searchView;
@@ -64,7 +64,7 @@ public class TalukaFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rcv_vriety);
         btn_next = view.findViewById(R.id.btnnextVariety);
         btn_back = view.findViewById(R.id.btnbackVariety);
-        btnFilterData = view.findViewById(R.id.btnbackVariety);
+        btnFilterData = view.findViewById(R.id.btnFilterData);
 
         productlist = new ArrayList<>();
         layoutManager = new LinearLayoutManager(getContext());
@@ -80,6 +80,7 @@ public class TalukaFragment extends Fragment {
             VarityId = extras.getString("VarietyId");
             itemTypeId=extras.getString("ItemTypeId");
             QualityId = extras.getString("QualityId");
+            StatesID = extras.getString("StatesID");
         }
 
 
@@ -116,6 +117,7 @@ public class TalukaFragment extends Fragment {
                     extras.putString("QualityId",QualityId);
                     extras.putString("TalukaId",taluka_builder_id.toString());
                     extras.putString("ItemTypeId",itemTypeId);
+                    extras.putString("StatesID",StatesID);
 
 
                 }
@@ -138,6 +140,7 @@ public class TalukaFragment extends Fragment {
                 intent.putExtra("QualityId",QualityId);
                 intent.putExtra("DistrictId", DistrictId);
                 intent.putExtra("TalukaId",taluka_builder_id.toString());
+                intent.putExtra("StatesID", StatesID);
                 startActivity(intent);
 
             }

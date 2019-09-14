@@ -65,7 +65,7 @@ public class StateFragment extends Fragment {
 
         btn_next = view.findViewById(R.id.btnnextVariety);
         btn_back = view.findViewById(R.id.btnbackVariety);
-        btnFilterData = view.findViewById(R.id.btnbackVariety);
+        btnFilterData = view.findViewById(R.id.btnFilterData);
 
         searchView = view.findViewById(R.id.searchViewState);
 

@@ -34,7 +34,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     List<SimilarList> productlist;
     Bundle bundle;
-    String TalukaId = "", VarityId = "", QualityId = "", ItemTypeId = "";
+    String TalukaId = "", VarityId = "", QualityId = "", ItemTypeId = "",StatesID = "",DistrictId="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,15 +65,56 @@ public class AllSimilarDataActivity extends AppCompatActivity {
             TalukaId = bundle.getString("TalukaId");
             VarityId = bundle.getString("VarietyId");
             QualityId = bundle.getString("QualityId");
+            StatesID = bundle.getString("StatesID");
+            DistrictId = bundle.getString("DistrictId");
         }
         if (bundle != null) {
-
-            if (TalukaId.equals(""))
+            if (TalukaId!=null) {
+                if (TalukaId.equals(""))
+                    TalukaId = "0";
+            }
+            else {
                 TalukaId = "0";
-            if (VarityId.equals(""))
+            }
+
+            if (VarityId!=null) {
+                if (VarityId.equals(""))
+                    VarityId = "0";
+            }
+            else {
                 VarityId = "0";
-            if (QualityId.equals(""))
+            }
+            if (QualityId!=null) {
+                if (QualityId.equals(""))
+                    QualityId = "0";
+            }
+            else {
                 QualityId = "0";
+            }
+            if (StatesID!=null) {
+                if (StatesID.equals(""))
+                    StatesID = "0";
+            }
+            else {
+                StatesID = "0";
+            }
+            if (DistrictId!=null) {
+                if (DistrictId.equals(""))
+                    DistrictId = "0";
+            }
+            else {
+                DistrictId = "0";
+            }
+            if (TalukaId!=null) {
+                if (TalukaId.equals(""))
+                    TalukaId = "0";
+            }
+            else {
+                TalukaId = "0";
+            }
+
+
+
 
             StringRequest stringRequest = new StringRequest(Request.Method.GET,
                     URLs.URL_REQESTS + "?StartIndex=1&PageSize=50&ItemTypeId=" + ItemTypeId + "&VarityId=" + VarityId + "&StateId=0&DistrictId=0&QualityId=" + QualityId + "&TalukaId=" + TalukaId,

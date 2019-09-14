@@ -24,7 +24,7 @@ public class PriceFragment extends Fragment {
     LinearLayoutManager layoutManager;
     List<SubCategoryFilter> productlist;
     Button btn_next,btn_back;
-    String   TalukaId="",VarityId="",QualityId="",itemTypeId="";
+    String   StatesID="",DistrictId="",TalukaId="",VarityId="",QualityId="",itemTypeId="";
     Bundle extras;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,6 +47,8 @@ public class PriceFragment extends Fragment {
             VarityId = extras.getString("VarietyId");
             QualityId = extras.getString("QualityId");
             itemTypeId=extras.getString("ItemTypeId");
+            DistrictId=extras.getString("DistrictId");
+            StatesID=extras.getString("StatesID");
 
         }
 
@@ -72,6 +74,8 @@ public class PriceFragment extends Fragment {
                 intent.putExtra("VarietyId",VarityId);
                 intent.putExtra("QualityId",QualityId);
                 intent.putExtra("ItemTypeId",itemTypeId);
+                intent.putExtra("DistrictId",DistrictId);
+                intent.putExtra("StatesID",StatesID);
                 startActivity(intent);
             }
         });

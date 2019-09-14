@@ -61,9 +61,8 @@ public class DataFetcher {
                                 if (!userJson.getBoolean("error")) {
 
 
-                                    prod =
-                                            new Product(userJson.getString(ColumnName)
-                                            ,userJson.getString(id));
+                                    prod = new Product(userJson.getString(ColumnName),
+                                            userJson.getString(id));
 
                                     list.add(prod);
 

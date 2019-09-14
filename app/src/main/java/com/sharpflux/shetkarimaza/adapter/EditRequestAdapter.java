@@ -2,7 +2,6 @@ package com.sharpflux.shetkarimaza.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sharpflux.shetkarimaza.R;
-import com.sharpflux.shetkarimaza.activities.EditRequestActivity;
 import com.sharpflux.shetkarimaza.activities.ProductInfoForSaleActivity;
 import com.sharpflux.shetkarimaza.model.SimilarList;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -33,7 +30,7 @@ public class EditRequestAdapter extends RecyclerView.Adapter<EditRequesViewHolde
 
     @Override
     public EditRequesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_similar_list, parent, false);
+        View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_request_view, parent, false);
         return new EditRequesViewHolder(mView) {
             @Override
             public void onClick(View view) {
