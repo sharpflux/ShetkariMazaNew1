@@ -219,6 +219,7 @@
     <string name="price_low_to_high">कीमतों का उतार - चढ़ाव</string>
     <string name="price_high_to_low">कीमत ऊंची से नीची</string>
     <string name="click_here_to_choose_variety">विविधता चुनने के लिए यहां क्लिक करें / विविधता से फ़िल्टर करें</string>
+    <string name="click_here_to_choose_village">click here to Choose village/Filter By village</string>
     <string name="click_here_to_choose_quality">गुणवत्ता चुनने के लिए यहां क्लिक करें / गुणवत्ता के अनुसार फ़िल्टर करें</string>
     <string name="click_here_to_choose_state">स्टेट को चुनने के लिए यहां क्लिक करें</string>
     <string name="click_here_to_choose_district">जिला चुनने के लिए यहां क्लिक करें</string>

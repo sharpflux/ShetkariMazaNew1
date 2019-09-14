@@ -122,7 +122,7 @@ public class TalukaFragment extends Fragment {
 
                 }
                 FragmentTransaction transection = getFragmentManager().beginTransaction();
-                PriceFragment mfragment = new PriceFragment();
+                VillageFragment mfragment = new VillageFragment();
                 mfragment.setArguments(extras);
                 transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
                 transection.commit();
