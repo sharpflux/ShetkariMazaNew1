@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.activities.AddListActivity;
+import com.sharpflux.shetkarimaza.activities.HomeActivity;
 import com.sharpflux.shetkarimaza.activities.ProductInfoForSaleActivity;
 import com.sharpflux.shetkarimaza.model.SimilarList;
 
@@ -45,9 +47,9 @@ public class EditRequestAdapter extends RecyclerView.Adapter<EditRequesViewHolde
       //  if (!mlist.get(i).getImageUrl().equals(""))
           //  Picasso.get().load(mlist.get(i).getImageUrl()).resize(300, 300).into(editRequesViewHolder.mImage);
         holder.mName.setText(mlist.get(currentPosition).getName());
-        holder.row_cartlist_tvKg.setText(mlist.get(currentPosition).getVarietyName());
-        holder.mPrice.setText(String.valueOf(  mlist.get(currentPosition).getPrice()));
-        holder.mQuantity.setText(String.valueOf( mlist.get(currentPosition).getQuantity()));
+        holder.mvarity.setText(mlist.get(currentPosition).getVarietyName());
+        holder.mQuality.setText(String.valueOf(  mlist.get(currentPosition).getQuality()));
+        holder.mPrice.setText(String.valueOf( mlist.get(currentPosition).getPrice()));
 
         holder.btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +83,14 @@ public class EditRequestAdapter extends RecyclerView.Adapter<EditRequesViewHolde
                 context.startActivity(i);
             }
         });
+        holder.btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Context context=view.getContext();
+                Intent i= new Intent(context, HomeActivity.class);
+                context.startActivity(i);
+            }
+        });
     }
 
 
@@ -93,8 +103,8 @@ public class EditRequestAdapter extends RecyclerView.Adapter<EditRequesViewHolde
 abstract class EditRequesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     ImageView mImage;
-    TextView mName, mPrice, mQuantity, row_cartlist_tvKg;
-    Button btn_update;
+    TextView mName,mvarity,mQuality,mPrice;
+    Button btn_update,btnCancel;
     String ItemName,VarietyName,QualityType,AvailableQuantity,
             MeasurementType,ExpectedPrice,AvailableMonths,FarmAddress,
             SurveyNo,StatesName,DistrictName,TalukaName,VillageName,Hector;
@@ -103,10 +113,11 @@ abstract class EditRequesViewHolder extends RecyclerView.ViewHolder implements V
 
         mImage = itemView.findViewById(R.id.row_cartlist_ivProImg);
         mName = itemView.findViewById(R.id.row_cartlist_tvName);
+        mvarity = itemView.findViewById(R.id.row_cartlist_tvVarity);
+        mQuality = itemView.findViewById(R.id.row_cartlist_tvQuality);
         mPrice = itemView.findViewById(R.id.row_cartlist_tvPrice);
-        mQuantity = itemView.findViewById(R.id.row_cartlist_tvQuantity);
-        row_cartlist_tvKg = itemView.findViewById(R.id.row_cartlist_tvKg);
         btn_update = itemView.findViewById(R.id.btn_update);
+        btnCancel = itemView.findViewById(R.id.btn_update);
         itemView.setOnClickListener(this);
 
 

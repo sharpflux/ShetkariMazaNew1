@@ -938,8 +938,8 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                //if user pressed "yes", then he is allowed to exit from application
-                                dialog.cancel();
+                                Intent i= new Intent(ProductInfoForSaleActivity.this,HomeActivity.class);
+                                startActivity(i);
                             }
                         });
 
