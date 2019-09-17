@@ -54,6 +54,9 @@ public class SimilarList {
         RequstId = requstId;
     }
 
+    public SimilarList(String fromDates, String toDates, String rates) {
+    }
+
     public String getImageUrl() {
         return ImageUrl;
     }

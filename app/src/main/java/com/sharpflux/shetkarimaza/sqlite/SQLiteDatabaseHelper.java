@@ -9,9 +9,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Jerry on 1/17/2018.
- */
 
 public class SQLiteDatabaseHelper extends SQLiteOpenHelper {
 
@@ -71,6 +68,21 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper {
         // After drop all exist tables, create all tables again.
         onCreate(sqLiteDatabase);
     }
+
+  /* public void insertData(){
+        SQLiteDatabase db1 = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("user_name", "Abhay");
+        contentValues.put("phone_number", "9971634265");
+        db1.insert(table_name, null, contentValues);
+    }
+
+     public Cursor getuser() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("select * from " + table_name + " ",
+                null);
+        return res;
+    }*/
 
     public List<String> getTableNameList() {
         if(tableNameList==null)

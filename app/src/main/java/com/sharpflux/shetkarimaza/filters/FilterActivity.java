@@ -34,7 +34,7 @@ public class FilterActivity extends AppCompatActivity {
         Bundle b = new Bundle();
         if (b != null) {
             b.putString("ItemTypeId", itemTypeId);
-            // Log.e("IDS",districtIds);
+
         }
 
         vfm.setArguments(b);

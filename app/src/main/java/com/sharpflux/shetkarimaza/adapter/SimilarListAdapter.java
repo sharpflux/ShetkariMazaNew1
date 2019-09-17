@@ -1,6 +1,8 @@
 package com.sharpflux.shetkarimaza.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.activities.ProductInfoForSaleActivity;
+import com.sharpflux.shetkarimaza.fragment.RateDialogFragment;
 import com.sharpflux.shetkarimaza.model.SimilarList;
 import com.squareup.picasso.Picasso;
 
@@ -39,7 +43,6 @@ public class SimilarListAdapter extends RecyclerView.Adapter<SimilarListViewHold
         holder.mvarity.setText(mlist.get(position).getVarietyName());
         holder.mQuality.setText(mlist.get(position).getQuality().toString());
         holder.mPrice.setText(String.valueOf( mlist.get(currentPosition).getPrice()));
-
     }
 
     @Override

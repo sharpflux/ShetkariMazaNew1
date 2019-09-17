@@ -36,7 +36,7 @@ public class WelcomeActivity extends AppCompatActivity {
         SliderDots = (LinearLayout) findViewById(R.id.SliderDots);
         final TextView tvTitleOne=findViewById(R.id.tvTitleOne);
         final TextView tvDesOne=findViewById(R.id.tvDesOne);
-        Button btn_skip= findViewById(R.id.btn_skip);
+       btn_skip= findViewById(R.id.btn_skip);
 
         btn_skip.setOnClickListener(new View.OnClickListener() {
             @Override

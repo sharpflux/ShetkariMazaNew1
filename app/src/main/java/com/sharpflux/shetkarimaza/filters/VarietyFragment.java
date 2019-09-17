@@ -110,6 +110,8 @@ public class VarietyFragment extends Fragment {
                     extras.putString("ItemTypeId", itemTypeId);
                     // Log.e("IDS",districtIds);
                 }
+
+
                 FragmentTransaction transection = getFragmentManager().beginTransaction();
                 QualityFragment mfragment = new QualityFragment();
                 mfragment.setArguments(extras);
