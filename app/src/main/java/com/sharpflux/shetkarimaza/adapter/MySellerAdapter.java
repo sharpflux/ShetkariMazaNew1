@@ -2,11 +2,13 @@ package com.sharpflux.shetkarimaza.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.sharpflux.shetkarimaza.activities.ProductInfoForSaleActivity;
@@ -16,12 +18,15 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class MySellerAdapter extends RecyclerView.Adapter<SellerViewHolder > {
+public class MySellerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mmContext;
     private List<SellOptions> sellOptions;
     public String id;
     private static int currentPosition = 0;
+
+    private final int VIEW_TYPE_ITEM = 0;
+    private final int VIEW_TYPE_LOADING = 1;
 
     public MySellerAdapter(Context mContext, List<SellOptions> sellOptions) {
         this.mmContext = mContext;
@@ -29,18 +34,35 @@ public class MySellerAdapter extends RecyclerView.Adapter<SellerViewHolder > {
     }
 
     @Override
-    public SellerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_seller, parent, false);
-        return new SellerViewHolder(mView);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == VIEW_TYPE_ITEM) {
+            View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_seller, parent, false);
+            return new SellerViewHolder(mView);
+        } else {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading, parent, false);
+            return new LoadingViewHolderSeller(view);
+        }
     }
 
     @Override
-    public void onBindViewHolder(final SellerViewHolder holder, final int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        if (holder instanceof SellerViewHolder)
+            try {
+                Picasso.get().load(sellOptions.get(position).getImage()).into(((SellerViewHolder) holder).mImage);
+                ((SellerViewHolder) holder).mTitle.setText(sellOptions.get(position).getProductlist());
+                ((SellerViewHolder) holder).ProductId = sellOptions.get(position).getProductId();
+            } catch (Exception d) {
 
-        Picasso.get().load(sellOptions.get(position).getImage()).into(holder.mImage);
-        holder.mTitle.setText(sellOptions.get(position).getProductlist());
-        holder.ProductId=sellOptions.get(position).getProductId();
+            }
+        else if (holder instanceof LoadingViewHolder) {
+            showLoadingView((LoadingViewHolderSeller) holder, position);
+        }
 
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return sellOptions.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
     }
 
     @Override
@@ -48,17 +70,18 @@ public class MySellerAdapter extends RecyclerView.Adapter<SellerViewHolder > {
         return sellOptions.size();
     }
 
+    private void showLoadingView(LoadingViewHolderSeller viewHolder, int position) {
+        //ProgressBar would be displayed
+
+    }
 
 }
 
 
-
-class SellerViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener{
+class SellerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     ImageView mImage;
     TextView mTitle;
-
-
     String ProductId;
 
 
@@ -73,12 +96,24 @@ class SellerViewHolder extends RecyclerView.ViewHolder  implements View.OnClickL
     @Override
     public void onClick(View v) {
 
-        Context context=v.getContext();
+        Context context = v.getContext();
         Intent intent;
-        intent =  new Intent(context, ProductInfoForSaleActivity.class);
-        intent.putExtra("ProductId",ProductId);
+        intent = new Intent(context, ProductInfoForSaleActivity.class);
+        intent.putExtra("ProductId", ProductId);
         context.startActivity(intent);
 
+    }
+
+
+}
+
+class LoadingViewHolderSeller extends RecyclerView.ViewHolder {
+
+    ProgressBar progressBar;
+
+    public LoadingViewHolderSeller(@NonNull View itemView) {
+        super(itemView);
+        progressBar = itemView.findViewById(R.id.progressBar);
     }
 
 

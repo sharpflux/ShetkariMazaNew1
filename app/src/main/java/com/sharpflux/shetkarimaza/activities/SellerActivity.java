@@ -3,6 +3,8 @@ package com.sharpflux.shetkarimaza.activities;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,6 +41,8 @@ public class SellerActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     Locale myLocale;
+    boolean isLoading = false;
+    MySellerAdapter myAdapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -110,8 +114,54 @@ public class SellerActivity extends AppCompatActivity {
                                     Toast.makeText(SellerActivity.this, response, Toast.LENGTH_SHORT).show();
                                 }
 
-                                MySellerAdapter myAdapter = new MySellerAdapter(SellerActivity.this, sellOptionsList);
-                                mRecyclerView.setAdapter(myAdapter);;
+                               myAdapter = new MySellerAdapter(SellerActivity.this, sellOptionsList);
+                                mRecyclerView.setAdapter(myAdapter);
+
+                                mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                                    @Override
+                                    public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                                        super.onScrollStateChanged(recyclerView, newState);
+                                    }
+
+                                    @Override
+                                    public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                                        super.onScrolled(recyclerView, dx, dy);
+
+                                        LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+                                        if (!isLoading) {
+                                            if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == sellOptionsList.size() - 1) {
+
+                                                sellOptionsList.add(null);
+                                                myAdapter.notifyItemInserted(sellOptionsList.size() - 1);
+
+                                                Handler handler = new Handler();
+
+                                                handler.postDelayed(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        sellOptionsList.remove(sellOptionsList.size() - 1);
+                                                        int scrollPosition = sellOptionsList.size();
+                                                        myAdapter.notifyItemRemoved(scrollPosition);
+                                                        int currentSize = scrollPosition;
+                                                        int nextLimit = currentSize + 3;
+
+                                                        while (currentSize - 1 < nextLimit) {
+                                                            // productlist.add(sellOptions);
+                                                            currentSize++;
+                                                        }
+
+                                                        myAdapter.notifyDataSetChanged();
+                                                        isLoading = false;
+                                                    }
+                                                }, 1000);
+
+                                                isLoading = true;
+                                            }
+                                        }
+                                    }
+                                });
+
                             }
 
                         } catch (JSONException e) {

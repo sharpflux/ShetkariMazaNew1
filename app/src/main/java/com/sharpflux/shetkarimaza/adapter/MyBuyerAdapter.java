@@ -2,6 +2,7 @@ package com.sharpflux.shetkarimaza.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.sharpflux.shetkarimaza.R;
@@ -21,10 +23,14 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyBuyerAdapter extends RecyclerView.Adapter<FlowerViewHolder> implements Filterable {
+public class MyBuyerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
+
+    private final int VIEW_TYPE_ITEM = 0;
+    private final int VIEW_TYPE_LOADING = 1;
+
+
 
     private Context mContext;
-
     public String id;
     private static int currentPosition = 0;
 
@@ -39,23 +45,37 @@ public class MyBuyerAdapter extends RecyclerView.Adapter<FlowerViewHolder> imple
     }
 
     @Override
-    public FlowerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_buyer, parent, false);
-        return new FlowerViewHolder(mView);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+
+        if (viewType == VIEW_TYPE_ITEM) {
+            View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_buyer, parent, false);
+            return new FlowerViewHolder(mView);
+        } else {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading, parent, false);
+            return new LoadingViewHolder(view);
+        }
+
     }
 
     @Override
-    public void onBindViewHolder(final FlowerViewHolder holder, final int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         //Log.d("Image Path", mList.get(position).getImage());
-        try {
-            if (mList.get(position).getImage() != null) {
-                Picasso.get().load(mList.get(position).getImage()).resize(300, 300).into(holder.mImage);
-                holder.mTitle.setText(mList.get(position).getProductlist());
-                holder.ItemTypeId = mList.get(position).getProductId();
+
+        if (holder instanceof FlowerViewHolder) {
+
+            try {
+                if (mList.get(position).getImage() != null) {
+                    Picasso.get().load(mList.get(position).getImage()).resize(300, 300).into(((FlowerViewHolder) holder).mImage);
+                    ((FlowerViewHolder) holder).mTitle.setText(mList.get(position).getProductlist());
+                    ((FlowerViewHolder) holder).ItemTypeId = mList.get(position).getProductId();
+                }
+            } catch (Exception d) {
+
             }
         }
-        catch(Exception d){
-
+        else if (holder instanceof LoadingViewHolder) {
+            showLoadingView((LoadingViewHolder) holder, position);
         }
 
 
@@ -63,13 +83,20 @@ public class MyBuyerAdapter extends RecyclerView.Adapter<FlowerViewHolder> imple
 
     @Override
     public int getItemCount() {
-        return mList.size();
+        return mList == null ? 0 : mList.size();
     }
+
+    @Override
+    public int getItemViewType(int position) {
+        return mList.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+    }
+
 
     @Override
     public Filter getFilter() {
         return exampleFilter;
     }
+
 
     private Filter exampleFilter = new Filter() {
 
@@ -103,6 +130,14 @@ public class MyBuyerAdapter extends RecyclerView.Adapter<FlowerViewHolder> imple
             notifyDataSetChanged();
         }
     };
+
+
+    private void showLoadingView(LoadingViewHolder viewHolder, int position) {
+        //ProgressBar would be displayed
+
+    }
+
+
 }
 
 class FlowerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -129,4 +164,18 @@ class FlowerViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         intent.putExtra("ItemTypeId",ItemTypeId);
         context.startActivity(intent);
     }
+
+
+}
+
+class LoadingViewHolder extends RecyclerView.ViewHolder {
+
+    ProgressBar progressBar;
+
+    public LoadingViewHolder(@NonNull View itemView) {
+        super(itemView);
+        progressBar = itemView.findViewById(R.id.progressBar);
+    }
+
+
 }
