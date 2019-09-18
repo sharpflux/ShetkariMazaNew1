@@ -36,21 +36,21 @@ public class RateDialogFragment extends AppCompatDialogFragment {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     List<RateData> ratelist;
-    String ItemTypeId,VarityId,QualityId;
+    String ItemTypeId="",VarityId="",QualityId="";
     Bundle extras;
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-        ItemTypeId="";
-        VarityId="";
-        QualityId="";
         AlertDialog.Builder builder= new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view =inflater.inflate(R.layout.custom_rate_layout,null);
+        View view =inflater.inflate(R.layout.rate_recyclerview,null);
+
+        ratelist=new ArrayList<>();
+        recyclerView = (RecyclerView) view.findViewById(R.id.edit_rvrate);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        ratelist=new ArrayList<>();
+
         builder.setView(view)
                 .setTitle("Rate Guide")
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -61,7 +61,6 @@ public class RateDialogFragment extends AppCompatDialogFragment {
         });
 
         extras = new Bundle();
-
         if (extras != null) {
             ItemTypeId = getArguments().getString("ItemTypeId");
             VarityId = getArguments().getString("VarityId");
@@ -72,7 +71,7 @@ public class RateDialogFragment extends AppCompatDialogFragment {
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_RATE + "ItemTypeId=" + ItemTypeId + "&VarietyId=" + VarityId +"&QualityId=" + QualityId,
+                URLs.URL_RATE + "ItemTypeId=" + "1" + "&VarietyId=" + "164" +"&QualityId=" + "3",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

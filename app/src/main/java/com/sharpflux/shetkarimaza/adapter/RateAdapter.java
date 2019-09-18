@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sharpflux.shetkarimaza.R;
@@ -28,7 +29,7 @@ public class RateAdapter extends RecyclerView.Adapter<RateAdapterViewHolder> {
     @NonNull
     @Override
     public RateAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View mView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.custom_similar_list, viewGroup, false);
+        View mView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.custom_rate_layout, viewGroup, false);
         return new RateAdapterViewHolder(mView);
     }
 
@@ -43,17 +44,20 @@ public class RateAdapter extends RecyclerView.Adapter<RateAdapterViewHolder> {
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mlist.size();
     }
 }
-class RateAdapterViewHolder extends RecyclerView.ViewHolder {
+class RateAdapterViewHolder  extends RecyclerView.ViewHolder  {
 
     TextView mfrom,mto,mrate;
-    public RateAdapterViewHolder(@NonNull View itemView) {
+    RateAdapterViewHolder(View itemView) {
         super(itemView);
+
         mfrom = itemView.findViewById(R.id.tv_from);
         mto = itemView.findViewById(R.id.tv_to);
         mrate = itemView.findViewById(R.id.rate);
 
     }
+
+
 }

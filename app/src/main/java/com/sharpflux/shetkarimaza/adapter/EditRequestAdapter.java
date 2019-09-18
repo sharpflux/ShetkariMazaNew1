@@ -55,8 +55,6 @@ public class EditRequestAdapter extends RecyclerView.Adapter<EditRequesViewHolde
             @Override
             public void onClick(View v) {
                 Context context=v.getContext();
-
-
                 Intent i= new Intent(context, ProductInfoForSaleActivity.class);
                 i.putExtra("Type","flag");
                 i.putExtra("ItemName",mlist.get(currentPosition).getName());
@@ -117,7 +115,7 @@ abstract class EditRequesViewHolder extends RecyclerView.ViewHolder implements V
         mQuality = itemView.findViewById(R.id.row_cartlist_tvQuality);
         mPrice = itemView.findViewById(R.id.row_cartlist_tvPrice);
         btn_update = itemView.findViewById(R.id.btn_update);
-        btnCancel = itemView.findViewById(R.id.btn_update);
+        btnCancel = itemView.findViewById(R.id.btnCancel);
         itemView.setOnClickListener(this);
 
 
