@@ -35,6 +35,7 @@ import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.MyCursorAdapter;
 import com.sharpflux.shetkarimaza.model.SaveProductInfo;
 import com.sharpflux.shetkarimaza.model.User;
+import com.sharpflux.shetkarimaza.sqlite.SQLiteDatabaseHelper;
 import com.sharpflux.shetkarimaza.sqlite.UserInfoDBManager;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 import com.sharpflux.shetkarimaza.volley.URLs;
@@ -78,7 +79,8 @@ public class AddListActivity extends AppCompatActivity {
     Document doc;
     String xmlImg;
     Bitmap bitmap;
-    ImageView ImgageAddList;
+    SQLiteDatabaseHelper database;
+    ImageView row_cartlist_ivDelete;
     private String fromColumnArr[] = {UserInfoDBManager.productType, UserInfoDBManager.productVariety, UserInfoDBManager.quality, UserInfoDBManager.expectedPrice};
     CheckBox itemCheckbox;
     private final int toViewIdArr[] = {R.id.user_account_list_item_id, R.id.user_account_list_item_user_name, R.id.user_account_list_item_password, R.id.user_account_list_item_email};
@@ -92,6 +94,7 @@ public class AddListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_list);
         builder = new StringBuilder();
         btnsubmit = findViewById(R.id.btnSubmitDb);
+        row_cartlist_ivDelete = findViewById(R.id.row_cartlist_ivDelete);
 
         userAccountListView = (ListView) findViewById(R.id.user_account_list_view);
         userAccountListEmptyTextView = (TextView) findViewById(R.id.user_account_list_empty_text_view);
@@ -172,7 +175,7 @@ public class AddListActivity extends AppCompatActivity {
                 userAccountDto.setImagename(image);
 
                 // Get checkbox object.
-                itemCheckbox = (CheckBox) view.findViewById(R.id.user_account_list_item_checkbox);
+             //   itemCheckbox = (CheckBox) view.findViewById(R.id.user_account_list_item_checkbox);
                 boolean checkboxChecked = false;
                 if (itemCheckbox.isChecked()) {
                     itemCheckbox.setChecked(false);
@@ -200,7 +203,12 @@ public class AddListActivity extends AppCompatActivity {
 
             }
         });
+
+
+
     }
+
+
 
     private String getUserCheckedItemIds() {
         StringBuffer retBuf = new StringBuffer();

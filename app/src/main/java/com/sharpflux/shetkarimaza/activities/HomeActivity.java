@@ -158,14 +158,14 @@ public class HomeActivity extends AppCompatActivity
 
     private void setDynamicFragmentToTabLayout() {
 
-        CustomProgressDialog.showSimpleProgressDialog(this, "Loading...", "Fetching data", false);
+//        CustomProgressDialog.showSimpleProgressDialog(this, "Loading...", "Fetching data", false);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_RECYCLER + myLocale,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
 
-                            CustomProgressDialog.removeSimpleProgressDialog();
+                           // CustomProgressDialog.removeSimpleProgressDialog();
                             JSONArray obj = new JSONArray(response);
                             for (int i = 0; i < obj.length(); i++) {
 

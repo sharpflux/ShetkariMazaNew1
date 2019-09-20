@@ -137,13 +137,24 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <CheckBox
+            <ImageView
+                android:id="@+id/row_cartlist_ivDelete"
+                android:layout_width="54dp"
+                android:layout_height="58dp"
+                android:layout_gravity="end"
+                android:padding="@dimen/_5sdp"
+                android:src="@drawable/ic_delete_forever"
+
+                />
+
+
+           <!-- <CheckBox
                 android:id="@+id/user_account_list_item_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:clickable="false"
-                android:focusable="false" />
+                android:focusable="false" />-->
 
             <!--<ImageView
                 android:background="@drawable/edit"

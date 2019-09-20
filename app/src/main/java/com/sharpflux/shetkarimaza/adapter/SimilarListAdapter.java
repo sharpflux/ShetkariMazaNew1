@@ -42,7 +42,7 @@ public class SimilarListAdapter extends RecyclerView.Adapter<SimilarListViewHold
         holder.mName.setText(mlist.get(position).getName());
         holder.mvarity.setText(mlist.get(position).getVarietyName());
         holder.mQuality.setText(mlist.get(position).getQuality().toString());
-        holder.mPrice.setText(String.valueOf( mlist.get(currentPosition).getPrice()));
+        holder.mPrice.setText(String.valueOf( mlist.get(position).getPrice()));
     }
 
     @Override

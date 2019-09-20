@@ -1,11 +1,25 @@
 package com.sharpflux.shetkarimaza.activities;
 
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -16,6 +30,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.SimilarListAdapter;
 import com.sharpflux.shetkarimaza.model.SimilarList;
+import com.sharpflux.shetkarimaza.sqlite.SQLiteDatabaseHelper;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
@@ -23,10 +38,23 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+
+import jxl.Workbook;
+import jxl.WorkbookSettings;
+import jxl.write.Label;
+import jxl.write.WritableCellFormat;
+import jxl.write.WritableFont;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
+import jxl.write.biff.RowsExceededException;
 
 public class AllSimilarDataActivity extends AppCompatActivity {
 
@@ -34,7 +62,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     List<SimilarList> productlist;
     Bundle bundle;
-    String TalukaId = "", VarityId = "", QualityId = "", ItemTypeId = "",StatesID = "",DistrictId="";
+    String TalukaId = "", VarityId = "", QualityId = "", ItemTypeId = "", StatesID = "", DistrictId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +81,8 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         AllSimilarDataActivity.AsyncTaskRunner runner = new AllSimilarDataActivity.AsyncTaskRunner();
         String sleepTime = "10";
         runner.execute(sleepTime);
+
+
     }
 
 
@@ -69,52 +99,43 @@ public class AllSimilarDataActivity extends AppCompatActivity {
             DistrictId = bundle.getString("DistrictId");
         }
         if (bundle != null) {
-            if (TalukaId!=null) {
+            if (TalukaId != null) {
                 if (TalukaId.equals(""))
                     TalukaId = "0";
-            }
-            else {
+            } else {
                 TalukaId = "0";
             }
 
-            if (VarityId!=null) {
+            if (VarityId != null) {
                 if (VarityId.equals(""))
                     VarityId = "0";
-            }
-            else {
+            } else {
                 VarityId = "0";
             }
-            if (QualityId!=null) {
+            if (QualityId != null) {
                 if (QualityId.equals(""))
                     QualityId = "0";
-            }
-            else {
+            } else {
                 QualityId = "0";
             }
-            if (StatesID!=null) {
+            if (StatesID != null) {
                 if (StatesID.equals(""))
                     StatesID = "0";
-            }
-            else {
+            } else {
                 StatesID = "0";
             }
-            if (DistrictId!=null) {
+            if (DistrictId != null) {
                 if (DistrictId.equals(""))
                     DistrictId = "0";
-            }
-            else {
+            } else {
                 DistrictId = "0";
             }
-            if (TalukaId!=null) {
+            if (TalukaId != null) {
                 if (TalukaId.equals(""))
                     TalukaId = "0";
-            }
-            else {
+            } else {
                 TalukaId = "0";
             }
-
-
-
 
             StringRequest stringRequest = new StringRequest(Request.Method.GET,
                     URLs.URL_REQESTS + "?StartIndex=1&PageSize=50&ItemTypeId=" + ItemTypeId + "&VarityId=" + VarityId + "&StateId=0&DistrictId=0&QualityId=" + QualityId + "&TalukaId=" + TalukaId,
@@ -134,16 +155,16 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                                                         userJson.getString("ItemName"),
                                                         userJson.getString("VarietyName"),
                                                         userJson.getString("QualityType"),
-                                                        String.valueOf(  userJson.getDouble("ExpectedPrice")),
-                                                       "",
-                                                        "",
-                                                        "",
-                                                        "",
-                                                        "",
-                                                        "",
-                                                        "",
-                                                        "",
-                                                        "",
+                                                        String.valueOf(userJson.getDouble("AvailableQuantity")),
+                                                        userJson.getString("MeasurementType"),
+                                                        String.valueOf(userJson.getDouble("ExpectedPrice")),
+                                                        userJson.getString("AvailableMonths"),
+                                                        userJson.getString("FarmAddress"),
+                                                        userJson.getString("StatesName"),
+                                                        userJson.getString("DistrictName"),
+                                                        userJson.getString("TalukaName"),
+                                                        userJson.getString("VillageName"),
+                                                        userJson.getString("Hector"),
                                                         "",
                                                         "",
                                                         "",
@@ -156,6 +177,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                                                 );
 
                                         productlist.add(sellOptions);
+                                        productlist.size();
                                     } else {
                                         Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
                                     }
@@ -227,4 +249,151 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         }
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_download, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_download) {
+            exportToExcel();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void exportToExcel() {
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            // Do the file write
+
+            final String fileName = "MyOrderList.xls";
+
+            //Saving file in external storage
+            File sdCard = Environment.getExternalStorageDirectory();
+            File directory = new File(sdCard.getAbsolutePath() + "/shetkrimaza");
+
+            //create directory if not exist
+            if (!directory.isDirectory()) {
+                directory.mkdirs();
+            }
+
+            //file path
+            File file = new File(directory, fileName);
+
+            // File file = new File(Environment.getExternalStorageDirectory()+ "/filepath/" + filename);
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            //intent.setDataAndType(Uri.fromFile(file),"application/vnd.ms-excel");//old version
+            //above 24 api new version
+            Uri apkURI = FileProvider.getUriForFile(
+                    AllSimilarDataActivity.this,
+                    this.getApplicationContext()
+                            .getPackageName() + ".fileprovider", file);
+            intent.setDataAndType(apkURI, "application/vnd.ms-excel");
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivityForResult(intent, 0);
+               // startActivity(intent);
+            } else {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(AllSimilarDataActivity.this);
+                builder.setCancelable(false);
+                builder.setTitle("File downloaded Successfully...");
+                //builder.setMessage("You don't have excel Application!Please download it!");
+                builder.setMessage("Go to shetkarimaza folder to your phone storage!");
+
+                builder.setIcon(R.drawable.ic_check_circle);
+
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+
+
+            WorkbookSettings wbSettings = new WorkbookSettings();
+            wbSettings.setLocale(new Locale("en", "EN"));
+            WritableWorkbook workbook;
+
+            try {
+
+                WritableFont titleFont = new WritableFont(WritableFont.TIMES, 10, WritableFont.BOLD, false);
+                WritableCellFormat titleformat = new WritableCellFormat(titleFont);
+                workbook = Workbook.createWorkbook(file, wbSettings);
+                //Excel sheet name. 0 represents first sheet
+                WritableSheet sheet = workbook.createSheet("MyOrder List", 0);
+
+                try {
+
+                   // sheet.addCell(new Label(0, 0, "Domain name", titleformat));
+                    sheet.addCell(new Label(0, 0, "Item Name",titleformat)); // column and row
+                    sheet.addCell(new Label(1, 0, "Variety Name",titleformat));
+                    sheet.addCell(new Label(2, 0, "Available Quality",titleformat));
+                    sheet.addCell(new Label(3, 0, "Available Quantity",titleformat));
+                    sheet.addCell(new Label(4, 0, "Unit",titleformat));
+                    sheet.addCell(new Label(5, 0, "Price per unit",titleformat));
+                    sheet.addCell(new Label(6, 0, "Available(month)",titleformat));
+                    sheet.addCell(new Label(7, 0, "Firm Address",titleformat));
+                    sheet.addCell(new Label(8, 0, "Survey No.",titleformat));
+                    sheet.addCell(new Label(9, 0, "State",titleformat));
+                    sheet.addCell(new Label(10, 0, "District",titleformat));
+                    sheet.addCell(new Label(11, 0, "Taluka",titleformat));
+                    sheet.addCell(new Label(12, 0, "Village",titleformat));
+                    sheet.addCell(new Label(13, 0, "Area in hector",titleformat));
+
+                    int j=1 ;
+
+                    for (int i = 0; i < productlist.size(); i++) {
+
+                        sheet.addCell(new Label(0, j, productlist.get(i).getName()));
+                        sheet.addCell(new Label(1, j, productlist.get(i).getVarietyName()));
+                        sheet.addCell(new Label(2, j, productlist.get(i).getQuality()));
+                        sheet.addCell(new Label(3, j, productlist.get(i).getQuantity()));
+                        sheet.addCell(new Label(4, j, productlist.get(i).getUnit()));
+                        sheet.addCell(new Label(5, j, productlist.get(i).getPrice()));
+                        sheet.addCell(new Label(6, j, productlist.get(i).getAvailable_month()));
+                        sheet.addCell(new Label(7, j, productlist.get(i).getFarm_address()));
+                        sheet.addCell(new Label(8, j, productlist.get(i).getState()));
+                        sheet.addCell(new Label(9, j, productlist.get(i).getState()));
+                        sheet.addCell(new Label(10, j, productlist.get(i).getDistrict()));
+                        sheet.addCell(new Label(11, j, productlist.get(i).getTaluka()));
+                        sheet.addCell(new Label(12, j, productlist.get(i).getVillage()));
+                        sheet.addCell(new Label(13, j, productlist.get(i).getHector()));
+
+                        j++;
+                    }
+
+                } catch (RowsExceededException e) {
+                    e.printStackTrace();
+                } catch (WriteException e) {
+                    e.printStackTrace();
+                }
+                workbook.write();
+                try {
+                    workbook.close();
+                } catch (WriteException e) {
+                    e.printStackTrace();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            // Request permission from the user
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+
+        }
+    }
+
+
 }

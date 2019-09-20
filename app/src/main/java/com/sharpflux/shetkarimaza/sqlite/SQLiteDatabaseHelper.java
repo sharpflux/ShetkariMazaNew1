@@ -1,6 +1,7 @@
 package com.sharpflux.shetkarimaza.sqlite;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
@@ -107,4 +108,13 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper {
     public void setCreateTableSqlList(List<String> createTableSqlList) {
         this.createTableSqlList = createTableSqlList;
     }
+
+   public int DeleteRecord(String userCheckedItemIds){
+       SQLiteDatabase db = this.getWritableDatabase();
+       return db.delete(String.valueOf(tableNameList), "ITEMID = ?",new String[] {userCheckedItemIds});
+
+    }
+
+
+
 }

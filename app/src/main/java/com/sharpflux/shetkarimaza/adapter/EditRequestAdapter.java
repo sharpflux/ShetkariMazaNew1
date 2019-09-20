@@ -15,6 +15,7 @@ import com.sharpflux.shetkarimaza.activities.AddListActivity;
 import com.sharpflux.shetkarimaza.activities.HomeActivity;
 import com.sharpflux.shetkarimaza.activities.ProductInfoForSaleActivity;
 import com.sharpflux.shetkarimaza.model.SimilarList;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -44,8 +45,8 @@ public class EditRequestAdapter extends RecyclerView.Adapter<EditRequesViewHolde
     @Override
     public void onBindViewHolder(final EditRequesViewHolder holder,final int currentPosition) {
 
-      //  if (!mlist.get(i).getImageUrl().equals(""))
-          //  Picasso.get().load(mlist.get(i).getImageUrl()).resize(300, 300).into(editRequesViewHolder.mImage);
+        if (!mlist.get(currentPosition).getImageUrl().equals(""))
+        Picasso.get().load(mlist.get(currentPosition).getImageUrl()).resize(300, 300).into(holder.mImage);
         holder.mName.setText(mlist.get(currentPosition).getName());
         holder.mvarity.setText(mlist.get(currentPosition).getVarietyName());
         holder.mQuality.setText(String.valueOf(  mlist.get(currentPosition).getQuality()));

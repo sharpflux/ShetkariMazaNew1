@@ -150,6 +150,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     Bundle extras;
     public String ClickedImage;
     String itemId, varityId, qualityid;
+    double total;
 
 
     @Override
@@ -246,21 +247,22 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         fetcher = new DataFetcher(sellOptions, customDialog, list, ProductInfoForSaleActivity.this);
 
 
-        edtTotalamt.setOnClickListener(new View.OnClickListener() {
+        edtExpectedPrice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String quantity = edtAQuantity.getText().toString();
                 double quant = Double.parseDouble(quantity);
 
-                String unit = edtUnit.getText().toString();
 
                 String expectedPrice = edtExpectedPrice.getText().toString();
                 double priceperunit = Double.parseDouble(expectedPrice);
 
-                double total = quant * priceperunit;
+                 total = quant * priceperunit;
                 edtTotalamt.setText(total + "₹");
             }
         });
+
+
         edtavailablityInMonths.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
