@@ -22,7 +22,8 @@ public class SimilarListAdapter extends RecyclerView.Adapter<SimilarListViewHold
 
     private Context mContext;
     private List<SimilarList> mlist;
-
+    private final int VIEW_TYPE_ITEM = 0;
+    private final int VIEW_TYPE_LOADING = 1;
     private static int currentPosition = 0;
 
     public SimilarListAdapter(Context mContext, List<SimilarList> mlist) {
@@ -47,8 +48,14 @@ public class SimilarListAdapter extends RecyclerView.Adapter<SimilarListViewHold
 
     @Override
     public int getItemCount() {
-        return mlist.size();
+        return   mlist == null ? 0 : mlist.size();
     }
+
+    @Override
+    public int getItemViewType(int position) {
+        return mlist.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+    }
+
 }
 
 class SimilarListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

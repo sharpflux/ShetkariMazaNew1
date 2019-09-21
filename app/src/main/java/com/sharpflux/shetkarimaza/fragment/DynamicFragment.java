@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -48,6 +49,8 @@ public class DynamicFragment extends Fragment {
     SearchView searchView;
     MyBuyerAdapter myAdapter;
     boolean isLoading = false;
+    int currentItems,totalItems,scrollOutItems;
+    GridLayoutManager mGridLayoutManager;
 
     public static DynamicFragment newInstance() {
         return new DynamicFragment();
@@ -65,14 +68,38 @@ public class DynamicFragment extends Fragment {
         View view = inflater.inflate(R.layout.dynamic_fragment_layout, container, false);
 
         mRecyclerView = view.findViewById(R.id.recyclerview);
-
-        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getContext(), 2);
-
+         mGridLayoutManager = new GridLayoutManager(getContext(), 2);
         mRecyclerView.setLayoutManager(mGridLayoutManager);
 
         CategoryId = String.valueOf(getArguments().getString("CategoryId"));
         searchView = view.findViewById(R.id.searchViewHome);
 
+
+        /*mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if(newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL)
+                {
+                    isLoading = true;
+                }
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                currentItems =mGridLayoutManager.getChildCount();
+                totalItems = mGridLayoutManager.getItemCount();
+                scrollOutItems = mGridLayoutManager.findFirstVisibleItemPosition();
+
+                if(isLoading&&(currentItems + scrollOutItems==totalItems)){
+
+                }
+
+            }
+        });*/
 
         productlist = new ArrayList<>();
         myLocale = getResources().getConfiguration().locale;
