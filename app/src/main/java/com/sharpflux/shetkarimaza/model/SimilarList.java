@@ -2,6 +2,8 @@ package com.sharpflux.shetkarimaza.model;
 
 public class SimilarList {
     private String ImageUrl;
+    private String FullName;
+    private String MobileNo;
     private String name;
     private String VarietyName;
     private String Quality;
@@ -25,12 +27,14 @@ public class SimilarList {
     private String RequstId;
 
 
-    public SimilarList(String imageUrl, String name, String varietyName, String quality, String quantity,
-                       String unit, String price, String available_month, String farm_address, String state, String district,
-                       String taluka, String village, String hector, String itemTypeId,
-                       String varietyId, String qualityId, String measurementId,
-                       String stateId, String districtId, String talukaId, String requstId) {
+    public SimilarList(String imageUrl, String fullName, String mobileNo, String name,
+                       String varietyName, String quality, String quantity, String unit, String price,
+                       String available_month, String farm_address, String state, String district, String taluka,
+                       String village, String hector, String itemTypeId, String varietyId, String qualityId,
+                       String measurementId, String stateId, String districtId, String talukaId, String requstId) {
         ImageUrl = imageUrl;
+        FullName = fullName;
+        MobileNo = mobileNo;
         this.name = name;
         VarietyName = varietyName;
         Quality = quality;
@@ -54,15 +58,28 @@ public class SimilarList {
         RequstId = requstId;
     }
 
-    public SimilarList(String fromDates, String toDates, String rates) {
-    }
-
     public String getImageUrl() {
         return ImageUrl;
     }
 
     public void setImageUrl(String imageUrl) {
         ImageUrl = imageUrl;
+    }
+
+    public String getFullName() {
+        return FullName;
+    }
+
+    public void setFullName(String fullName) {
+        FullName = fullName;
+    }
+
+    public String getMobileNo() {
+        return MobileNo;
+    }
+
+    public void setMobileNo(String mobileNo) {
+        MobileNo = mobileNo;
     }
 
     public String getName() {

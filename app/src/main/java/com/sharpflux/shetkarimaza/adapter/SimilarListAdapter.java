@@ -2,11 +2,13 @@ package com.sharpflux.shetkarimaza.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,10 +42,21 @@ public class SimilarListAdapter extends RecyclerView.Adapter<SimilarListViewHold
     @Override
     public void onBindViewHolder(final SimilarListViewHolder holder, final int position) {
         Picasso.get().load(mlist.get(position).getImageUrl()).resize(300, 300).into(holder.mImage);
+        holder.mfullname.setText(mlist.get(position).getFullName());
+        holder.mMobNo.setText(mlist.get(position).getMobileNo());
         holder.mName.setText(mlist.get(position).getName());
         holder.mvarity.setText(mlist.get(position).getVarietyName());
         holder.mQuality.setText(mlist.get(position).getQuality().toString());
         holder.mPrice.setText(String.valueOf( mlist.get(position).getPrice()));
+
+        holder.mMobNo.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel",  holder.mMobNo.getText().toString(), null));
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -61,12 +74,15 @@ public class SimilarListAdapter extends RecyclerView.Adapter<SimilarListViewHold
 class SimilarListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
     ImageView mImage;
-    TextView mName,mvarity,mQuality,mPrice;
+    TextView mMobNo;
+    TextView mName,mfullname,mvarity,mQuality,mPrice;
 
     SimilarListViewHolder(View itemView) {
         super(itemView);
 
         mImage = itemView.findViewById(R.id.row_cartlist_ivProImg);
+        mfullname = itemView.findViewById(R.id.row_cartlist_FarmerName);
+        mMobNo = itemView.findViewById(R.id.row_cartlist_MobNo);
         mName = itemView.findViewById(R.id.row_cartlist_tvName);
         mvarity = itemView.findViewById(R.id.row_cartlist_tvVarity);
         mQuality = itemView.findViewById(R.id.row_cartlist_tvQuality);
@@ -81,5 +97,8 @@ class SimilarListViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         Intent intent;
         intent =  new Intent(context, ProductDetailsForBuyerActivity.class);
         context.startActivity(intent);*/
+      /*  Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("8605121954"));
+        v.getContext().startActivity(callIntent);*/
     }
 }/////

@@ -23,6 +23,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -75,6 +76,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
     private boolean isFirstLoad = false;
     private int totalPage = 10;
     int itemCount = 0;
+    ProgressBar progressBar_filter;
 
 
     public static final int PAGE_START = 1;
@@ -93,7 +95,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         List<SimilarList> mList = new ArrayList<>();
 
         recyclerView.setAdapter(myAdapter);
-
+        progressBar_filter = findViewById(R.id.progressBar_filter);
 
         myAdapter = new SimilarListAdapter(AllSimilarDataActivity.this, mList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -116,6 +118,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
                 if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
                     // isLoading = true;
+                    progressBar_filter.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -139,8 +142,13 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                         runner.execute(sleepTime);
                         isLoading = true;
                         myAdapter.notifyDataSetChanged();
+                        isLoading = false;
+                        progressBar_filter.setVisibility(View.GONE);
+
                     }
+
                 }
+
 
 
             /*    if (isLoading && (currentItems + scrollOutItems == totalItems)) {
@@ -153,7 +161,9 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                 }*/
 
             }
+
         });
+
 
 
     }
@@ -227,6 +237,8 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                                         sellOptions = new SimilarList
                                                 (
                                                         userJson.getString("ImageUrl"),
+                                                        userJson.getString("FullName"),
+                                                        userJson.getString("MobileNo"),
                                                         userJson.getString("ItemName"),
                                                         userJson.getString("VarietyName"),
                                                         userJson.getString("QualityType"),
@@ -261,7 +273,10 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                                     myAdapter = new SimilarListAdapter(AllSimilarDataActivity.this, productlist);
                                     recyclerView.setAdapter(myAdapter);
                                     isLoading = false;
-
+                                    if (productlist.size() > 10)
+                                        recyclerView.scrollToPosition(productlist.size() - 10);
+                                    int scrollPosition = productlist.size();
+                                    myAdapter.notifyItemRemoved(scrollPosition);
                                 }
 
                             } catch (JSONException e) {
@@ -310,14 +325,14 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.dismiss();
+         //   progressDialog.dismiss();
         }
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(AllSimilarDataActivity.this,
+           /* progressDialog = ProgressDialog.show(AllSimilarDataActivity.this,
                     "Loading...",
-                    "");
+                    "");*/
         }
 
         @Override
@@ -411,43 +426,45 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
                 try {
 
-                    sheet.addCell(new Label(0, 0, "Full Name", titleformat));
-                    sheet.addCell(new Label(1, 0, "Mobile No.", titleformat));
-                    sheet.addCell(new Label(2, 0, "Item Name", titleformat)); // column and row
-                    sheet.addCell(new Label(3, 0, "Variety Name", titleformat));
-                    sheet.addCell(new Label(4, 0, "Available Quality", titleformat));
-                    sheet.addCell(new Label(5, 0, "Available Quantity", titleformat));
-                    sheet.addCell(new Label(6, 0, "Unit", titleformat));
-                    sheet.addCell(new Label(7, 0, "Price per unit", titleformat));
-                    sheet.addCell(new Label(8, 0, "Available(month)", titleformat));
-                    sheet.addCell(new Label(9, 0, "Firm Address", titleformat));
-                    sheet.addCell(new Label(10, 0, "Survey No.", titleformat));
-                    sheet.addCell(new Label(11, 0, "State", titleformat));
-                    sheet.addCell(new Label(12, 0, "District", titleformat));
-                    sheet.addCell(new Label(13, 0, "Taluka", titleformat));
-                    sheet.addCell(new Label(14, 0, "Village", titleformat));
-                    sheet.addCell(new Label(15, 0, "Area in hector", titleformat));
+
+                    sheet.addCell(new Label(0, 0, "Item Name", titleformat)); // column and row
+                    sheet.addCell(new Label(1, 0, "Variety Name", titleformat));
+                    sheet.addCell(new Label(2, 0, "Available Quality", titleformat));
+                    sheet.addCell(new Label(3, 0, "Available Quantity", titleformat));
+                    sheet.addCell(new Label(4, 0, "Unit", titleformat));
+                    sheet.addCell(new Label(5, 0, "Price per unit", titleformat));
+                    sheet.addCell(new Label(6, 0, "Available(month)", titleformat));
+                    sheet.addCell(new Label(7, 0, "Firm Address", titleformat));
+                    sheet.addCell(new Label(8, 0, "Survey No.", titleformat));
+                    sheet.addCell(new Label(9, 0, "State", titleformat));
+                    sheet.addCell(new Label(10, 0, "District", titleformat));
+                    sheet.addCell(new Label(11, 0, "Taluka", titleformat));
+                    sheet.addCell(new Label(12, 0, "Village", titleformat));
+                    sheet.addCell(new Label(13, 0, "Area in hector", titleformat));
+                    sheet.addCell(new Label(14, 0, "Full Name", titleformat));
+                    sheet.addCell(new Label(15, 0, "Mobile No.", titleformat));
 
                     int j = 1;
 
                     for (int i = 0; i < productlist.size(); i++) {
 
-                        sheet.addCell(new Label(0, j, ""));
-                        sheet.addCell(new Label(1, j, ""));
-                        sheet.addCell(new Label(2, j, productlist.get(i).getName()));
-                        sheet.addCell(new Label(3, j, productlist.get(i).getVarietyName()));
-                        sheet.addCell(new Label(4, j, productlist.get(i).getQuality()));
-                        sheet.addCell(new Label(5, j, productlist.get(i).getQuantity()));
-                        sheet.addCell(new Label(6, j, productlist.get(i).getUnit()));
-                        sheet.addCell(new Label(7, j, productlist.get(i).getPrice()));
-                        sheet.addCell(new Label(8, j, productlist.get(i).getAvailable_month()));
-                        sheet.addCell(new Label(9, j, productlist.get(i).getFarm_address()));
-                        sheet.addCell(new Label(10, j, productlist.get(i).getState()));
-                        sheet.addCell(new Label(11, j, productlist.get(i).getState()));
-                        sheet.addCell(new Label(12, j, productlist.get(i).getDistrict()));
-                        sheet.addCell(new Label(13, j, productlist.get(i).getTaluka()));
-                        sheet.addCell(new Label(14, j, productlist.get(i).getVillage()));
-                        sheet.addCell(new Label(15, j, productlist.get(i).getHector()));
+
+                        sheet.addCell(new Label(0, j, productlist.get(i).getName()));
+                        sheet.addCell(new Label(1, j, productlist.get(i).getVarietyName()));
+                        sheet.addCell(new Label(2, j, productlist.get(i).getQuality()));
+                        sheet.addCell(new Label(3, j, productlist.get(i).getQuantity()));
+                        sheet.addCell(new Label(4, j, productlist.get(i).getUnit()));
+                        sheet.addCell(new Label(5, j, productlist.get(i).getPrice()));
+                        sheet.addCell(new Label(6, j, productlist.get(i).getAvailable_month()));
+                        sheet.addCell(new Label(7, j, productlist.get(i).getFarm_address()));
+                        sheet.addCell(new Label(8, j, productlist.get(i).getState()));
+                        sheet.addCell(new Label(9, j, productlist.get(i).getState()));
+                        sheet.addCell(new Label(10, j, productlist.get(i).getDistrict()));
+                        sheet.addCell(new Label(11, j, productlist.get(i).getTaluka()));
+                        sheet.addCell(new Label(12, j, productlist.get(i).getVillage()));
+                        sheet.addCell(new Label(13, j, productlist.get(i).getHector()));
+                        sheet.addCell(new Label(14, j, productlist.get(i).getFullName()));
+                        sheet.addCell(new Label(15, j, productlist.get(i).getMobileNo()));
 
                         j++;
                     }

@@ -76,6 +76,8 @@ public class EditRequestActivity extends AppCompatActivity {
                                     SimilarList sellOptions;
                                     sellOptions = new SimilarList
                                                     (userJson.getString("ImageUrl"),
+                                                    "",
+                                                    "",
                                                     userJson.getString("ItemName"),
                                                     userJson.getString("VarietyName"),
                                                     userJson.getString("QualityType"),
