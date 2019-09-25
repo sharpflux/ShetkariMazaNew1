@@ -999,7 +999,8 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         };
 
       //  requestQueue.add(stringRequest);
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS *
+
+       stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS *
                 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         VolleySingleton.getInstance(ProductInfoForSaleActivity.this).addToRequestQueue(stringRequest);
