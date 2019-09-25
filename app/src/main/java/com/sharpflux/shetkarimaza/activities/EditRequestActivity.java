@@ -29,6 +29,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static java.security.AccessController.getContext;
@@ -38,6 +39,7 @@ public class EditRequestActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     List<SimilarList> productlist;
     Bundle bundle;
+    Locale myLocale;
     int userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,8 @@ public class EditRequestActivity extends AppCompatActivity {
         EditRequestAdapter myAdapter = new EditRequestAdapter(EditRequestActivity.this, mList);
         recyclerView.setAdapter(myAdapter);
 
+        myLocale = getResources().getConfiguration().locale;
+
 
         EditRequestActivity.AsyncTaskRunner runner = new EditRequestActivity.AsyncTaskRunner();
         String sleepTime = "10";
@@ -64,7 +68,7 @@ public class EditRequestActivity extends AppCompatActivity {
         userId = user.getId();
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_ORDERDETAILS+userId,
+                URLs.URL_ORDERDETAILS+userId+"&Language="+myLocale,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -145,9 +149,8 @@ public class EditRequestActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             publishProgress("Sleeping..."); // Calls onProgressUpdate()
             try {
-                int time = Integer.parseInt(params[0]) * 1000;
                 loadProducts();
-               // Thread.sleep(time);
+                Thread.sleep(2000);
                 resp = "Slept for " + params[0] + " seconds";
             } catch (Exception e) {
                 e.printStackTrace();

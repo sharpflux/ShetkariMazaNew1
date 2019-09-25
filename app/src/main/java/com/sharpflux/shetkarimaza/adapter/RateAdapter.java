@@ -38,6 +38,7 @@ public class RateAdapter extends RecyclerView.Adapter<RateAdapterViewHolder> {
         holder.mfrom.setText(mlist.get(i).getFromdate());
         holder.mto.setText(mlist.get(i).getTodate());
         holder.mrate.setText(mlist.get(i).getRate());
+        holder.munit.setText(mlist.get(i).getUnit());
 
 
     }
@@ -49,13 +50,14 @@ public class RateAdapter extends RecyclerView.Adapter<RateAdapterViewHolder> {
 }
 class RateAdapterViewHolder  extends RecyclerView.ViewHolder  {
 
-    TextView mfrom,mto,mrate;
+    TextView mfrom,mto,mrate,munit;
     RateAdapterViewHolder(View itemView) {
         super(itemView);
 
         mfrom = itemView.findViewById(R.id.tv_from);
         mto = itemView.findViewById(R.id.tv_to);
         mrate = itemView.findViewById(R.id.rate);
+        munit = itemView.findViewById(R.id.rate_unit);
 
     }
 

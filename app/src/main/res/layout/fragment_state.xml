@@ -26,6 +26,7 @@
         android:id="@+id/searchViewState"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/edit"
         android:queryHint="@string/search_here"
         android:iconifiedByDefault="false"
         android:layout_alignParentTop="true"

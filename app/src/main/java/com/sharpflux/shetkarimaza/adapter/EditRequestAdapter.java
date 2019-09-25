@@ -58,6 +58,7 @@ public class EditRequestAdapter extends RecyclerView.Adapter<EditRequesViewHolde
                 Context context=v.getContext();
                 Intent i= new Intent(context, ProductInfoForSaleActivity.class);
                 i.putExtra("Type","flag");
+                i.putExtra("ImageUrl",mlist.get(currentPosition).getImageUrl());
                 i.putExtra("ItemName",mlist.get(currentPosition).getName());
                 i.putExtra("VarietyName",mlist.get(currentPosition).getVarietyName());
                 i.putExtra("QualityType",mlist.get(currentPosition).getQuality());

@@ -9,10 +9,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.CountDownTimer;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -23,6 +25,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -33,9 +36,11 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.customviews.CustomRecyclerViewDialog;
 import com.sharpflux.shetkarimaza.fragment.RateDialogFragment;
@@ -92,7 +97,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     Locale myLocale;
     String ProductId, productTypeId, productVarietyId, qualityId, unitId, monthId, stateId, districtId, talukaId;
     String StateId;
-    private String UserId;
+    private String UserId,RequstId;
     private Integer userid;
     ProgressDialog mProgressDialog;
     public String ImageUrl;
@@ -102,6 +107,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     AlertDialog alertDialog;
     private View parentView;
     private GridView listView;
+    ImageView imageView;
     String ItemTypeId = "", VarityId = "", QualityId = "";
     // private ProgressBar mProgressBar;
     private Button btnChoose;
@@ -209,6 +215,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         btnAdd = findViewById(R.id.btnAdd);
         btnAddMore = findViewById(R.id.btnAddMore);
         tv_rate = findViewById(R.id.tv_rate);
+      //  imageView = findViewById(R.id.imageView);
 
 
         parentView = findViewById(R.id.parent_layout);
@@ -341,9 +348,10 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         btnFormSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AsyncTaskRunner runner = new AsyncTaskRunner();
+                /*AsyncTaskRunner runner = new AsyncTaskRunner();
                 String sleepTime = "Update";
-                runner.execute(sleepTime);
+                runner.execute(sleepTime);*/
+                submitToDb();
             }
         });
         tv_rate.setOnClickListener(new View.OnClickListener() {
@@ -379,6 +387,13 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
         extras = getIntent().getExtras();
         if (extras != null) {
+
+
+            String ImageUrl = extras.getString("ImageUrl");
+           /* byte[] decodedString = Base64.decode(ImageUrl, Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            img_banner_profile_placeholder.setImageBitmap(decodedByte);
+*/
             String ItemName = extras.getString("ItemName");
             edtproductType.setText(ItemName);
             String VarietyName = extras.getString("VarietyName");
@@ -419,7 +434,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
             hideDistrictId.setText(DistrictId);
             String TalukaId = extras.getString("TalukaId");
             hideTalukaId.setText(TalukaId);
-            String RequstId = extras.getString("RequstId");
+            RequstId = extras.getString("RequstId");
             hideRequstId.setText(RequstId);
 
             if (extras.getString("Type") != null) {
@@ -629,6 +644,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         b.putString("ItemTypeId", hidItemTypeId.getText().toString());
         b.putString("VarityId",  hidVarietyId.getText().toString());
         b.putString("QualityId",  hidQualityId.getText().toString());
+        b.putString("MeasurementType",  edtUnit.getText().toString());
         rateDialogFragment.setArguments(b);
         rateDialogFragment.show(getSupportFragmentManager(), "rateDialogFragment");
 
@@ -772,6 +788,10 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
     }
 
+
+
+
+
     public void EnableRuntimePermission() {
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(ProductInfoForSaleActivity.this,
@@ -891,7 +911,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
         builder.append("<Parent>");
         builder.append("<Assign>");
-        builder.append("<RequestId>" + "RequstId" + "</Id>");
+        builder.append("<RequestId>" + RequstId + "</Id>");
         builder.append("<UserId>" + UserId + "</UserId>");
         builder.append("<productTypeId>" + hidItemTypeId.getText() + "</productTypeId>");
         builder.append("<productVarietyId>" + hidVarietyId.getText() + "</productVarietyId>");
@@ -932,6 +952,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                         alert.show();
                     }
                 },
+
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
@@ -948,6 +969,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         };
 
         VolleySingleton.getInstance(ProductInfoForSaleActivity.this).addToRequestQueue(stringRequest);
+
 
     }
 }

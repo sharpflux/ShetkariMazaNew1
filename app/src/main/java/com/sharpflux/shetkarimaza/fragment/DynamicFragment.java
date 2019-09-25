@@ -249,7 +249,8 @@ public class DynamicFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(String result)
+        {
             progressDialog.dismiss();
         }
 

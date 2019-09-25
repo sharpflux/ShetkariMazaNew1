@@ -77,6 +77,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
     private int totalPage = 10;
     int itemCount = 0;
     ProgressBar progressBar_filter;
+    Locale myLocale;
 
 
     public static final int PAGE_START = 1;
@@ -103,6 +104,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(myAdapter);
 
+        myLocale = getResources().getConfiguration().locale;
 
         AllSimilarDataActivity.AsyncTaskRunner runner = new AllSimilarDataActivity.AsyncTaskRunner();
         String sleepTime = String.valueOf(currentPage);
@@ -222,7 +224,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
 
             StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                    URLs.URL_REQESTS + "?StartIndex=" + pageIndex + "&PageSize=" + PAGE_SIZE + "&ItemTypeId=" + ItemTypeId + "&VarityId=" + VarityId + "&StateId=" + StatesID + "&DistrictId=" + DistrictId + "&QualityId=" + QualityId + "&TalukaId=" + TalukaId,
+                    URLs.URL_REQESTS + "?StartIndex=" + pageIndex + "&PageSize=" + PAGE_SIZE + "&ItemTypeId=" + ItemTypeId + "&VarityId=" + VarityId + "&StateId=" + StatesID + "&DistrictId=" + DistrictId + "&QualityId=" + QualityId + "&TalukaId=" + TalukaId+"&Language="+myLocale,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {

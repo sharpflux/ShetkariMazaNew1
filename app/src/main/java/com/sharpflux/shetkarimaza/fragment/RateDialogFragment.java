@@ -36,7 +36,7 @@ public class RateDialogFragment extends AppCompatDialogFragment {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     List<RateData> ratelist;
-    String ItemTypeId="",VarityId="",QualityId="";
+    String ItemTypeId="",VarityId="",QualityId="",MeasurementType="";
     Bundle extras;
 
     @Override
@@ -65,6 +65,7 @@ public class RateDialogFragment extends AppCompatDialogFragment {
             ItemTypeId = getArguments().getString("ItemTypeId");
             VarityId = getArguments().getString("VarityId");
             QualityId = getArguments().getString("QualityId");
+       //    MeasurementType = getArguments().getString("MeasurementType");
         }
 
 
@@ -84,7 +85,8 @@ public class RateDialogFragment extends AppCompatDialogFragment {
                                     sellOptions = new RateData
                                             (userJson.getString("FromDates"),
                                                     userJson.getString("ToDates"),
-                                                    userJson.getString("Rates")
+                                                    userJson.getString("Rates"),
+                                                    userJson.getString("MeasurementType ")
                                             );
 
                                     ratelist.add(sellOptions);

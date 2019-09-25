@@ -4,12 +4,13 @@ public class RateData {
     private String fromdate;
     private String todate;
     private String rate;
+    private String unit;
 
-
-    public RateData(String fromdate, String todate, String rate) {
+    public RateData(String fromdate, String todate, String rate, String unit) {
         this.fromdate = fromdate;
         this.todate = todate;
         this.rate = rate;
+        this.unit = unit;
     }
 
     public String getFromdate() {
@@ -34,5 +35,13 @@ public class RateData {
 
     public void setRate(String rate) {
         this.rate = rate;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 }
