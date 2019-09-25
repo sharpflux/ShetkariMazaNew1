@@ -906,8 +906,19 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         }
     }
 
+    public void refreshAllContent(final long timetoupdate) {
+        new CountDownTimer(timetoupdate, 1000) {
+            public void onTick(long millisUntilFinished) {
+            }
+            public void onFinish() {
+                Log.i("SCROLLS ", "UPDATE CONTENT HERE ");
+                submitToDb();
+            }
+        }.start();
+    }
 
-    private void submitToDb() {
+
+   public void submitToDb() {
 
         builder.append("<Parent>");
         builder.append("<Assign>");
@@ -950,6 +961,8 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
                         AlertDialog alert = builder.create();
                         alert.show();
+
+                        refreshAllContent(30000);
                     }
                 },
 
