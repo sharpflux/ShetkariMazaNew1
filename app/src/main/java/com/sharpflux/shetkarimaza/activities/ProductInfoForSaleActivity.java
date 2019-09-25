@@ -34,6 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -920,7 +921,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
     public void submitToDb() {
 
-        RequestQueue requestQueue;
+       /* RequestQueue requestQueue;
 
 // Instantiate the cache
         DiskBasedCache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
@@ -933,7 +934,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
 // Start the queue
         requestQueue.start();
-
+*/
         builder.append("<Parent>");
         builder.append("<Assign>");
         builder.append("<RequestId>" + RequstId + "</Id>");
@@ -978,7 +979,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                         AlertDialog alert = builder.create();
                         alert.show();
 
-                        refreshAllContent(30000);
+                        //refreshAllContent(30000);
                     }
                 },
 
@@ -997,9 +998,11 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
             }
         };
 
-        requestQueue.add(stringRequest);
+      //  requestQueue.add(stringRequest);
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS *
+                2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-        //VolleySingleton.getInstance(ProductInfoForSaleActivity.this).addToRequestQueue(stringRequest);
+        VolleySingleton.getInstance(ProductInfoForSaleActivity.this).addToRequestQueue(stringRequest);
 
 
     }
