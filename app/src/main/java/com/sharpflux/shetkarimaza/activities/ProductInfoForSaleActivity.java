@@ -923,27 +923,27 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
        /* RequestQueue requestQueue;
 
-// Instantiate the cache
+ Instantiate the cache
         DiskBasedCache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
 
-// Set up the network to use HttpURLConnection as the HTTP client.
+ Set up the network to use HttpURLConnection as the HTTP client.
         Network network = new BasicNetwork(new HurlStack());
 
-// Instantiate the RequestQueue with the cache and network.
+ Instantiate the RequestQueue with the cache and network.
         requestQueue = new RequestQueue(cache, network);
 
-// Start the queue
-        requestQueue.start();
-*/
+ Start the queue
+        requestQueue.start();*/
+
         builder.append("<Parent>");
         builder.append("<Assign>");
-        builder.append("<RequestId>" + RequstId + "</Id>");
+        builder.append("<RequestId>" + RequstId + "</RequestId>");
         builder.append("<UserId>" + UserId + "</UserId>");
         builder.append("<productTypeId>" + hidItemTypeId.getText() + "</productTypeId>");
         builder.append("<productVarietyId>" + hidVarietyId.getText() + "</productVarietyId>");
         builder.append("<qualityId>" + hidQualityId.getText() + "</qualityId>");
         builder.append("<quantity>" + edtAQuantity.getText() + "</quantity>");
-        builder.append("<unitId>" + edtUnit.getText() + "</unitId>");
+        builder.append("<unitId>" + hidMeasurementId.getText() + "</unitId>");
         builder.append("<expectedPrice>" + edtExpectedPrice.getText() + "</expectedPrice>");
         builder.append("<days>" + "0" + "</days>");
         builder.append("<availablityInMonths>" + edtavailablityInMonths.getText() + "</availablityInMonths>");
@@ -998,9 +998,9 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
             }
         };
 
-      //  requestQueue.add(stringRequest);
+        //  requestQueue.add(stringRequest);
 
-       stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS *
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS *
                 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         VolleySingleton.getInstance(ProductInfoForSaleActivity.this).addToRequestQueue(stringRequest);
