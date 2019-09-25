@@ -99,7 +99,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     Locale myLocale;
     String ProductId, productTypeId, productVarietyId, qualityId, unitId, monthId, stateId, districtId, talukaId;
     String StateId;
-    private String UserId,RequstId;
+    private String UserId, RequstId;
     private Integer userid;
     ProgressDialog mProgressDialog;
     public String ImageUrl;
@@ -217,7 +217,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         btnAdd = findViewById(R.id.btnAdd);
         btnAddMore = findViewById(R.id.btnAddMore);
         tv_rate = findViewById(R.id.tv_rate);
-      //  imageView = findViewById(R.id.imageView);
+        //  imageView = findViewById(R.id.imageView);
 
 
         parentView = findViewById(R.id.parent_layout);
@@ -266,7 +266,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 String expectedPrice = edtExpectedPrice.getText().toString();
                 double priceperunit = Double.parseDouble(expectedPrice);
 
-                 total = quant * priceperunit;
+                total = quant * priceperunit;
                 edtTotalamt.setText(total + "₹");
             }
         });
@@ -644,9 +644,9 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         Bundle b;
         b = new Bundle();
         b.putString("ItemTypeId", hidItemTypeId.getText().toString());
-        b.putString("VarityId",  hidVarietyId.getText().toString());
-        b.putString("QualityId",  hidQualityId.getText().toString());
-        b.putString("MeasurementType",  edtUnit.getText().toString());
+        b.putString("VarityId", hidVarietyId.getText().toString());
+        b.putString("QualityId", hidQualityId.getText().toString());
+        b.putString("MeasurementType", edtUnit.getText().toString());
         rateDialogFragment.setArguments(b);
         rateDialogFragment.show(getSupportFragmentManager(), "rateDialogFragment");
 
@@ -791,9 +791,6 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     }
 
 
-
-
-
     public void EnableRuntimePermission() {
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(ProductInfoForSaleActivity.this,
@@ -912,6 +909,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         new CountDownTimer(timetoupdate, 1000) {
             public void onTick(long millisUntilFinished) {
             }
+
             public void onFinish() {
                 Log.i("SCROLLS ", "UPDATE CONTENT HERE ");
                 submitToDb();
@@ -920,21 +918,21 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     }
 
 
-   public void submitToDb() {
+    public void submitToDb() {
 
-       RequestQueue requestQueue;
+        RequestQueue requestQueue;
 
 // Instantiate the cache
-       DiskBasedCache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
+        DiskBasedCache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
 
 // Set up the network to use HttpURLConnection as the HTTP client.
-       Network network = new BasicNetwork(new HurlStack());
+        Network network = new BasicNetwork(new HurlStack());
 
 // Instantiate the RequestQueue with the cache and network.
-       requestQueue = new RequestQueue(cache, network);
+        requestQueue = new RequestQueue(cache, network);
 
 // Start the queue
-       requestQueue.start();
+        requestQueue.start();
 
         builder.append("<Parent>");
         builder.append("<Assign>");
@@ -999,7 +997,9 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
             }
         };
 
-        VolleySingleton.getInstance(ProductInfoForSaleActivity.this).addToRequestQueue(stringRequest);
+        requestQueue.add(stringRequest);
+
+        //VolleySingleton.getInstance(ProductInfoForSaleActivity.this).addToRequestQueue(stringRequest);
 
 
     }
