@@ -65,7 +65,7 @@ public class RateDialogFragment extends AppCompatDialogFragment {
             ItemTypeId = getArguments().getString("ItemTypeId");
             VarityId = getArguments().getString("VarityId");
             QualityId = getArguments().getString("QualityId");
-       //    MeasurementType = getArguments().getString("MeasurementType");
+         MeasurementType = getArguments().getString("MeasurementType");
         }
 
 
@@ -86,7 +86,7 @@ public class RateDialogFragment extends AppCompatDialogFragment {
                                             (userJson.getString("FromDates"),
                                                     userJson.getString("ToDates"),
                                                     userJson.getString("Rates"),
-                                                    userJson.getString("MeasurementType ")
+                                                   userJson.getString("MeasurementType")
                                             );
 
                                     ratelist.add(sellOptions);
