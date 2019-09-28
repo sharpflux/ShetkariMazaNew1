@@ -3,11 +3,14 @@ package com.sharpflux.shetkarimaza.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.filters.VarietyFragment;
+import com.sharpflux.shetkarimaza.fragment.FirstFragment;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -33,8 +36,11 @@ public class SplashActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
-                    Intent intent = new Intent(SplashActivity.this, WelcomeActivity.class);
+                    Intent intent = new Intent(SplashActivity.this,WelcomeActivity.class);
                     startActivity(intent);
+
+
+
                 }
             }
         };

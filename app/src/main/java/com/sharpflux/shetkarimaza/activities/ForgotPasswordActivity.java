@@ -34,6 +34,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     private Button btnResetPassword;
     private EditText etMobileNo;
     AlertDialog.Builder  builder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +42,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
         btnResetPassword=findViewById(R.id.btnResetPassword);
         etMobileNo=findViewById(R.id.etMobileNo);
-
+        builder = new AlertDialog.Builder(this);
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,53 +55,48 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
     private void getOtp() {
         //first getting the values
-        final String mobNo =  etMobileNo.getText().toString();
+     final String mobNo =  etMobileNo.getText().toString();
 
         if (!CommonUtils.isValidPhone(mobNo)) {
             etMobileNo.setError("Invalid Mobile number");
             return;
         }
         //if everything is fine
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_RESETPASS,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_OTP,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
 
                         try {
-
                             //converting response to json object
-                            final JSONObject obj = new JSONObject(response);
-
+                            JSONObject obj = new JSONObject(response);
                             //if no error in response
                             if (!obj.getBoolean("error")) {
 
-                                if (obj.getString("message").equals("Success")) {
-                                    builder.setMessage("Password Sucessfully updated")
-                                            .setCancelable(false)
+                                Intent in = new Intent(ForgotPasswordActivity.this,OtpActivity.class);
+                                in.putExtra("otp",obj.getString("OTP"));
+                                in.putExtra("UserId",obj.getInt("UserId"));
+                                startActivity(in);
 
-                                            .setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int id) {
-                                                    //  Action for 'NO' Button
-                                                 Intent i = new Intent(ForgotPasswordActivity.this,LoginFragment.class);
-                                                    try {
-                                                        i.putExtra("otp",obj.getString("OTPMobileNo"));
-                                                    } catch (JSONException e) {
-                                                        e.printStackTrace();
-                                                    }
-                                                    try {
-                                                        i.putExtra("UserId",obj.getInt("UserId"));
-                                                    } catch (JSONException e) {
-                                                        e.printStackTrace();
-                                                    }
-                                                    startActivity(i);
-                                                }
-                                            });
 
-                                    AlertDialog alert = builder.create();
-                                    alert.setTitle("Success");
-                                    alert.show();
-                                }
                             }
+                            else{
+                                builder.setMessage(obj.getString("message"))
+                                        .setCancelable(false)
+
+                                        .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                //  Action for 'NO' Button
+                                                dialog.cancel();
+
+                                            }
+                                        });
+
+                                AlertDialog alert = builder.create();
+                                alert.setTitle("Error");
+                                alert.show();
+                            }
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -109,7 +105,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        /*builder.setMessage(error.getMessage())
+                        builder.setMessage(error.getMessage())
                                 .setCancelable(false)
 
                                 .setNegativeButton("OK", new DialogInterface.OnClickListener() {
@@ -122,14 +118,14 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
                         AlertDialog alert = builder.create();
                         alert.setTitle("Error");
-                        alert.show();*/
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        alert.show();
+                        // Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("otp", "OTPMobileNo");
+                params.put("OTPMobileNo", mobNo);
                 return params;
             }
         };

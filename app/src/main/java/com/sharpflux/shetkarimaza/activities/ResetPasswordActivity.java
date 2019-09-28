@@ -1,15 +1,19 @@
 package com.sharpflux.shetkarimaza.activities;
 
         import android.annotation.SuppressLint;
+        import android.content.Context;
         import android.content.DialogInterface;
         import android.content.Intent;
         import android.os.Bundle;
+        import android.support.v4.app.FragmentManager;
+        import android.support.v4.app.FragmentTransaction;
         import android.support.v7.app.AlertDialog;
         import android.support.v7.app.AppCompatActivity;
         import android.text.TextUtils;
         import android.view.View;
         import android.widget.Button;
         import android.widget.EditText;
+        import android.widget.TextView;
 
         import com.android.volley.AuthFailureError;
         import com.android.volley.Request;
@@ -18,6 +22,7 @@ package com.sharpflux.shetkarimaza.activities;
         import com.android.volley.toolbox.StringRequest;
         import com.sharpflux.shetkarimaza.R;
         import com.sharpflux.shetkarimaza.fragment.LoginFragment;
+        import com.sharpflux.shetkarimaza.fragment.RateDialogFragment;
         import com.sharpflux.shetkarimaza.volley.URLs;
         import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
@@ -29,7 +34,7 @@ package com.sharpflux.shetkarimaza.activities;
 
 public class ResetPasswordActivity extends AppCompatActivity {
     EditText passwordEt, confirmPassEt;
-    Button submitBtnTv;
+    TextView submitTv;
     AlertDialog.Builder builder;
     Bundle bundle;
     Integer UserId;
@@ -45,10 +50,10 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
         passwordEt = findViewById(R.id.passwordEt);
         confirmPassEt = findViewById(R.id.confirmPassEt);
-        submitBtnTv = findViewById(R.id.submitBtnTv);
+        submitTv = findViewById(R.id.submitTv);
 
 
-        submitBtnTv.setOnClickListener(new View.OnClickListener() {
+        submitTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -98,12 +103,17 @@ public class ResetPasswordActivity extends AppCompatActivity {
                                 if (obj.getString("message").equals("Success")) {
                                     builder.setMessage("Password Sucessfully updated")
                                             .setCancelable(false)
+                                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
-                                            .setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int id) {
-                                                    Intent i = new Intent(ResetPasswordActivity.this, LoginFragment.class);
-                                                    i.putExtra("UserId", UserId.toString());
-                                                    startActivity(i);
+                                                @Override
+                                                public void onClick(DialogInterface dialogInterface, int i) {
+                                                  Intent intent = new Intent(ResetPasswordActivity.this,TabLayoutLogRegActivity.class);
+                                                    startActivity(intent);
+
+                                                /*   FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                                                    LoginFragment loginFragment = new LoginFragment();
+                                                    fragmentTransaction.replace(R.id.frame_login, loginFragment);
+                                                    fragmentTransaction.commit();*/
                                                 }
                                             });
 
@@ -122,7 +132,6 @@ public class ResetPasswordActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         builder.setMessage(error.getMessage())
                                 .setCancelable(false)
-
                                 .setNegativeButton("OK", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         //  Action for 'NO' Button
@@ -140,7 +149,6 @@ public class ResetPasswordActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-               //  params.put("UserId", UserId);
                  params.put("Passwords", newpass);
                 params.put("UserId", UserId);
 

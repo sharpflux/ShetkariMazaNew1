@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -66,6 +68,7 @@ public class SelfieActivity extends AppCompatActivity {
     private Integer userid;
     private String UserId;
     public String ImageUrl;
+    public String selfi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +115,7 @@ public class SelfieActivity extends AppCompatActivity {
         String adhartv = hideImageTvSelfie.getText().toString();
 
         if (TextUtils.isEmpty(adhartv)) {
-            btn_take_selfie.setError("Please upload copy of adhar");
+            btn_take_selfie.setError("Please upload your selfi");
             btn_take_selfie.requestFocus();
             return;
         }
@@ -228,9 +231,11 @@ public class SelfieActivity extends AppCompatActivity {
                 params.put("BranchCode",branchcode );
                 params.put("AccountNo", accno);
                 params.put("IFSCCode", ifsc);
-                params.put("UploadCancelledCheckUrl",ImageUrl);
-                params.put("UploadAdharCardPancardUrl", ImageUrl);
+                params.put("UploadCancelledCheckUrl",check);
+                params.put("UploadAdharCardPancardUrl",adhar);
+                params.put("ImageUrl",selfi);
                 params.put("UserPassword", "1");
+                params.put("AgentId", "0");
                 return params;
             }
 
@@ -291,6 +296,16 @@ public class SelfieActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            Bitmap newBitmap = Bitmap.createBitmap(bm.getWidth(), bm.getHeight(), bm.getConfig());
+            Canvas canvas = new Canvas(newBitmap);
+            canvas.drawColor(Color.WHITE);
+            canvas.drawBitmap(bm, 0, 0, null);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            newBitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
+
+            selfi = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
+
         }
         img_banner_profile_placeholder.setImageBitmap(bm);
     }
@@ -299,8 +314,19 @@ public class SelfieActivity extends AppCompatActivity {
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 
-        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-        ImageUrl= Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);
+
+
+        Bitmap newBitmap = Bitmap.createBitmap(thumbnail.getWidth(), thumbnail.getHeight(), thumbnail.getConfig());
+        Canvas canvas = new Canvas(newBitmap);
+        canvas.drawColor(Color.WHITE);
+        canvas.drawBitmap(thumbnail, 0, 0, null);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        newBitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
+        selfi = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
+
+
+        /*thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+        ImageUrl= Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);*/
         File destination = new File(Environment.getExternalStorageDirectory(),
                 System.currentTimeMillis() + ".jpg");
 

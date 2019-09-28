@@ -45,18 +45,18 @@
     <string name="seller">विक्रेता</string>
 
     //login signup
-    <string name="firstname">पहला नाम</string>
+    <string name="firstname">पहला नाम*</string>
     <string name="middlename">मध्य नाम</string>
     <string name="username">उपयोगकर्ता नाम</string>
-    <string name="password">पासवर्ड</string>
-    <string name="cpassword">पासवर्ड की पुष्टि कीजिये</string>
+    <string name="password">पासवर्ड*</string>
+    <string name="cpassword">पासवर्ड की पुष्टि कीजिये*</string>
     <string name="login">लॉग इन करें</string>
     <string name="signup">साइन अप करें</string>
     <string name="forgotpassword">पासवर्ड भूल गए?</string>
     <string name="loginwith">या साथ लॉगिन करें</string>
     <string name="newhere">यहाँ नये?</string>
     <string name="signuphere">पंजी यहॉ करे!</string>
-    <string name="lastname">उपनाम</string>
+    <string name="lastname">उपनाम*</string>
     <string name="mobnum">मोबाइल नंबर</string>
     <string name="alreadyhaveacc">पहले से ही खाता है?</string>
     <string name="loginphere">यहां साइन इन करो!</string>

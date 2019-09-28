@@ -27,10 +27,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.EditRequestActivity"
+        <activity android:name=".activities.UserVerificationActivity"></activity>
+        <activity
+            android:name=".activities.EditRequestActivity"
             android:label="Edit"
-            android:theme="@style/SellerDarkAppTheme"
-            android:parentActivityName=".activities.HomeActivity"/>
+            android:parentActivityName=".activities.HomeActivity"
+            android:theme="@style/SellerDarkAppTheme" />
         <activity
             android:name=".activities.AddListActivity"
             android:label="@string/list_added_item"
@@ -102,7 +104,6 @@
                 <action android:name="android.content.action.DOCUMENTS_PROVIDER" />
             </intent-filter>
         </provider>
-
         <provider
             android:name=".provider.GenericFileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -110,7 +111,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
 
         <uses-library

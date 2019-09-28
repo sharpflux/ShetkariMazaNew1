@@ -6,6 +6,15 @@
     android:orientation="vertical"
     >
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
     <LinearLayout
         android:layout_marginTop="2dp"
         android:layout_width="match_parent"
@@ -205,5 +214,8 @@
         android:text="hidden value"
         android:textSize="20dp"
         android:visibility="gone" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

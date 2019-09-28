@@ -22,6 +22,7 @@ import com.hbb20.CountryCodePicker;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.ChooseActivity;
 import com.sharpflux.shetkarimaza.activities.TabLayoutLogRegActivity;
+import com.sharpflux.shetkarimaza.activities.UserVerificationActivity;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.utils.CheckDeviceIsOnline;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
@@ -38,7 +39,7 @@ import java.util.Map;
 public class SignupFragment extends Fragment {
 
     RelativeLayout signup;
-    EditText eusername,epassword,editTextMobile,edtlastname,edtmiddlename,edtcpassword;
+    EditText eusername,edtmiddlename,edtlastname,editTextMobile,epassword,edtcpassword;
     CountryCodePicker ccp;
     String number;
     public SignupFragment() {
@@ -111,11 +112,11 @@ public class SignupFragment extends Fragment {
             return;
         }
 
-        if (TextUtils.isEmpty(middlename)) {
+      /*  if (TextUtils.isEmpty(middlename)) {
             edtmiddlename.setError("Please enter middle name");
             edtmiddlename.requestFocus();
             return;
-        }
+        }*/
 
         if (TextUtils.isEmpty(lastname)) {
             edtlastname.setError("Please enter your last name");
@@ -138,6 +139,12 @@ public class SignupFragment extends Fragment {
             edtcpassword.requestFocus();
             return;
         }
+        if (!password.equals(cpassword)) {
+            edtcpassword.setError("Please enter correct password");
+            edtcpassword.requestFocus();
+            return;
+        }
+
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_REGISTER,
@@ -159,7 +166,7 @@ public class SignupFragment extends Fragment {
                                 );
                                 SharedPrefManager.getInstance(getContext()).userLogin(user);
                                 getActivity().finish();
-                                startActivity(new Intent(getContext(), ChooseActivity.class));
+                                startActivity(new Intent(getContext(), UserVerificationActivity.class));
                             } else {
                                 Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                             }
@@ -203,7 +210,9 @@ public class SignupFragment extends Fragment {
                 params.put("IFSCCode", "0");
                 params.put("UploadCancelledCheckUrl","0");
                 params.put("UploadAdharCardPancardUrl", "0");
+                params.put("ImageUrl","0");
                 params.put("UserPassword", password);
+                params.put("AgentId", "");
 
                 return params;
             }

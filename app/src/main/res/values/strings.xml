@@ -45,19 +45,19 @@
     <string name="seller">Seller</string>
 
     //login signup
-    <string name="firstname">First Name</string>
+    <string name="firstname">First Name*</string>
     <string name="middlename">Middle Name</string>
 
     <string name="username">Username</string>
-    <string name="password">Password</string>
-    <string name="cpassword">Confirm Password</string>
+    <string name="password">Password*</string>
+    <string name="cpassword">Confirm Password*</string>
     <string name="login">Log In</string>
     <string name="signup">Sign Up</string>
     <string name="forgotpassword">Forgot password?</string>
     <string name="loginwith">Or Login With</string>
     <string name="newhere">New Here?</string>
     <string name="signuphere">New User Register</string>
-    <string name="lastname">Last Name</string>
+    <string name="lastname">Last Name*</string>
     <string name="mobnum">Mobile Number</string>
     <string name="alreadyhaveacc">Already have account?</string>
     <string name="loginphere">Old User LogIn</string>

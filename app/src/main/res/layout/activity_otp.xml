@@ -1,26 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
+    android:gravity="center"
     android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     >
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:padding="@dimen/padding_small">
+
     <TextView
-        android:id="@+id/otpTitle"
+        android:id="@+id/tvOtpTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin_large"
         android:gravity="center"
+        android:padding="@dimen/padding_small"
         android:text="@string/otp_verification"
         android:textColor="@color/black"
-        android:textSize="20dp"
+        android:textSize="20sp"
+        android:fontFamily="@font/sfui_text_regular"
         />
+
+
 
     <TextView
         android:id="@+id/otpSentText"
@@ -77,7 +94,6 @@
         android:background="@drawable/btnn"
         android:gravity="center"
         android:padding="08dp"
-
         android:text="@string/verify"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
@@ -94,6 +110,8 @@
         android:textColor="@color/black"
         android:textSize="14dp"
         />
+        </LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>

@@ -53,8 +53,6 @@ public class ThirdFragment extends Fragment {
 
     public String ChequeImageBlob,AdharImageBlob,ImageType;
 
-    public String ImageUrl1;
-
     Button submitButton, btn_chequeimage, btn_adharimage;
 
     Bundle bundle;
@@ -111,18 +109,11 @@ public class ThirdFragment extends Fragment {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 String accountnamee = accountname.getText().toString();
-
                 String banknamee = bankname.getText().toString();
-
                 String branchcodee = branchcode.getText().toString();
-
                 String accnoe = accno.getText().toString();
                 String ifsce = ifsc.getText().toString();
-
-
                 String chequetv = tvCheque.getText().toString();
                 String adhartv = tvAdhar.getText().toString();
 
@@ -171,39 +162,28 @@ public class ThirdFragment extends Fragment {
                 }
 
                 Intent intent = new Intent(getContext(), SelfieActivity.class);
+
                 intent.putExtra("Name", name);
                 intent.putExtra("RegistrationTypeId", registrationTypeId);
-
                 intent.putExtra("RegistrationCategoryId", registrationCategoryId);
                 intent.putExtra("Gender", gender);
-
                 intent.putExtra("Mobile", mobile);
                 intent.putExtra("AlternateMobile", alternateMobile);
-
                 intent.putExtra("Email", email);
                 intent.putExtra("address", address);
-
                 intent.putExtra("city", city);
                 intent.putExtra("district", district);
-
                 intent.putExtra("state", state);
                 intent.putExtra("companyname", companyname);
-
                 intent.putExtra("license", license);
                 intent.putExtra("companyregnno", companyregnno);
-
                 intent.putExtra("gstno", gstno);
-
-                ///
                 intent.putExtra("accountname", accountname.getText().toString());
                 intent.putExtra("bankname", bankname.getText().toString());
-
                 intent.putExtra("branchcode", branchcode.getText().toString());
                 intent.putExtra("accno", accno.getText().toString());
-
                 intent.putExtra("ifsc", ifsc.getText().toString());
                 intent.putExtra("check", ChequeImageBlob);
-
                 intent.putExtra("adhar", AdharImageBlob);
 
                 startActivity(intent);

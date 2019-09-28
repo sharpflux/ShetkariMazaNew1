@@ -135,9 +135,8 @@
                                 android:layout_alignParentTop="true"
                                 android:hint="@string/mobile_no"
                                 android:background="@null"
-                                android:inputType="phone"
                                 android:maxLength="12"
-                                android:singleLine="true" />
+                                android:inputType="phone" />
                         </LinearLayout>
                     </RelativeLayout>
 
