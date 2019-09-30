@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -257,7 +258,9 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         fetcher = new DataFetcher(sellOptions, customDialog, list, ProductInfoForSaleActivity.this);
 
 
-        edtExpectedPrice.setOnClickListener(new View.OnClickListener() {
+
+
+        edtTotalamt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String quantity = edtAQuantity.getText().toString();

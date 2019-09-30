@@ -1,7 +1,9 @@
 package com.sharpflux.shetkarimaza.fragment;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -20,11 +22,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.hbb20.CountryCodePicker;
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity;
 import com.sharpflux.shetkarimaza.activities.ChooseActivity;
+import com.sharpflux.shetkarimaza.activities.OtpActivity;
 import com.sharpflux.shetkarimaza.activities.TabLayoutLogRegActivity;
 import com.sharpflux.shetkarimaza.activities.UserVerificationActivity;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.utils.CheckDeviceIsOnline;
+import com.sharpflux.shetkarimaza.utils.CommonUtils;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
@@ -39,41 +44,42 @@ import java.util.Map;
 public class SignupFragment extends Fragment {
 
     RelativeLayout signup;
-    EditText eusername,edtmiddlename,edtlastname,editTextMobile,epassword,edtcpassword;
+    EditText eusername, edtmiddlename, edtlastname, editTextMobile, epassword, edtcpassword;
     CountryCodePicker ccp;
     String number;
+    AlertDialog.Builder  builder;
     public SignupFragment() {
 
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-       View view =inflater.inflate(R.layout.fragment_signup, container, false);
+        View view = inflater.inflate(R.layout.fragment_signup, container, false);
 
         //if the user is already logged in we will directly start the profile activity
         if (SharedPrefManager.getInstance(getContext()).isLoggedIn()) {
             getActivity().finish();
             startActivity(new Intent(getContext(), TabLayoutLogRegActivity.class));
         }
-        eusername=view.findViewById(R.id.eusername);
-        edtmiddlename=view.findViewById(R.id.middlename);
-        edtlastname=view.findViewById(R.id.lastname);
-        editTextMobile=view.findViewById(R.id.emobnum);
-        epassword =view.findViewById(R.id.epassword);
-        edtcpassword =view.findViewById(R.id.ecpassword);
+        eusername = view.findViewById(R.id.eusername);
+        edtmiddlename = view.findViewById(R.id.middlename);
+        edtlastname = view.findViewById(R.id.lastname);
+        editTextMobile = view.findViewById(R.id.emobnum);
+        epassword = view.findViewById(R.id.epassword);
+        edtcpassword = view.findViewById(R.id.ecpassword);
         ccp = (CountryCodePicker) view.findViewById(R.id.ccp);
         ccp.registerCarrierNumberEditText(editTextMobile);
-
-        signup=view.findViewById(R.id.rSignup);
+        builder = new AlertDialog.Builder(getContext());
+        signup = view.findViewById(R.id.rSignup);
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (!CheckDeviceIsOnline.isNetworkConnected(getContext())/*||!CheckDeviceIsOnline.isWifiConnected(SignupActivity.this)*/)
-
-                { AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                if (!CheckDeviceIsOnline.isNetworkConnected(getContext())/*||!CheckDeviceIsOnline.isWifiConnected(SignupActivity.this)*/) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setCancelable(false);
                     builder.setTitle("Check Internet Connection!");
                     builder.setIcon(android.R.drawable.ic_dialog_alert);
@@ -90,19 +96,26 @@ public class SignupFragment extends Fragment {
                     return;
                 }
 
-                registerUser();
+
+                SignupFragment.AsyncTaskRunner runner = new AsyncTaskRunner();
+                String sleepTime = "1";
+                runner.execute(sleepTime);
+
+               /* UserVerificationActivity.MyCountDownTimer m = new UserVerificationActivity.MyCountDownTimer(1000,1000);
+                m.start();*/
             }
         });
         return view;
     }
 
-    private void registerUser() {
-        final String username = eusername.getText().toString().trim();
-        final String middlename = edtmiddlename.getText().toString().trim();
-        final String lastname = edtlastname.getText().toString().trim();
-        final String mob = editTextMobile.getText().toString().trim();
-        final String password = epassword.getText().toString().trim();
-        final String cpassword = edtcpassword.getText().toString().trim();
+    private void getOtp() {
+
+        final String username = eusername.getText().toString();
+        final String middlename = edtmiddlename.getText().toString();
+        final String lastname = edtlastname.getText().toString();
+        final String mob = editTextMobile.getText().toString();
+        final String password = epassword.getText().toString();
+        final String cpassword = edtcpassword.getText().toString();
 
         number = ccp.getFullNumberWithPlus();
 
@@ -145,31 +158,53 @@ public class SignupFragment extends Fragment {
             return;
         }
 
-
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_REGISTER,
+        //if everything is fine
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_OTP2+mob,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
 
                         try {
-
+                            //converting response to json object
                             JSONObject obj = new JSONObject(response);
-
+                            //if no error in response
                             if (!obj.getBoolean("error")) {
 
-                                User user = new User(
-                                        obj.getInt("UserId"),
-                                        obj.getString("FullName"),
-                                        obj.getString("EmailId"),
-                                        obj.getString("MobileNo"),"",""
-                                );
-                                SharedPrefManager.getInstance(getContext()).userLogin(user);
-                                getActivity().finish();
-                                startActivity(new Intent(getContext(), UserVerificationActivity.class));
-                            } else {
-                                Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getContext(), UserVerificationActivity.class);
+
+                                intent.putExtra("OTP",obj.getString("OTP"));
+
+                                intent.putExtra("FullName",username);
+                                intent.putExtra("Middlename",middlename);
+                                intent.putExtra("Lastname",lastname);
+                                intent.putExtra("MobileNo",mob);
+                                intent.putExtra("Password",password);
+                                intent.putExtra("Cpassword",cpassword);
+
+                              /*  SharedPrefManager.getInstance(getContext()).userLogin(user);
+                                finish();*/
+
+                                startActivity(intent);
+
+
                             }
+                           else{
+                                builder.setMessage("Invalid User")
+                                        .setCancelable(false)
+
+                                        .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                //  Action for 'NO' Button
+                                                dialog.cancel();
+
+                                            }
+                                        });
+
+                                AlertDialog alert = builder.create();
+                                alert.setTitle("User already exists with same Mobile No please Login");
+                                alert.show();
+                            }
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -178,46 +213,78 @@ public class SignupFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                       builder.setMessage(error.getMessage())
+                                .setCancelable(false)
+
+                                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        //  Action for 'NO' Button
+                                        dialog.cancel();
+
+                                    }
+                                });
+
+                        AlertDialog alert = builder.create();
+                        alert.setTitle("Error");
+                        alert.show();
+                        // Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-
-                params.put("UserId","");
-                params.put("RegistrationTypeId", "0");
-                params.put("RegistrationCategoryId", "0");
-                params.put("FullName",username);
-                params.put("MobileNo", number);
-                params.put("AlternateMobile","0");
-                params.put("Address", "");
-                params.put("EmailId",lastname);
-                params.put("Gender", "0");
-                params.put("Address" , "0");
-                params.put("StateId", "1");
-                params.put("CityId", "1");
-                params.put("TahasilId", "1");
-                params.put("CompanyFirmName", "0");
-                params.put("LandLineNo", "1");
-                params.put("APMCLicence", "0");
-                params.put("CompanyRegNo","0" );
-                params.put("GSTNo", "0");
-                params.put("AccountHolderName", "0");
-                params.put("BankName", "0");
-                params.put("BranchCode","0" );
-                params.put("AccountNo", "0");
-                params.put("IFSCCode", "0");
-                params.put("UploadCancelledCheckUrl","0");
-                params.put("UploadAdharCardPancardUrl", "0");
-                params.put("ImageUrl","0");
-                params.put("UserPassword", password);
-                params.put("AgentId", "");
-
+                params.put("OTPMobileNo", mob);
                 return params;
             }
         };
 
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
+
+
+    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
+
+        private String resp;
+        ProgressDialog progressDialog;
+
+        @Override
+        protected String doInBackground(String... params) {
+            publishProgress("Sleeping..."); // Calls onProgressUpdate()
+            try {
+                int time = Integer.parseInt(params[0]) * 1000;
+                getOtp();
+                Thread.sleep(time);
+                resp = "Slept for " + params[0] + " seconds";
+            } catch (Exception e) {
+                e.printStackTrace();
+                resp = e.getMessage();
+            }
+            return resp;
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            // execution of result of Long time consuming operation
+            progressDialog.dismiss();
+            // finalResult.setText(result);
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(getContext(),
+                    "Loading...",
+                    "Wait for result..");
+        }
+
+
+        @Override
+        protected void onProgressUpdate(String... text) {
+            // finalResult.setText(text[0]);
+
+        }
+
+    }
+
 }

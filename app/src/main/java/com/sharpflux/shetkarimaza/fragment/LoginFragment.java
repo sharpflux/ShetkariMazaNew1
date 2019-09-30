@@ -4,6 +4,7 @@ package com.sharpflux.shetkarimaza.fragment;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -52,6 +53,8 @@ public class LoginFragment extends Fragment {
     LinearLayout forgotpw;
     ProgressDialog progressDialog;
     EditText eusername, epassword;
+    AlertDialog.Builder builder;
+
     CountryCodePicker ccp;
     public LoginFragment() {
         // Required empty public constructor
@@ -88,6 +91,8 @@ public class LoginFragment extends Fragment {
         ccp = (CountryCodePicker) view.findViewById(R.id.ccp);
         ccp.registerCarrierNumberEditText(eusername);
 
+        builder = new AlertDialog.Builder(getContext());
+
         forgotpw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,7 +125,9 @@ public class LoginFragment extends Fragment {
                     return;
                 }
 
-                userLogin();
+                AsyncTaskRunner runner = new AsyncTaskRunner();
+                String sleepTime = "1";
+                runner.execute(sleepTime);
 
 
             }
@@ -147,8 +154,6 @@ public class LoginFragment extends Fragment {
             epassword.requestFocus();
             return;
         }
-        CustomProgressDialog.showSimpleProgressDialog(getContext(),
-                "Logging In...", "", false);
 
         //if everything is fine
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_LOGIN,
@@ -160,12 +165,8 @@ public class LoginFragment extends Fragment {
                         //  progressBar.setVisibility(View.GONE);
                         try {
 
-                            CustomProgressDialog.removeSimpleProgressDialog();
-                            //converting response to json object
-                            //JSONObject obj = new JSONObject(response);
                             JSONArray obj = new JSONArray(response);
-                            //if no error in response
-                            //Toast.makeText(getApplicationContext(),response, Toast.LENGTH_SHORT).show();
+
                             for (int i = 0; i < obj.length(); i++) {
                                 //getting the user from the response
                                 JSONObject userJson = obj.getJSONObject(i);
@@ -183,9 +184,23 @@ public class LoginFragment extends Fragment {
                                     SharedPrefManager.getInstance(getContext()).userLogin(user);
                                     //starting the profile activity
                                     getActivity().finish();
+
                                     startActivity(new Intent(getContext(), HomeActivity.class));
                                 } else {
-                                    Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+                                    builder.setMessage("Invalid User Name or Password!")
+                                            .setCancelable(false)
+
+                                            .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    //  Action for 'NO' Button
+                                                    dialog.cancel();
+
+                                                }
+                                            });
+
+                                    AlertDialog alert = builder.create();
+                                    alert.setTitle("Invalid User");
+                                    alert.show();
                                 }
                             }
                         } catch (JSONException e) {
@@ -196,7 +211,20 @@ public class LoginFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        builder.setMessage(error.getMessage())
+                                .setCancelable(false)
+
+                                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        //  Action for 'NO' Button
+                                        dialog.cancel();
+
+                                    }
+                                });
+
+                        AlertDialog alert = builder.create();
+                        alert.setTitle("Error");
+                        alert.show();
                     }
                 }) {
             @Override
@@ -209,6 +237,51 @@ public class LoginFragment extends Fragment {
         };
 
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+    }
+
+    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
+
+        private String resp;
+        ProgressDialog progressDialog;
+
+        @Override
+        protected String doInBackground(String... params) {
+            publishProgress("Sleeping..."); // Calls onProgressUpdate()
+            try {
+                int time = Integer.parseInt(params[0]) * 1000;
+                userLogin();
+                Thread.sleep(time);
+                resp = "Slept for " + params[0] + " seconds";
+            } catch (Exception e) {
+                e.printStackTrace();
+                resp = e.getMessage();
+            }
+            return resp;
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            // execution of result of Long time consuming operation
+            progressDialog.dismiss();
+            // finalResult.setText(result);
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(getContext(),
+                    "Loading...",
+                    "Wait for result..");
+        }
+
+
+        @Override
+        protected void onProgressUpdate(String... text) {
+            // finalResult.setText(text[0]);
+
+        }
+
     }
 
 
