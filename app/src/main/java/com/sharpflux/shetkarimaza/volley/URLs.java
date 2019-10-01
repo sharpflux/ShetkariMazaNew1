@@ -22,4 +22,5 @@ public class URLs {
     public static final String URL_RATE="http://apimaza.supergo.in/api/RateMasterAPI/GETRateMasterApi?";
 
     public static String URL_OTP2="http://apimaza.supergo.in/User_Authentication/GetOTP?MobileNo=";
+    public static String URL_PROCESSOR="http://apimaza.supergo.in/api/ItemMasterApi/GetIsProcessAPI?Language=";
 }

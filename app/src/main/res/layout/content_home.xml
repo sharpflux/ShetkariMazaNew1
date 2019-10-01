@@ -5,10 +5,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/frame"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activities.HomeActivity"
     android:orientation="vertical"
     >
+    <FrameLayout
+        android:id="@+id/frame1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"></FrameLayout>
+
     <LinearLayout
         android:id="@+id/main_layout"
         android:orientation="vertical"
@@ -33,4 +40,5 @@
         </android.support.v4.view.ViewPager>
     </LinearLayout>
 
+    />
 </android.support.design.widget.CoordinatorLayout>

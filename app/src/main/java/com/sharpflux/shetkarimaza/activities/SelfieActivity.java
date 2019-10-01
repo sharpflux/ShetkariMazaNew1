@@ -50,13 +50,14 @@ import java.util.Map;
 public class SelfieActivity extends AppCompatActivity {
 
     TextView hideImageTvSelfie;
-    Button btn_take_selfie ;
-    ImageView img_banner_profile_placeholder ;
-    Intent intent ;
-    public  static final int RequestPermissionCode  = 1 ;
-    Integer REQUEST_CAMERA=1, SELECT_FILE=0;
+    Button btn_take_selfie;
+    ImageView img_banner_profile_placeholder;
+    Intent intent;
+    public static final int RequestPermissionCode = 1;
+    Integer REQUEST_CAMERA = 1, SELECT_FILE = 0;
     File imageFile = null;
-    private Button btn_submit;
+    Button btn_submit;
+    AlertDialog.Builder builder;
 
     private String address = "", city = "", district = "", state = "", companyname = "",
             license = "", companyregnno = "", gstno = "", names = "", registrationTypeId = "",
@@ -75,29 +76,27 @@ public class SelfieActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selfie);
 
-        btn_submit = findViewById(R.id.btnFormSubmit);
+        btn_submit = findViewById(R.id.btnFormSubmitSelfie);
         hideImageTvSelfie = findViewById(R.id.hideImageTvSelfie);
+        btn_take_selfie = (Button) findViewById(R.id.btn_take_selfie);
+        img_banner_profile_placeholder = (ImageView) findViewById(R.id.imageView);
 
         User user = SharedPrefManager.getInstance(this).getUser();
         userid = (Integer) user.getId();
         UserId = userid.toString();
 
+        builder = new AlertDialog.Builder(SelfieActivity.this);
+
+        EnableRuntimePermission();
+
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent in = new Intent(SelfieActivity.this, HomeActivity.class);
-                startActivity(in);
 
                 saveOrderDetails();
             }
         });
 
-        btn_take_selfie = (Button)findViewById(R.id.btn_take_selfie);
-        img_banner_profile_placeholder = (ImageView)findViewById(R.id.imageView);
-
-
-        EnableRuntimePermission();
         btn_take_selfie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,17 +109,147 @@ public class SelfieActivity extends AppCompatActivity {
 
     }
 
+    private void SelecteImages() {
+
+        final CharSequence[] items = {"Camera", "Gallary", "Cancel"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(SelfieActivity.this);
+        builder.setTitle("Add Image");
+
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+                if (items[i].equals("Camera")) {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, REQUEST_CAMERA);
+                } else if (items[i].equals("Gallary")) {
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);//
+                    startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
+                } else if (items[i].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, requestCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == SELECT_FILE)
+                onSelectFromGalleryResult(data);
+            else if (requestCode == REQUEST_CAMERA)
+                onCaptureImageResult(data);
+        }
+
+    }
+
+    private void onSelectFromGalleryResult(Intent data) {
+        Bitmap bm = null;
+        if (data != null) {
+            try {
+                bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Bitmap newBitmap = Bitmap.createBitmap(bm.getWidth(), bm.getHeight(), bm.getConfig());
+            Canvas canvas = new Canvas(newBitmap);
+            canvas.drawColor(Color.WHITE);
+            canvas.drawBitmap(bm, 0, 0, null);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            newBitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
+
+            selfi = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
+
+        }
+        img_banner_profile_placeholder.setImageBitmap(bm);
+    }
+
+    private void onCaptureImageResult(Intent data) {
+        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+
+
+        Bitmap newBitmap = Bitmap.createBitmap(thumbnail.getWidth(), thumbnail.getHeight(), thumbnail.getConfig());
+        Canvas canvas = new Canvas(newBitmap);
+        canvas.drawColor(Color.WHITE);
+        canvas.drawBitmap(thumbnail, 0, 0, null);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        newBitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
+        selfi = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
+
+
+        /*thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+        ImageUrl= Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);*/
+        File destination = new File(Environment.getExternalStorageDirectory(),
+                System.currentTimeMillis() + ".jpg");
+
+        FileOutputStream fo;
+
+        try {
+            destination.createNewFile();
+            fo = new FileOutputStream(destination);
+            fo.write(bytes.toByteArray());
+            fo.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // img_banner_profile_placeholder.setImageBitmap(thumbnail);
+
+        Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
+        img_banner_profile_placeholder.setImageBitmap(imageBitmap);
+
+    }
+
+    public void EnableRuntimePermission() {
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(SelfieActivity.this,
+                Manifest.permission.CAMERA)) {
+
+            Toast.makeText(SelfieActivity.this, "CAMERA permission allows us to Access CAMERA app", Toast.LENGTH_LONG).show();
+
+        } else {
+
+            ActivityCompat.requestPermissions(SelfieActivity.this, new String[]{
+                    Manifest.permission.CAMERA}, RequestPermissionCode);
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int RC, String per[], int[] PResult) {
+
+        switch (RC) {
+
+            case RequestPermissionCode:
+
+                if (PResult.length > 0 && PResult[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    Toast.makeText(SelfieActivity.this, "Permission Granted, Now your application can access CAMERA.", Toast.LENGTH_LONG).show();
+
+                } else {
+
+                    Toast.makeText(SelfieActivity.this, "Permission Canceled, Now your application cannot access CAMERA.", Toast.LENGTH_LONG).show();
+
+                }
+                break;
+        }
+    }
+
     public void saveOrderDetails() {
 
         String adhartv = hideImageTvSelfie.getText().toString();
 
-        if (TextUtils.isEmpty(adhartv)) {
-            btn_take_selfie.setError("Please upload your selfi");
+        /*if (TextUtils.isEmpty(adhartv)) {
+            btn_take_selfie.setError("Please upload your photo");
             btn_take_selfie.requestFocus();
             return;
         }
-
-
+*/
         iin = getIntent();
         bundle = iin.getExtras();
 
@@ -159,8 +288,6 @@ public class SelfieActivity extends AppCompatActivity {
             check = bundle.getString("check");
             adhar = bundle.getString("adhar");
 
-
-
         }
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_REGISTER,
@@ -174,20 +301,29 @@ public class SelfieActivity extends AppCompatActivity {
 
                             if (!obj.getBoolean("error")) {
 
-                                Intent in = new Intent(SelfieActivity.this, HomeActivity.class);
-                                startActivity(in);
+                                if (registrationTypeId.equals("1")) {
+                                    startActivity(new Intent(SelfieActivity.this, ProcessorActivity.class));
+                                } else {
+                                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                                }
 
                             } else {
+                                builder.setMessage(response)
+                                        .setCancelable(false)
 
-                               /* AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SelfieActivity.this);
-                                alertDialogBuilder.setMessage(response);
+                                        .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                //  Action for 'NO' Button
+                                                dialog.cancel();
 
-                                AlertDialog alertDialog = alertDialogBuilder.create();
-                                alertDialog.show();
-                                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();*/
+                                            }
+                                        });
+
+                                AlertDialog alert = builder.create();
+                                alert.setTitle("Invalid User");
+                                alert.show();
                             }
                         } catch (JSONException e) {
-
                             e.printStackTrace();
                         }
                     }
@@ -195,50 +331,69 @@ public class SelfieActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e("ERROR", error.getMessage());
+                        builder.setMessage(error.getMessage() )
+                                .setCancelable(false)
 
-                       /* AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SelfieActivity.this);
-                        alertDialogBuilder.setMessage(error.getMessage());
+                                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        //  Action for 'NO' Button
+                                        dialog.cancel();
 
-                        AlertDialog alertDialog = alertDialogBuilder.create();
-                        alertDialog.show();
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();*/
+                                    }
+                                });
+
+                        AlertDialog alert = builder.create();
+                        alert.setTitle("Invalid User");
+                        alert.show();
                     }
                 }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("UserId",UserId);
+                params.put("UserId", UserId);
                 params.put("RegistrationTypeId", registrationTypeId);
                 params.put("RegistrationCategoryId", registrationCategoryId);
-                params.put("FullName",names);
+                params.put("FullName", names);
+
                 params.put("MobileNo", mobile);
-                params.put("AlternateMobile",alternateMobile);
+                params.put("AlternateMobile", alternateMobile);
                 params.put("Address", address);
-                params.put("EmailId",email);
+                params.put("EmailId", email);
+
                 params.put("Gender", "male");
-                params.put("Address" , address);
+                params.put("Address", address);
                 params.put("StateId", "1");
                 params.put("CityId", "1");
+
                 params.put("TahasilId", "1");
                 params.put("CompanyFirmName", companyname);
                 params.put("LandLineNo", "1");
                 params.put("APMCLicence", license);
-                params.put("CompanyRegNo",companyregnno );
+
+                params.put("CompanyRegNo", companyregnno);
                 params.put("GSTNo", gstno);
                 params.put("AccountHolderName", accountname);
                 params.put("BankName", bankname);
-                params.put("BranchCode",branchcode );
+
+                params.put("BranchCode", branchcode);
                 params.put("AccountNo", accno);
                 params.put("IFSCCode", ifsc);
-                params.put("UploadCancelledCheckUrl",check);
-                params.put("UploadAdharCardPancardUrl",adhar);
-                params.put("ImageUrl",selfi);
+
+                params.put("UploadCancelledCheckUrl", "0");
+
+                params.put("UploadAdharCardPancardUrl", "0");
+                params.put("ImageUrl", "0");
+
+               /* params.put("UploadCancelledCheckUrl", check);
+
+                params.put("UploadAdharCardPancardUrl", adhar);
+                params.put("ImageUrl", selfi);*/
+
                 params.put("UserPassword", "1");
                 params.put("AgentId", "0");
+
                 return params;
             }
-
 
 
         };
@@ -246,144 +401,4 @@ public class SelfieActivity extends AppCompatActivity {
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
 
     }
-
-    private void SelecteImages(){
-
-        final CharSequence[] items={"Camera","Gallary","Cancel"};
-        AlertDialog.Builder builder=new AlertDialog.Builder(SelfieActivity.this);
-        builder.setTitle("Add Image");
-
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int i) {
-                if(items[i].equals("Camera")){
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, REQUEST_CAMERA);
-                }
-
-                else if(items[i].equals("Gallary")){
-                    Intent intent = new Intent();
-                    intent.setType("image/*");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);//
-                    startActivityForResult(Intent.createChooser(intent, "Select File"),SELECT_FILE);
-                }
-
-                else if(items[i].equals("Cancel"))
-                {
-                    dialog.dismiss();
-                }
-            }
-        });
-        builder.show();
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, requestCode,data);
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == SELECT_FILE)
-                onSelectFromGalleryResult(data);
-            else if (requestCode == REQUEST_CAMERA)
-                onCaptureImageResult(data);
-        }
-
-    }
-
-    private void onSelectFromGalleryResult(Intent data) {
-        Bitmap bm=null;
-        if (data != null) {
-            try {
-                bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            Bitmap newBitmap = Bitmap.createBitmap(bm.getWidth(), bm.getHeight(), bm.getConfig());
-            Canvas canvas = new Canvas(newBitmap);
-            canvas.drawColor(Color.WHITE);
-            canvas.drawBitmap(bm, 0, 0, null);
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            newBitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
-
-            selfi = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
-
-        }
-        img_banner_profile_placeholder.setImageBitmap(bm);
-    }
-
-    private void onCaptureImageResult(Intent data) {
-        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-
-
-
-        Bitmap newBitmap = Bitmap.createBitmap(thumbnail.getWidth(), thumbnail.getHeight(), thumbnail.getConfig());
-        Canvas canvas = new Canvas(newBitmap);
-        canvas.drawColor(Color.WHITE);
-        canvas.drawBitmap(thumbnail, 0, 0, null);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        newBitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
-        selfi = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
-
-
-        /*thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-        ImageUrl= Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);*/
-        File destination = new File(Environment.getExternalStorageDirectory(),
-                System.currentTimeMillis() + ".jpg");
-
-        FileOutputStream fo;
-
-        try {
-            destination.createNewFile();
-            fo = new FileOutputStream(destination);
-            fo.write(bytes.toByteArray());
-            fo.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-       // img_banner_profile_placeholder.setImageBitmap(thumbnail);
-
-        Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
-        img_banner_profile_placeholder.setImageBitmap(imageBitmap);
-
-    }
-
-    public void EnableRuntimePermission(){
-
-        if (ActivityCompat.shouldShowRequestPermissionRationale(SelfieActivity.this,
-                Manifest.permission.CAMERA))
-        {
-
-            Toast.makeText(SelfieActivity.this,"CAMERA permission allows us to Access CAMERA app", Toast.LENGTH_LONG).show();
-
-        } else {
-
-            ActivityCompat.requestPermissions(SelfieActivity.this,new String[]{
-                    Manifest.permission.CAMERA}, RequestPermissionCode);
-
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int RC, String per[], int[] PResult) {
-
-        switch (RC) {
-
-            case RequestPermissionCode:
-
-                if (PResult.length > 0 && PResult[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    Toast.makeText(SelfieActivity.this,"Permission Granted, Now your application can access CAMERA.", Toast.LENGTH_LONG).show();
-
-                } else {
-
-                    Toast.makeText(SelfieActivity.this,"Permission Canceled, Now your application cannot access CAMERA.", Toast.LENGTH_LONG).show();
-
-                }
-                break;
-        }
-    }
-
-
 }

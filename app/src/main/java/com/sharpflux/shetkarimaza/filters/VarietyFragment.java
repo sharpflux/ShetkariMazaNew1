@@ -77,7 +77,6 @@ public class VarietyFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         varity_builder_id = new StringBuilder();
-
         searchView=view.findViewById(R.id.searchView);
 
         extras = new Bundle();

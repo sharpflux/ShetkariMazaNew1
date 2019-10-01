@@ -29,7 +29,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.DynamicFragmentAdapter;
-import com.sharpflux.shetkarimaza.customviews.CustomProgressDialog;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.utils.CheckDeviceIsOnline;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
@@ -53,6 +52,10 @@ public class HomeActivity extends AppCompatActivity
     Button saleButton;
     TextView navBarName, navMobileNumber;
     SearchView searchView;
+    Bundle bundleProcessor;
+    Intent bundleIntent;
+    String registrationTypeId="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,6 +118,17 @@ public class HomeActivity extends AppCompatActivity
 
         navBarName.setText("Hey " + user.getUsername() + "!");
         navMobileNumber.setText("+91" + user.getMobile());
+
+        bundleProcessor=new Bundle();
+        bundleIntent=getIntent();
+
+        bundleProcessor = bundleIntent.getExtras();
+
+        if (bundleProcessor != null) {
+
+            registrationTypeId = bundleProcessor.getString("RegistrationTypeId");
+
+        }
 
         initViews();
         saleButton.setOnClickListener(new View.OnClickListener() {
@@ -276,5 +290,11 @@ public class HomeActivity extends AppCompatActivity
 
     }
 
+
+    private void displaySelectedFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frame, fragment);
+        fragmentTransaction.commit();
+    }
 
 }

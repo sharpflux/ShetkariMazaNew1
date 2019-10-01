@@ -149,7 +149,7 @@ public class ThirdFragment extends Fragment {
                 }
 
 
-                if (TextUtils.isEmpty(chequetv)) {
+               /* if (TextUtils.isEmpty(chequetv)) {
                     btn_chequeimage.setError("Please upload copy of cheque");
                     btn_chequeimage.requestFocus();
                     return;
@@ -159,7 +159,7 @@ public class ThirdFragment extends Fragment {
                     btn_adharimage.setError("Please upload copy of adhar");
                     btn_adharimage.requestFocus();
                     return;
-                }
+                }*/
 
                 Intent intent = new Intent(getContext(), SelfieActivity.class);
 

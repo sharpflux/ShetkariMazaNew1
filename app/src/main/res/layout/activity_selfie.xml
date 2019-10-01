@@ -19,7 +19,7 @@
 
             <Button
                 android:fontFamily="@font/sfpro_display_bold"
-                android:id="@+id/btnFormSubmit"
+                android:id="@+id/btnFormSubmitSelfie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

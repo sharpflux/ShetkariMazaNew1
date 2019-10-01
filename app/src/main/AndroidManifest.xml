@@ -27,7 +27,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.UserVerificationActivity"></activity>
+        <activity
+            android:name=".activities.ProcessorActivity"
+            android:theme="@style/SellerDarkAppTheme" />
+        <activity android:name=".activities.UserVerificationActivity" />
         <activity
             android:name=".activities.EditRequestActivity"
             android:label="Edit"

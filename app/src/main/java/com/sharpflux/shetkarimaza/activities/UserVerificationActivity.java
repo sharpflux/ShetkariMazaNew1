@@ -150,26 +150,32 @@ public class UserVerificationActivity extends AppCompatActivity {
                     params.put("RegistrationTypeId", "0");
                     params.put("RegistrationCategoryId", "0");
                     params.put("FullName", FullName);
+
                     params.put("MobileNo", MobileNo);
                     params.put("AlternateMobile", "0");
                     params.put("Address", "");
                     params.put("EmailId", Lastname);
+
                     params.put("Gender", "0");
                     params.put("Address", "0");
                     params.put("StateId", "1");
                     params.put("CityId", "1");
+
                     params.put("TahasilId", "1");
                     params.put("CompanyFirmName", "0");
                     params.put("LandLineNo", "1");
                     params.put("APMCLicence", "0");
+
                     params.put("CompanyRegNo", "0");
                     params.put("GSTNo", "0");
                     params.put("AccountHolderName", "0");
                     params.put("BankName", "0");
+
                     params.put("BranchCode", "0");
                     params.put("AccountNo", "0");
                     params.put("IFSCCode", "0");
                     params.put("UploadCancelledCheckUrl", "0");
+
                     params.put("UploadAdharCardPancardUrl", "0");
                     params.put("ImageUrl", "0");
                     params.put("UserPassword", Password);
