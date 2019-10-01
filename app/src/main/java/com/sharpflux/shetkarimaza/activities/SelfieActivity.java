@@ -301,11 +301,9 @@ public class SelfieActivity extends AppCompatActivity {
 
                             if (!obj.getBoolean("error")) {
 
-                                if (registrationTypeId.equals("1")) {
-                                    startActivity(new Intent(SelfieActivity.this, ProcessorActivity.class));
-                                } else {
+
                                     startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                                }
+
 
                             } else {
                                 builder.setMessage(response)

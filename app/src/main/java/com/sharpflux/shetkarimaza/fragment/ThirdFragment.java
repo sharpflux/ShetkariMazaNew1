@@ -24,6 +24,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.activities.HomeActivity;
+import com.sharpflux.shetkarimaza.activities.ProcessorActivity;
 import com.sharpflux.shetkarimaza.activities.SelfieActivity;
 
 import java.io.ByteArrayOutputStream;
@@ -161,6 +163,42 @@ public class ThirdFragment extends Fragment {
                     return;
                 }*/
 
+
+                if (registrationTypeId.equals("1")) {
+
+
+
+                    Intent intent = new Intent(getContext(), ProcessorActivity.class);
+
+                    intent.putExtra("Name", name);
+                    intent.putExtra("RegistrationTypeId", registrationTypeId);
+                    intent.putExtra("RegistrationCategoryId", registrationCategoryId);
+                    intent.putExtra("Gender", gender);
+                    intent.putExtra("Mobile", mobile);
+                    intent.putExtra("AlternateMobile", alternateMobile);
+                    intent.putExtra("Email", email);
+                    intent.putExtra("address", address);
+                    intent.putExtra("city", city);
+                    intent.putExtra("district", district);
+                    intent.putExtra("state", state);
+                    intent.putExtra("companyname", companyname);
+                    intent.putExtra("license", license);
+                    intent.putExtra("companyregnno", companyregnno);
+                    intent.putExtra("gstno", gstno);
+                    intent.putExtra("accountname", accountname.getText().toString());
+                    intent.putExtra("bankname", bankname.getText().toString());
+                    intent.putExtra("branchcode", branchcode.getText().toString());
+                    intent.putExtra("accno", accno.getText().toString());
+                    intent.putExtra("ifsc", ifsc.getText().toString());
+                    intent.putExtra("check", ChequeImageBlob);
+                    intent.putExtra("adhar", AdharImageBlob);
+
+                    startActivity(intent);
+
+                } else {
+
+
+
                 Intent intent = new Intent(getContext(), SelfieActivity.class);
 
                 intent.putExtra("Name", name);
@@ -187,6 +225,7 @@ public class ThirdFragment extends Fragment {
                 intent.putExtra("adhar", AdharImageBlob);
 
                 startActivity(intent);
+                }
             }
         });
 

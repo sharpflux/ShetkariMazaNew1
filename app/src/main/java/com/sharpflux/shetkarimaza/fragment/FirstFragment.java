@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.customviews.CustomRecyclerViewDialog;
+import com.sharpflux.shetkarimaza.model.MyProcessor;
 import com.sharpflux.shetkarimaza.model.Product;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.utils.DataFetcher;
@@ -30,11 +31,21 @@ import java.util.ArrayList;
 public class FirstFragment extends Fragment {
 
     TextInputEditText Rtype_edit, Rcategory_edit, editfullname, mobileNo, AlternateMobile, Email;
+
     ArrayList<Product> list;
+    private ArrayList<MyProcessor> processorList;
+
     private CustomRecyclerViewDialog customDialog;
+    private CustomRecyclerViewProcessorDialog customDialogProcessor;
+
+    DataFetcherProcessor dataFetcherProcessor;
     DataFetcher fetcher;
+
     TextView hidRegTypeId, hidRegCagteId;
+
+    MyProcessor myProcessor;
     Product sellOptions;
+
     RadioGroup rg;
     RadioButton rb1,rb2;
     View view;
@@ -74,6 +85,8 @@ public class FirstFragment extends Fragment {
         mobileNo.setText(usermobileno);
         // Email.setText(useremail);
 
+        processorList = new ArrayList<>();
+
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +94,10 @@ public class FirstFragment extends Fragment {
                 String regType = Rtype_edit.getText().toString();
                 String regCategory = Rcategory_edit.getText().toString();
                 String rb= Rcategory_edit.getText().toString();
+
+
+
+
 
                 if (TextUtils.isEmpty(regType)) {
                     Rtype_edit.setError("Please enter your quality");
@@ -124,6 +141,7 @@ public class FirstFragment extends Fragment {
         });
 
 
+        dataFetcherProcessor = new DataFetcherProcessor(myProcessor,customDialogProcessor,processorList,getContext());
         fetcher = new DataFetcher(sellOptions, customDialog, list, getContext());
 
         Rtype_edit.setOnClickListener(new View.OnClickListener() {
@@ -133,6 +151,18 @@ public class FirstFragment extends Fragment {
                 FirstFragment.AsyncTaskRunner runner = new FirstFragment.AsyncTaskRunner();
                 String sleepTime = "type";
                 runner.execute(sleepTime);
+
+
+                String regCategory = Rcategory_edit.getText().toString();
+
+               /* if(regCategory.equals("1"))
+                {
+
+                    FirstFragment.AsyncTaskRunner runner2 = new FirstFragment.AsyncTaskRunner();
+                    String sleepTime2 = "processor";
+                    runner.execute(sleepTime);
+                }*/
+
 
             }
         });
@@ -194,6 +224,11 @@ public class FirstFragment extends Fragment {
                     fetcher.loadList("RegistrationType", Rtype_edit, URLs.URL_RType, "RegistrationTypeId", hidRegTypeId, "", "");
                 else if (params[0].toString() == "cate")
                     fetcher.loadList("RegistrationCategoryName", Rcategory_edit, URLs.URL_RCategary, "RegistrationCategoryId", hidRegCagteId, "", "");
+
+                else if (params[0].toString() == "processor")
+
+                    dataFetcherProcessor.loadList("ItemName", URLs.URL_PROCESSOR+"en", "ItemTypeId", "", "");
+
 
                 Thread.sleep(500);
 
