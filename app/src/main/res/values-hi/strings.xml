@@ -224,6 +224,8 @@
     <string name="click_here_to_choose_state">स्टेट को चुनने के लिए यहां क्लिक करें</string>
     <string name="click_here_to_choose_district">जिला चुनने के लिए यहां क्लिक करें</string>
     <string name="click_here_to_choose_taluka">तालुका / फ़िल्टर बाय तालुका चुनने के लिए यहाँ क्लिक करें</string>
+    <string name="click_here_to_choose_age">click here to Choose Age/Filter By Age</string>
+
     <string name="back">वापस</string>
     <string name="delete">हटाना</string>
     <string name="communicate">संवाद</string>

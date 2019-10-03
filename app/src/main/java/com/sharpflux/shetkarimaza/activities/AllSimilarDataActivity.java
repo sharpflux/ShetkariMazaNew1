@@ -33,6 +33,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.SimilarListAdapter;
+import com.sharpflux.shetkarimaza.filters.VarietyFragment;
 import com.sharpflux.shetkarimaza.model.SimilarList;
 import com.sharpflux.shetkarimaza.sqlite.SQLiteDatabaseHelper;
 import com.sharpflux.shetkarimaza.volley.URLs;
@@ -224,7 +225,10 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
 
             StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                    URLs.URL_REQESTS + "?StartIndex=" + pageIndex + "&PageSize=" + PAGE_SIZE + "&ItemTypeId=" + ItemTypeId + "&VarityId=" + VarityId + "&StateId=" + StatesID + "&DistrictId=" + DistrictId + "&QualityId=" + QualityId + "&TalukaId=" + TalukaId+"&Language="+myLocale,
+                    URLs.URL_REQESTS + "?StartIndex=" + pageIndex + "&PageSize=" + PAGE_SIZE +
+                            "&ItemTypeId=" + ItemTypeId + "&VarityId=" + VarityId + "&StateId=" + StatesID +
+                            "&DistrictId=" + DistrictId + "&QualityId=" + QualityId + "&TalukaId="
+                            + TalukaId+"&Language="+myLocale,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -356,6 +360,11 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_download) {
             exportToExcel();
+        }
+
+        if (itemId == R.id.menu_filter) {
+
+
         }
         return super.onOptionsItemSelected(item);
     }

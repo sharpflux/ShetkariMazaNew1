@@ -6,12 +6,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -32,7 +30,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
-import com.sharpflux.shetkarimaza.adapter.MyCursorAdapter;
 import com.sharpflux.shetkarimaza.model.SaveProductInfo;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.sqlite.SQLiteDatabaseHelper;
@@ -43,9 +40,6 @@ import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
 import org.json.JSONArray;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import java.io.StringReader;
@@ -139,8 +133,8 @@ public class AddListActivity extends AppCompatActivity {
         Cursor cursor = userInfoDBManager.getAllAccountCursor();
 
         listViewDataAdapter =
-                new MyCursorAdapter(this, R.layout.activity_user_account_list_view_item,
-                        cursor, fromColumnArr, toViewIdArr);
+                listViewDataAdapter = new SimpleCursorAdapter(this, R.layout.activity_user_account_list_view_item, cursor, fromColumnArr, toViewIdArr, CursorAdapter.FLAG_AUTO_REQUERY);
+
 
 
         // Set simple cursor adapter to list view.
@@ -175,7 +169,7 @@ public class AddListActivity extends AppCompatActivity {
                 userAccountDto.setImagename(image);
 
                 // Get checkbox object.
-             //   itemCheckbox = (CheckBox) view.findViewById(R.id.user_account_list_item_checkbox);
+               itemCheckbox = (CheckBox) view.findViewById(R.id.user_account_list_item_checkbox);
                 boolean checkboxChecked = false;
                 if (itemCheckbox.isChecked()) {
                     itemCheckbox.setChecked(false);

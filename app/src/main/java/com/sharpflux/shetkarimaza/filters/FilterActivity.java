@@ -10,7 +10,7 @@ import com.sharpflux.shetkarimaza.R;
 public class FilterActivity extends AppCompatActivity {
 
     Bundle bundle;
-    String itemTypeId;
+    String itemTypeId,categoryId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +23,7 @@ public class FilterActivity extends AppCompatActivity {
         if(bundle!=null) {
 
             itemTypeId=bundle.getString("ItemTypeId");
-
+            categoryId=bundle.getString("ProductId");
 
         }
 
@@ -34,7 +34,7 @@ public class FilterActivity extends AppCompatActivity {
         Bundle b = new Bundle();
         if (b != null) {
             b.putString("ItemTypeId", itemTypeId);
-
+            b.putString("ProductId", categoryId);
         }
 
         vfm.setArguments(b);

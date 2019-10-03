@@ -69,6 +69,7 @@ public class MyBuyerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     Picasso.get().load(mList.get(position).getImage()).resize(300, 300).into(((FlowerViewHolder) holder).mImage);
                     ((FlowerViewHolder) holder).mTitle.setText(mList.get(position).getProductlist());
                     ((FlowerViewHolder) holder).ItemTypeId = mList.get(position).getProductId();
+                    ((FlowerViewHolder) holder).categoryId = mList.get(position).getCategoryId();
                 }
             } catch (Exception d) {
 
@@ -144,7 +145,7 @@ class FlowerViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
 
     ImageView mImage;
     TextView mTitle;
-    String ItemTypeId;
+    String ItemTypeId,categoryId;
     List<SubCategoryFilter> mlist;
 
     FlowerViewHolder(View itemView) {
@@ -162,6 +163,7 @@ class FlowerViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
 
         intent =  new Intent(context, FilterActivity.class);
         intent.putExtra("ItemTypeId",ItemTypeId);
+        intent.putExtra("ProductId",categoryId);
         context.startActivity(intent);
     }
 

@@ -245,10 +245,9 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
         }
 
-     /*  if(ProductId.equals("15"))
-        {
+        if (ProductId.equals("15")) {
             edtDays.setVisibility(View.VISIBLE);
-        }*/
+        }
 
         list = new ArrayList<Product>();
 
@@ -256,8 +255,6 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
 
         fetcher = new DataFetcher(sellOptions, customDialog, list, ProductInfoForSaleActivity.this);
-
-
 
 
         edtTotalamt.setOnClickListener(new View.OnClickListener() {
@@ -396,10 +393,11 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
 
             String ImageUrl = extras.getString("ImageUrl");
+
            /* byte[] decodedString = Base64.decode(ImageUrl, Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             img_banner_profile_placeholder.setImageBitmap(decodedByte);
-*/
+            */
             String ItemName = extras.getString("ItemName");
             edtproductType.setText(ItemName);
             String VarietyName = extras.getString("VarietyName");
@@ -450,7 +448,6 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
             }
 
         }
-
 
         btnAddMore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -566,9 +563,9 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                         userInfoDBManager.updateAccount(userId, productVariety, days, productType);
                     }
 
-              /*    Toast.makeText(getApplicationContext(), "User account is saved successfully.", Toast.LENGTH_SHORT).show();
+                 /*    Toast.makeText(getApplicationContext(), "User account is saved successfully.", Toast.LENGTH_SHORT).show();
                    finish();
-*/
+                */
                     AlertDialog.Builder builder = new AlertDialog.Builder(ProductInfoForSaleActivity.this);
                     builder.setCancelable(false);
                     builder.setMessage("Do you want to Add more Quality?");

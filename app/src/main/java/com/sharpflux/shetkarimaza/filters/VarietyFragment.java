@@ -45,8 +45,8 @@ public class VarietyFragment extends Fragment {
     private RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     ArrayList<SubCategoryFilter> productlist;
-    Button btn_next, btn_back,btnFilterData;
-    String itemTypeId = "";
+    Button btn_next, btn_back, btnFilterData;
+    String itemTypeId = "", categoryId = "";
     Bundle extras;
     StringBuilder varity_builder_id;
     TextView errortv;
@@ -54,6 +54,7 @@ public class VarietyFragment extends Fragment {
     SearchView searchView;
     VarietyAdapter myAdapter;
     Locale myLocale;
+
     public VarietyFragment() {
 
     }
@@ -77,12 +78,13 @@ public class VarietyFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         varity_builder_id = new StringBuilder();
-        searchView=view.findViewById(R.id.searchView);
+        searchView = view.findViewById(R.id.searchView);
 
         extras = new Bundle();
 
         if (extras != null) {
             itemTypeId = getArguments().getString("ItemTypeId");
+            categoryId = getArguments().getString("ProductId");
         }
 
 
@@ -111,11 +113,19 @@ public class VarietyFragment extends Fragment {
                 }
 
 
-                FragmentTransaction transection = getFragmentManager().beginTransaction();
-                QualityFragment mfragment = new QualityFragment();
-                mfragment.setArguments(extras);
-                transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
-                transection.commit();
+                if (categoryId.equals("15")) {
+                    FragmentTransaction transection = getFragmentManager().beginTransaction();
+                    AgeFragment mfragment = new AgeFragment();
+                    mfragment.setArguments(extras);
+                    transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
+                    transection.commit();
+                } else {
+                    FragmentTransaction transection = getFragmentManager().beginTransaction();
+                    QualityFragment mfragment = new QualityFragment();
+                    mfragment.setArguments(extras);
+                    transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
+                    transection.commit();
+                }
 
             }
         });
@@ -131,8 +141,8 @@ public class VarietyFragment extends Fragment {
                 Intent intent = new Intent(getContext(), AllSimilarDataActivity.class);
                /* intent.putExtra("TalukaId","0");
                    intent.putExtra("QualityId","0");*/
-                intent.putExtra("ItemTypeId",itemTypeId);
-                intent.putExtra("VarietyId",varity_builder_id.toString());
+                intent.putExtra("ItemTypeId", itemTypeId);
+                intent.putExtra("VarietyId", varity_builder_id.toString());
                 startActivity(intent);
 
             }
@@ -148,7 +158,7 @@ public class VarietyFragment extends Fragment {
     private void SetDynamicDATA() {
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_VARIATY + itemTypeId +"&Language="+ myLocale,
+                URLs.URL_VARIATY + itemTypeId + "&Language=" + myLocale,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

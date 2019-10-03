@@ -217,12 +217,15 @@
     <string name="search_here">Search Here</string>
     <string name="price_low_to_high">Price low to high</string>
     <string name="price_high_to_low">Price high to low</string>
+
     <string name="click_here_to_choose_variety">click here to Choose variety/Filter By Variety</string>
     <string name="click_here_to_choose_village">click here to Choose village/Filter By village</string>
     <string name="click_here_to_choose_quality">click here to Choose quality/Filter By quality</string>
     <string name="click_here_to_choose_state">click here to Choose State/Filter By State</string>
     <string name="click_here_to_choose_district">click here to Choose District/Filter By District</string>
     <string name="click_here_to_choose_taluka">click here to Choose Taluka/Filter By Taluka</string>
+    <string name="click_here_to_choose_age">click here to Choose Age/Filter By Age</string>
+
     <string name="back">Back</string>
     <string name="delete">Delete</string>
     <string name="communicate">Communicate</string>

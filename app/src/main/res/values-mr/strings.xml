@@ -217,12 +217,16 @@
     <string name="search_here">येथे शोधा</string>
     <string name="price_low_to_high">किंमत कमी ते उच्च</string>
     <string name="price_high_to_low">किंमत उच्च ते कमी</string>
+
+
     <string name="click_here_to_choose_variety">विविधता / फिल्टर बाय विविधता निवडण्यासाठी येथे क्लिक करा</string>
     <string name="click_here_to_choose_village">गावोगावी / गावोगावी फिल्टर करण्यासाठी येथे क्लिक करा</string>
     <string name="click_here_to_choose_quality">गुणवत्तेनुसार गुणवत्ता / फिल्टर निवडण्यासाठी येथे क्लिक करा</string>
     <string name="click_here_to_choose_state">राज्य / राज्यानुसार फिल्टर निवडण्यासाठी येथे क्लिक करा</string>
     <string name="click_here_to_choose_district">जिल्हा / जिल्हा निवडून जिल्हा निवडण्यासाठी येथे क्लिक करा</string>
     <string name="click_here_to_choose_taluka">तालुका / तालुका फिल्टर निवडण्यासाठी येथे क्लिक करा</string>
+    <string name="click_here_to_choose_age">click here to Choose Age/Filter By Age</string>
+
     <string name="back">मागे</string>
     <string name="delete">हटवा</string>
     <string name="communicate">संवाद</string>

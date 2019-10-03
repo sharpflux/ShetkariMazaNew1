@@ -30,6 +30,7 @@
 
         <activity
             android:name=".activities.ProcessorActivity"
+            android:parentActivityName=".activities.DetailFormActivity"
             android:label="What do you want to process?"
             android:theme="@style/SellerDarkAppTheme" />
 
@@ -84,7 +85,7 @@
         <activity
             android:name=".activities.SelfieActivity"
             android:label="@string/selfie"
-            android:parentActivityName=".activities.DetailFormActivity"
+            android:parentActivityName=".activities.ProcessorActivity"
             android:theme="@style/SellerDarkAppTheme" />
 
         <activity
@@ -116,7 +117,9 @@
             android:name=".activities.ForgotPasswordActivity" />
 
         <activity
-            android:name=".activities.SelectLanguageActivity" />
+            android:name=".activities.SelectLanguageActivity"
+            android:theme="@style/SellerDarkAppTheme"
+            android:label="Select your Language"/>
 
         <activity
             android:name=".activities.SplashActivity">

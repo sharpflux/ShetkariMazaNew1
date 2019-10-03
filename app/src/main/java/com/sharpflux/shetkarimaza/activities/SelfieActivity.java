@@ -347,6 +347,36 @@ public class SelfieActivity extends AppCompatActivity {
                 }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
+
+
+               /* UserId:0
+                RegistrationTypeId:0
+                RegistrationCategoryId:0
+                FullName:SadamHasan
+                MobileNo:9340105834
+                AlternateMobile:0
+                Address:0
+                emailid:aks@gmail.com
+                StateId:1
+                CityId:1
+                TahasilId:1
+                CompanyFirmName:gdgdg
+                LandLineNo:555555
+                APMCLicence:727272
+                CompanyRegNo:7275272
+                GSTNo:287528
+                AccountHolderName:fhfhfh
+                BankName:bcabca
+                BranchCode:55555
+                AccountNo:472727
+                IFSCCode:35374
+                UploadCancelledCheckUrl:0
+                UploadAdharCardPancardUrl:0
+                UserPassword:123
+                Gender:female
+                ImageUrl:0
+                AgentId:1*/
+
                 Map<String, String> params = new HashMap<>();
                 params.put("UserId", UserId);
                 params.put("RegistrationTypeId", registrationTypeId);
@@ -359,7 +389,6 @@ public class SelfieActivity extends AppCompatActivity {
                 params.put("EmailId", email);
 
                 params.put("Gender", "male");
-                params.put("Address", address);
                 params.put("StateId", "1");
                 params.put("CityId", "1");
 
@@ -376,19 +405,19 @@ public class SelfieActivity extends AppCompatActivity {
                 params.put("BranchCode", branchcode);
                 params.put("AccountNo", accno);
                 params.put("IFSCCode", ifsc);
-
                 params.put("UploadCancelledCheckUrl", "0");
 
                 params.put("UploadAdharCardPancardUrl", "0");
                 params.put("ImageUrl", "0");
+                params.put("UserPassword", "1");
+                params.put("AgentId", "0");
 
                /* params.put("UploadCancelledCheckUrl", check);
 
                 params.put("UploadAdharCardPancardUrl", adhar);
                 params.put("ImageUrl", selfi);*/
 
-                params.put("UserPassword", "1");
-                params.put("AgentId", "0");
+
 
                 return params;
             }

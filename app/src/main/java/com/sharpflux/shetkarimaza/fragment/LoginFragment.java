@@ -53,9 +53,10 @@ public class LoginFragment extends Fragment {
     LinearLayout forgotpw;
     ProgressDialog progressDialog;
     EditText eusername, epassword;
-    AlertDialog.Builder builder;
 
+    User user;
     CountryCodePicker ccp;
+
     public LoginFragment() {
         // Required empty public constructor
     }
@@ -91,7 +92,6 @@ public class LoginFragment extends Fragment {
         ccp = (CountryCodePicker) view.findViewById(R.id.ccp);
         ccp.registerCarrierNumberEditText(eusername);
 
-        builder = new AlertDialog.Builder(getContext());
 
         forgotpw.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,12 +123,13 @@ public class LoginFragment extends Fragment {
                     AlertDialog alert = builder.create();
                     alert.show();
                     return;
+                } else {
+                    //userLogin();
+                    AsyncTaskRunner runner = new AsyncTaskRunner();
+                    String sleepTime = "1";
+                    runner.execute(sleepTime);
+
                 }
-
-                AsyncTaskRunner runner = new AsyncTaskRunner();
-                String sleepTime = "1";
-                runner.execute(sleepTime);
-
 
             }
         });
@@ -139,21 +140,21 @@ public class LoginFragment extends Fragment {
 
     private void userLogin() {
         //first getting the values
-        String MobilePattern = "{10}";
+        //String MobilePattern = "{10}";
         final String username = eusername.getText().toString();
         final String password = epassword.getText().toString();
 
         number = ccp.getFullNumberWithPlus();
         //validating inputs
-        if (TextUtils.isEmpty(username)){
+        if (TextUtils.isEmpty(username)) {
             eusername.setError("Please enter your username");
             eusername.requestFocus();
             return;
         }
-        if (!username.equals(MobilePattern)){
+        /*if (!username.equals(MobilePattern)){
             eusername.setError("Username should not less than 10 digit");
             return;
-        }
+        }*/
         if (TextUtils.isEmpty(password)) {
             epassword.setError("Please enter your password");
             epassword.requestFocus();
@@ -163,7 +164,6 @@ public class LoginFragment extends Fragment {
         //if everything is fine
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_LOGIN,
                 new Response.Listener<String>() {
-
 
                     @Override
                     public void onResponse(String response) {
@@ -178,64 +178,65 @@ public class LoginFragment extends Fragment {
 
                                 if (!userJson.getBoolean("error")) {
 
-                                    User user = new User(
+                                    user = new User(
                                             userJson.getInt("UserId"),
                                             userJson.getString("FullName"),
                                             userJson.getString("EmailId"),
-                                            userJson.getString("MobileNo"),"",""
+                                            userJson.getString("MobileNo"), "", ""
 
                                     );
-                                    //storing the user in shared preferences
-                                    SharedPrefManager.getInstance(getContext()).userLogin(user);
-                                    //starting the profile activity
-                                    getActivity().finish();
 
-                                    startActivity(new Intent(getContext(), HomeActivity.class));
                                 } else {
-                                    builder.setMessage("Invalid User Name or Password!")
-                                            .setCancelable(false)
-
-                                            .setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int id) {
-                                                    //  Action for 'NO' Button
-                                                    dialog.cancel();
-
-                                                }
-                                            });
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                    builder.setCancelable(false);
+                                    builder.setMessage("Invalid Username or Password");
+                                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            //if user pressed "yes", then he is allowed to exit from application
+                                            dialog.cancel();
+                                            // getActivity().finish();
+                                        }
+                                    });
 
                                     AlertDialog alert = builder.create();
-                                    alert.setTitle("Invalid User");
                                     alert.show();
                                 }
+
+                                //storing the user in shared preferences
+                                SharedPrefManager.getInstance(getContext()).userLogin(user);
+                                //starting the profile activity
+                                getActivity().finish();
+                                startActivity(new Intent(getContext(), HomeActivity.class));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
+
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        builder.setMessage(error.getMessage())
-                                .setCancelable(false)
-
-                                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        //  Action for 'NO' Button
-                                        dialog.cancel();
-
-                                    }
-                                });
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        builder.setCancelable(false);
+                        builder.setMessage("Invalid Username or Password");
+                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //if user pressed "yes", then he is allowed to exit from application
+                                dialog.cancel();
+                            }
+                        });
 
                         AlertDialog alert = builder.create();
-                        alert.setTitle("Error");
                         alert.show();
                     }
                 }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("Email", number);
+                params.put("Email", username);
                 params.put("UserPassword", password);
                 return params;
             }
