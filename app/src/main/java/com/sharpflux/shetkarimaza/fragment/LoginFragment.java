@@ -139,14 +139,19 @@ public class LoginFragment extends Fragment {
 
     private void userLogin() {
         //first getting the values
+        String MobilePattern = "{10}";
         final String username = eusername.getText().toString();
         final String password = epassword.getText().toString();
 
         number = ccp.getFullNumberWithPlus();
         //validating inputs
-        if (TextUtils.isEmpty(username)) {
+        if (TextUtils.isEmpty(username)){
             eusername.setError("Please enter your username");
             eusername.requestFocus();
+            return;
+        }
+        if (!username.equals(MobilePattern)){
+            eusername.setError("Username should not less than 10 digit");
             return;
         }
         if (TextUtils.isEmpty(password)) {

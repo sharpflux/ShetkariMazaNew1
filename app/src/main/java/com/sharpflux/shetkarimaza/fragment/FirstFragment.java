@@ -36,9 +36,7 @@ public class FirstFragment extends Fragment {
     private ArrayList<MyProcessor> processorList;
 
     private CustomRecyclerViewDialog customDialog;
-    private CustomRecyclerViewProcessorDialog customDialogProcessor;
 
-    DataFetcherProcessor dataFetcherProcessor;
     DataFetcher fetcher;
 
     TextView hidRegTypeId, hidRegCagteId;
@@ -141,7 +139,7 @@ public class FirstFragment extends Fragment {
         });
 
 
-        dataFetcherProcessor = new DataFetcherProcessor(myProcessor,customDialogProcessor,processorList,getContext());
+
         fetcher = new DataFetcher(sellOptions, customDialog, list, getContext());
 
         Rtype_edit.setOnClickListener(new View.OnClickListener() {
@@ -152,16 +150,6 @@ public class FirstFragment extends Fragment {
                 String sleepTime = "type";
                 runner.execute(sleepTime);
 
-
-                String regCategory = Rcategory_edit.getText().toString();
-
-               /* if(regCategory.equals("1"))
-                {
-
-                    FirstFragment.AsyncTaskRunner runner2 = new FirstFragment.AsyncTaskRunner();
-                    String sleepTime2 = "processor";
-                    runner.execute(sleepTime);
-                }*/
 
 
             }
@@ -221,14 +209,12 @@ public class FirstFragment extends Fragment {
             try {
 
                 if (params[0].toString() == "type")
-                    fetcher.loadList("RegistrationType", Rtype_edit, URLs.URL_RType, "RegistrationTypeId", hidRegTypeId, "", "");
+                    fetcher.loadList("RegistrationType", Rtype_edit, URLs.URL_RType,
+                            "RegistrationTypeId", hidRegTypeId, "", "");
                 else if (params[0].toString() == "cate")
-                    fetcher.loadList("RegistrationCategoryName", Rcategory_edit, URLs.URL_RCategary, "RegistrationCategoryId", hidRegCagteId, "", "");
-
-                else if (params[0].toString() == "processor")
-
-                    dataFetcherProcessor.loadList("ItemName", URLs.URL_PROCESSOR+"en", "ItemTypeId", "", "");
-
+                    fetcher.loadList("RegistrationCategoryName",
+                            Rcategory_edit, URLs.URL_RCategary, "RegistrationCategoryId", hidRegCagteId,
+                            "", "");
 
                 Thread.sleep(500);
 
