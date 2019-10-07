@@ -124,8 +124,7 @@ public class DynamicFragment extends Fragment {
                             for (int i = 0; i < obj.length(); i++) {
                                 JSONObject userJson = obj.getJSONObject(i);
                                 if (!userJson.getBoolean("error")) {
-                                    sellOptions =
-                                            new SellOptions
+                                    sellOptions = new SellOptions
                                                     (userJson.getString("ImageUrl"),
                                                             userJson.getString("ItemName"),
                                                             userJson.getString("ItemTypeId"),

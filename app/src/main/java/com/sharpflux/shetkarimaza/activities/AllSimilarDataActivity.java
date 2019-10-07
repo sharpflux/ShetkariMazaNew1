@@ -11,6 +11,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
@@ -33,7 +35,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.SimilarListAdapter;
+import com.sharpflux.shetkarimaza.filters.PriceFragment;
+import com.sharpflux.shetkarimaza.filters.StateFragment;
 import com.sharpflux.shetkarimaza.filters.VarietyFragment;
+import com.sharpflux.shetkarimaza.fragment.CategoryFragment;
 import com.sharpflux.shetkarimaza.model.SimilarList;
 import com.sharpflux.shetkarimaza.sqlite.SQLiteDatabaseHelper;
 import com.sharpflux.shetkarimaza.volley.URLs;
@@ -363,7 +368,8 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         }
 
         if (itemId == R.id.menu_filter) {
-
+            StateFragment stateFragment = new StateFragment();
+            displaySelectedFragment(stateFragment);
 
         }
         return super.onOptionsItemSelected(item);
@@ -503,5 +509,9 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         }
     }
 
-
+    private void displaySelectedFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_order_list_llContainer, fragment);
+        fragmentTransaction.commit();
+    }
 }

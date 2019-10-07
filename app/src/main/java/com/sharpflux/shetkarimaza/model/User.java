@@ -3,7 +3,7 @@ package com.sharpflux.shetkarimaza.model;
 public class User {
 
     private int id;
-    private String username, email, mobile, middlename, lastname;//IsCompleteRegistration;
+    private String username, email, mobile, middlename, lastname,language;//IsCompleteRegistration;
 
     /*public User(int id, String username, String email, String mobile,
                 String middlename, String lastname, String isCompleteRegistration) {
@@ -16,13 +16,15 @@ public class User {
         IsCompleteRegistration = isCompleteRegistration;
     }
 */
-    public User(int id, String username, String email, String mobile, String middlename, String lastname) {
+
+    public User(int id, String username, String email, String mobile, String middlename, String lastname, String language) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.mobile = mobile;
         this.middlename = middlename;
         this.lastname = lastname;
+        this.language = language;
     }
 
     public int getId() {
@@ -73,5 +75,11 @@ public class User {
         this.lastname = lastname;
     }
 
+    public String getLanguage() {
+        return language;
+    }
 
+    public void setLanguage(String language) {
+        this.language = language;
+    }
 }

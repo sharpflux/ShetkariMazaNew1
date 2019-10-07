@@ -42,7 +42,7 @@
 
     <include layout="@layout/content_home" />
 
-    <Button
+    <!--<Button
         android:id="@+id/saleButton"
         android:layout_width="70dp"
         android:layout_height="70dp"
@@ -50,6 +50,6 @@
         android:layout_margin="@dimen/fab_margin"
         android:text="@string/sell"
         android:textColor="@color/white"
-        android:background="@drawable/round"/>
+        android:background="@drawable/round"/>-->
 
 </android.support.design.widget.CoordinatorLayout>

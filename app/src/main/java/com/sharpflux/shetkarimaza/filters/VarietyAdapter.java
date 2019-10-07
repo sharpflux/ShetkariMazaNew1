@@ -142,4 +142,4 @@ class VarietytViewHolder extends RecyclerView.ViewHolder implements View.OnClick
 
     }
 
-}/////
+}

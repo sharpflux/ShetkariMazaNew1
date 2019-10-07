@@ -27,102 +27,87 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
+        <activity
+            android:name=".activities.ContactDetailActivity"
+            android:theme="@style/SellerDarkAppTheme">
+        </activity>
+        <activity
+            android:name=".activities.BuyerActivity"
+            android:theme="@style/SellerDarkAppTheme"
+            android:parentActivityName=".activities.HomeActivity">
+        </activity>
+        <activity
+            android:name=".activities.TranspoterActivity"
+            android:label="Transpoter"
+            android:parentActivityName=".activities.SelfieActivity"
+            android:theme="@style/SellerDarkAppTheme" />
         <activity
             android:name=".activities.ProcessorActivity"
-            android:parentActivityName=".activities.DetailFormActivity"
             android:label="What do you want to process?"
+            android:parentActivityName=".activities.DetailFormActivity"
             android:theme="@style/SellerDarkAppTheme" />
-
-        <activity
-            android:name=".activities.UserVerificationActivity" />
-
+        <activity android:name=".activities.UserVerificationActivity" />
         <activity
             android:name=".activities.EditRequestActivity"
             android:label="Edit"
             android:parentActivityName=".activities.HomeActivity"
             android:theme="@style/SellerDarkAppTheme" />
-
         <activity
             android:name=".activities.AddListActivity"
             android:label="@string/list_added_item"
             android:theme="@style/SellerDarkAppTheme" />
-
-        <activity
-            android:name=".activities.ResetPasswordActivity" />
-
-        <activity
-            android:name=".activities.OtpActivity" />
-
+        <activity android:name=".activities.ResetPasswordActivity" />
+        <activity android:name=".activities.OtpActivity" />
         <activity
             android:name=".activities.PaymentActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".filters.FilterActivity"
             android:parentActivityName=".activities.AllSimilarDataActivity"
             android:theme="@style/ToolbarAppTheme" />
-
-        <activity
-            android:name=".activities.TabLayoutLogRegActivity" />
-
+        <activity android:name=".activities.TabLayoutLogRegActivity" />
         <activity
             android:name=".activities.AllSimilarDataActivity"
             android:parentActivityName=".activities.HomeActivity"
             android:theme="@style/ToolbarAppTheme" />
-
         <activity
             android:name=".activities.ProductDetailsForBuyerActivity"
             android:parentActivityName=".activities.AllSimilarDataActivity"
             android:theme="@style/ToolbarAppTheme" />
-
         <activity
             android:name=".activities.DetailFormActivity"
             android:label="@string/includemoredetails"
             android:parentActivityName=".activities.ChooseActivity"
             android:theme="@style/SellerDarkAppTheme" />
-
         <activity
             android:name=".activities.SelfieActivity"
             android:label="@string/selfie"
             android:parentActivityName=".activities.ProcessorActivity"
             android:theme="@style/SellerDarkAppTheme" />
-
         <activity
             android:name=".activities.ProductInfoForSaleActivity"
             android:label="@string/productdetail"
             android:parentActivityName=".activities.SellerActivity"
             android:theme="@style/SellerDarkAppTheme" />
-
         <activity
             android:name=".activities.SellerActivity"
             android:label="@string/productdetail"
             android:noHistory="true"
             android:parentActivityName=".activities.HomeActivity"
             android:theme="@style/SellerDarkAppTheme" />
-
-        <activity
-            android:name=".activities.ChooseActivity" />
-
-        <activity
-            android:name=".activities.WelcomeActivity" />
-
+        <activity android:name=".activities.ChooseActivity" />
+        <activity android:name=".activities.WelcomeActivity" />
         <activity
             android:name=".activities.HomeActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity
-            android:name=".activities.ForgotPasswordActivity" />
-
+        <activity android:name=".activities.ForgotPasswordActivity" />
         <activity
             android:name=".activities.SelectLanguageActivity"
-            android:theme="@style/SellerDarkAppTheme"
-            android:label="Select your Language"/>
-
-        <activity
-            android:name=".activities.SplashActivity">
+            android:label="Select your Language"
+            android:theme="@style/SellerDarkAppTheme" />
+        <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -141,7 +126,6 @@
                 <action android:name="android.content.action.DOCUMENTS_PROVIDER" />
             </intent-filter>
         </provider>
-
         <provider
             android:name=".provider.GenericFileProvider"
             android:authorities="${applicationId}.fileprovider"

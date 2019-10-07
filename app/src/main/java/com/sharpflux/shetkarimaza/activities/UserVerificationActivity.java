@@ -123,7 +123,7 @@ public class UserVerificationActivity extends AppCompatActivity {
                                             obj.getInt("UserId"),
                                             obj.getString("FullName"),
                                             obj.getString("EmailId"),
-                                            obj.getString("MobileNo"), "", ""
+                                            obj.getString("MobileNo"), "", "",""
                                     );
                                     SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
                                     finish();
@@ -146,21 +146,48 @@ public class UserVerificationActivity extends AppCompatActivity {
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> params = new HashMap<>();
 
+
+                     /* UserId:0
+                RegistrationTypeId:0
+                RegistrationCategoryId:0
+                FullName:SadamHasan
+                MobileNo:9340105834
+                AlternateMobile:0
+                Address:0
+                emailid:aks@gmail.com
+                StateId:1
+                CityId:1
+                TahasilId:1
+                CompanyFirmName:gdgdg
+                LandLineNo:555555
+                APMCLicence:727272
+                CompanyRegNo:7275272
+                GSTNo:287528
+                AccountHolderName:fhfhfh
+                BankName:bcabca
+                BranchCode:55555
+                AccountNo:472727
+                IFSCCode:35374
+                UploadCancelledCheckUrl:0
+                UploadAdharCardPancardUrl:0
+                UserPassword:123
+                Gender:female
+                ImageUrl:0
+                AgentId:1*/
+
                     params.put("UserId", "");
                     params.put("RegistrationTypeId", "0");
                     params.put("RegistrationCategoryId", "0");
                     params.put("FullName", FullName);
-
                     params.put("MobileNo", MobileNo);
+
                     params.put("AlternateMobile", "0");
-                    params.put("Address", "");
-                    params.put("EmailId", Lastname);
-
-                    params.put("Gender", "0");
                     params.put("Address", "0");
+                    params.put("EmailId", Lastname);
+                    params.put("Gender", "0");
                     params.put("StateId", "1");
-                    params.put("CityId", "1");
 
+                    params.put("CityId", "1");
                     params.put("TahasilId", "1");
                     params.put("CompanyFirmName", "0");
                     params.put("LandLineNo", "1");
@@ -170,14 +197,14 @@ public class UserVerificationActivity extends AppCompatActivity {
                     params.put("GSTNo", "0");
                     params.put("AccountHolderName", "0");
                     params.put("BankName", "0");
-
                     params.put("BranchCode", "0");
+
                     params.put("AccountNo", "0");
                     params.put("IFSCCode", "0");
                     params.put("UploadCancelledCheckUrl", "0");
-
                     params.put("UploadAdharCardPancardUrl", "0");
                     params.put("ImageUrl", "0");
+
                     params.put("UserPassword", Password);
                     params.put("AgentId", "");
 

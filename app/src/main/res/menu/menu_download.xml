@@ -6,10 +6,11 @@
         android:icon="@drawable/ic_file_download"
         android:title="Download"
         app:showAsAction="always|withText" />
-
     <item
         android:id="@+id/menu_filter"
         android:icon="@drawable/ic_filters"
-        android:title="Download"
+        android:title="Filter"
         app:showAsAction="always|withText" />
+
+
 </menu>

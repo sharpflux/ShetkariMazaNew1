@@ -26,6 +26,7 @@ import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 import com.sharpflux.shetkarimaza.volley.URLs;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class FirstFragment extends Fragment {
@@ -34,7 +35,7 @@ public class FirstFragment extends Fragment {
 
     ArrayList<Product> list;
     private ArrayList<MyProcessor> processorList;
-
+    Locale myLocale;
     private CustomRecyclerViewDialog customDialog;
 
     DataFetcher fetcher;
@@ -74,7 +75,7 @@ public class FirstFragment extends Fragment {
         list = new ArrayList<Product>();
 
         User user = SharedPrefManager.getInstance(getContext()).getUser();
-
+        myLocale = getResources().getConfiguration().locale;
         username = user.getUsername();
         usermobileno = user.getMobile();
         useremail = user.getEmail();
@@ -209,7 +210,7 @@ public class FirstFragment extends Fragment {
             try {
 
                 if (params[0].toString() == "type")
-                    fetcher.loadList("RegistrationType", Rtype_edit, URLs.URL_RType,
+                    fetcher.loadList("RegistrationType", Rtype_edit, URLs.URL_RType+myLocale ,
                             "RegistrationTypeId", hidRegTypeId, "", "");
                 else if (params[0].toString() == "cate")
                     fetcher.loadList("RegistrationCategoryName",

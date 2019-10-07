@@ -171,7 +171,7 @@ public class SelectLanguageActivity extends AppCompatActivity {
     }
 
 
-    private void loadLocate() {
+    public void loadLocate() {
         SharedPreferences sharedPreferences = getSharedPreferences("Settings", Activity.MODE_PRIVATE);
         String language = sharedPreferences.getString("My_Lang", "");
         setLocale(language);

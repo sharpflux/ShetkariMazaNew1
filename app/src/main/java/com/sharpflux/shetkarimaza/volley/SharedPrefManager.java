@@ -18,7 +18,7 @@ public class SharedPrefManager {
     private static final String KEY_LASTNAME = "lastname";
     //private static final String KEY_GENDER = "keygender";
     private static final String KEY_ID = "CustomerId";
-    private static final String KEY_LANGUAGE = "Language";
+    private static final String KEY_LANGUAGE = "currentLang";
     //private static final String KEY_ISCOMPLETE = "IsCompleteRegistration";
     private static SharedPrefManager mInstance;
     private static Context mCtx;
@@ -47,6 +47,7 @@ public class SharedPrefManager {
         editor.putString(KEY_MOBILE, user.getMobile());
         editor.putString(KEY_MIDDLENAME, user.getMiddlename());
         editor.putString(KEY_LASTNAME, user.getLastname());
+        editor.putString(KEY_LANGUAGE, user.getLanguage());
         //editor.putString(KEY_ISCOMPLETE, user.getIsCompleteRegistration());
         //editor.putString(KEY_GENDER, user.getGender());
         editor.apply();
@@ -70,7 +71,8 @@ public class SharedPrefManager {
                 sharedPreferences.getString(KEY_EMAIL, null),
                 sharedPreferences.getString(KEY_MOBILE, null),
                 sharedPreferences.getString(KEY_MIDDLENAME, null),
-                sharedPreferences.getString(KEY_LASTNAME, null)
+                sharedPreferences.getString(KEY_LASTNAME, null),
+                sharedPreferences.getString(KEY_LANGUAGE, null)
         );
     }
 

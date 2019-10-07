@@ -9,10 +9,8 @@
     </style>
 
     <!-- Base application theme. -->
-    <style name="SellerDarkAppTheme" parent="Theme.AppCompat.Light.DarkActionBar"
-        >
+    <style name="SellerDarkAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:fontFamily">@font/sfpro_display_regular</item>
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorPrimary</item>

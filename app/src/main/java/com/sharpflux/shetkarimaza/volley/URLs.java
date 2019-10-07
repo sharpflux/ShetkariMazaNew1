@@ -4,7 +4,7 @@ public class URLs {
     public static final String URL_REGISTER = "http://apimaza.supergo.in/api/Registration/User";
     public static final String URL_LOGIN = "http://apimaza.supergo.in/api/Users/Login";
     public static final String URL_RECYCLER="http://apimaza.supergo.in/api/Categories/GetCategories?Language=";
-    public static final String URL_RType="http://apimaza.supergo.in/api/Categories/GetRegType";
+    public static final String URL_RType="http://apimaza.supergo.in/api/Categories/GetRegType?Language=";
     public static final String URL_RCategary="http://apimaza.supergo.in/api/Categories/RegCat";
     public static final String URL_QUALITY="http://apimaza.supergo.in/api/Quality/GetQuality";
     public static final String URL_BANK="http://apimaza.supergo.in/api/Bank/GetBank";
@@ -22,5 +22,10 @@ public class URLs {
     public static final String URL_RATE="http://apimaza.supergo.in/api/RateMasterAPI/GETRateMasterApi?";
 
     public static String URL_OTP2="http://apimaza.supergo.in/User_Authentication/GetOTP?MobileNo=";
+    public static String URL_CONTACTDET="http://apimaza.supergo.in/api/Registration/RegistrationFilterGET?StartIndex=1&PageSize=500";
+
+
     public static String URL_PROCESSOR="http://apimaza.supergo.in/api/ItemMasterApi/GetIsProcessAPI?Language=";
+
+
 }

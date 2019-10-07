@@ -4,10 +4,8 @@ package com.sharpflux.shetkarimaza.fragment;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -18,7 +16,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -30,7 +27,7 @@ import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.ChooseActivity;
 import com.sharpflux.shetkarimaza.activities.ForgotPasswordActivity;
 import com.sharpflux.shetkarimaza.activities.HomeActivity;
-import com.sharpflux.shetkarimaza.customviews.CustomProgressDialog;
+import com.sharpflux.shetkarimaza.activities.SelectLanguageActivity;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.utils.CheckDeviceIsOnline;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
@@ -124,10 +121,10 @@ public class LoginFragment extends Fragment {
                     alert.show();
                     return;
                 } else {
-                    //userLogin();
-                    AsyncTaskRunner runner = new AsyncTaskRunner();
+                    userLogin();
+                   /* AsyncTaskRunner runner = new AsyncTaskRunner();
                     String sleepTime = "1";
-                    runner.execute(sleepTime);
+                    runner.execute(sleepTime);*/
 
                 }
 
@@ -139,29 +136,22 @@ public class LoginFragment extends Fragment {
     }
 
     private void userLogin() {
-        //first getting the values
-        //String MobilePattern = "{10}";
         final String username = eusername.getText().toString();
         final String password = epassword.getText().toString();
 
         number = ccp.getFullNumberWithPlus();
-        //validating inputs
         if (TextUtils.isEmpty(username)) {
             eusername.setError("Please enter your username");
             eusername.requestFocus();
             return;
         }
-        /*if (!username.equals(MobilePattern)){
-            eusername.setError("Username should not less than 10 digit");
-            return;
-        }*/
+
         if (TextUtils.isEmpty(password)) {
             epassword.setError("Please enter your password");
             epassword.requestFocus();
             return;
         }
 
-        //if everything is fine
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_LOGIN,
                 new Response.Listener<String>() {
 
@@ -182,7 +172,7 @@ public class LoginFragment extends Fragment {
                                             userJson.getInt("UserId"),
                                             userJson.getString("FullName"),
                                             userJson.getString("EmailId"),
-                                            userJson.getString("MobileNo"), "", ""
+                                            userJson.getString("MobileNo"), "", "",""
 
                                     );
 
@@ -207,7 +197,7 @@ public class LoginFragment extends Fragment {
                                 SharedPrefManager.getInstance(getContext()).userLogin(user);
                                 //starting the profile activity
                                 getActivity().finish();
-                                startActivity(new Intent(getContext(), HomeActivity.class));
+                                startActivity(new Intent(getContext(), SelectLanguageActivity.class));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -245,7 +235,7 @@ public class LoginFragment extends Fragment {
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
 
-    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
+    /*private class AsyncTaskRunner extends AsyncTask<String, String, String> {
 
         private String resp;
         ProgressDialog progressDialog;
@@ -289,6 +279,6 @@ public class LoginFragment extends Fragment {
         }
 
     }
-
+*/
 
 }

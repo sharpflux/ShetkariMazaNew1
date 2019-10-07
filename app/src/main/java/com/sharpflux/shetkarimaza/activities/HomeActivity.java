@@ -1,7 +1,9 @@
 package com.sharpflux.shetkarimaza.activities;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -29,6 +31,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.DynamicFragmentAdapter;
+import com.sharpflux.shetkarimaza.fragment.CategoryFragment;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.utils.CheckDeviceIsOnline;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
@@ -44,15 +47,16 @@ import java.util.Locale;
 import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, TabLayout.OnTabSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
-    private TabLayout mTabLayout;
+    //private TabLayout mTabLayout;
     Locale myLocale;
-    private ViewPager viewPager;
-    Button saleButton;
+    //private ViewPager viewPager;
+    //Button saleButton;
     TextView navBarName, navMobileNumber;
-    SearchView searchView;
+   // SearchView searchView;
     Bundle bundleProcessor;
+    String language;
     Intent bundleIntent;
     String registrationTypeId="";
 
@@ -65,7 +69,7 @@ public class HomeActivity extends AppCompatActivity
 
        // searchView = findViewById(R.id.searchViewHome);
 
-        saleButton = findViewById(R.id.saleButton);
+        //saleButton = findViewById(R.id.saleButton);
         myLocale = getResources().getConfiguration().locale;
 
         if (!CheckDeviceIsOnline.isNetworkConnected(this)) {
@@ -96,26 +100,21 @@ public class HomeActivity extends AppCompatActivity
 
         header = navigationView.getHeaderView(0);
 
-        //finish();
-        //startActivity(new Intent(this, ChooseActivity.class));
 
        if (!SharedPrefManager.getInstance(this).isLoggedIn()) {
             finish();
             startActivity(new Intent(this, TabLayoutLogRegActivity.class));
         }
 
-        /*if (!SharedPrefManager.getInstance(this).isCompleteRegistration()) {
-            finish();
-            startActivity(new Intent(this, ChooseActivity.class));
-        }
-*/
+
         navBarName = header.findViewById(R.id.navheaderName);
         navMobileNumber = header.findViewById(R.id.navheaderMobile);
 
 
         User user = SharedPrefManager.getInstance(this).getUser();
 
-
+        User user1 = SharedPrefManager.getInstance(new HomeActivity()).getUser();
+        language = user.getLanguage();
         navBarName.setText("Hey " + user.getUsername() + "!");
         navMobileNumber.setText("+91" + user.getMobile());
 
@@ -130,95 +129,23 @@ public class HomeActivity extends AppCompatActivity
 
         }
 
-        initViews();
-        saleButton.setOnClickListener(new View.OnClickListener() {
+        CategoryFragment categoryFragment = new CategoryFragment();
+        displaySelectedFragment(categoryFragment);
+        //initViews();
+
+        /*saleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent in = new Intent(HomeActivity.this, SellerActivity.class);
                 startActivity(in);
             }
-        });
+        });*/
+
+
 
     }
 
 
-    private void initViews() {
-
-        viewPager = findViewById(R.id.viewpager);
-        mTabLayout = findViewById(R.id.tabs);
-        viewPager.setOffscreenPageLimit(5);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
-        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
-        setDynamicFragmentToTabLayout();
-
-    }
-
-    private void setDynamicFragmentToTabLayout() {
-
-//        CustomProgressDialog.showSimpleProgressDialog(this, "Loading...", "Fetching data", false);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_RECYCLER + myLocale,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-
-                           // CustomProgressDialog.removeSimpleProgressDialog();
-                            JSONArray obj = new JSONArray(response);
-                            for (int i = 0; i < obj.length(); i++) {
-
-                                JSONObject userJson = obj.getJSONObject(i);
-
-                                if (!userJson.getBoolean("error")) {
-
-                                    mTabLayout.addTab(mTabLayout.newTab().setText(userJson.getString("CategoryName_EN")));
-
-                                    DynamicFragmentAdapter mDynamicFragmentAdapter = new DynamicFragmentAdapter(getSupportFragmentManager(), mTabLayout.getTabCount(), obj,getApplicationContext());
-
-                                    viewPager.setAdapter(mDynamicFragmentAdapter);
-
-                                    viewPager.setCurrentItem(0);
-                                } else {
-                                    Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("Email", "");
-                params.put("Password", "");
-                return params;
-            }
-        };
-
-        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
-    }
 
     @Override
     public void onBackPressed() {
@@ -226,25 +153,8 @@ public class HomeActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setCancelable(false);
-            builder.setMessage("Do you want to Exit?");
-            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    //if user pressed "yes", then he is allowed to exit from application
-                    finish();
-                }
-            });
-            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    //if user select "No", just cancel this dialog and continue with app
-                    dialog.cancel();
-                }
-            });
-            AlertDialog alert = builder.create();
-            alert.show();
+
+
 
         }
 
@@ -293,21 +203,6 @@ public class HomeActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    @Override
-    public void onTabSelected(TabLayout.Tab tab) {
-        viewPager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {
-
-    }
-
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {
-
     }
 
 

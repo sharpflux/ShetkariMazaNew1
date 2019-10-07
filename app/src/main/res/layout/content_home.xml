@@ -6,17 +6,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/frame"
+    android:background="@drawable/background"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activities.HomeActivity"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
     <FrameLayout
         android:id="@+id/frame1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"></FrameLayout>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <LinearLayout
+    </FrameLayout>
+
+    <!--<LinearLayout
         android:id="@+id/main_layout"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -32,13 +34,12 @@
             android:fontFamily="@font/sfpro_display_bold"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
           />
-        <!-- View pager to swipe views -->
+        &lt;!&ndash; View pager to swipe views &ndash;&gt;
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         </android.support.v4.view.ViewPager>
     </LinearLayout>
-
-    />
+    -->
 </android.support.design.widget.CoordinatorLayout>
