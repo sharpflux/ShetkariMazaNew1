@@ -29,6 +29,7 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".activities.ContactDetailActivity"
+            android:parentActivityName=".activities.HomeActivity"
             android:theme="@style/SellerDarkAppTheme">
         </activity>
         <activity

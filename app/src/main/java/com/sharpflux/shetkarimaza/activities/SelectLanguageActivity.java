@@ -2,6 +2,7 @@ package com.sharpflux.shetkarimaza.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -118,7 +119,7 @@ public class SelectLanguageActivity extends AppCompatActivity {
     }
 
 
-    /*private void showChangeLang() {
+    private void showChangeLang() {
 
         final String[] listItmes = {"English", "Marathi", "Hindi"};
 
@@ -150,7 +151,7 @@ public class SelectLanguageActivity extends AppCompatActivity {
 
         mDialog.show();
 
-    }*/
+    }
 
 
     public void setLocale(String localeName) {
@@ -160,10 +161,13 @@ public class SelectLanguageActivity extends AppCompatActivity {
             DisplayMetrics dm = res.getDisplayMetrics();
             Configuration conf = res.getConfiguration();
             conf.locale = myLocale;
+
             res.updateConfiguration(conf, dm);
             Intent refresh = new Intent(this, HomeActivity.class);
             refresh.putExtra(currentLang, localeName);
             startActivity(refresh);
+
+
             finish();
         } else {
             Toast.makeText(SelectLanguageActivity.this, "Language already selected!", Toast.LENGTH_SHORT).show();
@@ -171,10 +175,6 @@ public class SelectLanguageActivity extends AppCompatActivity {
     }
 
 
-    public void loadLocate() {
-        SharedPreferences sharedPreferences = getSharedPreferences("Settings", Activity.MODE_PRIVATE);
-        String language = sharedPreferences.getString("My_Lang", "");
-        setLocale(language);
-    }
+
 
 }

@@ -197,7 +197,7 @@ public class LoginFragment extends Fragment {
                                 SharedPrefManager.getInstance(getContext()).userLogin(user);
                                 //starting the profile activity
                                 getActivity().finish();
-                                startActivity(new Intent(getContext(), SelectLanguageActivity.class));
+                                startActivity(new Intent(getContext(), HomeActivity.class));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

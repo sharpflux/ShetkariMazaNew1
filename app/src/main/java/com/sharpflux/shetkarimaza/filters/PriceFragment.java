@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.AppCompatCheckedTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +22,13 @@ import java.util.List;
 
 public class PriceFragment extends Fragment {
 
+    StringBuilder district_builder_id;
+    AppCompatCheckedTextView tvlowtohigh,tvhightolow;
     private RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     List<SubCategoryFilter> productlist;
     Button btn_next,btn_back;
-    String   StatesID="",DistrictId="",TalukaId="",VarityId="",QualityId="",itemTypeId="";
+    String   StatesID="",DistrictId="",TalukaId="",VarityId="",QualityId="",itemTypeId="",priceids="";
     Bundle extras;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,6 +43,11 @@ public class PriceFragment extends Fragment {
         productlist = new ArrayList<>();
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
+
+        district_builder_id = new StringBuilder();
+
+
+
 
         extras = getArguments();
 
@@ -69,6 +78,16 @@ public class PriceFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                for (int i = 0; i < productlist.size(); i++) {
+                    SubCategoryFilter filter = productlist.get(i);
+                    if (filter.getSelected()) {
+                        district_builder_id.append(filter.getId() + ",");
+                        priceids = priceids + filter.getId() + ",";
+
+                    }
+                }
+
+
                 Intent intent = new Intent(getContext(), AllSimilarDataActivity.class);
                 intent.putExtra("TalukaId",TalukaId);
                 intent.putExtra("VarietyId",VarityId);
@@ -76,23 +95,18 @@ public class PriceFragment extends Fragment {
                 intent.putExtra("ItemTypeId",itemTypeId);
                 intent.putExtra("DistrictId",DistrictId);
                 intent.putExtra("StatesID",StatesID);
+                extras.putString("priceids",priceids);
                 startActivity(intent);
             }
         });
 
-        ArrayList<SubCategoryFilter> mFlowerList = new ArrayList<>();
 
-        SubCategoryFilter mFlowerData1 = new SubCategoryFilter("Price low to high","Price low to high");
-        mFlowerList.add(mFlowerData1);
 
-        SubCategoryFilter mFlowerData2 = new SubCategoryFilter("Price high to low","Price high to low");
-        mFlowerList.add(mFlowerData2);
+        productlist.add(new SubCategoryFilter("ASC","Price low to high"));
+        productlist.add(new SubCategoryFilter("DESC","Price high to low"));
 
-        VarietyAdapter myAdapter = new VarietyAdapter(getContext(), mFlowerList);
+       VarietyAdapter myAdapter = new VarietyAdapter(getContext(), productlist);
         recyclerView.setAdapter(myAdapter);
-
-
-
 
 
         return view;

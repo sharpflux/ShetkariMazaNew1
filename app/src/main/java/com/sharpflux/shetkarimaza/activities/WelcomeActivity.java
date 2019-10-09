@@ -3,6 +3,7 @@ package com.sharpflux.shetkarimaza.activities;
 import android.animation.ValueAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -18,7 +19,7 @@ import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.ViewPagerAdapter;
 
 public class WelcomeActivity extends AppCompatActivity {
-
+    SharedPreferences prefs;
     ViewPager viewPager;
     LinearLayout SliderDots;
     private int dotscount;
@@ -38,14 +39,37 @@ public class WelcomeActivity extends AppCompatActivity {
         final TextView tvDesOne=findViewById(R.id.tvDesOne);
        btn_skip= findViewById(R.id.btn_skip);
 
+
         btn_skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(WelcomeActivity.this,SelectLanguageActivity.class);
-                startActivity(intent);
+
+               Intent i = new Intent(WelcomeActivity.this, SelectLanguageActivity.class);//Activity to be  launched For the First time
+                startActivity(i);
                 finish();
+
+
+                /*SharedPreferences settings = getSharedPreferences("prefs", 0);
+                boolean firstRun = settings.getBoolean("firstRun", false);
+                if (firstRun == false)//if running for first time
+                {
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putBoolean("firstRun", true);
+                    editor.commit();
+                    Intent i = new Intent(WelcomeActivity.this, SelectLanguageActivity.class);//Activity to be  launched For the First time
+                    startActivity(i);
+                    finish();
+                } else {
+                    Intent a = new Intent(WelcomeActivity.this, HomeActivity.class);//Default Activity
+                    startActivity(a);
+                    finish();
+                }
+*/
+
+
             }
         }) ;
+
 
 
         final float startSize = 00; // Size in pixels
@@ -143,7 +167,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     }
 
-    @Override
+  /*  @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
@@ -164,6 +188,13 @@ public class WelcomeActivity extends AppCompatActivity {
         });
         AlertDialog alert = builder.create();
         alert.show();
+    }*/
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
     }
+
 
 }

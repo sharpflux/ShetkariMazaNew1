@@ -118,6 +118,8 @@ public class TalukaFragment extends Fragment {
                     extras.putString("TalukaId",taluka_builder_id.toString());
                     extras.putString("ItemTypeId",itemTypeId);
                     extras.putString("StatesID",StatesID);
+                    extras.putString("DistrictId",DistrictId);
+
 
 
                 }

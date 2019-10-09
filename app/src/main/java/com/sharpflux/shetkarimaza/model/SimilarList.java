@@ -25,6 +25,7 @@ public class SimilarList {
     private String DistrictId;
     private String TalukaId;
     private String RequstId;
+    private String surveyNo;
 
 
     public SimilarList(String imageUrl, String fullName, String mobileNo, String name,

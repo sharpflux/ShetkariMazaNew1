@@ -84,4 +84,18 @@ public class SharedPrefManager {
         editor.apply();
         mCtx.startActivity(new Intent(mCtx, TabLayoutLogRegActivity.class));
     }
+
+    public boolean isFirstTime() {
+        boolean firstTime=true;
+        if (firstTime ) {
+            SharedPreferences mPreferences = mCtx.getSharedPreferences("first_time", Context.MODE_PRIVATE);
+            firstTime = mPreferences.getBoolean("firstTime", true);
+            if (firstTime) {
+                SharedPreferences.Editor editor = mPreferences.edit();
+                editor.putBoolean("firstTime", false);
+                editor.commit();
+            }
+        }
+        return firstTime;
+    }
 }

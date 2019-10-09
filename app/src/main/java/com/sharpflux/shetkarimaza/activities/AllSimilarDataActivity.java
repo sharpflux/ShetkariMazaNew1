@@ -38,6 +38,7 @@ import com.sharpflux.shetkarimaza.adapter.SimilarListAdapter;
 import com.sharpflux.shetkarimaza.filters.PriceFragment;
 import com.sharpflux.shetkarimaza.filters.StateFragment;
 import com.sharpflux.shetkarimaza.filters.VarietyFragment;
+import com.sharpflux.shetkarimaza.filters.VillageFragment;
 import com.sharpflux.shetkarimaza.fragment.CategoryFragment;
 import com.sharpflux.shetkarimaza.model.SimilarList;
 import com.sharpflux.shetkarimaza.sqlite.SQLiteDatabaseHelper;
@@ -72,7 +73,8 @@ public class AllSimilarDataActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     List<SimilarList> productlist;
     Bundle bundle;
-    String TalukaId = "", VarityId = "", QualityId = "", ItemTypeId = "", StatesID = "", DistrictId = "";
+
+    String TalukaId = "", VarityId = "", QualityId = "", ItemTypeId = "", StatesID = "", DistrictId = "",priceids="";
     boolean isLoading = false;
     int currentItems;
     int totalItems;
@@ -137,7 +139,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                 currentItems = layoutManager.getChildCount();
                 totalItems = layoutManager.getItemCount();
 
-                scrollOutItems = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+               /* scrollOutItems = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
 
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
@@ -155,7 +157,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
                     }
 
-                }
+                }*/
 
 
 
@@ -188,6 +190,8 @@ public class AllSimilarDataActivity extends AppCompatActivity {
             QualityId = bundle.getString("QualityId");
             StatesID = bundle.getString("StatesID");
             DistrictId = bundle.getString("DistrictId");
+            priceids=bundle.getString("priceids");
+
         }
         if (bundle != null) {
             if (TalukaId != null) {
@@ -233,7 +237,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                     URLs.URL_REQESTS + "?StartIndex=" + pageIndex + "&PageSize=" + PAGE_SIZE +
                             "&ItemTypeId=" + ItemTypeId + "&VarityId=" + VarityId + "&StateId=" + StatesID +
                             "&DistrictId=" + DistrictId + "&QualityId=" + QualityId + "&TalukaId="
-                            + TalukaId+"&Language="+myLocale,
+                            + TalukaId+"&Language="+myLocale+"&SortByRate="+"0",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -368,8 +372,27 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         }
 
         if (itemId == R.id.menu_filter) {
-            StateFragment stateFragment = new StateFragment();
-            displaySelectedFragment(stateFragment);
+
+
+            bundle = new Bundle();
+
+            if (bundle != null) {
+                bundle.putString("VarietyId",VarityId);
+                bundle.putString("QualityId",QualityId);
+                bundle.putString("TalukaId",TalukaId);
+                bundle.putString("TalukaId",TalukaId);
+                bundle.putString("ItemTypeId",ItemTypeId);
+                bundle.putString("StatesID",StatesID);
+                bundle.putString("DistrictId",DistrictId);
+
+
+            }
+
+            PriceFragment priceFragment = new PriceFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_order_list_llContainer, priceFragment);
+            priceFragment.setArguments(bundle);
+            fragmentTransaction.commit();
 
         }
         return super.onOptionsItemSelected(item);
@@ -451,7 +474,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                     sheet.addCell(new Label(4, 0, "Unit", titleformat));
                     sheet.addCell(new Label(5, 0, "Price per unit", titleformat));
                     sheet.addCell(new Label(6, 0, "Available(month)", titleformat));
-                    sheet.addCell(new Label(7, 0, "Firm Address", titleformat));
+                    sheet.addCell(new Label(7, 0, "Farm Address", titleformat));
                     sheet.addCell(new Label(8, 0, "Survey No.", titleformat));
                     sheet.addCell(new Label(9, 0, "State", titleformat));
                     sheet.addCell(new Label(10, 0, "District", titleformat));
@@ -509,9 +532,5 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         }
     }
 
-    private void displaySelectedFragment(Fragment fragment) {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_order_list_llContainer, fragment);
-        fragmentTransaction.commit();
-    }
+
 }
