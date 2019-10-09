@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fr_buyer"
+    tools:context=".fragment.BuyerFragment">
+    <!--<android.support.design.widget.AppBarLayout
+        android:id="@+id/lr_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:background="@color/white"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:autoMirrored="true"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ToolBarStyle"
+        app:layout_collapseMode="pin"
+        app:layout_scrollFlags="enterAlways|scroll">
+
+
+    </android.support.v7.widget.Toolbar>
+
+    </LinearLayout>
+    </android.support.design.widget.AppBarLayout>-->
+
+    <LinearLayout
+        android:id="@+id/main_layout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <android.support.design.widget.TabLayout
+            app:tabMode="scrollable"
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:fontFamily="@font/sfpro_display_bold"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            />
+        <!-- View pager to swipe views -->
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </android.support.v4.view.ViewPager>
+    </LinearLayout>
+
+
+</FrameLayout>
