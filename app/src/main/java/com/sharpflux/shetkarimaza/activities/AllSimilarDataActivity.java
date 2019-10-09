@@ -231,7 +231,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
             } else {
                 TalukaId = "0";
             }
-
+//
 
             StringRequest stringRequest = new StringRequest(Request.Method.GET,
                     URLs.URL_REQESTS + "?StartIndex=" + pageIndex + "&PageSize=" + PAGE_SIZE +
