@@ -58,11 +58,11 @@ public class ContactDetailAdapter extends RecyclerView.Adapter<ContactDetaiViewH
         return   mlist == null ? 0 : mlist.size();
     }
 
-    @Override
+   /* @Override
     public int getItemViewType(int position) {
         return mlist.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
     }
-
+*/
 }
 
 class ContactDetaiViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

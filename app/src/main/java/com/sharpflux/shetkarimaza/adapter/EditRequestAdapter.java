@@ -80,6 +80,7 @@ public class EditRequestAdapter extends RecyclerView.Adapter<EditRequesViewHolde
                 i.putExtra("DistrictId",mlist.get(currentPosition).getDistrictId());
                 i.putExtra("TalukaId",mlist.get(currentPosition).getTalukaId());
                 i.putExtra("RequstId",mlist.get(currentPosition).getRequstId());
+                i.putExtra("ProductId",mlist.get(currentPosition).getCategoryId());
                 context.startActivity(i);
             }
         });

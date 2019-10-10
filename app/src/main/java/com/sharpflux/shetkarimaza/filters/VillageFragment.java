@@ -15,6 +15,8 @@ import com.sharpflux.shetkarimaza.R;
 public class VillageFragment extends Fragment {
     Button btn_next,btn_back,btnFilterData;
     Bundle extras;
+    String   StatesID="",DistrictId="",TalukaId="",VarityId="",QualityId="",itemTypeId="",priceids="";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -24,6 +26,19 @@ public class VillageFragment extends Fragment {
         btnFilterData = view.findViewById(R.id.btnFilterData);
 
 
+
+
+        extras = getArguments();
+
+        if (extras != null) {
+            TalukaId = extras.getString("TalukaId");
+            VarityId = extras.getString("VarietyId");
+            QualityId = extras.getString("QualityId");
+            itemTypeId=extras.getString("ItemTypeId");
+            DistrictId=extras.getString("DistrictId");
+            StatesID=extras.getString("StatesID");
+
+        }
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,6 +57,21 @@ public class VillageFragment extends Fragment {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+                extras = new Bundle();
+
+                if (extras != null) {
+                    extras.putString("VarietyId",VarityId);
+                    extras.putString("QualityId",QualityId);
+                    extras.putString("TalukaId",TalukaId);
+                    extras.putString("ItemTypeId",itemTypeId);
+                    extras.putString("StatesID",StatesID);
+                    extras.putString("DistrictId",DistrictId);
+
+
+
+                }
                 FragmentTransaction transection = getFragmentManager().beginTransaction();
                 PriceFragment mfragment = new PriceFragment();
                 mfragment.setArguments(extras);

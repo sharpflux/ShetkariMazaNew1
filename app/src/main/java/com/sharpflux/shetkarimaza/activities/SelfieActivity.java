@@ -405,17 +405,19 @@ public class SelfieActivity extends AppCompatActivity {
                 params.put("BranchCode", branchcode);
                 params.put("AccountNo", accno);
                 params.put("IFSCCode", ifsc);
-                params.put("UploadCancelledCheckUrl", "0");
 
+
+               /* params.put("UploadCancelledCheckUrl", "0");
                 params.put("UploadAdharCardPancardUrl", "0");
-                params.put("ImageUrl", "0");
+                params.put("ImageUrl", "0");*/
+
                 params.put("UserPassword", "1");
                 params.put("AgentId", "0");
 
-               /* params.put("UploadCancelledCheckUrl", check);
 
+                params.put("UploadCancelledCheckUrl", check);
                 params.put("UploadAdharCardPancardUrl", adhar);
-                params.put("ImageUrl", selfi);*/
+                params.put("ImageUrl", selfi);
 
 
 

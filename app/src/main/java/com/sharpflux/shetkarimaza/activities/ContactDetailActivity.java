@@ -1,7 +1,6 @@
 package com.sharpflux.shetkarimaza.activities;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,8 +22,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AbsListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -35,10 +32,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.ContactDetailAdapter;
-import com.sharpflux.shetkarimaza.adapter.SimilarListAdapter;
-import com.sharpflux.shetkarimaza.filters.StateFragment;
 import com.sharpflux.shetkarimaza.model.ContactDetail;
-import com.sharpflux.shetkarimaza.model.SimilarList;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
@@ -190,7 +184,7 @@ public class ContactDetailActivity extends AppCompatActivity {
 
 
 
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+       /*  recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
 
             @Override
@@ -214,7 +208,8 @@ public class ContactDetailActivity extends AppCompatActivity {
 
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
-                if (!isLoading) {
+
+             if (!isLoading) {
                     if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == contactlist.size() - 1) {
                         //bottom of list!
                         currentPage++;
@@ -231,19 +226,18 @@ public class ContactDetailActivity extends AppCompatActivity {
                 }
 
 
-
-            /*    if (isLoading && (currentItems + scrollOutItems == totalItems)) {
+   if (isLoading && (currentItems + scrollOutItems == totalItems)) {
                     currentPage++;
                     AllSimilarDataActivity.AsyncTaskRunner runner = new AllSimilarDataActivity.AsyncTaskRunner();
                     String sleepTime =String.valueOf( currentPage);
                     runner.execute(sleepTime);
 
                     recyclerView.scrollToPosition(myAdapter.getItemCount()-1);
-                }*/
+                }
 
             }
 
-        });
+        });*/
 
 
 
@@ -294,7 +288,7 @@ public class ContactDetailActivity extends AppCompatActivity {
 
 
             StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                    URLs.URL_CONTACTDET +"&RegistrationTypeId="+ItemTypeId+"&StateId=0&DistrictId=1,&TalukaId=0&Language=en",
+                    URLs.URL_CONTACTDET +"&RegistrationTypeId="+ItemTypeId+"&StateId="+StatesID+"&DistrictId="+DistrictId+"&TalukaId="+TalukaId+"&Language=en",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -323,11 +317,11 @@ public class ContactDetailActivity extends AppCompatActivity {
 
                                     myAdapter = new ContactDetailAdapter(ContactDetailActivity.this, contactlist);
                                     recyclerView.setAdapter(myAdapter);
-                                    isLoading = false;
+                                   /* isLoading = false;
                                     if (contactlist.size() > 10)
                                         recyclerView.scrollToPosition(contactlist.size() - 10);
                                     int scrollPosition = contactlist.size();
-                                    myAdapter.notifyItemRemoved(scrollPosition);
+                                    myAdapter.notifyItemRemoved(scrollPosition);*/
                                 }
 
                             } catch (JSONException e) {
@@ -396,7 +390,7 @@ public class ContactDetailActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_download_white, menu);
+        menuInflater.inflate(R.menu.menu_contact_detail, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

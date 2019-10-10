@@ -25,7 +25,7 @@ public class SimilarList {
     private String DistrictId;
     private String TalukaId;
     private String RequstId;
-    private String surveyNo;
+    private String surveyNo,categoryId;
 
 
     public SimilarList(String imageUrl, String fullName, String mobileNo, String name,
@@ -57,6 +57,36 @@ public class SimilarList {
         DistrictId = districtId;
         TalukaId = talukaId;
         RequstId = requstId;
+    }
+
+
+    public SimilarList(String imageUrl, String fullName, String mobileNo, String name, String varietyName, String quality, String quantity, String unit, String price, String available_month, String farm_address, String state, String district, String taluka, String village, String hector, String itemTypeId, String varietyId, String qualityId, String measurementId, String stateId, String districtId, String talukaId, String requstId, String surveyNo, String categoryId) {
+        ImageUrl = imageUrl;
+        FullName = fullName;
+        MobileNo = mobileNo;
+        this.name = name;
+        VarietyName = varietyName;
+        Quality = quality;
+        this.quantity = quantity;
+        this.unit = unit;
+        this.price = price;
+        this.available_month = available_month;
+        this.farm_address = farm_address;
+        this.state = state;
+        this.district = district;
+        this.taluka = taluka;
+        this.village = village;
+        this.hector = hector;
+        ItemTypeId = itemTypeId;
+        VarietyId = varietyId;
+        QualityId = qualityId;
+        MeasurementId = measurementId;
+        StateId = stateId;
+        DistrictId = districtId;
+        TalukaId = talukaId;
+        RequstId = requstId;
+        this.surveyNo = surveyNo;
+        this.categoryId = categoryId;
     }
 
     public String getImageUrl() {
@@ -249,5 +279,21 @@ public class SimilarList {
 
     public void setRequstId(String requstId) {
         RequstId = requstId;
+    }
+
+    public String getSurveyNo() {
+        return surveyNo;
+    }
+
+    public void setSurveyNo(String surveyNo) {
+        this.surveyNo = surveyNo;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 }

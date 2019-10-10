@@ -22,8 +22,8 @@ import java.util.List;
 
 public class PriceFragment extends Fragment {
 
-    StringBuilder district_builder_id;
-    AppCompatCheckedTextView tvlowtohigh,tvhightolow;
+    StringBuilder priceids_builder_id;
+
     private RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     List<SubCategoryFilter> productlist;
@@ -36,7 +36,7 @@ public class PriceFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_price, container, false);
 
-        recyclerView = view.findViewById(R.id.rcv_vriety);
+        recyclerView = view.findViewById(R.id.rcv_price);
         btn_next = view.findViewById(R.id.btnnextPrice);
         btn_back = view.findViewById(R.id.btnbackPrice);
 
@@ -44,7 +44,7 @@ public class PriceFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        district_builder_id = new StringBuilder();
+        priceids_builder_id = new StringBuilder();
 
 
 
@@ -81,8 +81,8 @@ public class PriceFragment extends Fragment {
                 for (int i = 0; i < productlist.size(); i++) {
                     SubCategoryFilter filter = productlist.get(i);
                     if (filter.getSelected()) {
-                        district_builder_id.append(filter.getId() + ",");
-                        priceids = priceids + filter.getId() + ",";
+                        priceids_builder_id.append(filter.getId());
+                        priceids = priceids + filter.getId();
 
                     }
                 }
@@ -95,7 +95,7 @@ public class PriceFragment extends Fragment {
                 intent.putExtra("ItemTypeId",itemTypeId);
                 intent.putExtra("DistrictId",DistrictId);
                 intent.putExtra("StatesID",StatesID);
-                extras.putString("priceids",priceids);
+                intent.putExtra("priceids",priceids);
                 startActivity(intent);
             }
         });

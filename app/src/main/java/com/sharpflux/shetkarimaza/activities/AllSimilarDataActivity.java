@@ -119,7 +119,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         runner.execute(sleepTime);
 
 
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+       /* recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
 
             @Override
@@ -139,7 +139,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                 currentItems = layoutManager.getChildCount();
                 totalItems = layoutManager.getItemCount();
 
-               /* scrollOutItems = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+               *//* scrollOutItems = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
 
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
@@ -157,22 +157,23 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
                     }
 
-                }*/
+                }*//*
 
 
 
-            /*    if (isLoading && (currentItems + scrollOutItems == totalItems)) {
+            *//*    if (isLoading && (currentItems + scrollOutItems == totalItems)) {
                     currentPage++;
                     AllSimilarDataActivity.AsyncTaskRunner runner = new AllSimilarDataActivity.AsyncTaskRunner();
                     String sleepTime =String.valueOf( currentPage);
                     runner.execute(sleepTime);
 
                     recyclerView.scrollToPosition(myAdapter.getItemCount()-1);
-                }*/
+                }*//*
 
             }
 
-        });
+        });*/
+
 
 
 
@@ -182,7 +183,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
     private void SetDynamicDATA(String pageIndex) {
 
         bundle = getIntent().getExtras();
-        bundle.getString("ItemTypeId");
+       // bundle.getString("ItemTypeId");
         if (bundle != null) {
             ItemTypeId = bundle.getString("ItemTypeId");
             TalukaId = bundle.getString("TalukaId");
@@ -194,6 +195,8 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
         }
         if (bundle != null) {
+
+
             if (TalukaId != null) {
                 if (TalukaId.equals(""))
                     TalukaId = "0";
@@ -231,13 +234,20 @@ public class AllSimilarDataActivity extends AppCompatActivity {
             } else {
                 TalukaId = "0";
             }
-//
+            if (priceids != null) {
+                if (priceids.equals(""))
+                    priceids = "0";
+            } else {
+                priceids = "0";
+            }
+
+
 
             StringRequest stringRequest = new StringRequest(Request.Method.GET,
                     URLs.URL_REQESTS + "?StartIndex=" + pageIndex + "&PageSize=" + PAGE_SIZE +
                             "&ItemTypeId=" + ItemTypeId + "&VarityId=" + VarityId + "&StateId=" + StatesID +
                             "&DistrictId=" + DistrictId + "&QualityId=" + QualityId + "&TalukaId="
-                            + TalukaId+"&Language="+myLocale+"&SortByRate="+"0",
+                            + TalukaId+"&Language="+myLocale+"&SortByRate="+priceids,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -287,11 +297,11 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
                                     myAdapter = new SimilarListAdapter(AllSimilarDataActivity.this, productlist);
                                     recyclerView.setAdapter(myAdapter);
-                                    isLoading = false;
+                                    /*isLoading = false;
                                     if (productlist.size() > 10)
                                         recyclerView.scrollToPosition(productlist.size() - 10);
                                     int scrollPosition = productlist.size();
-                                    myAdapter.notifyItemRemoved(scrollPosition);
+                                    myAdapter.notifyItemRemoved(scrollPosition);*/
                                 }
 
                             } catch (JSONException e) {

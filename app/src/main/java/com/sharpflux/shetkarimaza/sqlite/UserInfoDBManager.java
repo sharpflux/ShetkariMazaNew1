@@ -9,9 +9,7 @@ import com.sharpflux.shetkarimaza.model.SaveProductInfo;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Jerry on 1/17/2018.
- */
+
 
 public class UserInfoDBManager {
 

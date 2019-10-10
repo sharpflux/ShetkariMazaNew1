@@ -20,11 +20,8 @@ public class URLs {
     public static final String URL_RESETPASS="http://apimaza.supergo.in/api/UserUdatePasswordAPI/UpdatePasswordApi";
     public static final String URL_ORDERDETAILS="http://apimaza.supergo.in/api/RequestAPI/GETRequestsApi?StartIndex=1&PageSize=500&UserId=";
     public static final String URL_RATE="http://apimaza.supergo.in/api/RateMasterAPI/GETRateMasterApi?";
-
     public static String URL_OTP2="http://apimaza.supergo.in/User_Authentication/GetOTP?MobileNo=";
     public static String URL_CONTACTDET="http://apimaza.supergo.in/api/Registration/RegistrationFilterGET?StartIndex=1&PageSize=500";
-
-
     public static String URL_PROCESSOR="http://apimaza.supergo.in/api/ItemMasterApi/GetIsProcessAPI?Language=";
 
 

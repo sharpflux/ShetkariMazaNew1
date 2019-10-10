@@ -102,7 +102,9 @@ public class EditRequestActivity extends AppCompatActivity {
                                                             String.valueOf(userJson.getInt("StateId")),
                                                             String.valueOf(userJson.getInt("DistrictId")),
                                                             String.valueOf(userJson.getInt("TalukaId")),
-                                                            String.valueOf(userJson.getInt("RequstId"))
+                                                            String.valueOf(userJson.getInt("RequstId")),
+                                                            "",
+                                                            String.valueOf(userJson.getInt("CategoryId"))
 
                                             );
 
