@@ -1,20 +1,24 @@
 package com.sharpflux.shetkarimaza.fragment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +26,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.sharpflux.shetkarimaza.R;
-import com.sharpflux.shetkarimaza.activities.HomeActivity;
 import com.sharpflux.shetkarimaza.activities.ProcessorActivity;
+import com.sharpflux.shetkarimaza.activities.ProductInfoForSaleActivity;
 import com.sharpflux.shetkarimaza.activities.SelfieActivity;
 
 import java.io.ByteArrayOutputStream;
@@ -33,6 +36,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import static com.sharpflux.shetkarimaza.activities.SelfieActivity.RequestPermissionCode;
 
 public class ThirdFragment extends Fragment {
 
@@ -58,6 +63,9 @@ public class ThirdFragment extends Fragment {
     Button submitButton, btn_chequeimage, btn_adharimage;
 
     Bundle bundle;
+
+    private String [] permissions = {"android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_FINE_LOCATION",
+            "android.permission.READ_PHONE_STATE", "android.permission.SYSTEM_ALERT_WINDOW","android.permission.CAMERA"};
 
     String address = "", city = "", district = "", state = "", companyname = "",
             license = "", companyregnno = "", gstno = "", name = "", registrationTypeId = "",
@@ -86,6 +94,11 @@ public class ThirdFragment extends Fragment {
             license = bundle.getString("license");
             companyregnno = bundle.getString("companyregnno");
             gstno = bundle.getString("gstno");
+        }
+
+        int requestCode = 200;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(permissions, requestCode);
         }
 
         submitButton = view.findViewById(R.id.thirdbtnnext);
@@ -329,6 +342,8 @@ public class ThirdFragment extends Fragment {
 
         }
     }
+
+
 
     private void onCaptureImageResult(Intent data) {
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");

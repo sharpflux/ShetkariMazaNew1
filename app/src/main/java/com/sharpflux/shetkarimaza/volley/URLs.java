@@ -13,7 +13,7 @@ public class URLs {
     public static final String URL_VARIATY="http://apimaza.supergo.in/api/VarietyMaster/Get_VarietyMaster?ItemTypeId=";
     public static final String URL_SAVEPRODUCTDETAILS = "http://apimaza.supergo.in/api/RequestAPI/request";
     public static  final String URL_REQESTS="http://apimaza.supergo.in/api/request/RequestsGET";
-    public static final String URL_STATE=" http://apimaza.supergo.in/api/States/GETSTATE";
+    public static final String URL_STATE="http://apimaza.supergo.in/api/States/GETSTATE";
     public static  final String URL_DISTRICT="http://apimaza.supergo.in/Api/DistrictMultiple/Get_DistrictMultiple?StatesID=";
     public static final String URL_OTP="http://apimaza.supergo.in/User_Authentication/OTPGenerate";
     public static final String URL_TALUKA="http://apimaza.supergo.in/Api/GetMultipleTalukasApi/GetMultipleTalukas?DistrictsID=";
@@ -23,6 +23,8 @@ public class URLs {
     public static String URL_OTP2="http://apimaza.supergo.in/User_Authentication/GetOTP?MobileNo=";
     public static String URL_CONTACTDET="http://apimaza.supergo.in/api/Registration/RegistrationFilterGET?StartIndex=1&PageSize=500";
     public static String URL_PROCESSOR="http://apimaza.supergo.in/api/ItemMasterApi/GetIsProcessAPI?Language=";
+    public static String URL_VEHICLETYPE="http://apimaza.supergo.in/api/Vehical/Get_VehicalTypeAPI";
+    public static String URL_ALL_TRANSPORTER="http://apimaza.supergo.in/api/TransporterAPI/Get_TransporterDetailsAPI?Search=s";
 
 
 }

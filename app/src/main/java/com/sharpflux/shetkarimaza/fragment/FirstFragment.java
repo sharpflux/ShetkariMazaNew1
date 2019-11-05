@@ -67,6 +67,7 @@ public class FirstFragment extends Fragment {
         rb1=view.findViewById(R.id.radio1);
         rb2=view.findViewById(R.id.radio2);
 
+
         btn_next = (Button) (view.findViewById(R.id.firstbtnnext));
         editfullname = view.findViewById(R.id.editfullname);
         mobileNo = view.findViewById(R.id.mobileNo);
@@ -91,7 +92,7 @@ public class FirstFragment extends Fragment {
             public void onClick(View v) {
 
                 String regType = Rtype_edit.getText().toString();
-                String regCategory = Rcategory_edit.getText().toString();
+               // String regCategory = Rcategory_edit.getText().toString();
                 String rb= Rcategory_edit.getText().toString();
 
 
@@ -104,11 +105,11 @@ public class FirstFragment extends Fragment {
                     return;
                 }
 
-                if (TextUtils.isEmpty(regCategory)) {
+              /*  if (TextUtils.isEmpty(regCategory)) {
                     Rcategory_edit.setError("Please enter your quality");
                     Rcategory_edit.requestFocus();
                     return;
-                }
+                }*/
 
                 //int id = rg.getCheckedRadioButtonId();
                 if(!rb1.isChecked()||!rb2.isChecked())
@@ -157,14 +158,14 @@ public class FirstFragment extends Fragment {
         });
 
 
-        Rcategory_edit.setOnClickListener(new View.OnClickListener() {
+        /*Rcategory_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FirstFragment.AsyncTaskRunner runner = new FirstFragment.AsyncTaskRunner();
                 String sleepTime = "cate";
                 runner.execute(sleepTime);
             }
-        });
+        });*/
 
 
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -211,11 +212,11 @@ public class FirstFragment extends Fragment {
 
                 if (params[0].toString() == "type")
                     fetcher.loadList("RegistrationType", Rtype_edit, URLs.URL_RType+myLocale ,
-                            "RegistrationTypeId", hidRegTypeId, "", "");
+                            "RegistrationTypeId", hidRegTypeId, "", "","Registration Type");
                 else if (params[0].toString() == "cate")
                     fetcher.loadList("RegistrationCategoryName",
                             Rcategory_edit, URLs.URL_RCategary, "RegistrationCategoryId", hidRegCagteId,
-                            "", "");
+                            "", "","Registration Category Name");
 
                 Thread.sleep(500);
 

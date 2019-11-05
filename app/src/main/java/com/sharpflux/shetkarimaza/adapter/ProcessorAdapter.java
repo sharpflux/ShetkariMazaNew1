@@ -11,7 +11,6 @@ import android.widget.Filter;
 import android.widget.Filterable;
 
 import com.sharpflux.shetkarimaza.R;
-import com.sharpflux.shetkarimaza.filters.SubCategoryFilter;
 import com.sharpflux.shetkarimaza.model.MyProcessor;
 
 import java.util.ArrayList;

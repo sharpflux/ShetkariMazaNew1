@@ -63,7 +63,7 @@
 
     //Seller Form
     <string name="seller_name">नाव*</string>
-    <string name="seller_variety">विविधता*</string>
+    <string name="seller_variety">विविधता</string>
     <string name="seller_age_days">वय (दिवस)*</string>
     <string name="seller_available_month">उपलब्ध (महिने)*</string>
     <string name="seller_available_quality">उपलब्ध गुणवत्ता*</string>
@@ -235,6 +235,8 @@
     <string name="guide_your_rate_here"><u>दर मार्गदर्शक!</u></string>
     <string name="update">अद्यतनित करा</string>
 
+
+    <string name="sort">Sort</string>
 
 
 

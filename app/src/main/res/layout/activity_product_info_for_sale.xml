@@ -115,6 +115,8 @@
             </android.support.design.widget.TextInputLayout>
 
 
+
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -137,6 +139,71 @@
 
             </android.support.design.widget.TextInputLayout>
 
+            <LinearLayout
+                android:padding="2dp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/LinearLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:fontFamily="@font/sfpro_display_medium"
+                    android:textSize="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Organic/ Non organic*"
+                    />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:fontFamily="@font/sfpro_display_medium"
+                        android:id="@+id/radio1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Organic" />
+
+                    <RadioButton
+                        android:fontFamily="@font/sfpro_display_medium"
+                        android:id="@+id/radio2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Non organic" />
+
+
+                </RadioGroup>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center"
+                    android:background="@color/colorGray" />
+
+            </LinearLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:fontFamily="@font/sfpro_display_medium">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtcertifiedno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:fontFamily="@font/sfpro_display_medium"
+                    android:hint="Organic certifing agency and certificate number"
+                    android:textColorHint="@color/colorGray"
+                    android:visibility="gone"
+                    android:textSize="15dp" />
+
+            </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -331,23 +398,24 @@
                     android:textSize="15dp" />
             </android.support.design.widget.TextInputLayout>
 
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edtstate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:fontFamily="@font/sfpro_display_medium"
+                android:hint="@string/state"
+                android:inputType="none"
+                android:textSize="15dp" />
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:fontFamily="@font/sfpro_display_medium">
 
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/edtstate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:cursorVisible="false"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:fontFamily="@font/sfpro_display_medium"
-                    android:hint="@string/state"
-                    android:inputType="none"
-                    android:textSize="15dp" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout

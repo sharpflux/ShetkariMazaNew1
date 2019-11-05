@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.model.ContactDetail;
-import com.sharpflux.shetkarimaza.model.SimilarList;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

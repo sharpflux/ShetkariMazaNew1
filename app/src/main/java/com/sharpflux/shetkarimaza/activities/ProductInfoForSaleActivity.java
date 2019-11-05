@@ -19,33 +19,32 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Network;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.BasicNetwork;
-import com.android.volley.toolbox.DiskBasedCache;
-import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.adapter.DataAdapter;
 import com.sharpflux.shetkarimaza.customviews.CustomRecyclerViewDialog;
 import com.sharpflux.shetkarimaza.fragment.RateDialogFragment;
 import com.sharpflux.shetkarimaza.model.Product;
@@ -86,7 +85,10 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
     private TextInputEditText edtTotalamt, edtproductType, edtdistrict, edtstate, edtproductVariety,
             edtDays, edtavailablityInMonths, edtAQuality, edtAQuantity, edtUnit, edtExpectedPrice,
-            edttaluka, edtaddres, edtvillage, edtareahector;
+            edttaluka, edtaddres, edtvillage, edtareahector,edtcertifiedno,edtsurveyNo;
+    RadioGroup rg;
+    RadioButton rb1,rb2;
+    LinearLayout LinearLayout1;
     ImageView imageviewcam1, imageviewcam2, imageviewcam3, imageviewcam4;
     ArrayList<Product> list;
     Product sellOptions;
@@ -99,7 +101,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     DataFetcher fetcher;
     TextView hidItemTypeId, hidVarietyId, hidQualityId, hidMeasurementId, hideStateId, hideDistrictId, hideTalukaId, hideRequstId;
     Locale myLocale;
-    String ProductId, productTypeId, productVarietyId, qualityId, unitId, monthId, stateId, districtId, talukaId;
+    String ProductId, productTypeId, productVarietyId, qualityId, unitId, monthId, stateId, districtId, talukaId,certificateno;
     String StateId;
     private String UserId, RequstId;
     private Integer userid;
@@ -154,6 +156,13 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     private static final String INPUT_VILLAGE = "village";
 
     private static final String INPUT_AREA = "area";
+
+    private static final String INPUT_ORGNIC = "orgnic";
+
+    private static final String INPUT_CERTIFICATENO= "certificateno";
+
+    private static final String INPUT_SURVEYNO= "SurveyNo";
+
     int year;
     int month;
     int day;
@@ -161,7 +170,10 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     public String ClickedImage;
     String itemId, varityId, qualityid;
     double total;
+    String org,productVariety,orgnic,SurveyNo;
 
+    DataAdapter dataAdapter;
+        public  static  int MY_PERMISSIONS_REQUEST=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,6 +181,9 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_product_info_for_sale);
         builder = new StringBuilder();
         builder.append("<?xml version=\"1.0\" ?>");
+        org="0";
+        productVariety="";
+        orgnic="";
         ClickedImage = "";
 
         User user = SharedPrefManager.getInstance(this).getUser();
@@ -186,6 +201,8 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         hideImageTvSelfie = findViewById(R.id.hideImageTvSelfie);
         hideRequstId = findViewById(R.id.hideRequstId);
 
+        // search
+        ///searchView =findViewById(R.id.searchView_customDialog);
         //edt
         edtproductType = findViewById(R.id.name_edit);
         edtproductVariety = findViewById(R.id.edtVarity);
@@ -195,6 +212,15 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         edtUnit = findViewById(R.id.edtquantUnit);
         edtExpectedPrice = findViewById(R.id.edtExpectedPrice);
         edtTotalamt = findViewById(R.id.edttotalPrice);
+
+
+        rg = findViewById(R.id.radioGroup1);
+        rb1=findViewById(R.id.radio1);
+        rb2=findViewById(R.id.radio2);
+        LinearLayout1= findViewById(R.id.LinearLayout1);
+        edtcertifiedno=findViewById(R.id.edtcertifiedno);
+        edtsurveyNo=findViewById(R.id.edtsurveyNo);
+
 
         edtDays = findViewById(R.id.edtDays);
         edtavailablityInMonths = findViewById(R.id.edt_available_in_months);
@@ -222,6 +248,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         //  imageView = findViewById(R.id.imageView);
 
 
+
         parentView = findViewById(R.id.parent_layout);
         listView = findViewById(R.id.listView);
 
@@ -245,8 +272,25 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
         }
 
-        if (ProductId.equals("15")) {
+        //age
+         if (ProductId.equals("15")||ProductId.equals("6")||ProductId.equals("8")) {
             edtDays.setVisibility(View.VISIBLE);
+
+        }
+
+         // organic
+       if (ProductId.equals("2")||ProductId.equals("9")||ProductId.equals("3")||ProductId.equals("7")||ProductId.equals("14")||ProductId.equals("17")||ProductId.equals("42")){
+            LinearLayout1.setVisibility(View.VISIBLE);
+        }
+
+       // certificate
+        if (ProductId.equals("2")||ProductId.equals("9")||ProductId.equals("3")||ProductId.equals("7")||ProductId.equals("14")||ProductId.equals("17")||ProductId.equals("42")){
+            edtcertifiedno.setVisibility(View.VISIBLE);
+        }
+
+       //quality
+       if (ProductId.equals("6")||ProductId.equals("4")||ProductId.equals("8")) {
+            edtAQuality.setVisibility(View.GONE);
         }
 
         list = new ArrayList<Product>();
@@ -256,6 +300,34 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
         fetcher = new DataFetcher(sellOptions, customDialog, list, ProductInfoForSaleActivity.this);
 
+
+
+        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                rb1 = (RadioButton) findViewById(checkedId);
+                rb2 = (RadioButton)findViewById(checkedId);
+
+                if (rb1 != null) {
+
+                    org = rb1.getHint().toString();
+
+                    Toast.makeText(getApplicationContext(),
+                            org,
+                            Toast.LENGTH_LONG).show();
+                }
+                else if (rb2 != null)
+                {
+                    org = rb2.getHint().toString();
+
+                    Toast.makeText(getApplicationContext(),
+                            org,
+                            Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
 
         edtTotalamt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -288,14 +360,14 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                         year, month, day);
 
                 int day = getApplicationContext().getResources().getIdentifier("android:id/day", null, null);
-                if (day != 0) {
+               if (day != 0) {
                     View yearPicker = dialog.getDatePicker().findViewById(day);
                     if (yearPicker != null) {
                         yearPicker.setVisibility(View.GONE);
                     }
                 }
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                //dialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                 dialog.show();
             }
         });
@@ -449,6 +521,9 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
         }
 
+
+
+
         btnAddMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -456,8 +531,9 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 String productVariety = edtproductVariety.getText().toString();
                 String quality = edtAQuality.getText().toString();
                 String quantity = edtAQuantity.getText().toString();
+               String certificateno = edtcertifiedno.getText().toString();
                 String unit = edtUnit.getText().toString();
-                String days = edtDays.getText().toString();
+                String days;
                 String expectedPrice = edtExpectedPrice.getText().toString();
                 String availablityInMonths = edtavailablityInMonths.getText().toString();
                 String address = edtaddres.getText().toString();
@@ -466,7 +542,45 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 String taluka = edttaluka.getText().toString();
                 String villagenam = edtvillage.getText().toString();
                 String areaheactor = edtareahector.getText().toString();
+                String surveyNo = edtsurveyNo.getText().toString();
+
                 StringBuffer errorMessageBuf = new StringBuffer();
+
+
+                if(edtDays.getVisibility()==View.VISIBLE)
+                {
+                    days = edtDays.getText().toString();
+                }
+                else {
+                    days ="0";
+                }
+
+               /* if(LinearLayout1.getVisibility()==View.VISIBLE)
+                {
+                    org = edtDays.getText().toString();
+                }
+                else {
+                    org ="0";
+                }*/
+
+
+                // organic
+                if (ProductId.equals("2")||ProductId.equals("9")||ProductId.equals("3")||ProductId.equals("7")||ProductId.equals("14")||ProductId.equals("17")||ProductId.equals("42")){
+                    LinearLayout1.setVisibility(View.VISIBLE);
+                }
+
+                // certificate
+                if (ProductId.equals("2")||ProductId.equals("9")||ProductId.equals("3")||ProductId.equals("7")||ProductId.equals("14")||ProductId.equals("17")||ProductId.equals("42")){
+                    edtcertifiedno.setVisibility(View.VISIBLE);
+                }
+
+                //quality
+                if (ProductId.equals("6")||ProductId.equals("4")||ProductId.equals("8")) {
+                    edtAQuality.setVisibility(View.GONE);
+                }
+
+
+
 
                 if (TextUtils.isEmpty(productType)) {
                     edtproductType.setError("Please enter your quality");
@@ -486,7 +600,20 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                     edtAQuantity.requestFocus();
                     return;
                 }
+              /*  if(!rb1.isChecked()||!rb2.isChecked())
+                {//Grp is your radio group object
+                    rb1.setError("please select organic or Non organic");
+                    rb1.requestFocus();
+                    rb2.setError("please select organic or Non organic");
+                    rb2.requestFocus();
+                    return;
+                }
 
+                if (TextUtils.isEmpty(certificateno)) {
+                    edtcertifiedno.setError("Please enter your certificateno.");
+                    edtcertifiedno.requestFocus();
+                    return;
+                }*/
 
                 if (TextUtils.isEmpty(unit)) {
                     edtUnit.setError("Please enter your unit");
@@ -508,7 +635,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 }
 
                 if (TextUtils.isEmpty(address)) {
-                    edtaddres.setError("Please enter your available month");
+                    edtaddres.setError("Please enter your address");
                     edtaddres.requestFocus();
                     return;
                 }
@@ -538,6 +665,13 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                     return;
                 }
 
+                if (TextUtils.isEmpty(surveyNo)) {
+                    edtsurveyNo.setError("Please enter your Survey No.");
+                    edtsurveyNo.requestFocus();
+                    return;
+                }
+
+
                 if (TextUtils.isEmpty(productType)) {
                     errorMessageBuf.append("Username can not be empty./r/n");
                 } else if (TextUtils.isEmpty(productType)) {
@@ -554,8 +688,9 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                         // Insert new user account.
                         userInfoDBManager.insertAccount(productType, hidItemTypeId.getText().toString(), productVariety, hidVarietyId.getText().toString(),
                                 quality, hidQualityId.getText().toString(), quantity, unit, hidMeasurementId.getText().toString(), expectedPrice,
-                                days, availablityInMonths, address, state, hideStateId.getText().toString(),
-                                district, hideDistrictId.getText().toString(), taluka, hideTalukaId.getText().toString(), villagenam, areaheactor, ImageUrl);
+                                days,availablityInMonths, address, state, hideStateId.getText().toString(),
+                                district, hideDistrictId.getText().toString(), taluka, hideTalukaId.getText().toString(),
+                                villagenam, areaheactor, ImageUrl,org,certificateno,surveyNo);
 
 
                     } else {
@@ -579,6 +714,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                             edtExpectedPrice.setText("");
                             edtUnit.setText("");
                             edtTotalamt.setText("");
+                           edtcertifiedno.setText("");
 
 
                         }
@@ -593,7 +729,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
                             startUserAccountListIntent.putExtra("productTypeId", hidItemTypeId.getText().toString());
                             startUserAccountListIntent.putExtra("productVarietyId", hidVarietyId.getText().toString());
-                            startUserAccountListIntent.putExtra("qualityId", hidQualityId.getText().toString());
+                            startUserAccountListIntent.putExtra("productVariety",edtproductVariety.getText().toString());
                             startUserAccountListIntent.putExtra("qualityId", hidQualityId.getText().toString());
 
                             //startUserAccountListIntent.putExtra("monthId", edtavailablityInMonths.getText().toString());
@@ -601,7 +737,9 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                             startUserAccountListIntent.putExtra("stateId", hideStateId.getText().toString());
                             startUserAccountListIntent.putExtra("districtId", hideDistrictId.getText().toString());
                             startUserAccountListIntent.putExtra("talukaId", hideTalukaId.getText().toString());
-
+                           startUserAccountListIntent.putExtra("organic", org);
+                            startUserAccountListIntent.putExtra("certificateno", edtcertifiedno.getText().toString());
+                            startUserAccountListIntent.putExtra("SurveyNo",edtsurveyNo.getText().toString());
                             startActivity(startUserAccountListIntent);
 
                         }
@@ -611,6 +749,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 }
             }
         });
+
 
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -639,6 +778,12 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this,SellerActivity.class);
+        startActivity(intent);
+    }
 
     public void openDialog() {
         RateDialogFragment rateDialogFragment = new RateDialogFragment();
@@ -699,15 +844,12 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     }
 
     public void clickHere(View view) {
-
-
         AsyncTaskRunner runner = new AsyncTaskRunner();
         String sleepTime = "ItemName";
         runner.execute(sleepTime);
     }
 
     public void clickHereVariety(View view) {
-
         AsyncTaskRunner runner = new AsyncTaskRunner();
         String sleepTime = "Variety";
         runner.execute(sleepTime);
@@ -727,6 +869,8 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         runner.execute(sleepTime);
     }
 
+
+
     private class AsyncTaskRunner extends AsyncTask<String, String, String> {
 
         private String resp;
@@ -738,19 +882,19 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
             try {
 
                 if (params[0].toString() == "ItemName")
-                    fetcher.loadList("ItemName", edtproductType, URLs.URL_NAME + "?CategoryId=" + ProductId + "&Language=" + myLocale, "ItemTypeId", hidItemTypeId, "CategoryId", ProductId);
+                    fetcher.loadList("ItemName", edtproductType, URLs.URL_NAME + "?CategoryId=" + ProductId + "&Language=" + myLocale, "ItemTypeId", hidItemTypeId, "CategoryId", ProductId,"Botanical Name");
                 else if (params[0].toString() == "Variety")
-                    fetcher.loadList("VarietyName", edtproductVariety, URLs.URL_VARIATY + hidItemTypeId.getText() + "&Language=" + myLocale, "VarietyId", hidVarietyId, "", "");
+                    fetcher.loadList("VarietyName", edtproductVariety, URLs.URL_VARIATY + hidItemTypeId.getText() + "&Language=" + myLocale, "VarietyId", hidVarietyId, "", "","Variety");
                 else if (params[0].toString() == "Quality")
-                    fetcher.loadList("QualityType", edtAQuality, URLs.URL_QUALITY + "?Language=" + myLocale, "QualityId", hidQualityId, "", "");
+                    fetcher.loadList("QualityType", edtAQuality, URLs.URL_QUALITY + "?Language=" + myLocale, "QualityId", hidQualityId, "", "","Available Quality");
                 else if (params[0].toString() == "Unit")
-                    fetcher.loadList("MeasurementType", edtUnit, URLs.URL_UNIT + "?Language=" + myLocale, "MeasurementId", hidMeasurementId, "", "");
+                    fetcher.loadList("MeasurementType", edtUnit, URLs.URL_UNIT + "?Language=" + myLocale, "MeasurementId", hidMeasurementId, "", "","Unit");
                 else if (params[0].toString() == "state")
-                    fetcher.loadList("StatesName", edtstate, URLs.URL_STATE + "?Language=" + myLocale, "StatesID", hideStateId, "", "");
+                    fetcher.loadList("StatesName", edtstate, URLs.URL_STATE + "?Language=" + myLocale, "StatesID", hideStateId, "", "","State");
                 else if (params[0].toString() == "district")
-                    fetcher.loadList("DistrictName", edtdistrict, URLs.URL_DISTRICT + hideStateId.getText() + ",&Language=" + myLocale, "DistrictId", hideDistrictId, "", "");
+                    fetcher.loadList("DistrictName", edtdistrict, URLs.URL_DISTRICT + hideStateId.getText() + ",&Language=" + myLocale, "DistrictId", hideDistrictId, "", "","District");
                 else if (params[0].toString() == "taluka")
-                    fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText() + ",&Language=" + myLocale, "TalukasId", hideTalukaId, "", "");
+                    fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText() + ",&Language=" + myLocale, "TalukasId", hideTalukaId, "", "","Taluka");
 
                 else if (params[0].toString() == "Update") {
                     submitToDb();
@@ -762,12 +906,14 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
                 resp = "Slept for " + params[0] + " seconds";
 
+
             } catch (Exception e) {
                 e.printStackTrace();
                 resp = e.getMessage();
             }
             return resp;
         }
+
 
         @Override
         protected void onPostExecute(String result) {
@@ -803,6 +949,18 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(ProductInfoForSaleActivity.this, new String[]{
                     Manifest.permission.CAMERA}, RequestPermissionCode);
 
+        }
+
+        if (ContextCompat.checkSelfPermission(ProductInfoForSaleActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(ProductInfoForSaleActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED) {
+            // Permission is granted
+        }
+        else {
+            //Permission is not granted so you have to request it
+            ActivityCompat.requestPermissions(ProductInfoForSaleActivity.this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST);
         }
     }
 
@@ -921,20 +1079,6 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
     public void submitToDb() {
 
-       /* RequestQueue requestQueue;
-
- Instantiate the cache
-        DiskBasedCache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
-
- Set up the network to use HttpURLConnection as the HTTP client.
-        Network network = new BasicNetwork(new HurlStack());
-
- Instantiate the RequestQueue with the cache and network.
-        requestQueue = new RequestQueue(cache, network);
-
- Start the queue
-        requestQueue.start();*/
-
         builder.append("<Parent>");
         builder.append("<Assign>");
         builder.append("<RequestId>" + RequstId + "</RequestId>");
@@ -954,10 +1098,13 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         builder.append("<villagenam>" + edtvillage.getText() + "</villagenam>");
         builder.append("<areaheactor>" + edtareahector.getText() + "</areaheactor>");
         builder.append("<imagename>" + "" + "</imagename>");
+        builder.append("<orgnic>"+org+"</orgnic>");
+        builder.append("<certificateno>"+edtcertifiedno.getText()+"</certificateno>");
+        builder.append("<SurveyNo>"+edtsurveyNo.getText()+"</SurveyNo>");
         builder.append("</Assign>");
         builder.append("</Parent>");
 
-
+//edtcertifiedno.getText()+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_SAVEPRODUCTDETAILS,
                 new com.android.volley.Response.Listener<String>() {
                     @Override

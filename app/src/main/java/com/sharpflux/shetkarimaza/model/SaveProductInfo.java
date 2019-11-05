@@ -1,7 +1,7 @@
 package com.sharpflux.shetkarimaza.model;
 
 public class SaveProductInfo {
-    private  int id ;
+    private String id ;
     private String productType;
     private String productVariety;
     private String quality;
@@ -17,11 +17,13 @@ public class SaveProductInfo {
     private String villagenam;
     private String areaheactor;
     private String imagename;
+    private String organic;
+    private String certificateno;
 
-    public SaveProductInfo() {
-    }
-
-    public SaveProductInfo(int id, String productType, String productVariety, String quality, String quantity, String unit, String expectedPrice, String days, String availablityInMonths, String address, String state, String district, String taluka, String villagenam, String areaheactor, String imagename) {
+   public SaveProductInfo(String id, String productType, String productVariety, String quality, String quantity,
+                           String unit, String expectedPrice, String days, String availablityInMonths, String address,
+                           String state, String district, String taluka,
+                           String villagenam, String areaheactor, String imagename, String organic, String certificateno) {
         this.id = id;
         this.productType = productType;
         this.productVariety = productVariety;
@@ -38,13 +40,55 @@ public class SaveProductInfo {
         this.villagenam = villagenam;
         this.areaheactor = areaheactor;
         this.imagename = imagename;
+        this.organic = organic;
+        this.certificateno = certificateno;
     }
 
-    public int getId() {
+    public SaveProductInfo(String id, String productType, String productVariety,
+                           String quality, String quantity, String unit, String expectedPrice, String days,
+                           String availablityInMonths, String address, String state, String district, String taluka,
+                           String villagenam, String areaheactor, String imagename) {
+        this.id = this.id;
+        this.productType = this.productType;
+        this.productVariety = this.productVariety;
+        this.quality = this.quality;
+        this.quantity = this.quantity;
+        this.unit = this.unit;
+        this.expectedPrice = this.expectedPrice;
+        this.days = this.days;
+        this.availablityInMonths = this.availablityInMonths;
+        this.address = this.address;
+        this.state = this.state;
+        this.district = this.district;
+        this.taluka = this.taluka;
+        this.villagenam = this.villagenam;
+        this.areaheactor = this.areaheactor;
+        this.imagename = this.imagename;
+    }
+
+    public String getOrganic() {
+        return organic;
+    }
+
+    public void setOrganic(String organic) {
+        this.organic = organic;
+    }
+
+    public String getCertificateno() {
+        return certificateno;
+    }
+
+    public void setCertificateno(String certificateno) {
+        this.certificateno = certificateno;
+    }
+
+
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -1,12 +1,8 @@
 package com.sharpflux.shetkarimaza.utils;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.v7.app.AlertDialog;
-import android.widget.Toast;
 
 public class CheckDeviceIsOnline {
 

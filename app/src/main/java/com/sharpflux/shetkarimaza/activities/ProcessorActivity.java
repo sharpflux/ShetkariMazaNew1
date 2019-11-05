@@ -18,13 +18,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
-import com.sharpflux.shetkarimaza.adapter.MySellerAdapter;
 import com.sharpflux.shetkarimaza.adapter.ProcessorAdapter;
-import com.sharpflux.shetkarimaza.filters.SubCategoryFilter;
-import com.sharpflux.shetkarimaza.filters.VarietyAdapter;
-import com.sharpflux.shetkarimaza.filters.VarietyFragment;
 import com.sharpflux.shetkarimaza.model.MyProcessor;
-import com.sharpflux.shetkarimaza.model.SellOptions;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 

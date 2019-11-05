@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sharpflux.shetkarimaza.R;
-import com.sharpflux.shetkarimaza.activities.AddListActivity;
 import com.sharpflux.shetkarimaza.activities.HomeActivity;
 import com.sharpflux.shetkarimaza.activities.ProductInfoForSaleActivity;
 import com.sharpflux.shetkarimaza.model.SimilarList;

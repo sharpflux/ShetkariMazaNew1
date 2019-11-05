@@ -1,19 +1,14 @@
 package com.sharpflux.shetkarimaza.activities;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -23,32 +18,15 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
-import com.sharpflux.shetkarimaza.adapter.DynamicFragmentAdapter;
 import com.sharpflux.shetkarimaza.fragment.CategoryFragment;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.utils.CheckDeviceIsOnline;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
-import com.sharpflux.shetkarimaza.volley.URLs;
-import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -218,12 +196,12 @@ public class HomeActivity extends AppCompatActivity
         fragmentTransaction.commit();
     }
 
-    @Override
+   /* @Override
     protected void onStart() {
         super.onStart();
 
 
-    }
+    }*/
 
     public void setLocale(String localeName) {
 

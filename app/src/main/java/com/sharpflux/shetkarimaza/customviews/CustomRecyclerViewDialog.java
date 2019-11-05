@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.sharpflux.shetkarimaza.R;
@@ -28,6 +29,8 @@ public class CustomRecyclerViewDialog extends Dialog implements View.OnClickList
     public Context context;
     public Dialog dialog;
     public Button yes;
+  SearchView searchView;
+
     TextView title;
     RecyclerView recyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -48,21 +51,40 @@ public class CustomRecyclerViewDialog extends Dialog implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        requestWindowFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.custom_dialog_layout);
         yes = (Button) findViewById(R.id.yes);
         //no = (Button) findViewById(R.id.no);
-        title = findViewById(R.id.title);
+        title = findViewById(R.id.tv_tittle);
         recyclerView = findViewById(R.id.recycler_view);
         mLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(mLayoutManager);
+        searchView = findViewById(R.id.searchView_customDialog);
+
         //recyclerView.setNestedScrollingEnabled(false);
+
 
         recyclerView.setAdapter(adapter);
 
         yes.setOnClickListener(this);
         //no.setOnClickListener(this);
 
+
+       /* searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                adapter.getFilter().filter(newText);
+                return false;
+
+            }
+        });*/
     }
 
 

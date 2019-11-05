@@ -2,6 +2,7 @@ package com.sharpflux.shetkarimaza.utils;
 
 import android.content.Context;
 import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -11,6 +12,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.DataAdapter;
 import com.sharpflux.shetkarimaza.customviews.CustomRecyclerViewDialog;
 import com.sharpflux.shetkarimaza.model.Product;
@@ -28,6 +30,8 @@ public class DataFetcher {
     private Product prod;
     private CustomRecyclerViewDialog customDialog;
     private ArrayList<Product>  list;
+    SearchView searchView;
+    DataAdapter dataAdapter;
 
     private  Context context;
 
@@ -37,13 +41,15 @@ public class DataFetcher {
         this.customDialog = customDialog;
         this.list = list;
         this.context = context;
+        this.searchView = searchView;
     }
 
 
 
 
-    public void loadList(final String ColumnName, final EditText editText, final  String URL,final String id,final TextView hiddenText,final String ParameterName, final String ParameterValue) {
+    public void loadList(final String ColumnName, final EditText editText, final  String URL,final String id,final TextView hiddenText,final String ParameterName, final String ParameterValue,final String Title) {
         list.clear();
+
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 URL,
@@ -73,7 +79,7 @@ public class DataFetcher {
 
 
                             }
-                            DataAdapter dataAdapter = new DataAdapter(list, new DataAdapter.RecyclerViewItemClickListener() {
+                           dataAdapter = new DataAdapter(list, new DataAdapter.RecyclerViewItemClickListener() {
                                 @Override
                                 public void clickOnItem(Product data) {
                                     editText.setText(data.getName());
@@ -88,10 +94,34 @@ public class DataFetcher {
                             customDialog.show();
                             customDialog.setCanceledOnTouchOutside(false);
 
+                            TextView txtTitle=customDialog.findViewById(R.id.tv_tittle);
+                            txtTitle.setText(Title);
+
+                            searchView =customDialog.findViewById(R.id.searchView_customDialog);
+
+                            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                                @Override
+                                public boolean onQueryTextSubmit(String query) {
+
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean onQueryTextChange(String newText) {
+
+                                    dataAdapter.getFilter().filter(newText);
+                                    return false;
+
+                                }
+                            });
+
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+
                     }
                 },
                 new Response.ErrorListener() {

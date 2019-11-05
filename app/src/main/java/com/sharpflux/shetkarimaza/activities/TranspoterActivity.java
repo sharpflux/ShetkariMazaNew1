@@ -15,9 +15,9 @@ public class TranspoterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transpoter);
-        editTransporterType = findViewById(R.id.editTransporterType);
+       /* editTransporterType = findViewById(R.id.editTransporterType);
         edittransporterRate = findViewById(R.id.edittransporterRate);
-        editTransporterType = findViewById(R.id.editTransporterType);
+        editTransporterType = findViewById(R.id.editTransporterType);*/
 
     }
 }

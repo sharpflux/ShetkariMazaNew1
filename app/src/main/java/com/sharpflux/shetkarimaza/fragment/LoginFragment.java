@@ -27,7 +27,6 @@ import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.ChooseActivity;
 import com.sharpflux.shetkarimaza.activities.ForgotPasswordActivity;
 import com.sharpflux.shetkarimaza.activities.HomeActivity;
-import com.sharpflux.shetkarimaza.activities.SelectLanguageActivity;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.utils.CheckDeviceIsOnline;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;

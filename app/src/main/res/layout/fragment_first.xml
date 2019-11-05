@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
                 android:id="@+id/edtRegitype"
-                android:hint="@string/registration_type"
+                android:hint="@string/registration_category"
                 android:cursorVisible="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
@@ -61,6 +61,7 @@
                 android:hint="@string/registration_category"
                 android:cursorVisible="false"
                 android:focusable="false"
+                android:visibility="gone"
                 android:focusableInTouchMode="false"
                 android:inputType="none"/>
         </android.support.design.widget.TextInputLayout>
@@ -163,6 +164,7 @@
                 android:inputType="number"
                 android:id="@+id/AlternateMobile"
                 android:textSize="15dp"
+                android:maxLength="10"
                 android:cursorVisible="false"
                 android:hint="@string/AlternateMob"/>
         </android.support.design.widget.TextInputLayout>

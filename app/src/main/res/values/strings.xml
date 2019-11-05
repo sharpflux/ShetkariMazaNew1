@@ -64,7 +64,7 @@
 
     //Seller Form
     <string name="seller_name">Name/Botanical Name*</string>
-    <string name="seller_variety">Variety*</string>
+    <string name="seller_variety">Variety</string>
     <string name="seller_age_days">Age(Days)*</string>
     <string name="seller_available_month">Available(Months)*</string>
     <string name="seller_available_quality">Available Quality*</string>
@@ -233,6 +233,8 @@
     <string name="edit"> Edit</string>
     <string name="update">Update</string>
     <string name="guide_your_rate_here"><u>Rate Guide!</u></string>
+
+    <string name="sort">Sort</string>
 
 
 </resources>

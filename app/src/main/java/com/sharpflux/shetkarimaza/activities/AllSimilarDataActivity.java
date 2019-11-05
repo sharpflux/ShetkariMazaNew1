@@ -5,13 +5,11 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
@@ -23,8 +21,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AbsListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -36,12 +32,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.SimilarListAdapter;
 import com.sharpflux.shetkarimaza.filters.PriceFragment;
-import com.sharpflux.shetkarimaza.filters.StateFragment;
-import com.sharpflux.shetkarimaza.filters.VarietyFragment;
-import com.sharpflux.shetkarimaza.filters.VillageFragment;
-import com.sharpflux.shetkarimaza.fragment.CategoryFragment;
 import com.sharpflux.shetkarimaza.model.SimilarList;
-import com.sharpflux.shetkarimaza.sqlite.SQLiteDatabaseHelper;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
@@ -446,7 +437,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                 builder.setCancelable(false);
                 builder.setTitle("File downloaded Successfully...");
                 //builder.setMessage("You don't have excel Application!Please download it!");
-                builder.setMessage("Go to shetkarimaza folder to your phone storage!");
+                builder.setMessage("Go to diapertohome folder to your phone storage!");
 
                 builder.setIcon(R.drawable.ic_check_circle);
 

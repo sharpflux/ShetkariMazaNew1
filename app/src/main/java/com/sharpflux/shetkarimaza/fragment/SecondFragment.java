@@ -12,28 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
-import com.sharpflux.shetkarimaza.customviews.CustomProgressDialog;
 import com.sharpflux.shetkarimaza.customviews.CustomRecyclerViewDialog;
 import com.sharpflux.shetkarimaza.model.Product;
 import com.sharpflux.shetkarimaza.utils.DataFetcher;
 import com.sharpflux.shetkarimaza.volley.URLs;
-import com.sharpflux.shetkarimaza.volley.VolleySingleton;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class SecondFragment extends DialogFragment {
@@ -233,14 +219,14 @@ public class SecondFragment extends DialogFragment {
             publishProgress("Sleeping..."); // Calls onProgressUpdate()
             try {
                 if (params[0].toString() == "state")
-                    fetcher.loadList("StatesName", edtstate, URLs.URL_STATE + "?StatesID=15&Language=en", "StatesID", hideStateId, "", "");
+                    fetcher.loadList("StatesName", edtstate, URLs.URL_STATE + "?StatesID=15&Language=en", "StatesID", hideStateId, "", "","State");
                    // fetcher.loadList("StatesName", edtstate, URLs.URL_STATE, "StatesID", hideStateId, "", "");
 
                 else if (params[0].toString() == "district")
-                    fetcher.loadList("DistrictName", edtdistrict, URLs.URL_DISTRICT + hideStateId.getText()+"," + "&Language=en", "DistrictId", hideDistrictId, "", "");
+                    fetcher.loadList("DistrictName", edtdistrict, URLs.URL_DISTRICT + hideStateId.getText()+"," + "&Language=en", "DistrictId", hideDistrictId, "", "","District");
 
                 else if (params[0].toString() == "taluka")
-                    fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText()+"," + "&Language=en", "TalukasId", hideTalukaId, "", "");
+                    fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText()+"," + "&Language=en", "TalukasId", hideTalukaId, "", "","Taluka");
 
 
                 Thread.sleep(500);

@@ -26,7 +26,7 @@
             android:gravity="center_vertical"
             android:background="@drawable/edit">
 
-            <EditText
+           <!-- <EditText
                 android:textColor="@color/color_black"
                 android:textColorHint="@color/color_gray_light"
                 android:id="@+id/editTransporterType"
@@ -37,7 +37,7 @@
                 android:layout_alignParentTop="true"
                 android:hint="Select your Vehicle Type* "
                 android:background="@null"
-                android:inputType="number" />
+                android:inputType="number" />-->
         </LinearLayout>
     </RelativeLayout>
 

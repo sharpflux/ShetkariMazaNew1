@@ -22,6 +22,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -32,6 +33,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.ContactDetailAdapter;
+import com.sharpflux.shetkarimaza.filters.BottomSheetDialogSorting;
+import com.sharpflux.shetkarimaza.filters.Filter1Activity;
 import com.sharpflux.shetkarimaza.model.ContactDetail;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
@@ -239,7 +242,25 @@ public class ContactDetailActivity extends AppCompatActivity {
 
         });*/
 
+        View showModalBottomSheet = findViewById(R.id.bottom);
+        showModalBottomSheet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BottomSheetDialogSorting bottomSheetDialogFragment = new BottomSheetDialogSorting();
+                bottomSheetDialogFragment.setArguments(bundle);
+                bottomSheetDialogFragment.setCancelable(true);
+                bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+            }
+        });
 
+        View tv_filter = findViewById(R.id.tv_filter);
+        tv_filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ContactDetailActivity.this, Filter1Activity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -443,7 +464,7 @@ public class ContactDetailActivity extends AppCompatActivity {
                 builder.setCancelable(false);
                 builder.setTitle("File downloaded Successfully...");
                 //builder.setMessage("You don't have excel Application!Please download it!");
-                builder.setMessage("Go to shetkarimaza folder to your phone storage!");
+                builder.setMessage("Go to diapertohome folder to your phone storage!");
 
                 builder.setIcon(R.drawable.ic_check_circle);
 

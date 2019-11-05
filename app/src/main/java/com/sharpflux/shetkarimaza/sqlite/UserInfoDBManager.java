@@ -2,13 +2,11 @@ package com.sharpflux.shetkarimaza.sqlite;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.text.TextUtils;
 
 import com.sharpflux.shetkarimaza.model.SaveProductInfo;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 
 public class UserInfoDBManager {
@@ -24,46 +22,47 @@ public class UserInfoDBManager {
     // SQLite database need table primary key column named as _id. Otherwise a "java.lang.IllegalArgumentException: column '_id' does not exist" exception will be thrown.
     public static final String TABLE_ACCOUNT_COLUMN_ID = "_id";
 
-    public static final String productType = "productType";
-    public static final String productTypeId = "productTypeId";
+    public static final String productType = "productType";//1
+    public static final String productTypeId = "productTypeId";//2
 
-    public static final String productVariety = "productVariety";
-    public static final String productVarietyId = "productVarietyId";
+    public static final String productVariety = "productVariety";//3
+    public static final String productVarietyId = "productVarietyId";//4
 
-    public static final String quality = "quality";
-    public static final String qualityId = "qualityId";
+    public static final String quality = "quality";//5
+    public static final String qualityId = "qualityId";//6
 
-    public static final String quantity="quantity";
+    public static final String quantity = "quantity";//7
 
-    public static final String unit="unit";
-    public static final String unitId="unitId";
+    public static final String unit = "unit";//8
+    public static final String unitId = "unitId";//9
 
-    public static final String expectedPrice="expectedPrice";
+    public static final String expectedPrice = "expectedPrice";//10
 
-    public static final String days = "days";
+    public static final String days = "days";//11
 
-    public static final String availablityInMonths = "availablityInMonths";
+    public static final String availablityInMonths = "availablityInMonths";//12
 
-    public static final String address= "address";
+    public static final String address = "address";//13
 
-    public static final String state="state";
-    public static final String stateId="stateId";
+    public static final String state = "state";//14
+    public static final String stateId = "stateId";//15
 
-    public static final String district="district";
-    public static final String districtId="districtId";
+    public static final String district = "district";//16
+    public static final String districtId = "districtId";//17
 
-    public static final String taluka="taluka";
-    public static final String talukaId="talukaId";
+    public static final String taluka = "taluka";//18
+    public static final String talukaId = "talukaId";//19
 
-    public static final String villagenam="villagenam";
-    public static final String areaheactor="areaheactor";
-    public static final String imagename="imagename";
+    public static final String villagenam = "villagenam";//20
+    public static final String areaheactor = "areaheactor";//21
+    public static final String imagename = "imagename";//22
+
+    public static final String organic = "organic";//23
+    public static final String certificateno = "certificateno";//24
+
+    public static final String SurveyNo = "SurveyNo";//25
+
     //public static final String video="video";
-
-
-
-
-
 
 
     private int DB_VERSION = 1;
@@ -78,15 +77,12 @@ public class UserInfoDBManager {
         this.dbManager = new DatabaseManager(ctx, this.DB_NAME, this.DB_VERSION, this.tableNameList, this.createTableSqlList);
     }
 
-    private void init()
-    {
-        if(this.tableNameList==null)
-        {
+    private void init() {
+        if (this.tableNameList == null) {
             this.tableNameList = new ArrayList<String>();
         }
 
-        if(this.createTableSqlList==null)
-        {
+        if (this.createTableSqlList == null) {
             this.createTableSqlList = new ArrayList<String>();
         }
 
@@ -102,104 +98,112 @@ public class UserInfoDBManager {
         sqlBuf.append(TABLE_ACCOUNT_COLUMN_ID);
         sqlBuf.append(" integer primary key autoincrement,");
 
-        sqlBuf.append(productType);
+        sqlBuf.append(productType);//1
         sqlBuf.append(" text,");
-        sqlBuf.append(productTypeId);
-        sqlBuf.append(" text,");
-
-        sqlBuf.append(productVariety);
-        sqlBuf.append(" text,");
-        sqlBuf.append(productVarietyId);
+        sqlBuf.append(productTypeId);//2
         sqlBuf.append(" text,");
 
+        sqlBuf.append(productVariety);//3
+        sqlBuf.append(" text,");
+        sqlBuf.append(productVarietyId);//4
+        sqlBuf.append(" text,");
 
-        sqlBuf.append(quality);
-        sqlBuf.append(" text, ");
-        sqlBuf.append(qualityId);
-        sqlBuf.append(" text, ");
 
-
-        sqlBuf.append(quantity);
+        sqlBuf.append(quality);//5
         sqlBuf.append(" text, ");
-
-        sqlBuf.append(unit);
-        sqlBuf.append(" text, ");
-        sqlBuf.append(unitId);
+        sqlBuf.append(qualityId);//6
         sqlBuf.append(" text, ");
 
 
-        sqlBuf.append(expectedPrice);
+        sqlBuf.append(quantity);//7
+        sqlBuf.append(" text, ");
+
+        sqlBuf.append(unit);//8
+        sqlBuf.append(" text, ");
+        sqlBuf.append(unitId);//9
         sqlBuf.append(" text, ");
 
 
-        sqlBuf.append(days);
+        sqlBuf.append(expectedPrice);//10
         sqlBuf.append(" text, ");
 
 
-        sqlBuf.append(availablityInMonths);
+        sqlBuf.append(days);//11
         sqlBuf.append(" text, ");
 
 
-        sqlBuf.append(address);
+        sqlBuf.append(availablityInMonths);//12
         sqlBuf.append(" text, ");
 
 
-        sqlBuf.append(state);
-        sqlBuf.append(" text, ");
-        sqlBuf.append(stateId);
+        sqlBuf.append(address);//13
         sqlBuf.append(" text, ");
 
 
-        sqlBuf.append(district);
+        sqlBuf.append(state);//14
         sqlBuf.append(" text, ");
-        sqlBuf.append(districtId);
-        sqlBuf.append(" text, ");
-
-
-        sqlBuf.append(taluka);
-        sqlBuf.append(" text, ");
-        sqlBuf.append(talukaId);
+        sqlBuf.append(stateId);//15
         sqlBuf.append(" text, ");
 
 
-        sqlBuf.append(villagenam);
+        sqlBuf.append(district);//16
+        sqlBuf.append(" text, ");
+        sqlBuf.append(districtId);//17
         sqlBuf.append(" text, ");
 
 
-        sqlBuf.append(areaheactor);
+        sqlBuf.append(taluka);//18
+        sqlBuf.append(" text, ");
+        sqlBuf.append(talukaId);//19
         sqlBuf.append(" text, ");
 
-        sqlBuf.append(imagename);
-        sqlBuf.append(" text)");
 
+        sqlBuf.append(villagenam);//20
+        sqlBuf.append(" text, ");
+
+
+        sqlBuf.append(areaheactor);//21
+        sqlBuf.append(" text, ");
+
+        sqlBuf.append(imagename);//22
+        sqlBuf.append(" text,");
+
+        sqlBuf.append(organic);//23
+        sqlBuf.append(" text, ");
+
+        sqlBuf.append(certificateno);//24
+        sqlBuf.append(" text, ");
+
+        sqlBuf.append(SurveyNo);//24
+        sqlBuf.append(" text) ");
 
 
         this.createTableSqlList.add(sqlBuf.toString());
     }
 
 
-    public void open()
-    {
+    public void open() {
         this.dbManager.openDB();
     }
 
-    public void close()
-    {
-        this.dbManager.closeDB();;
+    public void close() {
+        this.dbManager.closeDB();
+        ;
     }
 
     // Insert one row.
-    public void insertAccount(String productType,String productTypeId, String productVariety,String productVarietyId,
-                              String quality,String qualityId, String quantity, String unit,String unitId, String expectedPrice,
+    public void insertAccount(String productType, String productTypeId, String productVariety, String productVarietyId,
+                              String quality, String qualityId, String quantity, String unit, String unitId, String expectedPrice,
                               String days, String availablityInMonths, String address, String state, String stateId,
-                              String district,  String districtId,String taluka, String talukaId, String villagenam,
-                              String areaheactor,String imagename)
-    {
+                              String district, String districtId, String taluka, String talukaId, String villagenam,
+                              String areaheactor,String imagename,String organic, String certificateno,String SurveyNo) {
         // Create table column list.
         List<TableColumn> tableColumnList = new ArrayList<TableColumn>();
 
+        //
+
         // Add user name column.
-        TableColumn typeColumn = new TableColumn();
+        TableColumn typeColumn = new TableColumn();//0
         typeColumn.setColumnName(this.productType);
         typeColumn.setColumnValue(productType);
         tableColumnList.add(typeColumn);
@@ -281,7 +285,7 @@ public class UserInfoDBManager {
         stateColumnId.setColumnValue(stateId);
         tableColumnList.add(stateColumnId);
 
-        TableColumn districtColumn= new TableColumn();
+        TableColumn districtColumn = new TableColumn();
         districtColumn.setColumnName(this.district);
         districtColumn.setColumnValue(district);
         tableColumnList.add(districtColumn);
@@ -310,7 +314,6 @@ public class UserInfoDBManager {
         tableColumnList.add(villageColumn);
 
 
-
         TableColumn areaColumn = new TableColumn();
         areaColumn.setColumnName(this.areaheactor);
         areaColumn.setColumnValue(areaheactor);
@@ -322,6 +325,22 @@ public class UserInfoDBManager {
         tableColumnList.add(imageColumn);
 
 
+        TableColumn organicColumn = new TableColumn();
+        organicColumn.setColumnName(this.organic);
+        organicColumn.setColumnValue(organic);
+        tableColumnList.add(organicColumn);
+
+
+        TableColumn certificatenoColumn = new TableColumn();
+        certificatenoColumn.setColumnName(this.certificateno);
+        certificatenoColumn.setColumnValue(certificateno);
+        tableColumnList.add(certificatenoColumn);
+
+        TableColumn surveyNoColumn = new TableColumn();
+        surveyNoColumn.setColumnName(this.SurveyNo);
+        surveyNoColumn.setColumnValue(SurveyNo);
+        tableColumnList.add(surveyNoColumn);
+
 
 
         // Insert added column in to account table.
@@ -329,8 +348,7 @@ public class UserInfoDBManager {
     }
 
     // Update one row. User name column can not be updated.
-    public void updateAccount(int id, String password, String email,String pty)
-    {
+    public void updateAccount(int id, String password, String email, String pty) {
         // Create table column list.
         List<TableColumn> updateColumnList = new ArrayList<TableColumn>();
 
@@ -359,26 +377,23 @@ public class UserInfoDBManager {
     }
 
     // Delete one account.
-    public void deleteAccount(int id)
-    {
+    public void deleteAccount(int id) {
         this.dbManager.delete(this.TABLE_NAME_ACCOUNT, this.TABLE_ACCOUNT_COLUMN_ID + " = " + id);
     }
-    public void deleteAll()
-    {
-            this.dbManager.delete(this.TABLE_NAME_ACCOUNT,null);
+
+    public void deleteAll() {
+        this.dbManager.delete(this.TABLE_NAME_ACCOUNT, null);
 
     }
 
 
     // Get all user account dto list.
-    public List<SaveProductInfo> getAllAccount()
-    {
+    public List<SaveProductInfo> getAllAccount() {
         List<SaveProductInfo> ret = new ArrayList<SaveProductInfo>();
         Cursor cursor = this.dbManager.queryAllReturnCursor(this.TABLE_NAME_ACCOUNT);
-        if(cursor!=null)
-        {
+        if (cursor != null) {
             do {
-                int id = cursor.getInt(cursor.getColumnIndex(this.TABLE_ACCOUNT_COLUMN_ID));
+                String id = cursor.getString(cursor.getColumnIndex(this.TABLE_ACCOUNT_COLUMN_ID));
                 String productType = cursor.getString(cursor.getColumnIndex(this.productType));
                 String productVariety = cursor.getString(cursor.getColumnIndex(this.productVariety));
                 String quality = cursor.getString(cursor.getColumnIndex(this.quality));
@@ -386,6 +401,7 @@ public class UserInfoDBManager {
                 String unit = cursor.getString(cursor.getColumnIndex(this.unit));
                 String expectedPrice = cursor.getString(cursor.getColumnIndex(this.expectedPrice));
                 String days = cursor.getString(cursor.getColumnIndex(this.days));
+
                 String availablityInMonths = cursor.getString(cursor.getColumnIndex(this.availablityInMonths));
                 String address = cursor.getString(cursor.getColumnIndex(this.address));
                 String state = cursor.getString(cursor.getColumnIndex(this.state));
@@ -394,15 +410,14 @@ public class UserInfoDBManager {
                 String villagenam = cursor.getString(cursor.getColumnIndex(this.villagenam));
                 String areaheactor = cursor.getString(cursor.getColumnIndex(this.areaheactor));
                 String imagename = cursor.getString(cursor.getColumnIndex(this.imagename));
-
-
-
+                String organic = cursor.getString(cursor.getColumnIndex(this.organic));
+                String certificateno = cursor.getString(cursor.getColumnIndex(this.certificateno));
 
 
                 SaveProductInfo userAccountDto = new SaveProductInfo(id,
-                        productType, productVariety, quality, quantity, unit,  expectedPrice,
-                        days,availablityInMonths,address,  state,
-                        district,taluka,villagenam, areaheactor,imagename);
+                        productType, productVariety, quality, quantity, unit, expectedPrice,
+                        days, availablityInMonths, address, state,
+                        district, taluka, villagenam, areaheactor, imagename);
                 userAccountDto.setId(id);
                 userAccountDto.setProductType(productType);
                 userAccountDto.setProductVariety(productVariety);
@@ -418,15 +433,16 @@ public class UserInfoDBManager {
                 userAccountDto.setQuality(taluka);
                 userAccountDto.setQuality(villagenam);
                 userAccountDto.setQuality(areaheactor);
-
+                userAccountDto.setQuality(organic);
+                userAccountDto.setQuality(certificateno);
 
 
                 ret.add(userAccountDto);
 
-            }while(cursor.moveToNext());
+            } while (cursor.moveToNext());
 
             // Close cursor after query.
-            if(!cursor.isClosed()) {
+            if (!cursor.isClosed()) {
                 cursor.close();
             }
         }
@@ -435,8 +451,8 @@ public class UserInfoDBManager {
     }
 
     // Return sqlite database cursor object.
-    public Cursor getAllAccountCursor()
-    {
+    public Cursor getAllAccountCursor() {
         Cursor cursor = this.dbManager.queryAllReturnCursor(this.TABLE_NAME_ACCOUNT);
         return cursor;
-    }}
+    }
+}

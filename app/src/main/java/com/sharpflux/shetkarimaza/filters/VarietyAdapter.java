@@ -12,7 +12,6 @@ import android.widget.Filterable;
 
 
 import com.sharpflux.shetkarimaza.R;
-import com.sharpflux.shetkarimaza.model.Product;
 
 import java.util.ArrayList;
 import java.util.List;

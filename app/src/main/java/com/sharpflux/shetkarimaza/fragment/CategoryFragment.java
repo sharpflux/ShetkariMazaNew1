@@ -1,10 +1,7 @@
 package com.sharpflux.shetkarimaza.fragment;
 
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -46,6 +43,7 @@ public class CategoryFragment extends Fragment {
     Locale myLocale;
     String language;
     MyCategoryType myCategoryType;
+   // ShimmerFrameLayout parentShimmerLayout;
 
     public CategoryFragment() {
         // Required empty public constructor
@@ -62,6 +60,8 @@ public class CategoryFragment extends Fragment {
         mRecyclerView.setLayoutManager(mGridLayoutManager);
 
         categoryList = new ArrayList<>();
+       // parentShimmerLayout =view.findViewById(R.id.shimmer_view_container);
+
      /*   myLocale = getResources().getConfiguration().locale;
         Context context = getContext();
         SharedPreferences sharedPref = context.getSharedPreferences(
@@ -73,10 +73,14 @@ public class CategoryFragment extends Fragment {
         myLocale = getResources().getConfiguration().locale;
         language = user.getLanguage();
 
+        //parentShimmerLayout.startShimmerAnimation();
+       setDynamicFragmentToTabLayout();
 
-        setDynamicFragmentToTabLayout();
         return view;
     }
+
+
+
     private void setDynamicFragmentToTabLayout() {
 
 
@@ -106,20 +110,23 @@ public class CategoryFragment extends Fragment {
                                 myCategoryTypeAdapter = new MyCategoryTypeAdapter(getContext(), categoryList);
                                 mRecyclerView.setAdapter(myCategoryTypeAdapter);
 
-                                mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                                /*mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                                     @Override
                                     public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                                         super.onScrollStateChanged(recyclerView, newState);
                                     }
 
-                                });
+                                });*/
                             }
+                          /*  parentShimmerLayout.stopShimmerAnimation();
+                            parentShimmerLayout.setVisibility(View.GONE);*/
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
                 },
+
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
@@ -136,5 +143,15 @@ public class CategoryFragment extends Fragment {
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+      //  parentShimmerLayout.startShimmerAnimation();
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+       // parentShimmerLayout.stopShimmerAnimation();
+    }
 }

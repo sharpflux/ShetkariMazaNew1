@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -51,6 +52,14 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import static com.sharpflux.shetkarimaza.sqlite.UserInfoDBManager.areaheactor;
+import static com.sharpflux.shetkarimaza.sqlite.UserInfoDBManager.availablityInMonths;
+import static com.sharpflux.shetkarimaza.sqlite.UserInfoDBManager.days;
+import static com.sharpflux.shetkarimaza.sqlite.UserInfoDBManager.expectedPrice;
+import static com.sharpflux.shetkarimaza.sqlite.UserInfoDBManager.imagename;
+import static com.sharpflux.shetkarimaza.sqlite.UserInfoDBManager.productType;
+import static com.sharpflux.shetkarimaza.sqlite.UserInfoDBManager.villagenam;
+
 public class AddListActivity extends AppCompatActivity {
     JSONArray array;
     StringBuilder
@@ -63,7 +72,7 @@ public class AddListActivity extends AppCompatActivity {
     Bundle bundle;
     String type = "", varity = "", quality = "", unit = "", month = "", state = "", district = "", taluka = "";
 
-    String ProductId;
+    String ProductId,organic,certificateno,SurveyNo;
     Cursor cursor;
     int UserId;
     private TextView userAccountListEmptyTextView = null;
@@ -75,7 +84,7 @@ public class AddListActivity extends AppCompatActivity {
     Bitmap bitmap;
     SQLiteDatabaseHelper database;
     ImageView row_cartlist_ivDelete;
-    private String fromColumnArr[] = {UserInfoDBManager.productType, UserInfoDBManager.productVariety, UserInfoDBManager.quality, UserInfoDBManager.expectedPrice};
+    private String fromColumnArr[] = {productType, UserInfoDBManager.productVariety, UserInfoDBManager.quality, expectedPrice};
     CheckBox itemCheckbox;
     private final int toViewIdArr[] = {R.id.user_account_list_item_id, R.id.user_account_list_item_user_name, R.id.user_account_list_item_password, R.id.user_account_list_item_email};
 
@@ -113,13 +122,16 @@ public class AddListActivity extends AppCompatActivity {
 
             ProductId = bundle.getString("ProductId");
             type = bundle.getString("productTypeId");
-            varity = bundle.getString("productVarietyId");
+            varity = bundle.getString("productVariety");
             quality = bundle.getString("qualityId");
             unit = bundle.getString("unitId");
             //month = bundle.getString("monthId");
             state = bundle.getString("stateId");
             district = bundle.getString("districtId");
             taluka = bundle.getString("talukaId");
+            organic= bundle.getString("organic");
+            certificateno = bundle.getString("certificateno");
+            SurveyNo = bundle.getString("SurveyNo");
 
 
         }
@@ -153,15 +165,20 @@ public class AddListActivity extends AppCompatActivity {
 
                 // Get row column data.
                 //   int rowId = sqcursor.getInt(sqcursor.getColumnIndex(UserInfoDBManager.TABLE_ACCOUNT_COLUMN_ID));
-                String producttype = sqcursor.getString(sqcursor.getColumnIndex(UserInfoDBManager.productType));
+                String producttype = sqcursor.getString(sqcursor.getColumnIndex(productType));
                 String productvarity = sqcursor.getString(sqcursor.getColumnIndex(UserInfoDBManager.productVariety));
                 String quality = sqcursor.getString(sqcursor.getColumnIndex(UserInfoDBManager.quality));
-                String price = sqcursor.getString(sqcursor.getColumnIndex(UserInfoDBManager.expectedPrice));
-                String image = sqcursor.getString(sqcursor.getColumnIndex(UserInfoDBManager.imagename));
+                String price = sqcursor.getString(sqcursor.getColumnIndex(expectedPrice));
+                String image = sqcursor.getString(sqcursor.getColumnIndex(imagename));
 
 
                 // Create a UserAccountDTO object to save row column data.
-                SaveProductInfo userAccountDto = new SaveProductInfo();
+
+                String id="";
+                String productVariety="";
+                String quantity="";
+                String address="";
+                SaveProductInfo userAccountDto = new SaveProductInfo(id, productType, productVariety, quality, quantity, unit, expectedPrice, days, availablityInMonths, address, state, district, taluka, villagenam, areaheactor, imagename);
                 userAccountDto.setProductType(producttype);
                 userAccountDto.setProductVariety(productvarity);
                 userAccountDto.setQuality(quality);
@@ -316,7 +333,7 @@ public class AddListActivity extends AppCompatActivity {
 
                         SaveProductInfo tmpDto = userCheckedItemList.get(i);
 
-                        userInfoDBManager.deleteAccount(tmpDto.getId());
+                       // userInfoDBManager.deleteAccount(tmpDto.getId());
 
                         userCheckedItemList.remove(i);
 
@@ -347,8 +364,6 @@ public class AddListActivity extends AppCompatActivity {
 
     private void submitToDb() {
         cursor = userInfoDBManager.getAllAccountCursor();
-
-
         array = new JSONArray();
         builder.append("<Parent>");
         if (cursor != null && cursor.getCount() > 0) {
@@ -373,6 +388,9 @@ public class AddListActivity extends AppCompatActivity {
                 builder.append("<villagenam>" + cursor.getString(20) + "</villagenam>");
                 builder.append("<areaheactor>" + cursor.getString(21) + "</areaheactor>");
                 builder.append("<imagename>" + cursor.getString(22) + "</imagename>");
+                builder.append("<organic>" + cursor.getString(23) + "</organic>");
+                builder.append("<certificateno>" + cursor.getString(24) + "</certificateno>");
+                builder.append("<SurveyNo>" + cursor.getString(25) + "</SurveyNo>");
                 builder.append("</Assign>");
                 //cursor.getString(22).replaceAll("\\<\\?xml(.+?)\\?\\>", "").trim()
             }
@@ -418,6 +436,8 @@ public class AddListActivity extends AppCompatActivity {
                 return params;
             }
         };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         VolleySingleton.getInstance(AddListActivity.this).addToRequestQueue(stringRequest);
 

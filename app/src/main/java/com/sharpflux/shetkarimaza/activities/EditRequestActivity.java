@@ -16,7 +16,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.EditRequestAdapter;
-import com.sharpflux.shetkarimaza.adapter.SimilarListAdapter;
 import com.sharpflux.shetkarimaza.model.SimilarList;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
@@ -31,8 +30,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import static java.security.AccessController.getContext;
 
 public class EditRequestActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
