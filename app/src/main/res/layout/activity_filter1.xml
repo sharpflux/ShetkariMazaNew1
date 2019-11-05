@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!--<include layout="@layout/category_toolbar" />-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/shadow_down" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.25"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/states_linear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/brands_color"
+                        android:layout_width="5.3dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/gradient_upside_down"
+                        android:orientation="vertical" />
+
+                    <TextView
+                        android:id="@+id/brands_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="9.7dp"
+                        android:paddingBottom="16dp"
+                        android:paddingTop="16dp"
+                        android:text="State"
+                        android:textColor="@color/color_black"
+                        android:textStyle="normal" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.3dp"
+                    android:background="@color/grey_4a" />
+
+                <LinearLayout
+                    android:id="@+id/District_linear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/category_color"
+                        android:layout_width="5.3dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/gradient_upside_down"
+                        android:orientation="vertical" />
+                    <TextView
+                        android:id="@+id/category_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="9.7dp"
+                        android:paddingBottom="16dp"
+                        android:paddingTop="15.3dp"
+                        android:text="District"
+                        android:textColor="@color/color_black"
+                        android:textStyle="normal" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.3dp"
+                    android:background="@color/grey_4a" />
+
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.3dp"
+                    android:background="@color/grey_4a" />
+
+                <LinearLayout
+                    android:id="@+id/taluka_linear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/size_color"
+                        android:layout_width="5.3dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/gradient_upside_down"
+                        android:orientation="vertical" />
+
+                    <TextView
+                        android:id="@+id/size_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="9.7dp"
+                        android:paddingBottom="16dp"
+                        android:paddingTop="15.3dp"
+                        android:text="Taluka"
+                        android:textColor="@color/color_black"
+                        android:textStyle="normal" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.3dp"
+                    android:background="@color/grey_4a" />
+
+                <LinearLayout
+                    android:id="@+id/discount_linear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/discount_color"
+                        android:layout_width="5.3dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/gradient_upside_down"
+                        android:orientation="vertical" />
+
+                    <TextView
+                        android:id="@+id/discount_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="9.7dp"
+                        android:paddingBottom="16dp"
+                        android:paddingTop="15.3dp"
+                        android:text="Discount"
+                        android:textColor="@color/black"
+                        android:textStyle="normal" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.3dp"
+                    android:background="@color/grey_4a" />
+
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.3dp"
+                    android:background="@color/grey_4a" />
+
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.3dp"
+                    android:background="@color/grey_4a" />
+
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.3dp"
+                    android:background="@color/grey_4a" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="0.3dp"
+                android:layout_height="match_parent"
+                android:background="@color/grey_4a" />
+
+            <!--Frame Layout is used
+            as container to load fragment inside the this layout-->
+            <FrameLayout
+                android:id="@+id/container"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.75" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--"layoutAbove" is used to place above the linear layout-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:layout_above="@+id/linear"
+        android:background="@color/grey_4a" />
+
+    <!--"alignParentBottom" property is used to stitch the Linear Layout
+    at the bottom pf the screen...-->
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <TextView
+            android:id="@+id/btnClear"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.25"
+            android:gravity="center"
+            android:paddingBottom="16.3dp"
+            android:paddingTop="16.3dp"
+            android:text="Clear"
+            android:textColor="#000000"
+            android:textSize="13.3sp" />
+
+        <TextView
+            android:id="@+id/btnFilterData"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.75"
+            android:background="@drawable/button_gradient_without_radius"
+            android:gravity="center"
+            android:paddingBottom="16.3dp"
+            android:paddingTop="16.3dp"
+            android:text="Apply"
+            android:textColor="@color/white"
+            android:textSize="13.3sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

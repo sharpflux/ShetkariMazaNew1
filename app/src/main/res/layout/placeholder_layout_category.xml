@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="20dp"
+    android:layout_marginLeft="10dp">
+
+
+    <LinearLayout
+        android:id="@+id/rl_two"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="2dp"
+        android:layout_marginLeft="50dp">
+
+        <View
+            android:id="@+id/thumbnail1"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/color_gray_light" />
+
+        <View
+            android:id="@+id/thumbnail2"
+            android:paddingLeft="2dp"
+            android:layout_marginLeft="8dp"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/color_gray_light" />
+       <!-- <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_10"
+            android:layout_below="@+id/thumbnail2"
+            android:orientation="vertical"
+            >
+            <View
+                android:layout_width="100dp"
+                android:layout_height="8dp"
+                android:background="@color/color_gray_light" />
+
+        </LinearLayout>-->
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</RelativeLayout>
