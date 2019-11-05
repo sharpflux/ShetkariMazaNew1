@@ -14,7 +14,7 @@ public class SplashActivity extends AppCompatActivity {
 
     RelativeLayout spalsh;
 
-
+//
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
