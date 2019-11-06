@@ -26,6 +26,8 @@ import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity;
 import com.sharpflux.shetkarimaza.activities.HomeActivity;
 import com.sharpflux.shetkarimaza.adapter.DataAdapter;
+import com.sharpflux.shetkarimaza.sqlite.dbBuyerFilter;
+import com.sharpflux.shetkarimaza.utils.Constant;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
@@ -52,7 +54,7 @@ public class VarietyFragment extends Fragment {
     SearchView searchView;
     VarietyAdapter myAdapter;
     Locale myLocale;
-
+    dbBuyerFilter myDatabase;
     public VarietyFragment() {
 
     }
@@ -77,6 +79,10 @@ public class VarietyFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         varity_builder_id = new StringBuilder();
         searchView = view.findViewById(R.id.searchView);
+
+        myDatabase = new dbBuyerFilter(getContext());
+
+
 
         extras = new Bundle();
 
@@ -171,7 +177,9 @@ public class VarietyFragment extends Fragment {
                                             new SubCategoryFilter
                                                     (
                                                             userJson.getString("VarietyId"),
-                                                            userJson.getString("VarietyName"));
+                                                            userJson.getString("VarietyName"),
+                                                            Constant.VARIETY
+                                                            );
 
                                     productlist.add(sellOptions);
 

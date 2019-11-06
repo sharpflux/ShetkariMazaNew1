@@ -23,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity;
+import com.sharpflux.shetkarimaza.utils.Constant;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
@@ -176,7 +177,9 @@ public class TalukaFragment extends Fragment {
                                             new SubCategoryFilter
                                                     (
                                                             userJson.getString("TalukasId"),
-                                                            userJson.getString("TalukaName"));
+                                                            userJson.getString("TalukaName"),
+                                                            Constant.TALUKA
+                                                            );
 
                                     productlist.add(sellOptions);
                                 } else {

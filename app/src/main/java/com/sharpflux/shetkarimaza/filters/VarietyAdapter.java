@@ -1,6 +1,7 @@
 package com.sharpflux.shetkarimaza.filters;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.support.v7.widget.AppCompatCheckedTextView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,6 +13,8 @@ import android.widget.Filterable;
 
 
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.sqlite.dbBuyerFilter;
+import com.sharpflux.shetkarimaza.utils.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,17 +24,18 @@ public class VarietyAdapter extends RecyclerView.Adapter<VarietytViewHolder> imp
 
     private Context mContext;
 
-    public static String ProductId;
+    public static String ProductId, FilterBy;
     private static int currentPosition = 0;
 
     private List<SubCategoryFilter> exampleList;
     private List<SubCategoryFilter> exampleListFull;
-
+    dbBuyerFilter myDatabase;
 
     public VarietyAdapter(Context mContext, List<SubCategoryFilter> exampleList) {
         this.mContext = mContext;
         this.exampleList = exampleList;
         exampleListFull = new ArrayList<>(exampleList);
+        myDatabase = new dbBuyerFilter(mContext);
 
     }
 
@@ -48,7 +52,58 @@ public class VarietyAdapter extends RecyclerView.Adapter<VarietytViewHolder> imp
         holder.position = position;
         holder.mTextView.setText(exampleList.get(position).getName());
         holder.ProductId = exampleList.get(position).getId();
+        holder.FilterBy = exampleList.get(position).getFilterBy();
         ProductId = exampleList.get(position).getId();
+         holder.myDatabase=myDatabase;
+
+        switch (holder.FilterBy) {
+            case "VARIETY":
+                Cursor VARIETYCursor = myDatabase.FilterGetByFilterName("VARIETY");
+                while (VARIETYCursor.moveToNext()) {
+                    if (VARIETYCursor.getString(0).equals(holder.ProductId)) {
+                        holder.mTextView.setCheckMarkDrawable(R.drawable.ic_check_box_black_24dp);
+                        holder.mTextView.setChecked(true);
+                    }
+                }
+                break;
+            case "QUALITY":
+                Cursor QUALITYCursor = myDatabase.FilterGetByFilterName("QUALITY");
+                while (QUALITYCursor.moveToNext()) {
+                    if (QUALITYCursor.getString(0).equals(holder.ProductId)) {
+                        holder.mTextView.setCheckMarkDrawable(R.drawable.ic_check_box_black_24dp);
+                        holder.mTextView.setChecked(true);
+                    }
+                }
+                break;
+            case "STATE":
+                Cursor STATECursor = myDatabase.FilterGetByFilterName("STATE");
+                while (STATECursor.moveToNext()) {
+                    if (STATECursor.getString(0).equals(holder.ProductId)) {
+                        holder.mTextView.setCheckMarkDrawable(R.drawable.ic_check_box_black_24dp);
+                        holder.mTextView.setChecked(true);
+                    }
+                }
+                break;
+            case "DISTRICT":
+                Cursor DISTRICTCursor = myDatabase.FilterGetByFilterName("DISTRICT");
+                while (DISTRICTCursor.moveToNext()) {
+                    if (DISTRICTCursor.getString(0).equals(holder.ProductId)) {
+                        holder.mTextView.setCheckMarkDrawable(R.drawable.ic_check_box_black_24dp);
+                        holder.mTextView.setChecked(true);
+                    }
+                }
+                break;
+            case "TALUKA":
+                Cursor TALUKACursor = myDatabase.FilterGetByFilterName("TALUKA");
+                while (TALUKACursor.moveToNext()) {
+                    if (TALUKACursor.getString(0).equals(holder.ProductId)) {
+                        holder.mTextView.setCheckMarkDrawable(R.drawable.ic_check_box_black_24dp);
+                        holder.mTextView.setChecked(true);
+                    }
+                }
+                break;
+        }
+
     }
 
     @Override
@@ -100,9 +155,10 @@ public class VarietyAdapter extends RecyclerView.Adapter<VarietytViewHolder> imp
 class VarietytViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     AppCompatCheckedTextView mTextView;
-    String ProductId = "", childName = "";
+    String ProductId = "", childName = "", FilterBy = "";
     int position = 0;
     List<SubCategoryFilter> mlist;
+    dbBuyerFilter myDatabase;
 
     VarietytViewHolder(View itemView) {
         super(itemView);
@@ -120,8 +176,8 @@ class VarietytViewHolder extends RecyclerView.ViewHolder implements View.OnClick
         String n = "";
         Boolean value = mTextView.isChecked();
         if (value) {
-            // set check mark drawable and set checked property to false
 
+            myDatabase.DeleteRecord(FilterBy, ProductId);
             mTextView.setCheckMarkDrawable(R.drawable.ic_check_box_outline_blank_black_24dp);
             mTextView.setChecked(false);
             SubCategoryFilter filter = mlist.get(position);
@@ -134,6 +190,7 @@ class VarietytViewHolder extends RecyclerView.ViewHolder implements View.OnClick
             Log.e(pid, n);
             SubCategoryFilter filter = mlist.get(position);
             filter.setSelected(true);
+            myDatabase.FilterInsert(FilterBy, ProductId);
             // set check mark drawable and set checked property to true
             mTextView.setCheckMarkDrawable(R.drawable.ic_check_box_black_24dp);
             mTextView.setChecked(true);

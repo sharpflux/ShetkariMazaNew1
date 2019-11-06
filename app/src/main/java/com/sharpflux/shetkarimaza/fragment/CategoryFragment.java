@@ -73,6 +73,9 @@ public class CategoryFragment extends Fragment {
         myLocale = getResources().getConfiguration().locale;
         language = user.getLanguage();
 
+
+
+
         //parentShimmerLayout.startShimmerAnimation();
        setDynamicFragmentToTabLayout();
 

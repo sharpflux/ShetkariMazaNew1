@@ -30,6 +30,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".filters.Filter1Activity">
         </activity>
+        <activity android:name=".filters.BuyerFilterActivity"></activity>
         <activity
             android:name="com.sharpflux.shetkarimaza.activities.ContactDetailActivity"
             android:parentActivityName="com.sharpflux.shetkarimaza.activities.HomeActivity"
@@ -67,11 +68,11 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.sharpflux.shetkarimaza.filters.FilterActivity"
-            android:parentActivityName="com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity"
+            android:parentActivityName="com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity" android:noHistory="true"
             android:theme="@style/ToolbarAppTheme" />
         <activity android:name="com.sharpflux.shetkarimaza.activities.TabLayoutLogRegActivity" />
         <activity
-            android:name="com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity"
+            android:name="com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity" android:noHistory="true"
             android:parentActivityName="com.sharpflux.shetkarimaza.activities.HomeActivity"
             android:theme="@style/ToolbarAppTheme" />
         <activity

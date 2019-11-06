@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity;
+import com.sharpflux.shetkarimaza.utils.Constant;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
@@ -68,8 +69,8 @@ public class StateFragment extends Fragment {
 
         searchView = view.findViewById(R.id.searchViewState);
 
-
-        extras = getArguments();
+        BundleAssign();
+        /*extras = getArguments();
 
         if (extras != null) {
 
@@ -77,19 +78,18 @@ public class StateFragment extends Fragment {
             QualityId = extras.getString("QualityId");
             itemTypeId=extras.getString("ItemTypeId");
 
-        }
+        }*/
 
 
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                BundleAssign();
                 FragmentTransaction transection = getFragmentManager().beginTransaction();
                 QualityFragment  mfragment = new QualityFragment ();
                 transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
                 transection.commit();
-
             }
         });
 
@@ -128,7 +128,7 @@ public class StateFragment extends Fragment {
         btnFilterData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                BundleAssign();
                 Intent intent = new Intent(getContext(), AllSimilarDataActivity.class);
                 intent.putExtra("ItemTypeId",itemTypeId);
                 intent.putExtra("VarietyId",VarityId);
@@ -150,6 +150,19 @@ public class StateFragment extends Fragment {
 
     }
 
+    private void BundleAssign()
+    {
+        extras = new Bundle();
+        if (extras != null) {
+            extras.putString("VarietyId",VarityId);
+            extras.putString("QualityId",QualityId);
+            extras.putString("StatesID",state_builder_id.toString());
+            extras.putString("ItemTypeId",itemTypeId);
+        }
+
+    }
+
+
     private void SetDynamicDATA() {
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
@@ -168,7 +181,9 @@ public class StateFragment extends Fragment {
                                             new SubCategoryFilter
                                                     (
                                                             userJson.getString("StatesID"),
-                                                            userJson.getString("StatesName"));
+                                                            userJson.getString("StatesName"),
+                                                            Constant.STATE
+                                                            );
 
                                     productlist.add(sellOptions);
 

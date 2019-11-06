@@ -23,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity;
+import com.sharpflux.shetkarimaza.utils.Constant;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
@@ -42,7 +43,7 @@ public class QualityFragment extends Fragment {
     LinearLayoutManager layoutManager;
     ArrayList<SubCategoryFilter> productlist;
     Button btn_next,btn_back,btnFilterData;
-    String VarityId="",itemTypeId="";
+    String VarityId="",itemTypeId="",ItemTypeId;
     Bundle extras;
     Locale myLocale;
     SearchView searchView;
@@ -77,15 +78,8 @@ public class QualityFragment extends Fragment {
 
 
 
-        extras = getArguments();
-
-        if (extras != null) {
-
-            VarityId = extras.getString("VarietyId");
-            itemTypeId = extras.getString("ItemTypeId");
-        }
-
-
+        AssignVariables();
+        BundleAssign();
 
 
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -141,7 +135,7 @@ public class QualityFragment extends Fragment {
         btnFilterData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                BundleAssign();
                 Intent intent = new Intent(getContext(), AllSimilarDataActivity.class);
                 intent.putExtra("ItemTypeId",itemTypeId);
                 intent.putExtra("VarietyId",VarityId);
@@ -161,8 +155,29 @@ public class QualityFragment extends Fragment {
         return view;
     }
 
-    private void SetDynamicDATA() {
+    private void BundleAssign()
+    {
+        extras = getArguments();
 
+        if (extras != null) {
+
+            VarityId = extras.getString("VarietyId");
+            itemTypeId = extras.getString("ItemTypeId");
+        }
+
+    }
+
+    private void AssignVariables()
+    {
+        ItemTypeId = "";
+
+        VarityId = "";
+
+    }
+
+    private void SetDynamicDATA() {
+        AssignVariables();
+        BundleAssign();
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 URLs.URL_QUALITY + "?Language="+myLocale,
                 new Response.Listener<String>() {
@@ -179,7 +194,9 @@ public class QualityFragment extends Fragment {
                                                     (
 
                                                             userJson.getString("QualityId"),
-                                                            userJson.getString("QualityType"));
+                                                            userJson.getString("QualityType"),
+                                                            Constant.QUALITY
+                                                            );
 
                                     productlist.add(sellOptions);
                                 } else {

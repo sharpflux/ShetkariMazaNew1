@@ -23,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity;
+import com.sharpflux.shetkarimaza.utils.Constant;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
@@ -192,7 +193,8 @@ public class DistrictFragment extends Fragment {
                                             new SubCategoryFilter
                                                     (
                                                             userJson.getString("DistrictId"),
-                                                            userJson.getString("DistrictName")
+                                                            userJson.getString("DistrictName"),
+                                                            Constant.DISTRICT
                                                     );
 
                                     productlist.add(sellOptions);

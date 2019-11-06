@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -31,8 +33,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.SimilarListAdapter;
+import com.sharpflux.shetkarimaza.filters.BottomSheetDialogSorting;
+import com.sharpflux.shetkarimaza.filters.BuyerFilterActivity;
+import com.sharpflux.shetkarimaza.filters.Filter1Activity;
 import com.sharpflux.shetkarimaza.filters.PriceFragment;
 import com.sharpflux.shetkarimaza.model.SimilarList;
+import com.sharpflux.shetkarimaza.sqlite.dbBuyerFilter;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
@@ -77,7 +83,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
     int itemCount = 0;
     ProgressBar progressBar_filter;
     Locale myLocale;
-
+    dbBuyerFilter myDatabase;
 
     public static final int PAGE_START = 1;
     private static final int PAGE_SIZE = 10;
@@ -93,6 +99,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         List<SimilarList> mList = new ArrayList<>();
+        myDatabase = new dbBuyerFilter(getApplicationContext());
 
         recyclerView.setAdapter(myAdapter);
         progressBar_filter = findViewById(R.id.progressBar_filter);
@@ -109,6 +116,8 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         String sleepTime = String.valueOf(currentPage);
         runner.execute(sleepTime);
 
+        AssignVariables();
+        BundleAssign();
 
        /* recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -168,13 +177,42 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
 
 
+
+        View showModalBottomSheet = findViewById(R.id.bottom);
+        showModalBottomSheet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BottomSheetDialogSorting bottomSheetDialogFragment = new BottomSheetDialogSorting();
+                bottomSheetDialogFragment.setArguments(bundle);
+                bottomSheetDialogFragment.setCancelable(true);
+                bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+            }
+        });
+
+        View tv_filter = findViewById(R.id.tv_filter);
+        tv_filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BundleAssign();
+                Intent intent = new Intent(AllSimilarDataActivity.this, BuyerFilterActivity.class);
+                intent.putExtra("ItemTypeId",ItemTypeId);
+                intent.putExtra("TalukaId",TalukaId);
+                intent.putExtra("VarietyId",VarityId);
+                intent.putExtra("QualityId",QualityId);
+                intent.putExtra("StatesID",StatesID);
+                intent.putExtra("DistrictId",DistrictId);
+                intent.putExtra("priceids",priceids);
+
+                startActivity(intent);
+            }
+        });
+
+
     }
 
-
-    private void SetDynamicDATA(String pageIndex) {
-
+    private void BundleAssign()
+    {
         bundle = getIntent().getExtras();
-       // bundle.getString("ItemTypeId");
         if (bundle != null) {
             ItemTypeId = bundle.getString("ItemTypeId");
             TalukaId = bundle.getString("TalukaId");
@@ -185,7 +223,66 @@ public class AllSimilarDataActivity extends AppCompatActivity {
             priceids=bundle.getString("priceids");
 
         }
+
+    }
+
+    private void AssignVariables()
+    {
+        ItemTypeId = "";
+        TalukaId = "";
+        VarityId = "";
+        QualityId ="";
+        StatesID ="";
+        DistrictId ="";
+        priceids="";
+    }
+
+    private void SetDynamicDATA(String pageIndex) {
+
+        bundle = getIntent().getExtras();
+
+        AssignVariables();
         if (bundle != null) {
+
+            BundleAssign();
+
+            if(bundle.getString("Search")!=null) {
+                if (bundle.getString("Search").contains("Filter")) {
+                    Cursor VARIETYCursor = myDatabase.FilterGetByFilterName("VARIETY");
+                    Cursor QUALITYCursor = myDatabase.FilterGetByFilterName("QUALITY");
+                    Cursor STATECursor = myDatabase.FilterGetByFilterName("STATE");
+                    Cursor DISTRICTCursor = myDatabase.FilterGetByFilterName("DISTRICT");
+                    Cursor TALUKACursor = myDatabase.FilterGetByFilterName("TALUKA");
+
+                    while (VARIETYCursor.moveToNext()) {
+                        if(VarityId==null)
+                        {
+                            VarityId="";
+                        }
+                        VarityId = VarityId + VARIETYCursor.getString(0) + ",";
+                    }
+                    while (QUALITYCursor.moveToNext()) {
+                        if(QualityId==null)
+                        {
+                            QualityId="";
+                        }
+                        QualityId = QualityId + QUALITYCursor.getString(0) + ",";
+                    }
+                    while (STATECursor.moveToNext()) {
+                        StatesID = StatesID + STATECursor.getString(0) + ",";
+                    }
+                    while (DISTRICTCursor.moveToNext()) {
+                        if(DistrictId==null)
+                        {
+                            DistrictId="";
+                        }
+                        DistrictId = DistrictId + DISTRICTCursor.getString(0) + ",";
+                    }
+                    while (TALUKACursor.moveToNext()) {
+                        TalukaId = TalukaId + TALUKACursor.getString(0) + ",";
+                    }
+                }
+            }
 
 
             if (TalukaId != null) {
@@ -231,8 +328,6 @@ public class AllSimilarDataActivity extends AppCompatActivity {
             } else {
                 priceids = "0";
             }
-
-
 
             StringRequest stringRequest = new StringRequest(Request.Method.GET,
                     URLs.URL_REQESTS + "?StartIndex=" + pageIndex + "&PageSize=" + PAGE_SIZE +
