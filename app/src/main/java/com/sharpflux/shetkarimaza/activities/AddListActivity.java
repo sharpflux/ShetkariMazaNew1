@@ -66,7 +66,7 @@ public class AddListActivity extends AppCompatActivity {
             builder;
     private Button btnsubmit;
     private UserInfoDBManager userInfoDBManager = null;
-
+//
     private ListView userAccountListView = null;
     SQLiteCursor sqcursor;
     Bundle bundle;
