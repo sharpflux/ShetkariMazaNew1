@@ -22,7 +22,7 @@ public class ChooseActivity extends AppCompatActivity {
         buttonBuyer = findViewById(R.id.buttonBuyer);
 
 
-
+//
         buttonBuyer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
