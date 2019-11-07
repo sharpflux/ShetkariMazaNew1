@@ -2,7 +2,7 @@ package com.sharpflux.shetkarimaza.utils;
 
 import android.content.Context;
 import android.widget.EditText;
-import android.widget.SearchView;
+import android.support.v7.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 

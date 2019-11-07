@@ -70,7 +70,7 @@
             android:name="com.sharpflux.shetkarimaza.filters.FilterActivity"
             android:parentActivityName="com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity" android:noHistory="true"
             android:theme="@style/ToolbarAppTheme" />
-        <activity android:name="com.sharpflux.shetkarimaza.activities.TabLayoutLogRegActivity" />
+        <activity android:name="com.sharpflux.shetkarimaza.activities.TabLayoutLogRegActivity"  android:noHistory="true"/>
         <activity
             android:name="com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity" android:noHistory="true"
             android:parentActivityName="com.sharpflux.shetkarimaza.activities.HomeActivity"
@@ -109,7 +109,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name="com.sharpflux.shetkarimaza.activities.ForgotPasswordActivity" />
         <activity
-            android:name="com.sharpflux.shetkarimaza.activities.SelectLanguageActivity"
+            android:name="com.sharpflux.shetkarimaza.activities.SelectLanguageActivity" android:noHistory="true"
             android:label="Select your Language"
             android:theme="@style/SellerDarkAppTheme" />
         <activity android:name="com.sharpflux.shetkarimaza.activities.SplashActivity">

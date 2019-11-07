@@ -4,6 +4,7 @@ package com.sharpflux.shetkarimaza.fragment;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -49,6 +50,8 @@ public class LoginFragment extends Fragment {
     LinearLayout forgotpw;
     ProgressDialog progressDialog;
     EditText eusername, epassword;
+    AlertDialog.Builder builder;
+
 
     User user;
     CountryCodePicker ccp;
@@ -77,6 +80,8 @@ public class LoginFragment extends Fragment {
             startActivity(new Intent(getContext(), ChooseActivity.class));
         }
 
+        builder = new AlertDialog.Builder(getContext());
+
         //progressBar = (ProgressBar) findViewById(R.id.progressBar);
         editTextUsername = view.findViewById(R.id.activity_login_etusername);
         editTextPassword = view.findViewById(R.id.activity_login_etPassword);
@@ -104,7 +109,7 @@ public class LoginFragment extends Fragment {
             public void onClick(View view) {
 
                 if (!CheckDeviceIsOnline.isNetworkConnected(getContext())/*||!CheckDeviceIsOnline.isWifiConnected(LoginActivity.this)*/) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
                     builder.setCancelable(false);
                     builder.setTitle("Check Internet Connection!");
                     builder.setIcon(android.R.drawable.ic_dialog_alert);
@@ -120,10 +125,10 @@ public class LoginFragment extends Fragment {
                     alert.show();
                     return;
                 } else {
-                    userLogin();
-                   /* AsyncTaskRunner runner = new AsyncTaskRunner();
+                   // userLogin();
+                    AsyncTaskRunner runner = new AsyncTaskRunner();
                     String sleepTime = "1";
-                    runner.execute(sleepTime);*/
+                    runner.execute(sleepTime);
 
                 }
 
@@ -132,6 +137,52 @@ public class LoginFragment extends Fragment {
 
 
         return view;
+    }
+
+    class AsyncTaskRunner extends AsyncTask<String, String, String> {
+
+        private String resp;
+
+        @Override
+        protected String doInBackground(String... params) {
+            publishProgress("Sleeping..."); // Calls onProgressUpdate()
+            try {
+                int time = Integer.parseInt(params[0]) * 1000;
+                userLogin();
+                Thread.sleep(time);
+                resp = "Slept for " + params[0] + " seconds";
+            } catch (Exception e) {
+                e.printStackTrace();
+                resp = e.getMessage();
+            }
+            return resp;
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            // execution of result of Long time consuming operation
+
+            // finalResult.setText(result);
+        }
+
+
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(getContext(),
+                    "Loading...",
+                    "Wait for result..");
+        }
+
+
+
+        @Override
+        protected void onProgressUpdate(String... text) {
+            // finalResult.setText(text[0]);
+
+        }
+
     }
 
     private void userLogin() {
@@ -161,6 +212,7 @@ public class LoginFragment extends Fragment {
 
                             JSONArray obj = new JSONArray(response);
 
+
                             for (int i = 0; i < obj.length(); i++) {
                                 //getting the user from the response
                                 JSONObject userJson = obj.getJSONObject(i);
@@ -176,20 +228,21 @@ public class LoginFragment extends Fragment {
                                     );
 
                                 } else {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                                    builder.setCancelable(false);
-                                    builder.setMessage("Invalid Username or Password");
-                                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            //if user pressed "yes", then he is allowed to exit from application
-                                            dialog.cancel();
-                                            // getActivity().finish();
-                                        }
-                                    });
+                                    builder.setMessage("Invalid User Name or Password?")
+                                            .setCancelable(false)
+
+                                            .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    //  Action for 'NO' Button
+                                                    dialog.cancel();
+                                                }
+                                            });
 
                                     AlertDialog alert = builder.create();
+                                    alert.setTitle("Invalid User");
                                     alert.show();
+                                  progressDialog.dismiss();
+
                                 }
 
                                 //storing the user in shared preferences
@@ -198,6 +251,26 @@ public class LoginFragment extends Fragment {
                                 getActivity().finish();
                                 startActivity(new Intent(getContext(), HomeActivity.class));
                             }
+
+                            if (obj.length() == 0) {
+                                builder.setMessage("Invalid User Name or Password?")
+                                        .setCancelable(false)
+
+                                        .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                //  Action for 'NO' Button
+                                                dialog.cancel();
+
+                                            }
+                                        });
+
+                                builder.create();
+                                builder.setTitle("Invalid User");
+                                builder.show();
+                                progressDialog.dismiss();
+                                return;
+                            }
+
                         } catch (JSONException e) {
                             e.printStackTrace();
 
@@ -234,7 +307,7 @@ public class LoginFragment extends Fragment {
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
 
-    /*private class AsyncTaskRunner extends AsyncTask<String, String, String> {
+   /* private class AsyncTaskRunner extends AsyncTask<String, String, String> {
 
         private String resp;
         ProgressDialog progressDialog;
@@ -277,7 +350,7 @@ public class LoginFragment extends Fragment {
 
         }
 
-    }
-*/
+    }*/
+
 
 }

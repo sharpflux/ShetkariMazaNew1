@@ -3,8 +3,10 @@ package com.sharpflux.shetkarimaza.activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
@@ -19,6 +21,9 @@ import android.widget.Toast;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.LanguageAdapter;
 import com.sharpflux.shetkarimaza.model.MyLanguage;
+import com.sharpflux.shetkarimaza.model.User;
+import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
+import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -30,10 +35,11 @@ public class SelectLanguageActivity extends AppCompatActivity {
     private ArrayList<MyLanguage> employees = new ArrayList<>();
     private LanguageAdapter adapter;
     private android.support.v7.widget.AppCompatButton btnGetSelected;
-
     Button spinner;
     Locale myLocale;
     String currentLanguage = "en", currentLang;
+    User user;
+    dbLanguage mydatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +57,16 @@ public class SelectLanguageActivity extends AppCompatActivity {
                 showChangeLang();
             }
         });*/
-
+        mydatabase = new dbLanguage(getApplicationContext());
 
         this.btnGetSelected = (AppCompatButton) findViewById(R.id.btnGetSelected);
         this.recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
+        Cursor res = mydatabase.getAllData();
+        if(res.getCount()>0){
+            Intent intent = new Intent(SelectLanguageActivity.this, HomeActivity.class);
+            startActivity(intent);
+        }
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -74,25 +85,32 @@ public class SelectLanguageActivity extends AppCompatActivity {
 
                     if(adapter.getSelected().getLanguageName().equals("English"))
                     {
+                        mydatabase.LanguageInsert("en");
                         setLocale("en");
                         recreate();
                     }
 
                     else if(adapter.getSelected().getLanguageName().equals("हिन्दी"))
                     {
+                        mydatabase.LanguageInsert("hi");
                         setLocale("hi");
                         recreate();
                     }
                     else if(adapter.getSelected().getLanguageName().equals("मराठी"))
                     {
+                        mydatabase.LanguageInsert("mr");
                         setLocale("mr");
                         recreate();
                     }
                     } else {
                          showToast("No Selection");
                     }
+
+
             }
         });
+
+
 
 
     }
@@ -156,12 +174,15 @@ public class SelectLanguageActivity extends AppCompatActivity {
             conf.locale = myLocale;
 
             res.updateConfiguration(conf, dm);
+
+           /* SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
+            finish();*/
             Intent refresh = new Intent(this, HomeActivity.class);
             refresh.putExtra(currentLang, localeName);
             startActivity(refresh);
 
 
-            finish();
+           finish();
         } else {
             Toast.makeText(SelectLanguageActivity.this, "Language already selected!", Toast.LENGTH_SHORT).show();
         }

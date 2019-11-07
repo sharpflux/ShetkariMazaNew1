@@ -1,6 +1,7 @@
 package com.sharpflux.shetkarimaza.fragment;
 
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -19,6 +20,7 @@ import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.MyCategoryTypeAdapter;
 import com.sharpflux.shetkarimaza.model.MyCategoryType;
 import com.sharpflux.shetkarimaza.model.User;
+import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
@@ -43,6 +45,8 @@ public class CategoryFragment extends Fragment {
     Locale myLocale;
     String language;
     MyCategoryType myCategoryType;
+    dbLanguage mydatabase;
+    String currentLanguage;
    // ShimmerFrameLayout parentShimmerLayout;
 
     public CategoryFragment() {
@@ -59,6 +63,8 @@ public class CategoryFragment extends Fragment {
         mGridLayoutManager = new GridLayoutManager(getContext(), 2);
         mRecyclerView.setLayoutManager(mGridLayoutManager);
 
+        mydatabase = new dbLanguage(getContext());
+
         categoryList = new ArrayList<>();
        // parentShimmerLayout =view.findViewById(R.id.shimmer_view_container);
 
@@ -73,7 +79,12 @@ public class CategoryFragment extends Fragment {
         myLocale = getResources().getConfiguration().locale;
         language = user.getLanguage();
 
+        Cursor cursor = mydatabase.LanguageGet(language);
 
+        while (cursor.moveToNext()) {
+            currentLanguage = cursor.getString(0);
+
+        }
 
 
         //parentShimmerLayout.startShimmerAnimation();
@@ -86,9 +97,8 @@ public class CategoryFragment extends Fragment {
 
     private void setDynamicFragmentToTabLayout() {
 
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_RType+myLocale,
+       StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                URLs.URL_RType+currentLanguage,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

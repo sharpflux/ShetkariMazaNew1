@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.SearchView;
+import android.support.v7.widget.SearchView;
 import android.widget.TextView;
 
 import com.sharpflux.shetkarimaza.R;
@@ -29,7 +29,7 @@ public class CustomRecyclerViewDialog extends Dialog implements View.OnClickList
     public Context context;
     public Dialog dialog;
     public Button yes;
-  SearchView searchView;
+    SearchView searchView;
 
     TextView title;
     RecyclerView recyclerView;
@@ -70,21 +70,6 @@ public class CustomRecyclerViewDialog extends Dialog implements View.OnClickList
         //no.setOnClickListener(this);
 
 
-       /* searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-
-                adapter.getFilter().filter(newText);
-                return false;
-
-            }
-        });*/
     }
 
 

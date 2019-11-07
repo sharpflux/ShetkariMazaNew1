@@ -53,33 +53,31 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.FruitViewHolde
 
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-                constraint = constraint.toString().toLowerCase();
-                FilterResults result = new FilterResults();
 
-                if (constraint != null && constraint.toString().length() > 0) {
-                    List<Product> founded = new ArrayList<>();
-                    for(Product item: mDataset){
-                        if(item.toString().toLowerCase().contains(constraint)){
-                            founded.add(item);
+                List<Product> filteredList = new ArrayList<>();
+
+                if (constraint == null || constraint.length() == 0) {
+                    filteredList.addAll(exampleListFull);
+                } else {
+                    String filterPattern = constraint.toString().toLowerCase().trim();
+
+                    for (Product item : exampleListFull) {
+                        if (item.getName().toLowerCase().contains(filterPattern)) {
+                            filteredList.add(item);
                         }
                     }
-
-                    result.values = founded;
-                    result.count = founded.size();
-                }else {
-                    result.values = mDataset;
-                    result.count = mDataset.size();
                 }
-                return result;
 
+                FilterResults results = new FilterResults();
+                results.values = filteredList;
+
+                return results;
 
             }
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 mDataset.clear();
-                for (String item : (List<String>) results.values) {
-                   // exampleListFull.add();
-                }
+                mDataset.addAll((List) results.values);
                 notifyDataSetChanged();
             }
         };

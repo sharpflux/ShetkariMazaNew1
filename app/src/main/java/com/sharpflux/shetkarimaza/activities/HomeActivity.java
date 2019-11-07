@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.fragment.CategoryFragment;
 import com.sharpflux.shetkarimaza.model.User;
+import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.utils.CheckDeviceIsOnline;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 
@@ -43,6 +44,7 @@ public class HomeActivity extends AppCompatActivity
     String currentLanguage = "en";
     public static final String KEY_PREF_LANGUAGE = "pref_language";
     public String languagePref_ID;
+    dbLanguage mydatabase;
 
 
     @Override
@@ -57,6 +59,8 @@ public class HomeActivity extends AppCompatActivity
 
         //saleButton = findViewById(R.id.saleButton);
         myLocale = getResources().getConfiguration().locale;
+
+        mydatabase = new dbLanguage(getApplicationContext());
 
         if (!CheckDeviceIsOnline.isNetworkConnected(this)) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -180,6 +184,8 @@ public class HomeActivity extends AppCompatActivity
             SharedPrefManager.getInstance(getApplicationContext()).logout();
 
         }else if (id == R.id.nav_lang) {
+            mydatabase.DeleteRecordAll();
+
           Intent lin = new Intent(HomeActivity.this, SelectLanguageActivity.class);
           startActivity(lin);
         }
