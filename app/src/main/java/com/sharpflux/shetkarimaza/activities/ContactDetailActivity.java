@@ -326,7 +326,10 @@ public class ContactDetailActivity extends AppCompatActivity {
                                                         userJson.getString("ImageUrl"),
                                                         userJson.getString("FullName"),
                                                         userJson.getString("Address"),
-                                                        userJson.getString("MobileNo")
+                                                        userJson.getString("MobileNo"),
+                                                        userJson.getString("StatesName"),
+                                                        userJson.getString("DistrictName"),
+                                                        userJson.getString("TalukaName")
                                                 );
 
                                         contactlist.add(detail);

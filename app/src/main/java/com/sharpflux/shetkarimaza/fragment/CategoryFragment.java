@@ -1,7 +1,9 @@
 package com.sharpflux.shetkarimaza.fragment;
 
 
+import android.app.ProgressDialog;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -85,10 +87,12 @@ public class CategoryFragment extends Fragment {
             currentLanguage = cursor.getString(0);
 
         }
-
+       CategoryFragment.AsyncTaskRunner runner = new CategoryFragment.AsyncTaskRunner();
+        String sleepTime = "1";
+        runner.execute(sleepTime);
 
         //parentShimmerLayout.startShimmerAnimation();
-       setDynamicFragmentToTabLayout();
+      // setDynamicFragmentToTabLayout();
 
         return view;
     }
@@ -154,6 +158,53 @@ public class CategoryFragment extends Fragment {
         };
 
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+    }
+
+    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
+
+        private String resp;
+        ProgressDialog progressDialog;
+
+        @Override
+        protected String doInBackground(String... params) {
+            publishProgress("Sleeping..."); // Calls onProgressUpdate()
+            try {
+
+               /* setDynamicFragmentToTabLayout();
+                Thread.sleep(100);
+
+                resp = "Slept for " + params[0] + " seconds";*/
+
+                int time = Integer.parseInt(params[0]) * 1000;
+                setDynamicFragmentToTabLayout();
+                Thread.sleep(time);
+                resp = "Slept for " + params[0] + " seconds";
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                resp = e.getMessage();
+            }
+            return resp;
+        }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+            progressDialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(getContext(),
+                    "Loading...",
+                    "");
+        }
+
+        @Override
+        protected void onProgressUpdate(String... text) {
+
+        }
+
     }
 
     @Override

@@ -27,39 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_100sdp">
 
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/viewPager"
-                    android:layout_width="376dp"
-                    android:layout_height="300dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="0dp"
-                    app:layout_constraintBottom_toTopOf="@+id/tvTitleOne"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.578"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btn_skip"
-                    app:layout_constraintVertical_bias="0.0">
-
-                </android.support.v4.view.ViewPager>
-
-                <LinearLayout
-                    android:id="@+id/SliderDots"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/viewPager"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent" />
+                <include layout="@layout/activity_load" />
 
             </RelativeLayout>
             <android.support.v7.widget.CardView
@@ -73,38 +41,116 @@
                 app:cardElevation="0dp">
 
                 <LinearLayout
+                    android:id="@+id/lr_one"
                     android:orientation="vertical"
                     android:padding="@dimen/_12sdp"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_160sdp">
+                    android:layout_height="wrap_content">
                     <TextView
                         android:fontFamily="@font/sfpro_display_bold"
-                        android:id="@+id/fragment_product_details_tvTitle"
+                        android:id="@+id/tvName"
                         style="@style/ganaral_primarystyle"
+                        android:textSize="20dp"
                         android:text="@string/title"/>
-
-                    <TextView
-                        android:fontFamily="@font/sfpro_display_bold"
-                        android:id="@+id/fragment_product_details_tvPrice"
-                        android:paddingTop="@dimen/_3sdp"
-                        android:text="@string/price"
-                        style="@style/ganaral_greystyle"/>
-
                     <TextView
                         android:fontFamily="@font/sfpro_display_medium"
-                        android:id="@+id/fragment_product_details_tvDescription"
+                        android:id="@+id/tvAddress"
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/_110sdp"
+                        android:layout_height="wrap_content"
                         android:paddingTop="@dimen/_3sdp"
                         android:text="@string/description_data"
-                        android:textColor="@color/signup_lable_color"
-                        android:textSize="@dimen/_10sdp" />
+                        android:textColor="@color/lightGrey"
+                        android:textSize="15dp"/>
+
+                    <LinearLayout
+                        android:id="@+id/lr_two"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:text="+91 "/>
+                        <TextView
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:fontFamily="@font/sfpro_display_bold"
+                            android:id="@+id/tvMobileNo"
+                            android:paddingTop="@dimen/_3sdp"
+                            android:text="866749536"
+                            style="@style/ganaral_greystyle"/>
+                        <!-- <TextView
+                             android:layout_marginLeft="160dp"
+                             android:layout_marginTop="2dp"
+                             android:textAllCaps="true"
+                             android:textStyle="bold"
+                             android:height="40dp"
+                             android:textColor="@android:color/white"
+                             android:fontFamily="@font/sfpro_display_bold"
+                             android:background="@drawable/btn_backnext"
+                             android:id="@+id/btnbackVariety"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_alignParentLeft="true"
+                            android:drawableLeft="@drawable/ic_call_white"/>-->
+                        <Button
+                            android:layout_marginLeft="80dp"
+                            android:textSize="20dp"
+                            android:textAllCaps="true"
+                            android:textStyle="bold"
+                            android:height="40dp"
+                            android:textColor="@android:color/white"
+                            android:fontFamily="@font/sfpro_display_bold"
+                            android:background="@drawable/btn_backnext"
+                            android:id="@+id/btnbackVariety"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:text="Call"
+                            android:layout_weight="1"
+
+                            />
+                    </LinearLayout>
+
+
                 </LinearLayout>
+
+
+               <!-- <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13.3dp"
+                    android:orientation="horizontal"
+                    android:paddingEnd="12.7dp"
+                    android:paddingStart="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="Fair"
+                        android:textColor="@color/lightGrey"
+                        android:textSize="13.3sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/rs_479"
+                        android:textColor="#707070"
+                        android:textSize="13.3sp" />
+
+
+                </LinearLayout>-->
+
+
             </android.support.v7.widget.CardView>
         </LinearLayout>
     </ScrollView>
 
-    <LinearLayout
+   <!-- <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="bottom"
@@ -122,6 +168,6 @@
             android:textColor="@android:color/white"
             android:textSize="20dp"
             android:textStyle="bold" />
-    </LinearLayout>
+    </LinearLayout>-->
 
 </LinearLayout>

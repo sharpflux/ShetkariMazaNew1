@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.activities.ProductDetailsForBuyerActivity;
+import com.sharpflux.shetkarimaza.activities.ProductInfoForSaleActivity;
 import com.sharpflux.shetkarimaza.model.ContactDetail;
 import com.squareup.picasso.Picasso;
 
@@ -31,7 +33,7 @@ public class ContactDetailAdapter extends RecyclerView.Adapter<ContactDetaiViewH
 
     @Override
     public ContactDetaiViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_contact_detail_list, parent, false);
+        View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.contact_details_item_view, parent, false);
         return new ContactDetaiViewHolder(mView);
     }
 
@@ -41,15 +43,18 @@ public class ContactDetailAdapter extends RecyclerView.Adapter<ContactDetaiViewH
         holder.mfullname.setText(mlist.get(position).getFullName());
         holder.mAddress.setText(mlist.get(position).getAddress());
         holder.mMobNo.setText(mlist.get(position).getMobileNo());
-
-        holder.mMobNo.setOnClickListener(new View.OnClickListener() {
+        holder.mState.setText(mlist.get(position).getState()+",");
+        holder.mDistrict.setText(mlist.get(position).getDistrict()+",");
+        holder.mTaluka.setText(mlist.get(position).getTaluka());
+        holder.ImageUrl=mlist.get(position).getImage();
+       /* holder.mMobNo.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel",  holder.mMobNo.getText().toString(), null));
                 mContext.startActivity(intent);
             }
-        });
+        });*/
     }
 
     @Override
@@ -67,8 +72,8 @@ public class ContactDetailAdapter extends RecyclerView.Adapter<ContactDetaiViewH
 class ContactDetaiViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
     ImageView mImage;
-    TextView mfullname,mAddress,mMobNo;
-
+    TextView mfullname,mAddress,mMobNo,mState,mDistrict,mTaluka;
+    String name,mobileNo,address,state,district,taluka,ImageUrl;
     ContactDetaiViewHolder(View itemView) {
         super(itemView);
 
@@ -76,6 +81,9 @@ class ContactDetaiViewHolder extends RecyclerView.ViewHolder implements View.OnC
         mfullname = itemView.findViewById(R.id.tvName);
         mAddress = itemView.findViewById(R.id.tvAddress);
         mMobNo = itemView.findViewById(R.id.tv_MobNo);
+        mState = itemView.findViewById(R.id.tvState);
+        mDistrict = itemView.findViewById(R.id.tvDistrict);
+        mTaluka = itemView.findViewById(R.id.tvTaluka);
 
 
         itemView.setOnClickListener(this);
@@ -83,12 +91,28 @@ class ContactDetaiViewHolder extends RecyclerView.ViewHolder implements View.OnC
 
     @Override
     public void onClick(View v) {
-        /*Context context=v.getContext();
+        name=mfullname.getText().toString();
+        mobileNo=mMobNo.getText().toString();
+        address=mAddress.getText().toString();
+        state=mState.getText().toString();
+        district=mDistrict.getText().toString();
+        taluka=mTaluka.getText().toString();
+
+
+        Context context = v.getContext();
         Intent intent;
-        intent =  new Intent(context, ProductDetailsForBuyerActivity.class);
-        context.startActivity(intent);*/
-       Intent callIntent = new Intent(Intent.ACTION_CALL);
+        intent = new Intent(context, ProductDetailsForBuyerActivity.class);
+        intent.putExtra("Name", name);
+        intent.putExtra("MobileNo", mobileNo);
+        intent.putExtra("Address", address);
+        intent.putExtra("State", state);
+        intent.putExtra("District", district);
+        intent.putExtra("Taluka", taluka);
+        intent.putExtra("ImageUrl", ImageUrl);
+        context.startActivity(intent);
+
+       /*Intent callIntent = new Intent(Intent.ACTION_CALL);
         callIntent.setData(Uri.parse("8605121954"));
-        v.getContext().startActivity(callIntent);
+        v.getContext().startActivity(callIntent);*/
     }
 }

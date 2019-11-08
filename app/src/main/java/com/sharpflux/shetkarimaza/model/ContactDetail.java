@@ -6,12 +6,49 @@ public class ContactDetail {
     private String fullName;
     private String address;
     private  String mobileNo;
+   private  String state;
+    private  String district;
+    private  String taluka;
 
     public ContactDetail(String image, String fullName, String address, String mobileNo) {
         this.image = image;
         this.fullName = fullName;
         this.address = address;
         this.mobileNo = mobileNo;
+    }
+
+    public ContactDetail(String image, String fullName, String address, String mobileNo, String state, String district, String taluka) {
+        this.image = image;
+        this.fullName = fullName;
+        this.address = address;
+        this.mobileNo = mobileNo;
+        this.state = state;
+        this.district = district;
+        this.taluka = taluka;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getTaluka() {
+        return taluka;
+    }
+
+    public void setTaluka(String taluka) {
+        this.taluka = taluka;
     }
 
     public String getImage() {

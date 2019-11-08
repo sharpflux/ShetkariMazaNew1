@@ -2,6 +2,7 @@ package com.sharpflux.shetkarimaza.activities;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -20,7 +21,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.MySellerAdapter;
 import com.sharpflux.shetkarimaza.model.SellOptions;
+import com.sharpflux.shetkarimaza.model.User;
+import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.utils.CheckDeviceIsOnline;
+import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
@@ -41,6 +45,8 @@ public class SellerActivity extends AppCompatActivity {
     Locale myLocale;
     boolean isLoading = false;
     MySellerAdapter myAdapter;
+    dbLanguage mydatabase;
+    String currentLanguage,language;
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -67,6 +73,8 @@ public class SellerActivity extends AppCompatActivity {
             return;
         }
 
+        mydatabase = new dbLanguage(getApplicationContext());
+
 
         setTitle(R.string.whatareyouoffering);
         mRecyclerView = findViewById(R.id.rvMain);
@@ -78,10 +86,23 @@ public class SellerActivity extends AppCompatActivity {
 
         sellOptionsList = new ArrayList<>();
 
+        User user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+        myLocale = getResources().getConfiguration().locale;
+        language = user.getLanguage();
+
+        Cursor cursor = mydatabase.LanguageGet(language);
+
+        while (cursor.moveToNext()) {
+            currentLanguage = cursor.getString(0);
+
+        }
+
         // setDynamicFragmentToTabLayout();
         SellerActivity.AsyncTaskRunner runner = new SellerActivity.AsyncTaskRunner();
-        String sleepTime = "100";
+        String sleepTime = "1";
         runner.execute(sleepTime);
+
+
 
     }
 
@@ -89,7 +110,7 @@ public class SellerActivity extends AppCompatActivity {
     private void setDynamicFragmentToTabLayout() {
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_RECYCLER+myLocale,
+                URLs.URL_RECYCLER+currentLanguage,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -195,10 +216,17 @@ public class SellerActivity extends AppCompatActivity {
             try {
 
 
-                setDynamicFragmentToTabLayout();
+              /*  setDynamicFragmentToTabLayout();
                 Thread.sleep(100);
 
+                resp = "Slept for " + params[0] + " seconds";*/
+
+
+                int time = Integer.parseInt(params[0]) * 1000;
+                setDynamicFragmentToTabLayout();
+                Thread.sleep(time);
                 resp = "Slept for " + params[0] + " seconds";
+
 
             } catch (Exception e) {
                 e.printStackTrace();

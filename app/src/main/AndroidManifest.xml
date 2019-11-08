@@ -12,7 +12,9 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <uses-feature android:name="android.hardware.camera2" />
+
     <uses-permission
         android:name="org.apache.http.legacy"
         android:required="false" />
@@ -28,91 +30,93 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".filters.Filter1Activity">
-        </activity>
-        <activity android:name=".filters.BuyerFilterActivity"></activity>
+        <activity android:name=".filters.Filter1Activity" />
+        <activity android:name=".filters.BuyerFilterActivity" />
         <activity
-            android:name="com.sharpflux.shetkarimaza.activities.ContactDetailActivity"
-            android:parentActivityName="com.sharpflux.shetkarimaza.activities.HomeActivity"
-            android:theme="@style/SellerDarkAppTheme">
-        </activity>
+            android:name=".activities.ContactDetailActivity"
+            android:parentActivityName=".activities.HomeActivity"
+            android:theme="@style/SellerDarkAppTheme" />
         <activity
-            android:name="com.sharpflux.shetkarimaza.activities.BuyerActivity"
-            android:theme="@style/SellerDarkAppTheme"
-            android:parentActivityName="com.sharpflux.shetkarimaza.activities.HomeActivity">
-        </activity>
+            android:name=".activities.BuyerActivity"
+            android:parentActivityName=".activities.HomeActivity"
+            android:theme="@style/SellerDarkAppTheme" />
         <activity
-            android:name="com.sharpflux.shetkarimaza.activities.TranspoterActivity"
+            android:name=".activities.TranspoterActivity"
             android:label="Transpoter"
-            android:parentActivityName="com.sharpflux.shetkarimaza.activities.SelfieActivity"
+            android:parentActivityName=".activities.SelfieActivity"
             android:theme="@style/SellerDarkAppTheme" />
         <activity
-            android:name="com.sharpflux.shetkarimaza.activities.ProcessorActivity"
+            android:name=".activities.ProcessorActivity"
             android:label="What do you want to process?"
-            android:parentActivityName="com.sharpflux.shetkarimaza.activities.DetailFormActivity"
+            android:parentActivityName=".activities.DetailFormActivity"
             android:theme="@style/SellerDarkAppTheme" />
-        <activity android:name="com.sharpflux.shetkarimaza.activities.UserVerificationActivity" />
+        <activity android:name=".activities.UserVerificationActivity" />
         <activity
-            android:name="com.sharpflux.shetkarimaza.activities.EditRequestActivity"
+            android:name=".activities.EditRequestActivity"
             android:label="Edit"
-            android:parentActivityName="com.sharpflux.shetkarimaza.activities.HomeActivity"
+            android:parentActivityName=".activities.HomeActivity"
             android:theme="@style/SellerDarkAppTheme" />
         <activity
-            android:name="com.sharpflux.shetkarimaza.activities.AddListActivity"
+            android:name=".activities.AddListActivity"
             android:label="@string/list_added_item"
             android:theme="@style/SellerDarkAppTheme" />
-        <activity android:name="com.sharpflux.shetkarimaza.activities.ResetPasswordActivity" />
-        <activity android:name="com.sharpflux.shetkarimaza.activities.OtpActivity" />
+        <activity android:name=".activities.ResetPasswordActivity" />
+        <activity android:name=".activities.OtpActivity" />
         <activity
-            android:name="com.sharpflux.shetkarimaza.activities.PaymentActivity"
+            android:name=".activities.PaymentActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.sharpflux.shetkarimaza.filters.FilterActivity"
-            android:parentActivityName="com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity" android:noHistory="true"
-            android:theme="@style/ToolbarAppTheme" />
-        <activity android:name="com.sharpflux.shetkarimaza.activities.TabLayoutLogRegActivity"  android:noHistory="true"/>
-        <activity
-            android:name="com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity" android:noHistory="true"
-            android:parentActivityName="com.sharpflux.shetkarimaza.activities.HomeActivity"
+            android:name=".filters.FilterActivity"
+            android:noHistory="true"
+            android:parentActivityName=".activities.AllSimilarDataActivity"
             android:theme="@style/ToolbarAppTheme" />
         <activity
-            android:name="com.sharpflux.shetkarimaza.activities.ProductDetailsForBuyerActivity"
-            android:parentActivityName="com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity"
+            android:name=".activities.TabLayoutLogRegActivity"
+            android:noHistory="true" />
+        <activity
+            android:name=".activities.AllSimilarDataActivity"
+            android:noHistory="true"
+            android:parentActivityName=".activities.HomeActivity"
             android:theme="@style/ToolbarAppTheme" />
         <activity
-            android:name="com.sharpflux.shetkarimaza.activities.DetailFormActivity"
+            android:name=".activities.ProductDetailsForBuyerActivity"
+            android:parentActivityName=".activities.AllSimilarDataActivity"
+            android:theme="@style/ToolbarAppTheme" />
+        <activity
+            android:name=".activities.DetailFormActivity"
             android:label="@string/includemoredetails"
-            android:parentActivityName="com.sharpflux.shetkarimaza.activities.ChooseActivity"
+            android:parentActivityName=".activities.ChooseActivity"
             android:theme="@style/SellerDarkAppTheme" />
         <activity
-            android:name="com.sharpflux.shetkarimaza.activities.SelfieActivity"
+            android:name=".activities.SelfieActivity"
             android:label="@string/selfie"
-            android:parentActivityName="com.sharpflux.shetkarimaza.activities.ProcessorActivity"
+            android:parentActivityName=".activities.ProcessorActivity"
             android:theme="@style/SellerDarkAppTheme" />
         <activity
-            android:name="com.sharpflux.shetkarimaza.activities.ProductInfoForSaleActivity"
+            android:name=".activities.ProductInfoForSaleActivity"
             android:label="@string/productdetail"
-            android:parentActivityName="com.sharpflux.shetkarimaza.activities.SellerActivity"
+            android:parentActivityName=".activities.SellerActivity"
             android:theme="@style/SellerDarkAppTheme" />
         <activity
-            android:name="com.sharpflux.shetkarimaza.activities.SellerActivity"
+            android:name=".activities.SellerActivity"
             android:label="@string/productdetail"
             android:noHistory="true"
-            android:parentActivityName="com.sharpflux.shetkarimaza.activities.HomeActivity"
+            android:parentActivityName=".activities.HomeActivity"
             android:theme="@style/SellerDarkAppTheme" />
-        <activity android:name="com.sharpflux.shetkarimaza.activities.ChooseActivity" />
-        <activity android:name="com.sharpflux.shetkarimaza.activities.WelcomeActivity" />
+        <activity android:name=".activities.ChooseActivity" />
+        <activity android:name=".activities.WelcomeActivity" />
         <activity
-            android:name="com.sharpflux.shetkarimaza.activities.HomeActivity"
+            android:name=".activities.HomeActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.sharpflux.shetkarimaza.activities.ForgotPasswordActivity" />
+        <activity android:name=".activities.ForgotPasswordActivity" />
         <activity
-            android:name="com.sharpflux.shetkarimaza.activities.SelectLanguageActivity" android:noHistory="true"
+            android:name=".activities.SelectLanguageActivity"
             android:label="Select your Language"
+            android:noHistory="true"
             android:theme="@style/SellerDarkAppTheme" />
-        <activity android:name="com.sharpflux.shetkarimaza.activities.SplashActivity">
+        <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -121,7 +125,7 @@
         </activity>
 
         <provider
-            android:name="com.sharpflux.shetkarimaza.uploadimage.LocalStorageProvider"
+            android:name=".uploadimage.LocalStorageProvider"
             android:authorities="{applicationId}.documents"
             android:enabled="@bool/use_provider"
             android:exported="true"
@@ -132,7 +136,7 @@
             </intent-filter>
         </provider>
         <provider
-            android:name="com.sharpflux.shetkarimaza.provider.GenericFileProvider"
+            android:name=".provider.GenericFileProvider"
             android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
