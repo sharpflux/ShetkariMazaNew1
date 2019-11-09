@@ -331,7 +331,7 @@ public class ContactDetailActivity extends AppCompatActivity {
                                                         userJson.getString("DistrictName"),
                                                         userJson.getString("TalukaName")
                                                 );
-
+//
                                         contactlist.add(detail);
                                         contactlist.size();
 
