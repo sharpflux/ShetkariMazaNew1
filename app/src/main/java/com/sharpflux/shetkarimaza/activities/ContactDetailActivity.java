@@ -79,6 +79,7 @@ public class ContactDetailActivity extends AppCompatActivity {
     int itemCount = 0;
     ProgressBar progressBar_filter;
     Locale myLocale;
+    JSONArray obj;
 
 
     public static final int PAGE_START = 1;
@@ -182,9 +183,8 @@ public class ContactDetailActivity extends AppCompatActivity {
         myLocale = getResources().getConfiguration().locale;
 
         ContactDetailActivity.AsyncTaskRunner runner = new ContactDetailActivity.AsyncTaskRunner();
-        String sleepTime = String.valueOf(currentPage);
+        String sleepTime = "1";
         runner.execute(sleepTime);
-
 
 
        /*  recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -265,7 +265,7 @@ public class ContactDetailActivity extends AppCompatActivity {
     }
 
 
-    private void SetDynamicDATA(String pageIndex) {
+    private void SetDynamicDATA() {
 
 
         if (bundle != null) {
@@ -315,7 +315,7 @@ public class ContactDetailActivity extends AppCompatActivity {
                         public void onResponse(String response) {
 
                             try {
-                                JSONArray obj = new JSONArray(response);
+                                obj = new JSONArray(response);
                                 isFirstLoad = true;
                                 for (int i = 0; i < obj.length(); i++) {
                                     JSONObject userJson = obj.getJSONObject(i);
@@ -351,6 +351,8 @@ public class ContactDetailActivity extends AppCompatActivity {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+
+
                         }
                     },
                     new Response.ErrorListener() {
@@ -380,9 +382,14 @@ public class ContactDetailActivity extends AppCompatActivity {
             publishProgress("Sleeping..."); // Calls onProgressUpdate()
             try {
 
-                SetDynamicDATA(params[0]);
+               /* SetDynamicDATA();
                 Thread.sleep(100);
 
+                resp = "Slept for " + params[0] + " seconds";*/
+
+                int time = Integer.parseInt(params[0]) * 1000;
+                SetDynamicDATA();
+                Thread.sleep(time);
                 resp = "Slept for " + params[0] + " seconds";
 
             } catch (Exception e) {
