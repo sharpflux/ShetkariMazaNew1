@@ -1,6 +1,7 @@
 package com.sharpflux.shetkarimaza.activities;
 
 import android.app.ProgressDialog;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.EditRequestAdapter;
 import com.sharpflux.shetkarimaza.model.SimilarList;
 import com.sharpflux.shetkarimaza.model.User;
+import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 import com.sharpflux.shetkarimaza.volley.URLs;
 
@@ -38,6 +40,9 @@ public class EditRequestActivity extends AppCompatActivity {
     Bundle bundle;
     Locale myLocale;
     int userId;
+
+    dbLanguage mydatabase;
+    String currentLanguage,language;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +59,15 @@ public class EditRequestActivity extends AppCompatActivity {
         recyclerView.setAdapter(myAdapter);
 
         myLocale = getResources().getConfiguration().locale;
+        mydatabase = new dbLanguage(getApplicationContext());
+
+        Cursor cursor = mydatabase.LanguageGet(language);
+
+        while (cursor.moveToNext()) {
+            currentLanguage = cursor.getString(0);
+
+        }
+
 
 
         EditRequestActivity.AsyncTaskRunner runner = new EditRequestActivity.AsyncTaskRunner();
@@ -65,7 +79,7 @@ public class EditRequestActivity extends AppCompatActivity {
         userId = user.getId();
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_ORDERDETAILS+userId+"&Language="+myLocale,
+                URLs.URL_ORDERDETAILS+userId+"&Language="+currentLanguage,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

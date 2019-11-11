@@ -169,6 +169,8 @@ class FlowerViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
 
 }
 
+
+
 class LoadingViewHolder extends RecyclerView.ViewHolder {
 
     ProgressBar progressBar;

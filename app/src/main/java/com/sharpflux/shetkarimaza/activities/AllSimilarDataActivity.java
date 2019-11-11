@@ -38,7 +38,10 @@ import com.sharpflux.shetkarimaza.filters.BuyerFilterActivity;
 import com.sharpflux.shetkarimaza.filters.Filter1Activity;
 import com.sharpflux.shetkarimaza.filters.PriceFragment;
 import com.sharpflux.shetkarimaza.model.SimilarList;
+import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.sqlite.dbBuyerFilter;
+import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
+import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
@@ -88,6 +91,10 @@ public class AllSimilarDataActivity extends AppCompatActivity {
     public static final int PAGE_START = 1;
     private static final int PAGE_SIZE = 10;
 
+    dbLanguage mydatabase;
+    String currentLanguage,language;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,6 +118,19 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         recyclerView.setAdapter(myAdapter);
 
         myLocale = getResources().getConfiguration().locale;
+
+        mydatabase = new dbLanguage(getApplicationContext());
+
+        User user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+        myLocale = getResources().getConfiguration().locale;
+        language = user.getLanguage();
+
+        Cursor cursor = mydatabase.LanguageGet(language);
+
+        while (cursor.moveToNext()) {
+            currentLanguage = cursor.getString(0);
+
+        }
 
         AllSimilarDataActivity.AsyncTaskRunner runner = new AllSimilarDataActivity.AsyncTaskRunner();
         String sleepTime = String.valueOf(currentPage);
@@ -333,7 +353,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                     URLs.URL_REQESTS + "?StartIndex=" + pageIndex + "&PageSize=" + PAGE_SIZE +
                             "&ItemTypeId=" + ItemTypeId + "&VarityId=" + VarityId + "&StateId=" + StatesID +
                             "&DistrictId=" + DistrictId + "&QualityId=" + QualityId + "&TalukaId="
-                            + TalukaId+"&Language="+myLocale+"&SortByRate="+priceids,
+                            + TalukaId+"&Language="+currentLanguage+"&SortByRate="+priceids,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -370,7 +390,10 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                                                         "",
                                                         "",
                                                         "",
-                                                        "0"
+                                                        "0",
+                                                        userJson.getString("CategoryName_EN"),
+                                                        userJson.getString("Organic "),
+                                                        userJson.getString("OrganicCertiicateNo")
 
                                                 );
 
@@ -467,7 +490,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
             exportToExcel();
         }
 
-        if (itemId == R.id.menu_filter) {
+      /*  if (itemId == R.id.menu_filter) {
 
 
             bundle = new Bundle();
@@ -490,7 +513,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
             priceFragment.setArguments(bundle);
             fragmentTransaction.commit();
 
-        }
+        }*/
         return super.onOptionsItemSelected(item);
     }
 

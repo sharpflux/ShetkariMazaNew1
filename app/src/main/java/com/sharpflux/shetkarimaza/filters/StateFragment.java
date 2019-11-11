@@ -2,6 +2,7 @@ package com.sharpflux.shetkarimaza.filters;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,7 +23,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity;
+import com.sharpflux.shetkarimaza.model.User;
+import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.utils.Constant;
+import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
@@ -48,6 +52,8 @@ public class StateFragment extends Fragment {
     SearchView searchView;
     VarietyAdapter myAdapter;
 
+    dbLanguage mydatabase;
+    String currentLanguage,language;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,6 +74,20 @@ public class StateFragment extends Fragment {
         btnFilterData = view.findViewById(R.id.btnFilterData);
 
         searchView = view.findViewById(R.id.searchViewState);
+
+        mydatabase = new dbLanguage(getContext());
+
+        User user = SharedPrefManager.getInstance(getContext()).getUser();
+        myLocale = getResources().getConfiguration().locale;
+        language = user.getLanguage();
+
+        Cursor cursor = mydatabase.LanguageGet(language);
+
+
+        while (cursor.moveToNext()) {
+            currentLanguage = cursor.getString(0);
+
+        }
 
         BundleAssign();
         /*extras = getArguments();
@@ -166,7 +186,7 @@ public class StateFragment extends Fragment {
     private void SetDynamicDATA() {
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_STATE +"?Language="+myLocale,
+                URLs.URL_STATE +"?Language="+currentLanguage,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

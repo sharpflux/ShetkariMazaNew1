@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -50,6 +51,7 @@ import com.sharpflux.shetkarimaza.fragment.RateDialogFragment;
 import com.sharpflux.shetkarimaza.model.Product;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.sqlite.UserInfoDBManager;
+import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.uploadimage.FileUtils;
 import com.sharpflux.shetkarimaza.utils.DataFetcher;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
@@ -172,6 +174,9 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     double total;
     String org,productVariety,orgnic,SurveyNo;
 
+    dbLanguage mydatabase;
+    String currentLanguage,language;
+
     DataAdapter dataAdapter;
         public  static  int MY_PERMISSIONS_REQUEST=1;
 
@@ -185,6 +190,13 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         productVariety="";
         orgnic="";
         ClickedImage = "";
+        mydatabase = new dbLanguage(getApplicationContext());
+        Cursor cursor = mydatabase.LanguageGet(language);
+
+        while (cursor.moveToNext()) {
+            currentLanguage = cursor.getString(0);
+
+        }
 
         User user = SharedPrefManager.getInstance(this).getUser();
         userid = (Integer) user.getId();
@@ -882,19 +894,19 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
             try {
 
                 if (params[0].toString() == "ItemName")
-                    fetcher.loadList("ItemName", edtproductType, URLs.URL_NAME + "?CategoryId=" + ProductId + "&Language=" + myLocale, "ItemTypeId", hidItemTypeId, "CategoryId", ProductId,"Botanical Name");
+                    fetcher.loadList("ItemName", edtproductType, URLs.URL_NAME + "?CategoryId=" + ProductId + "&Language=" + currentLanguage, "ItemTypeId", hidItemTypeId, "CategoryId", ProductId,"Botanical Name");
                 else if (params[0].toString() == "Variety")
-                    fetcher.loadList("VarietyName", edtproductVariety, URLs.URL_VARIATY + hidItemTypeId.getText() + "&Language=" + myLocale, "VarietyId", hidVarietyId, "", "","Variety");
+                    fetcher.loadList("VarietyName", edtproductVariety, URLs.URL_VARIATY + hidItemTypeId.getText() + "&Language=" + currentLanguage, "VarietyId", hidVarietyId, "", "","Variety");
                 else if (params[0].toString() == "Quality")
-                    fetcher.loadList("QualityType", edtAQuality, URLs.URL_QUALITY + "?Language=" + myLocale, "QualityId", hidQualityId, "", "","Available Quality");
+                    fetcher.loadList("QualityType", edtAQuality, URLs.URL_QUALITY + "?Language=" + currentLanguage, "QualityId", hidQualityId, "", "","Available Quality");
                 else if (params[0].toString() == "Unit")
-                    fetcher.loadList("MeasurementType", edtUnit, URLs.URL_UNIT + "?Language=" + myLocale, "MeasurementId", hidMeasurementId, "", "","Unit");
+                    fetcher.loadList("MeasurementType", edtUnit, URLs.URL_UNIT + "?Language=" + currentLanguage, "MeasurementId", hidMeasurementId, "", "","Unit");
                 else if (params[0].toString() == "state")
-                    fetcher.loadList("StatesName", edtstate, URLs.URL_STATE + "?Language=" + myLocale, "StatesID", hideStateId, "", "","State");
+                    fetcher.loadList("StatesName", edtstate, URLs.URL_STATE + "?Language=" + currentLanguage, "StatesID", hideStateId, "", "","State");
                 else if (params[0].toString() == "district")
-                    fetcher.loadList("DistrictName", edtdistrict, URLs.URL_DISTRICT + hideStateId.getText() + ",&Language=" + myLocale, "DistrictId", hideDistrictId, "", "","District");
+                    fetcher.loadList("DistrictName", edtdistrict, URLs.URL_DISTRICT + hideStateId.getText() + ",&Language=" + currentLanguage, "DistrictId", hideDistrictId, "", "","District");
                 else if (params[0].toString() == "taluka")
-                    fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText() + ",&Language=" + myLocale, "TalukasId", hideTalukaId, "", "","Taluka");
+                    fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText() + ",&Language=" + currentLanguage, "TalukasId", hideTalukaId, "", "","Taluka");
 
                 else if (params[0].toString() == "Update") {
                     submitToDb();

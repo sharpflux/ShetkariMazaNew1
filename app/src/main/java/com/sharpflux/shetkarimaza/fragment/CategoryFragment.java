@@ -127,13 +127,7 @@ public class CategoryFragment extends Fragment {
                                 myCategoryTypeAdapter = new MyCategoryTypeAdapter(getContext(), categoryList);
                                 mRecyclerView.setAdapter(myCategoryTypeAdapter);
 
-                                /*mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                                    @Override
-                                    public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                                        super.onScrollStateChanged(recyclerView, newState);
-                                    }
 
-                                });*/
                             }
                           /*  parentShimmerLayout.stopShimmerAnimation();
                             parentShimmerLayout.setVisibility(View.GONE);*/

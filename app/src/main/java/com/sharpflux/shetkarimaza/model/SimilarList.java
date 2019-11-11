@@ -26,9 +26,13 @@ public class SimilarList {
     private String TalukaId;
     private String RequstId;
     private String surveyNo,categoryId;
+    private String categeryName;
+    private String organic;
+    private String certificateNo;
 
 
-    public SimilarList(String imageUrl, String fullName, String mobileNo, String name,
+
+    public SimilarList(String url, String imageUrl, String fullName, String mobileNo, String name,
                        String varietyName, String quality, String quantity, String unit, String price,
                        String available_month, String farm_address, String state, String district, String taluka,
                        String village, String hector, String itemTypeId, String varietyId, String qualityId,
@@ -59,8 +63,11 @@ public class SimilarList {
         RequstId = requstId;
     }
 
-
-    public SimilarList(String imageUrl, String fullName, String mobileNo, String name, String varietyName, String quality, String quantity, String unit, String price, String available_month, String farm_address, String state, String district, String taluka, String village, String hector, String itemTypeId, String varietyId, String qualityId, String measurementId, String stateId, String districtId, String talukaId, String requstId, String surveyNo, String categoryId) {
+    public SimilarList(String imageUrl, String fullName, String mobileNo, String name, String varietyName,
+                       String quality, String quantity, String unit, String price, String available_month,
+                       String farm_address, String state, String district, String taluka, String village, String hector,
+                       String itemTypeId, String varietyId, String qualityId, String measurementId, String stateId,
+                       String districtId, String talukaId, String requstId, String surveyNo, String categoryId, String categeryName) {
         ImageUrl = imageUrl;
         FullName = fullName;
         MobileNo = mobileNo;
@@ -87,6 +94,102 @@ public class SimilarList {
         RequstId = requstId;
         this.surveyNo = surveyNo;
         this.categoryId = categoryId;
+        this.categeryName = categeryName;
+    }
+
+    public SimilarList(String imageUrl, String fullName, String mobileNo,
+                       String name, String varietyName, String quality, String quantity, String unit,
+                       String price, String available_month, String farm_address, String state, String district,
+                       String taluka, String village, String hector, String itemTypeId, String varietyId, String qualityId,
+                       String measurementId, String stateId, String districtId, String talukaId, String requstId, String surveyNo,
+                       String categoryId) {
+        ImageUrl = imageUrl;
+        FullName = fullName;
+        MobileNo = mobileNo;
+        this.name = name;
+        VarietyName = varietyName;
+        Quality = quality;
+        this.quantity = quantity;
+        this.unit = unit;
+        this.price = price;
+        this.available_month = available_month;
+        this.farm_address = farm_address;
+        this.state = state;
+        this.district = district;
+        this.taluka = taluka;
+        this.village = village;
+        this.hector = hector;
+        ItemTypeId = itemTypeId;
+        VarietyId = varietyId;
+        QualityId = qualityId;
+        MeasurementId = measurementId;
+        StateId = stateId;
+        DistrictId = districtId;
+        TalukaId = talukaId;
+        RequstId = requstId;
+        this.surveyNo = surveyNo;
+        this.categoryId = categoryId;
+    }
+
+    public SimilarList(String imageUrl, String fullName, String mobileNo, String name, String varietyName,
+                       String quality, String quantity, String unit, String price, String available_month, String farm_address,
+                       String state, String district, String taluka, String village, String hector, String itemTypeId, String varietyId,
+                       String qualityId, String measurementId, String stateId, String districtId,
+                       String talukaId, String requstId, String surveyNo, String categoryId,
+                       String categeryName, String organic, String certificateNo) {
+        ImageUrl = imageUrl;
+        FullName = fullName;
+        MobileNo = mobileNo;
+        this.name = name;
+        VarietyName = varietyName;
+        Quality = quality;
+        this.quantity = quantity;
+        this.unit = unit;
+        this.price = price;
+        this.available_month = available_month;
+        this.farm_address = farm_address;
+        this.state = state;
+        this.district = district;
+        this.taluka = taluka;
+        this.village = village;
+        this.hector = hector;
+        ItemTypeId = itemTypeId;
+        VarietyId = varietyId;
+        QualityId = qualityId;
+        MeasurementId = measurementId;
+        StateId = stateId;
+        DistrictId = districtId;
+        TalukaId = talukaId;
+        RequstId = requstId;
+        this.surveyNo = surveyNo;
+        this.categoryId = categoryId;
+        this.categeryName = categeryName;
+        this.organic = organic;
+        this.certificateNo = certificateNo;
+    }
+
+    public String getOrganic() {
+        return organic;
+    }
+
+    public void setOrganic(String organic) {
+        this.organic = organic;
+    }
+
+    public String getCertificateNo() {
+        return certificateNo;
+    }
+
+    public void setCertificateNo(String certificateNo) {
+        this.certificateNo = certificateNo;
+    }
+
+    public String getCategeryName() {
+        return categeryName;
+    }
+
+    public void setCategeryName(String categeryName) {
+        this.categeryName = categeryName;
     }
 
     public String getImageUrl() {

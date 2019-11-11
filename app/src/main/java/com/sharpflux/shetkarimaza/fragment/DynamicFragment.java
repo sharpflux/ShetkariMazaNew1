@@ -1,6 +1,7 @@
 package com.sharpflux.shetkarimaza.fragment;
 
 import android.app.ProgressDialog;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,6 +25,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.MyBuyerAdapter;
 import com.sharpflux.shetkarimaza.model.SellOptions;
+import com.sharpflux.shetkarimaza.model.User;
+import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
+import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
@@ -50,6 +54,11 @@ public class DynamicFragment extends Fragment {
     int currentItems,totalItems,scrollOutItems;
     GridLayoutManager mGridLayoutManager;
 
+    dbLanguage mydatabase;
+    String currentLanguage,language;
+
+
+
     public static DynamicFragment newInstance() {
         return new DynamicFragment();
     }
@@ -73,31 +82,19 @@ public class DynamicFragment extends Fragment {
         searchView = view.findViewById(R.id.searchViewHome);
 
 
-        /*mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
+        mydatabase = new dbLanguage(getContext());
 
-                if(newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL)
-                {
-                    isLoading = true;
-                }
-            }
+        User user = SharedPrefManager.getInstance(getContext()).getUser();
+        myLocale = getResources().getConfiguration().locale;
+        language = user.getLanguage();
 
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
+        Cursor cursor = mydatabase.LanguageGet(language);
 
-                currentItems =mGridLayoutManager.getChildCount();
-                totalItems = mGridLayoutManager.getItemCount();
-                scrollOutItems = mGridLayoutManager.findFirstVisibleItemPosition();
 
-                if(isLoading&&(currentItems + scrollOutItems==totalItems)){
+        while (cursor.moveToNext()) {
+            currentLanguage = cursor.getString(0);
 
-                }
-
-            }
-        });*/
+        }
 
         productlist = new ArrayList<>();
         myLocale = getResources().getConfiguration().locale;
@@ -112,7 +109,7 @@ public class DynamicFragment extends Fragment {
     private void setDynamicFragmentToTabLayout() {
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_NAME + "?CategoryId=" + CategoryId + "&Language=" + myLocale,
+                URLs.URL_NAME + "?CategoryId=" + CategoryId + "&Language=" + currentLanguage,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -166,7 +163,7 @@ public class DynamicFragment extends Fragment {
                                                         int nextLimit = currentSize + 3;
 
                                                         while (currentSize - 1 < nextLimit) {
-                                                           // productlist.add(sellOptions);
+                                                            // productlist.add(sellOptions);
                                                             currentSize++;
                                                         }
 
@@ -174,7 +171,6 @@ public class DynamicFragment extends Fragment {
                                                         isLoading = false;
                                                     }
                                                 }, 1000);
-
 
                                                 isLoading = true;
                                             }

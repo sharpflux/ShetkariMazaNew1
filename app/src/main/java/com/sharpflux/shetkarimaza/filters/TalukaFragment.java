@@ -3,6 +3,7 @@ package com.sharpflux.shetkarimaza.filters;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,7 +24,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity;
+import com.sharpflux.shetkarimaza.model.User;
+import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.utils.Constant;
+import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
@@ -33,6 +37,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -48,7 +53,10 @@ public class TalukaFragment extends Fragment {
     StringBuilder taluka_builder_id = new StringBuilder();
     SearchView searchView;
     VarietyAdapter myAdapter;
+    Locale myLocale;
 
+    dbLanguage mydatabase;
+    String currentLanguage,language;
 
 
     public TalukaFragment() {
@@ -60,6 +68,7 @@ public class TalukaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_taluka, container, false);
+        myLocale = getResources().getConfiguration().locale;
 
         recyclerView = view.findViewById(R.id.rcv_vriety);
         btn_next = view.findViewById(R.id.btnnextVariety);
@@ -72,6 +81,20 @@ public class TalukaFragment extends Fragment {
 
         searchView = view.findViewById(R.id.searchViewTaluka);
 
+
+        mydatabase = new dbLanguage(getContext());
+
+        User user = SharedPrefManager.getInstance(getContext()).getUser();
+        myLocale = getResources().getConfiguration().locale;
+        language = user.getLanguage();
+
+        Cursor cursor = mydatabase.LanguageGet(language);
+
+
+        while (cursor.moveToNext()) {
+            currentLanguage = cursor.getString(0);
+
+        }
         extras = getArguments();
 
 
@@ -162,7 +185,7 @@ public class TalukaFragment extends Fragment {
     private void SetDynamicDATA() {
 
       StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_TALUKA+DistrictId+"&Language=en",
+                URLs.URL_TALUKA+DistrictId+"&Language="+currentLanguage,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

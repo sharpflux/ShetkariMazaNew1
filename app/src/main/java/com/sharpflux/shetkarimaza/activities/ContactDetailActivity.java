@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -346,6 +348,56 @@ public class ContactDetailActivity extends AppCompatActivity {
                                         recyclerView.scrollToPosition(contactlist.size() - 10);
                                     int scrollPosition = contactlist.size();
                                     myAdapter.notifyItemRemoved(scrollPosition);*/
+
+
+
+                                    /*recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                                        @Override
+                                        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                                            super.onScrollStateChanged(recyclerView, newState);
+                                        }
+
+                                        @Override
+                                        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                                            super.onScrolled(recyclerView, dx, dy);
+
+                                            LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+                                            if (!isLoading) {
+                                                if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == contactlist.size() - 1) {
+
+                                                    contactlist.add(null);
+                                                    myAdapter.notifyItemInserted(contactlist.size() - 1);
+
+                                                    Handler handler = new Handler();
+
+                                                    handler.postDelayed(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            contactlist.remove(contactlist.size() - 1);
+                                                            int scrollPosition = contactlist.size();
+                                                            myAdapter.notifyItemRemoved(scrollPosition);
+                                                            int currentSize = scrollPosition;
+                                                            int nextLimit = currentSize + 3;
+
+                                                            while (currentSize - 1 < nextLimit) {
+                                                                // productlist.add(sellOptions);
+                                                                currentSize++;
+                                                            }
+
+                                                            myAdapter.notifyDataSetChanged();
+                                                            isLoading = false;
+                                                        }
+                                                    }, 1000);
+
+                                                    isLoading = true;
+                                                }
+                                            }
+                                        }
+                                    });
+
+*/
+
                                 }
 
                             } catch (JSONException e) {
@@ -401,14 +453,14 @@ public class ContactDetailActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-         //   progressDialog.dismiss();
+           progressDialog.dismiss();
         }
 
         @Override
         protected void onPreExecute() {
-           /* progressDialog = ProgressDialog.show(AllSimilarDataActivity.this,
+           progressDialog = ProgressDialog.show(ContactDetailActivity.this,
                     "Loading...",
-                    "");*/
+                    "");
         }
 
         @Override

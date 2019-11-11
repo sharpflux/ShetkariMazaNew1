@@ -1,5 +1,6 @@
 package com.sharpflux.shetkarimaza.activities;
 
+import android.database.Cursor;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.DynamicFragmentAdapter;
+import com.sharpflux.shetkarimaza.model.User;
+import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
+import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
@@ -30,10 +34,28 @@ public class BuyerActivity extends AppCompatActivity implements  TabLayout.OnTab
     Locale myLocale;
     private ViewPager viewPager;
 
+    dbLanguage mydatabase;
+    String currentLanguage,language;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buyer);
+
+        mydatabase = new dbLanguage(getApplicationContext());
+
+        User user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+        myLocale = getResources().getConfiguration().locale;
+        language = user.getLanguage();
+
+        Cursor cursor = mydatabase.LanguageGet(language);
+
+
+        while (cursor.moveToNext()) {
+            currentLanguage = cursor.getString(0);
+
+        }
+
 
         initViews();
 
@@ -69,7 +91,7 @@ public class BuyerActivity extends AppCompatActivity implements  TabLayout.OnTab
     private void setDynamicFragmentToTabLayout() {
 
         //    CustomProgressDialog.showSimpleProgressDialog(getContext(), "Loading...", "Fetching data", false);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_RECYCLER + "en",
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_RECYCLER + currentLanguage,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
