@@ -82,6 +82,7 @@ public class ContactDetailActivity extends AppCompatActivity {
     ProgressBar progressBar_filter;
     Locale myLocale;
     JSONArray obj;
+    AlertDialog.Builder builder;
 
 
     public static final int PAGE_START = 1;
@@ -319,6 +320,27 @@ public class ContactDetailActivity extends AppCompatActivity {
                             try {
                                 obj = new JSONArray(response);
                                 isFirstLoad = true;
+
+
+                                if(obj.length()==0){
+                                    builder.setMessage("No Data in Database")
+                                            .setCancelable(false)
+
+                                            .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    //  Action for 'NO' Button
+                                                    dialog.cancel();
+
+                                                }
+                                            });
+
+                                    AlertDialog alert = builder.create();
+                                    alert.setTitle("Oops");
+                                    alert.show();
+                                    return;
+                                }
+
+
                                 for (int i = 0; i < obj.length(); i++) {
                                     JSONObject userJson = obj.getJSONObject(i);
                                     if (!userJson.getBoolean("error")) {

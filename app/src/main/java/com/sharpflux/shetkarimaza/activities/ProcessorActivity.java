@@ -2,6 +2,7 @@ package com.sharpflux.shetkarimaza.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.ProcessorAdapter;
 import com.sharpflux.shetkarimaza.model.MyProcessor;
+import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
@@ -43,6 +45,9 @@ Button btnProcessorSubmit;
     private Intent iin;
     private Bundle bundle;
 
+    dbLanguage mydatabase;
+    String currentLanguage,language;
+
     private String address = "", city = "", district = "", state = "", companyname = "",
             license = "", companyregnno = "", gstno = "", names = "", registrationTypeId = "",
             registrationCategoryId = "", gender = "", mobile = "", alternateMobile = "", email = "",
@@ -61,6 +66,15 @@ Button btnProcessorSubmit;
 
 
         processorList = new ArrayList<>();
+
+        mydatabase = new dbLanguage(getApplicationContext());
+
+        Cursor cursor = mydatabase.LanguageGet(language);
+
+        while (cursor.moveToNext()) {
+            currentLanguage = cursor.getString(0);
+
+        }
 
         LinearLayoutManager mGridLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mGridLayoutManager);
@@ -150,7 +164,7 @@ Button btnProcessorSubmit;
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_PROCESSOR+myLocale,
+                URLs.URL_PROCESSOR+currentLanguage,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

@@ -1,6 +1,7 @@
 package com.sharpflux.shetkarimaza.fragment;
 
 import android.app.ProgressDialog;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
@@ -16,10 +17,14 @@ import android.widget.TextView;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.customviews.CustomRecyclerViewDialog;
 import com.sharpflux.shetkarimaza.model.Product;
+import com.sharpflux.shetkarimaza.model.User;
+import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.utils.DataFetcher;
+import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 import com.sharpflux.shetkarimaza.volley.URLs;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class SecondFragment extends DialogFragment {
@@ -32,10 +37,18 @@ public class SecondFragment extends DialogFragment {
     DataFetcher fetcher;
     private CustomRecyclerViewDialog customDialog;
     Product sellOptions;
+
+    Locale myLocale;
+    dbLanguage mydatabase;
+    String currentLanguage,language;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_second, container, false);
+
+        myLocale = getResources().getConfiguration().locale;
+        mydatabase = new dbLanguage(getContext());
 
         list = new ArrayList<Product>();
 
@@ -58,6 +71,20 @@ public class SecondFragment extends DialogFragment {
         hideStateId = view.findViewById(R.id.hideStateId);
         hideDistrictId = view.findViewById(R.id.hideDistrictId);
         hideTalukaId = view.findViewById(R.id.hideTalukaId);
+
+        User user = SharedPrefManager.getInstance(getContext()).getUser();
+        myLocale = getResources().getConfiguration().locale;
+        language = user.getLanguage();
+
+        Cursor cursor = mydatabase.LanguageGet(language);
+
+
+        while (cursor.moveToNext()) {
+            currentLanguage = cursor.getString(0);
+
+        }
+
+
         bundle = getArguments();
 
         if (bundle != null) {

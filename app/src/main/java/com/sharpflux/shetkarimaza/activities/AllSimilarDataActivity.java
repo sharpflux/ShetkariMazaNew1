@@ -349,6 +349,9 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                 priceids = "0";
             }
 
+            //?StartIndex=1&PageSize=500
+            //    // &ItemTypeId=0&VarityId=0&StateId=0&DistrictId=0&QualityId=0&TalukaId=0&Language=en&SortByRate=ASC
+
             StringRequest stringRequest = new StringRequest(Request.Method.GET,
                     URLs.URL_REQESTS + "?StartIndex=" + pageIndex + "&PageSize=" + PAGE_SIZE +
                             "&ItemTypeId=" + ItemTypeId + "&VarityId=" + VarityId + "&StateId=" + StatesID +
@@ -392,7 +395,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                                                         "",
                                                         "0",
                                                         userJson.getString("CategoryName_EN"),
-                                                        userJson.getString("Organic "),
+                                                        userJson.getString("Organic"),
                                                         userJson.getString("OrganicCertiicateNo")
 
                                                 );
@@ -585,45 +588,49 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 //
                 try {
 
-
-                    sheet.addCell(new Label(0, 0, "Item Name", titleformat)); // column and row
-                    sheet.addCell(new Label(1, 0, "Variety Name", titleformat));
-                    sheet.addCell(new Label(2, 0, "Available Quality", titleformat));
-                    sheet.addCell(new Label(3, 0, "Available Quantity", titleformat));
-                    sheet.addCell(new Label(4, 0, "Unit", titleformat));
-                    sheet.addCell(new Label(5, 0, "Price per unit", titleformat));
-                    sheet.addCell(new Label(6, 0, "Available(month)", titleformat));
-                    sheet.addCell(new Label(7, 0, "Farm Address", titleformat));
-                    sheet.addCell(new Label(8, 0, "Survey No.", titleformat));
-                    sheet.addCell(new Label(9, 0, "State", titleformat));
-                    sheet.addCell(new Label(10, 0, "District", titleformat));
-                    sheet.addCell(new Label(11, 0, "Taluka", titleformat));
-                    sheet.addCell(new Label(12, 0, "Village", titleformat));
-                    sheet.addCell(new Label(13, 0, "Area in hector", titleformat));
-                    sheet.addCell(new Label(14, 0, "Full Name", titleformat));
-                    sheet.addCell(new Label(15, 0, "Mobile No.", titleformat));
+                    sheet.addCell(new Label(0, 0, "Category Name", titleformat));
+                    sheet.addCell(new Label(1, 0, "Item Name", titleformat)); // column and row
+                    sheet.addCell(new Label(2, 0, "Variety Name", titleformat));
+                    sheet.addCell(new Label(3, 0, "Available Quality", titleformat));
+                    sheet.addCell(new Label(4, 0, "Organic/Non-organic", titleformat));
+                    sheet.addCell(new Label(5, 0, "Organic Certifying Agency and Certificate No.", titleformat));
+                    sheet.addCell(new Label(6, 0, "Available Quantity", titleformat));
+                    sheet.addCell(new Label(7, 0, "Unit", titleformat));
+                    sheet.addCell(new Label(8, 0, "Price per unit", titleformat));
+                    sheet.addCell(new Label(9, 0, "Available(month)", titleformat));
+                    sheet.addCell(new Label(10, 0, "Farm Address", titleformat));
+                    sheet.addCell(new Label(11, 0, "Survey No.", titleformat));
+                    sheet.addCell(new Label(12, 0, "State", titleformat));
+                    sheet.addCell(new Label(13, 0, "District", titleformat));
+                    sheet.addCell(new Label(14, 0, "Taluka", titleformat));
+                    sheet.addCell(new Label(15, 0, "Village", titleformat));
+                    sheet.addCell(new Label(16, 0, "Area in hector", titleformat));
+                    sheet.addCell(new Label(17, 0, "Full Name", titleformat));
+                    sheet.addCell(new Label(18, 0, "Mobile No.", titleformat));
 
                     int j = 1;
 
                     for (int i = 0; i < productlist.size(); i++) {
 
-
-                        sheet.addCell(new Label(0, j, productlist.get(i).getName()));
-                        sheet.addCell(new Label(1, j, productlist.get(i).getVarietyName()));
-                        sheet.addCell(new Label(2, j, productlist.get(i).getQuality()));
-                        sheet.addCell(new Label(3, j, productlist.get(i).getQuantity()));
-                        sheet.addCell(new Label(4, j, productlist.get(i).getUnit()));
-                        sheet.addCell(new Label(5, j, productlist.get(i).getPrice()));
-                        sheet.addCell(new Label(6, j, productlist.get(i).getAvailable_month()));
-                        sheet.addCell(new Label(7, j, productlist.get(i).getFarm_address()));
-                        sheet.addCell(new Label(8, j, productlist.get(i).getState()));
-                        sheet.addCell(new Label(9, j, productlist.get(i).getState()));
-                        sheet.addCell(new Label(10, j, productlist.get(i).getDistrict()));
-                        sheet.addCell(new Label(11, j, productlist.get(i).getTaluka()));
-                        sheet.addCell(new Label(12, j, productlist.get(i).getVillage()));
-                        sheet.addCell(new Label(13, j, productlist.get(i).getHector()));
-                        sheet.addCell(new Label(14, j, productlist.get(i).getFullName()));
-                        sheet.addCell(new Label(15, j, productlist.get(i).getMobileNo()));
+                        sheet.addCell(new Label(0, j, productlist.get(i).getCategeryName()));
+                        sheet.addCell(new Label(1, j, productlist.get(i).getName()));
+                        sheet.addCell(new Label(2, j, productlist.get(i).getVarietyName()));
+                        sheet.addCell(new Label(3, j, productlist.get(i).getQuality()));
+                        sheet.addCell(new Label(4, j, productlist.get(i).getOrganic()));
+                        sheet.addCell(new Label(5, j, productlist.get(i).getCertificateNo()));
+                        sheet.addCell(new Label(6, j, productlist.get(i).getQuantity()));
+                        sheet.addCell(new Label(7, j, productlist.get(i).getUnit()));
+                        sheet.addCell(new Label(8, j, productlist.get(i).getPrice()));
+                        sheet.addCell(new Label(9, j, productlist.get(i).getAvailable_month()));
+                        sheet.addCell(new Label(10, j, productlist.get(i).getFarm_address()));
+                        sheet.addCell(new Label(11, j, productlist.get(i).getState()));
+                        sheet.addCell(new Label(12, j, productlist.get(i).getState()));
+                        sheet.addCell(new Label(13, j, productlist.get(i).getDistrict()));
+                        sheet.addCell(new Label(14, j, productlist.get(i).getTaluka()));
+                        sheet.addCell(new Label(15, j, productlist.get(i).getVillage()));
+                        sheet.addCell(new Label(16, j, productlist.get(i).getHector()));
+                        sheet.addCell(new Label(17, j, productlist.get(i).getFullName()));
+                        sheet.addCell(new Label(18, j, productlist.get(i).getMobileNo()));
 
                         j++;
                     }

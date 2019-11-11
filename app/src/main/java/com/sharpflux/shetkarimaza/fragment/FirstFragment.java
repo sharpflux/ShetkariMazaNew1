@@ -1,6 +1,7 @@
 package com.sharpflux.shetkarimaza.fragment;
 
 import android.app.ProgressDialog;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
@@ -21,6 +22,7 @@ import com.sharpflux.shetkarimaza.customviews.CustomRecyclerViewDialog;
 import com.sharpflux.shetkarimaza.model.MyProcessor;
 import com.sharpflux.shetkarimaza.model.Product;
 import com.sharpflux.shetkarimaza.model.User;
+import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.utils.DataFetcher;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 import com.sharpflux.shetkarimaza.volley.URLs;
@@ -53,6 +55,9 @@ public class FirstFragment extends Fragment {
     private OnStepOneListener mListener;
     private String UserId, username, usermobileno, useremail;
 
+    dbLanguage mydatabase;
+    String currentLanguage,language;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -75,11 +80,22 @@ public class FirstFragment extends Fragment {
         Email = view.findViewById(R.id.Email);
         list = new ArrayList<Product>();
 
+        mydatabase = new dbLanguage(getContext());
+
         User user = SharedPrefManager.getInstance(getContext()).getUser();
         myLocale = getResources().getConfiguration().locale;
         username = user.getUsername();
         usermobileno = user.getMobile();
         useremail = user.getEmail();
+
+        Cursor cursor = mydatabase.LanguageGet(language);
+
+
+        while (cursor.moveToNext()) {
+            currentLanguage = cursor.getString(0);
+
+        }
+
 
         editfullname.setText(username);
         mobileNo.setText(usermobileno);
@@ -211,7 +227,7 @@ public class FirstFragment extends Fragment {
             try {
 
                 if (params[0].toString() == "type")
-                    fetcher.loadList("RegistrationType", Rtype_edit, URLs.URL_RType+myLocale ,
+                    fetcher.loadList("RegistrationType", Rtype_edit, URLs.URL_RType+currentLanguage,
                             "RegistrationTypeId", hidRegTypeId, "", "","Registration Type");
                 else if (params[0].toString() == "cate")
                     fetcher.loadList("RegistrationCategoryName",
