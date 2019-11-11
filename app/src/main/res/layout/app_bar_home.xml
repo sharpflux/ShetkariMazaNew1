@@ -30,7 +30,7 @@
             app:layout_collapseMode="pin"
             app:layout_scrollFlags="enterAlways|scroll">
 
-
+//
         </android.support.v7.widget.Toolbar>
 
             <FrameLayout android:id="@+id/flcontainer"
