@@ -245,7 +245,7 @@ public class AddListActivity extends AppCompatActivity {
               Toast.makeText(getApplicationContext(), "Select id : " + getUserCheckedItemIds(), Toast.LENGTH_SHORT).show();
             }
         });*/
-
+//
         Cursor cursorData = userInfoDBManager.getAllAccountCursor();
         if (cursorData != null && cursorData.getCount() > 0){
             while (cursorData.moveToNext()) {
