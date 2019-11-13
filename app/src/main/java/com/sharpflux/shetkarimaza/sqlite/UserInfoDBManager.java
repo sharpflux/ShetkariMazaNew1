@@ -381,9 +381,9 @@ public class UserInfoDBManager {
         this.dbManager.delete(this.TABLE_NAME_ACCOUNT, this.TABLE_ACCOUNT_COLUMN_ID + " = " + id);
     }
 
+
     public void deleteAll() {
         this.dbManager.delete(this.TABLE_NAME_ACCOUNT, null);
-
     }
 
 

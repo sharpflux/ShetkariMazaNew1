@@ -25,6 +25,7 @@ import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.TabLayoutLogRegActivity;
 import com.sharpflux.shetkarimaza.activities.UserVerificationActivity;
 import com.sharpflux.shetkarimaza.utils.CheckDeviceIsOnline;
+import com.sharpflux.shetkarimaza.utils.CommonUtils;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
@@ -42,7 +43,8 @@ public class SignupFragment extends Fragment {
     EditText eusername, edtmiddlename, edtlastname, editTextMobile, epassword, edtcpassword;
     CountryCodePicker ccp;
     String number;
-    AlertDialog.Builder  builder;
+    AlertDialog.Builder builder;
+
     public SignupFragment() {
 
     }
@@ -154,7 +156,7 @@ public class SignupFragment extends Fragment {
         }
 
         //if everything is fine
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_OTP2+mob,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_OTP2 + mob,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -167,14 +169,13 @@ public class SignupFragment extends Fragment {
 
                                 Intent intent = new Intent(getContext(), UserVerificationActivity.class);
 
-                                intent.putExtra("OTP",obj.getString("OTP"));
-
-                                intent.putExtra("FullName",username);
-                                intent.putExtra("Middlename",middlename);
-                                intent.putExtra("Lastname",lastname);
-                                intent.putExtra("MobileNo",mob);
-                                intent.putExtra("Password",password);
-                                intent.putExtra("Cpassword",cpassword);
+                                intent.putExtra("OTP", obj.getString("OTP"));
+                                intent.putExtra("FullName", username);
+                                intent.putExtra("Middlename", middlename);
+                                intent.putExtra("Lastname", lastname);
+                                intent.putExtra("MobileNo", mob);
+                                intent.putExtra("Password", password);
+                                intent.putExtra("Cpassword", cpassword);
 
                               /*  SharedPrefManager.getInstance(getContext()).userLogin(user);
                                 finish();*/
@@ -182,8 +183,7 @@ public class SignupFragment extends Fragment {
                                 startActivity(intent);
 
 
-                            }
-                           else{
+                            } else {
                                 builder.setMessage("Invalid User")
                                         .setCancelable(false)
 
@@ -196,7 +196,7 @@ public class SignupFragment extends Fragment {
                                         });
 
                                 AlertDialog alert = builder.create();
-                                alert.setTitle("User already exists with same Mobile No please Login");
+                                alert.setTitle("User already exists with same Mobile No");
                                 alert.show();
                             }
 
@@ -208,7 +208,7 @@ public class SignupFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                       builder.setMessage(error.getMessage())
+                        builder.setMessage(error.getMessage())
                                 .setCancelable(false)
 
                                 .setNegativeButton("OK", new DialogInterface.OnClickListener() {
@@ -282,5 +282,81 @@ public class SignupFragment extends Fragment {
         }
 
     }
+    /*private void getOtp1() {
+        //first getting the values
+        final String mobNo = editTextMobile.getText().toString();
+        final String mob = editTextMobile.getText().toString();
+        if (!CommonUtils.isValidPhone(mobNo)) {
+            editTextMobile.setError("Invalid Mobile number");
+            return;
+        }
+        //if everything is fine
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_OTP2+mob,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            //converting response to json object
+                            JSONObject obj = new JSONObject(response);
+                            //if no error in response
+                            if (!obj.getBoolean("error")) {
+                                Intent in = new Intent(SignupFragment.this,
+                                        UserVerificationActivity.class);
+                                in.putExtra("otp", obj.getString("OTP"));
+                                startActivity(in);
+                            } else {
 
+                                builder.setMessage("Invalid User")
+                                        .setCancelable(false)
+
+                                        .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                //  Action for 'NO' Button
+                                                dialog.cancel();
+
+                                            }
+                                        });
+
+                                AlertDialog alert = builder.create();
+                                alert.setTitle(response);
+                                alert.show();
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        builder.setMessage("Invalid User")
+                                .setCancelable(false)
+
+                                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        //  Action for 'NO' Button
+                                        dialog.cancel();
+
+                                    }
+                                });
+
+                        AlertDialog alert = builder.create();
+                        alert.setTitle(error.getMessage());
+                        alert.show();
+
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("OTPMobileNo", mob);
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+    }*/
 }

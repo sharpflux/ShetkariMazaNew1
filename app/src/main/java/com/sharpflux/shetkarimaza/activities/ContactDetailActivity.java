@@ -26,6 +26,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -83,6 +84,7 @@ public class ContactDetailActivity extends AppCompatActivity {
     Locale myLocale;
     JSONArray obj;
     AlertDialog.Builder builder;
+    TextView user_account_list_empty_text_view;
 
 
     public static final int PAGE_START = 1;
@@ -100,8 +102,14 @@ public class ContactDetailActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         List<ContactDetail> mList = new ArrayList<>();
 
+
+
+
         recyclerView.setAdapter(myAdapter);
+
         progressBar_filter = findViewById(R.id.progressBar_filter);
+        user_account_list_empty_text_view = findViewById(R.id.user_account_list_empty_text_view);
+
 
 
         bundle = getIntent().getExtras();
@@ -116,65 +124,39 @@ public class ContactDetailActivity extends AppCompatActivity {
         }
 
 
-        if(ItemTypeId.equals("1"))
-        {
+        if (ItemTypeId.equals("1")) {
             setTitle("Processor ");
-        }
-        else if(ItemTypeId.equals("4"))
-        {
+        } else if (ItemTypeId.equals("4")) {
             setTitle("Producer");
-        }
-        else if(ItemTypeId.equals("5"))
-        {
+        } else if (ItemTypeId.equals("5")) {
             setTitle("Commission Agent");
-        }
-        else if(ItemTypeId.equals("6"))
-        {
+        } else if (ItemTypeId.equals("6")) {
             setTitle("Service Provider");
-        }
-        else if(ItemTypeId.equals("16"))
-        {
+        } else if (ItemTypeId.equals("16")) {
             setTitle("Individual Farmers");
-        }
-        else if(ItemTypeId.equals("17"))
-        {
+        } else if (ItemTypeId.equals("17")) {
             setTitle("Farmer Group");
-        }
-        else if(ItemTypeId.equals("18"))
-        {
+        } else if (ItemTypeId.equals("18")) {
             setTitle("Trader");
-        }
-        else if(ItemTypeId.equals("20"))
-        {
+        } else if (ItemTypeId.equals("20")) {
             setTitle("FPO/FPC");
-        }
-        else if(ItemTypeId.equals("21"))
-        {
+        } else if (ItemTypeId.equals("21")) {
             setTitle("Govt. Agency");
-        }
-        else if(ItemTypeId.equals("22"))
-        {
+        } else if (ItemTypeId.equals("22")) {
             setTitle("Individual Customer");
-        }else if(ItemTypeId.equals("23"))
-        {
+        } else if (ItemTypeId.equals("23")) {
             setTitle("Exporter");
-        }else if(ItemTypeId.equals("24"))
-        {
+        } else if (ItemTypeId.equals("24")) {
             setTitle("Retailer");
-        }else if(ItemTypeId.equals("26"))
-        {
+        } else if (ItemTypeId.equals("26")) {
             setTitle("Warehouse");
-        }else if(ItemTypeId.equals("27"))
-        {
+        } else if (ItemTypeId.equals("27")) {
             setTitle("Transporter");
-        }else if(ItemTypeId.equals("28"))
-        {
+        } else if (ItemTypeId.equals("28")) {
             setTitle("Packer");
-        }else if(ItemTypeId.equals("29"))
-        {
+        } else if (ItemTypeId.equals("29")) {
             setTitle("Franchise");
         }
-
 
 
         myAdapter = new ContactDetailAdapter(ContactDetailActivity.this, mList);
@@ -182,6 +164,7 @@ public class ContactDetailActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(myAdapter);
+
 
         myLocale = getResources().getConfiguration().locale;
 
@@ -312,7 +295,7 @@ public class ContactDetailActivity extends AppCompatActivity {
 
 
             StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                    URLs.URL_CONTACTDET +"&RegistrationTypeId="+ItemTypeId+"&StateId="+StatesID+"&DistrictId="+DistrictId+"&TalukaId="+TalukaId+"&Language=en",
+                    URLs.URL_CONTACTDET + "&RegistrationTypeId=" + ItemTypeId + "&StateId=" + StatesID + "&DistrictId=" + DistrictId + "&TalukaId=" + TalukaId + "&Language=en",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -321,28 +304,14 @@ public class ContactDetailActivity extends AppCompatActivity {
                                 obj = new JSONArray(response);
                                 isFirstLoad = true;
 
-
-                                if(obj.length()==0){
-                                    builder.setMessage("No Data in Database")
-                                            .setCancelable(false)
-
-                                            .setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int id) {
-                                                    //  Action for 'NO' Button
-                                                    dialog.cancel();
-
-                                                }
-                                            });
-
-                                    AlertDialog alert = builder.create();
-                                    alert.setTitle("Oops");
-                                    alert.show();
-                                    return;
-                                }
-
-
                                 for (int i = 0; i < obj.length(); i++) {
                                     JSONObject userJson = obj.getJSONObject(i);
+
+                                   /* if(userJson.length()==0){
+                                       txt_err.setVisibility(View.VISIBLE);
+                                    }
+*/
+
                                     if (!userJson.getBoolean("error")) {
                                         ContactDetail detail;
                                         detail = new ContactDetail
@@ -359,66 +328,18 @@ public class ContactDetailActivity extends AppCompatActivity {
                                         contactlist.add(detail);
                                         contactlist.size();
 
-                                    } else {
+                                    }  /*if(obj.length()==0){
+                                        Toast.makeText(getApplicationContext(),"Data base is empty",Toast.LENGTH_SHORT).show();
+                                    }*/
+                                    else {
                                         Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
                                     }
 
                                     myAdapter = new ContactDetailAdapter(ContactDetailActivity.this, contactlist);
                                     recyclerView.setAdapter(myAdapter);
-                                   /* isLoading = false;
-                                    if (contactlist.size() > 10)
-                                        recyclerView.scrollToPosition(contactlist.size() - 10);
-                                    int scrollPosition = contactlist.size();
-                                    myAdapter.notifyItemRemoved(scrollPosition);*/
-
-
-
-                                    /*recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                                        @Override
-                                        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                                            super.onScrollStateChanged(recyclerView, newState);
-                                        }
-
-                                        @Override
-                                        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                                            super.onScrolled(recyclerView, dx, dy);
-
-                                            LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-
-                                            if (!isLoading) {
-                                                if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == contactlist.size() - 1) {
-
-                                                    contactlist.add(null);
-                                                    myAdapter.notifyItemInserted(contactlist.size() - 1);
-
-                                                    Handler handler = new Handler();
-
-                                                    handler.postDelayed(new Runnable() {
-                                                        @Override
-                                                        public void run() {
-                                                            contactlist.remove(contactlist.size() - 1);
-                                                            int scrollPosition = contactlist.size();
-                                                            myAdapter.notifyItemRemoved(scrollPosition);
-                                                            int currentSize = scrollPosition;
-                                                            int nextLimit = currentSize + 3;
-
-                                                            while (currentSize - 1 < nextLimit) {
-                                                                // productlist.add(sellOptions);
-                                                                currentSize++;
-                                                            }
-
-                                                            myAdapter.notifyDataSetChanged();
-                                                            isLoading = false;
-                                                        }
-                                                    }, 1000);
-
-                                                    isLoading = true;
-                                                }
-                                            }
-                                        }
-                                    });
-
-*/
+                                    if(response==" "){
+                                        user_account_list_empty_text_view.setVisibility(View.VISIBLE);
+                                    }
 
                                 }
 
@@ -475,12 +396,12 @@ public class ContactDetailActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-           progressDialog.dismiss();
+            progressDialog.dismiss();
         }
 
         @Override
         protected void onPreExecute() {
-           progressDialog = ProgressDialog.show(ContactDetailActivity.this,
+            progressDialog = ProgressDialog.show(ContactDetailActivity.this,
                     "Loading...",
                     "");
         }
@@ -579,8 +500,6 @@ public class ContactDetailActivity extends AppCompatActivity {
                 try {
 
 
-
-
                     sheet.addCell(new Label(0, 0, "Full Name", titleformat));
                     sheet.addCell(new Label(1, 0, "Mobile No.", titleformat));
                     sheet.addCell(new Label(2, 0, "Address", titleformat)); // column and row
@@ -588,7 +507,6 @@ public class ContactDetailActivity extends AppCompatActivity {
                     int j = 1;
 
                     for (int i = 0; i < contactlist.size(); i++) {
-
 
 
                         sheet.addCell(new Label(0, j, contactlist.get(i).getFullName()));

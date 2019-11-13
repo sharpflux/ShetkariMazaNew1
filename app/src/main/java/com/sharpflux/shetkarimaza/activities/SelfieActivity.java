@@ -3,12 +3,14 @@ package com.sharpflux.shetkarimaza.activities;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -23,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -91,7 +94,10 @@ public class SelfieActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                saveOrderDetails();
+               /* saveOrderDetails();*/
+                SelfieActivity.AsyncTaskRunner runner = new SelfieActivity.AsyncTaskRunner();
+                String sleepTime = "2";
+                runner.execute(sleepTime);
             }
         });
 
@@ -103,6 +109,8 @@ public class SelfieActivity extends AppCompatActivity {
                 hideImageTvSelfie.setText("selfie");
             }
         });
+
+
 
 
     }
@@ -424,8 +432,64 @@ public class SelfieActivity extends AppCompatActivity {
 
 
         };
-
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
 
     }
+
+
+    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
+
+        private String resp;
+        ProgressDialog progressDialog;
+
+        @Override
+        protected String doInBackground(String... params) {
+            publishProgress("Sleeping..."); // Calls onProgressUpdate()
+            try {
+
+
+              /*  setDynamicFragmentToTabLayout();
+                Thread.sleep(100);
+
+                resp = "Slept for " + params[0] + " seconds";*/
+
+
+                int time = Integer.parseInt(params[0]) * 1000;
+                saveOrderDetails();
+                Thread.sleep(time);
+                resp = "Slept for " + params[0] + " seconds";
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                resp = e.getMessage();
+            }
+            return resp;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // execution of result of Long time consuming operation
+            progressDialog.dismiss();
+            // finalResult.setText(result);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(SelfieActivity.this,
+                    "Save your Data",
+                    "Loading...");
+        }
+
+        @Override
+        protected void onProgressUpdate(String... text) {
+            // finalResult.setText(text[0]);
+
+        }
+
+    }
+
+
 }

@@ -65,9 +65,11 @@ public class ProductDetailsForBuyerActivity extends AppCompatActivity {
     Bundle extras;
     String name,mobileNo,address,state,district,taluka,newAddress;
     TextView tvName,tvAddress,tvMobileNo;
+
     private View mLoadingView;
     ImageView imgProductDetails,img_buyerDetails;
     private int mAnimationDuration;
+
     private TableLayout mTableLayout;
     String colSq,colVehicletype,colVehicleNo,colrate;
     JSONArray obj;
@@ -83,7 +85,6 @@ public class ProductDetailsForBuyerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details_for_buyer);
-        mLoadingView = findViewById(R.id.loading_spinner);
 
        // viewPager = (ViewPager) findViewById(R.id.viewPager);
         SliderDots = (LinearLayout) findViewById(R.id.SliderDots);
@@ -91,8 +92,11 @@ public class ProductDetailsForBuyerActivity extends AppCompatActivity {
         tvName=findViewById(R.id.tvName);
         tvAddress=findViewById(R.id.tvAddress);
         tvMobileNo=findViewById(R.id.tvMobileNo);
+
+
         mAnimationDuration = getResources().getInteger(android.R.integer.config_longAnimTime);
         imgProductDetails = findViewById(R.id.imgProductDetails);
+        mLoadingView = findViewById(R.id.loading_spinner);
 
 
         mRecyclerView = findViewById(R.id.rv_transporter);

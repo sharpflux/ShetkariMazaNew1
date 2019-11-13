@@ -752,6 +752,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                            startUserAccountListIntent.putExtra("organic", org);
                             startUserAccountListIntent.putExtra("certificateno", edtcertifiedno.getText().toString());
                             startUserAccountListIntent.putExtra("SurveyNo",edtsurveyNo.getText().toString());
+                            startUserAccountListIntent.putExtra("ImageUrl",ImageUrl);
                             startActivity(startUserAccountListIntent);
 
                         }

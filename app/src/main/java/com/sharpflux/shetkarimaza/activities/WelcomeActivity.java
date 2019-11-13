@@ -38,10 +38,10 @@ public class WelcomeActivity extends AppCompatActivity {
         final TextView tvDesOne=findViewById(R.id.tvDesOne);
        btn_skip= findViewById(R.id.btn_skip);
 
-        if (SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
+       /*if (SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
            finish();
-            startActivity(new Intent(getApplicationContext(), SelectLanguageActivity.class));
-        }
+            startActivity(new Intent(getApplicationContext(), ChooseActivity.class));
+        }*/
         btn_skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

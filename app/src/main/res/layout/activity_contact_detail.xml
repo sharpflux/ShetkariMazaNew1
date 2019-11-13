@@ -5,8 +5,7 @@ android:id="@+id/fragment_order_list_llContainer"
 android:background="@drawable/backgroundlogo"
 android:layout_width="fill_parent"
 android:layout_height="fill_parent"
-xmlns:android="http://schemas.android.com/apk/res/android"
-    >
+xmlns:android="http://schemas.android.com/apk/res/android">
 
 <android.support.v7.widget.RecyclerView
     android:id="@+id/contact_Detail_rvProductList"
@@ -27,8 +26,21 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         android:visibility="gone"
         />
 
-    <LinearLayout
 
+    <TextView
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:id="@+id/user_account_list_empty_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="The user account list is empty."
+        android:textColor="@color/error_color_material"
+        android:visibility="gone"
+        android:textSize="20dp"/>
+
+
+    <LinearLayout
+        android:id="@+id/lr_filterbtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

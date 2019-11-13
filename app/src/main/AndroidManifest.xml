@@ -33,6 +33,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".filters.Filter1Activity" />
         <activity android:name=".filters.BuyerFilterActivity" />
+        <activity android:name=".activities.AddListActivityTest"/>
         <activity
             android:name=".activities.ContactDetailActivity"
             android:parentActivityName=".activities.HomeActivity"

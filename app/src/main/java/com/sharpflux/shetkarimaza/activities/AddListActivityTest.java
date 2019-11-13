@@ -38,6 +38,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.MyCursorAdapter;
+import com.sharpflux.shetkarimaza.adapter.MySellerAdapter;
 import com.sharpflux.shetkarimaza.model.CursorData;
 import com.sharpflux.shetkarimaza.model.SaveProductInfo;
 import com.sharpflux.shetkarimaza.model.User;
@@ -69,17 +70,14 @@ import static com.sharpflux.shetkarimaza.sqlite.UserInfoDBManager.imagename;
 import static com.sharpflux.shetkarimaza.sqlite.UserInfoDBManager.productType;
 import static com.sharpflux.shetkarimaza.sqlite.UserInfoDBManager.villagenam;
 
-public class AddListActivity extends AppCompatActivity {
+public class AddListActivityTest extends AppCompatActivity {
     JSONArray array;
-    StringBuilder builder;
+    StringBuilder
+            builder;
     private Button btnsubmit;
     private UserInfoDBManager userInfoDBManager = null;
-
-    private RecyclerView mrecyclerView;
-
-
 //
-    private ListView userAccountListView = null;
+    private RecyclerView mrecyclerView;
     SQLiteCursor sqcursor;
     Bundle bundle;
     String type = "", varity = "", quality = "", unit = "", month = "", state = "", district = "", taluka = "";
@@ -108,13 +106,11 @@ public class AddListActivity extends AppCompatActivity {
 
     // Store user checked account DTO.
     private List<SaveProductInfo> userCheckedItemList ;
-
     CursorData cursorData;
     MyCursorAdapter myCursorAdapter;
     ArrayList<CursorData> cursorDataList;
 
     SQLiteCursor sqcursordata;
-
 
 
     @Override
@@ -125,18 +121,15 @@ public class AddListActivity extends AppCompatActivity {
         btnsubmit = findViewById(R.id.btnSubmitDb);
         row_cartlist_ivDelete = findViewById(R.id.row_cartlist_ivDelete);
 
+
         LinearLayoutManager mGridLayoutManager = new LinearLayoutManager(this);
         mrecyclerView = findViewById(R.id.rv_listView);
         mrecyclerView.setLayoutManager(mGridLayoutManager);
         cursorDataList = new ArrayList<>();
 
-       /* userAccountListView = (ListView) findViewById(R.id.user_account_list_view);
-        userAccountListEmptyTextView = (TextView) findViewById(R.id.user_account_list_empty_text_view);
-        userAccountListView.setEmptyView(userAccountListEmptyTextView);*/
-
         // builder.append("<?xml version=\"1.0\" ?>");
         // Initialize the progress dialog
-        mProgressDialog = new ProgressDialog(AddListActivity.this);
+        mProgressDialog = new ProgressDialog(AddListActivityTest.this);
         mProgressDialog.setIndeterminate(false);
         // Progress dialog horizontal style
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -150,6 +143,8 @@ public class AddListActivity extends AppCompatActivity {
         mAnimationDuration = getResources().getInteger(android.R.integer.config_longAnimTime);
         mLoadingView = findViewById(R.id.loading_spinner);
         ImgageAddList = findViewById(R.id.ImgageAddList);
+
+
 
 
 
@@ -184,89 +179,31 @@ public class AddListActivity extends AppCompatActivity {
         // Get SQLite database query cursor.
         userInfoDBManager = new UserInfoDBManager(getApplicationContext());
         userInfoDBManager.open();
-        Cursor cursor = userInfoDBManager.getAllAccountCursor();
-
-       /* listViewDataAdapter =
-                listViewDataAdapter = new SimpleCursorAdapter(this, R.layout.activity_user_account_list_view_item, cursor, fromColumnArr, toViewIdArr, CursorAdapter.FLAG_AUTO_REQUERY);
-*/
-
-
-        // Set simple cursor adapter to list view.
-       /* userAccountListView.setAdapter(listViewDataAdapter);
-        // userAccountListView.setEnabled(false);
-        //userAccountListView.setFocusable(false);
-        userAccountListView.setClickable(false);
-        userAccountListView.setSelector(android.R.color.transparent);*/
-        // When list view item is clicked.
-       /* userAccountListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int index, long viewId) {
-                // Get list view item SQLiteCursor object.
-                Object clickItemObject = adapterView.getAdapter().getItem(index);
-                sqcursor = (SQLiteCursor) clickItemObject;
-
-                // Get row column data.
-                //   int rowId = sqcursor.getInt(sqcursor.getColumnIndex(UserInfoDBManager.TABLE_ACCOUNT_COLUMN_ID));
-                String producttype = sqcursor.getString(sqcursor.getColumnIndex(productType));
-                String productvarity = sqcursor.getString(sqcursor.getColumnIndex(UserInfoDBManager.productVariety));
-                String quality = sqcursor.getString(sqcursor.getColumnIndex(UserInfoDBManager.quality));
-                String price = sqcursor.getString(sqcursor.getColumnIndex(expectedPrice));
-                String image = sqcursor.getString(sqcursor.getColumnIndex(imagename));
-
-
-                // Create a UserAccountDTO object to save row column data.
-
-                String id="";
-                String productVariety="";
-                String quantity="";
-                String address="";
-                SaveProductInfo userAccountDto = new SaveProductInfo(id, productType, productVariety, quality, quantity, unit, expectedPrice, days, availablityInMonths, address, state, district, taluka, villagenam, areaheactor, imagename);
-                userAccountDto.setProductType(producttype);
-                userAccountDto.setProductVariety(productvarity);
-                userAccountDto.setQuality(quality);
-                userAccountDto.setExpectedPrice(price);
-                userAccountDto.setImagename(image);
-
-                // Get checkbox object.
-               itemCheckbox = (CheckBox) view.findViewById(R.id.user_account_list_item_checkbox);
-                boolean checkboxChecked = false;
-                if (itemCheckbox.isChecked()) {
-                    itemCheckbox.setChecked(false);
-                    checkboxChecked = false;
-                } else {
-                    itemCheckbox.setChecked(true);
-                    checkboxChecked = true;
-                }
-
-                // Add ( or remove ) userAccountDto from the instance variable userCheckedItemList.
-                addCheckListItem(userAccountDto, checkboxChecked);
-
-                // Show user select list view item id.
-              Toast.makeText(getApplicationContext(), "Select id : " + getUserCheckedItemIds(), Toast.LENGTH_SHORT).show();
-            }
-        });*/
-
         Cursor cursorData = userInfoDBManager.getAllAccountCursor();
-        if (cursorData != null && cursorData.getCount() > 0){
-            while (cursorData.moveToNext()) {
-                CursorData data = new CursorData(
-                        cursorData.getString(cursorData.getColumnIndex(imagename)),
-                        cursorData.getString(cursorData.getColumnIndex(productType)),
-                        cursorData.getString(cursorData.getColumnIndex(UserInfoDBManager.productVariety)),
-                        cursorData.getString(cursorData.getColumnIndex(UserInfoDBManager.quality)),
-                        cursorData.getString(cursorData.getColumnIndex(expectedPrice)),
-                        cursorData.getString(cursorData.getColumnIndex(UserInfoDBManager.TABLE_ACCOUNT_COLUMN_ID))
-                );
-                cursorDataList.add(data);
-            }
 
 
+       if (cursorData != null && cursorData.getCount() > 0){
+        /*   String producttype =t sqcursordata.getSring(sqcursordata.getColumnIndex(productType));
+           String productvarity = sqcursordata.getString(sqcursordata.getColumnIndex(UserInfoDBManager.productVariety));
+           String quality = sqcursordata.getString(sqcursordata.getColumnIndex(UserInfoDBManager.quality));
+           String price = sqcursordata.getString(sqcursordata.getColumnIndex(expectedPrice));
+           String image = sqcursordata.getString(sqcursordata.getColumnIndex(imagename));*/
+           CursorData data = new CursorData(
+                   cursorData.getString(cursorData.getColumnIndex(imagename)),
+                   cursorData.getString(cursorData.getColumnIndex(productType)),
+                   cursorData.getString(cursorData.getColumnIndex(UserInfoDBManager.productVariety)),
+                   cursorData.getString(cursorData.getColumnIndex(UserInfoDBManager.quality)),
+                   cursorData.getString(cursorData.getColumnIndex(expectedPrice))
 
+           );
 
-        }
+           cursorDataList.add(data);
+
+       }
 
         myCursorAdapter = new MyCursorAdapter(getApplicationContext(), cursorDataList);
         mrecyclerView.setAdapter(myCursorAdapter);
+
 
 
 
@@ -410,7 +347,7 @@ public class AddListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_add) {
-            Intent in = new Intent(AddListActivity.this, ProductInfoForSaleActivity.class);
+            Intent in = new Intent(AddListActivityTest.this, ProductInfoForSaleActivity.class);
             in.putExtra("ProductId", ProductId);
             startActivity(in);
 
@@ -453,7 +390,7 @@ public class AddListActivity extends AppCompatActivity {
 
                     listViewDataAdapter = new SimpleCursorAdapter(this, R.layout.activity_user_account_list_view_item, cursor, fromColumnArr, toViewIdArr, CursorAdapter.FLAG_AUTO_REQUERY);
 
-                    userAccountListView.setAdapter(listViewDataAdapter);
+                    mrecyclerView.setAdapter(myCursorAdapter);
 
                 }
             }
@@ -511,7 +448,7 @@ public class AddListActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(AddListActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(AddListActivityTest.this);
                         builder.setCancelable(false);
                         mProgressDialog.dismiss();
                         builder.setMessage("Data submitted successfully");
@@ -522,7 +459,7 @@ public class AddListActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 //if user pressed "yes", then he is allowed to exit from application
                                 //dialog.cancel();
-                                Intent i= new Intent(AddListActivity.this,HomeActivity.class);
+                                Intent i= new Intent(AddListActivityTest.this,HomeActivity.class);
                                 startActivity(i);
                             }
                         });
@@ -535,7 +472,7 @@ public class AddListActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                        Toast.makeText(AddListActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddListActivityTest.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
@@ -548,7 +485,7 @@ public class AddListActivity extends AppCompatActivity {
 
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-        VolleySingleton.getInstance(AddListActivity.this).addToRequestQueue(stringRequest);
+        VolleySingleton.getInstance(AddListActivityTest.this).addToRequestQueue(stringRequest);
 
     }
 

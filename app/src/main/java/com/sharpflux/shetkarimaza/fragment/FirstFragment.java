@@ -88,7 +88,7 @@ public class FirstFragment extends Fragment {
         usermobileno = user.getMobile();
         useremail = user.getEmail();
 
-        Cursor cursor = mydatabase.LanguageGet(language);
+       Cursor cursor = mydatabase.LanguageGet(language);
 
 
         while (cursor.moveToNext()) {
@@ -174,14 +174,14 @@ public class FirstFragment extends Fragment {
         });
 
 
-        /*Rcategory_edit.setOnClickListener(new View.OnClickListener() {
+        Rcategory_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FirstFragment.AsyncTaskRunner runner = new FirstFragment.AsyncTaskRunner();
                 String sleepTime = "cate";
                 runner.execute(sleepTime);
             }
-        });*/
+        });
 
 
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

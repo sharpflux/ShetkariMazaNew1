@@ -13,14 +13,16 @@
         android:orientation="horizontal">
 
 
+       <!-- <include layout="@layout/activity_load_addlist" />
+-->
         <ImageView
             android:id="@+id/ImgageAddList"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_gravity="center_horizontal"
             android:layout_marginStart="@dimen/_5sdp"
             android:layout_marginEnd="@dimen/_5sdp"
             android:src="@drawable/graps" />
+
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -137,15 +139,15 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-           <!-- <ImageView
+             <ImageView
                 android:id="@+id/row_cartlist_ivDelete"
                 android:layout_width="54dp"
                 android:layout_height="58dp"
                 android:layout_gravity="end"
                 android:padding="@dimen/_5sdp"
-                android:src="@drawable/ic_delete_forever"
+                android:src="@drawable/ic_dustbin"
+                />
 
-                />-->
 
 
           <CheckBox
@@ -154,6 +156,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:clickable="false"
+android:visibility="gone"
                 android:focusable="false" />
 
             <!--<ImageView
