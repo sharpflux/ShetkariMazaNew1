@@ -47,13 +47,20 @@ public class MyBuyerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
 
-        if (viewType == VIEW_TYPE_ITEM) {
+        if (viewType == VIEW_TYPE_ITEM)
+        {
             View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_buyer, parent, false);
             return new FlowerViewHolder(mView);
-        } else {
+        }
+        else if(viewType == VIEW_TYPE_LOADING){
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading, parent, false);
             return new LoadingViewHolder(view);
         }
+        else{
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_group_layout, parent,false);
+            return  new GroupViewHolder(view);
+        }
+
 
     }
 
@@ -76,6 +83,10 @@ public class MyBuyerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
         else if (holder instanceof LoadingViewHolder) {
             showLoadingView((LoadingViewHolder) holder, position);
+        }
+        else if(holder instanceof GroupViewHolder)
+        {
+
         }
 
 
@@ -176,6 +187,18 @@ class LoadingViewHolder extends RecyclerView.ViewHolder {
     ProgressBar progressBar;
 
     public LoadingViewHolder(@NonNull View itemView) {
+        super(itemView);
+        progressBar = itemView.findViewById(R.id.progressBar);
+    }
+
+
+}
+
+
+class GroupViewHolder extends RecyclerView.ViewHolder {
+
+    ProgressBar progressBar;
+    public GroupViewHolder(@NonNull View itemView) {
         super(itemView);
         progressBar = itemView.findViewById(R.id.progressBar);
     }

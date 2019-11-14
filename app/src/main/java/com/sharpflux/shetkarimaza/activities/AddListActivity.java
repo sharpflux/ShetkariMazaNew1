@@ -114,6 +114,7 @@ public class AddListActivity extends AppCompatActivity {
     ArrayList<CursorData> cursorDataList;
 
     SQLiteCursor sqcursordata;
+    TextView txt_emptyView;
 
 
 
@@ -130,19 +131,11 @@ public class AddListActivity extends AppCompatActivity {
         mrecyclerView.setLayoutManager(mGridLayoutManager);
         cursorDataList = new ArrayList<>();
 
-       /* userAccountListView = (ListView) findViewById(R.id.user_account_list_view);
-        userAccountListEmptyTextView = (TextView) findViewById(R.id.user_account_list_empty_text_view);
-        userAccountListView.setEmptyView(userAccountListEmptyTextView);*/
 
-        // builder.append("<?xml version=\"1.0\" ?>");
-        // Initialize the progress dialog
         mProgressDialog = new ProgressDialog(AddListActivity.this);
         mProgressDialog.setIndeterminate(false);
-        // Progress dialog horizontal style
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        // Progress dialog title
         mProgressDialog.setTitle("Saving data");
-        // Progress dialog message
         mProgressDialog.setMessage("Please wait, we are saving your data...");
 
         userCheckedItemList = new ArrayList<SaveProductInfo>();
@@ -150,6 +143,7 @@ public class AddListActivity extends AppCompatActivity {
         mAnimationDuration = getResources().getInteger(android.R.integer.config_longAnimTime);
         mLoadingView = findViewById(R.id.loading_spinner);
         ImgageAddList = findViewById(R.id.ImgageAddList);
+        txt_emptyView = findViewById(R.id.txt_emptyView);
 
 
 
@@ -181,71 +175,14 @@ public class AddListActivity extends AppCompatActivity {
         User user = SharedPrefManager.getInstance(this).getUser();
         UserId = user.getId();
 
-        // Get SQLite database query cursor.
+
         userInfoDBManager = new UserInfoDBManager(getApplicationContext());
         userInfoDBManager.open();
         Cursor cursor = userInfoDBManager.getAllAccountCursor();
 
-       /* listViewDataAdapter =
-                listViewDataAdapter = new SimpleCursorAdapter(this, R.layout.activity_user_account_list_view_item, cursor, fromColumnArr, toViewIdArr, CursorAdapter.FLAG_AUTO_REQUERY);
-*/
 
 
-        // Set simple cursor adapter to list view.
-       /* userAccountListView.setAdapter(listViewDataAdapter);
-        // userAccountListView.setEnabled(false);
-        //userAccountListView.setFocusable(false);
-        userAccountListView.setClickable(false);
-        userAccountListView.setSelector(android.R.color.transparent);*/
-        // When list view item is clicked.
-       /* userAccountListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int index, long viewId) {
-                // Get list view item SQLiteCursor object.
-                Object clickItemObject = adapterView.getAdapter().getItem(index);
-                sqcursor = (SQLiteCursor) clickItemObject;
 
-                // Get row column data.
-                //   int rowId = sqcursor.getInt(sqcursor.getColumnIndex(UserInfoDBManager.TABLE_ACCOUNT_COLUMN_ID));
-                String producttype = sqcursor.getString(sqcursor.getColumnIndex(productType));
-                String productvarity = sqcursor.getString(sqcursor.getColumnIndex(UserInfoDBManager.productVariety));
-                String quality = sqcursor.getString(sqcursor.getColumnIndex(UserInfoDBManager.quality));
-                String price = sqcursor.getString(sqcursor.getColumnIndex(expectedPrice));
-                String image = sqcursor.getString(sqcursor.getColumnIndex(imagename));
-
-
-                // Create a UserAccountDTO object to save row column data.
-
-                String id="";
-                String productVariety="";
-                String quantity="";
-                String address="";
-                SaveProductInfo userAccountDto = new SaveProductInfo(id, productType, productVariety, quality, quantity, unit, expectedPrice, days, availablityInMonths, address, state, district, taluka, villagenam, areaheactor, imagename);
-                userAccountDto.setProductType(producttype);
-                userAccountDto.setProductVariety(productvarity);
-                userAccountDto.setQuality(quality);
-                userAccountDto.setExpectedPrice(price);
-                userAccountDto.setImagename(image);
-
-                // Get checkbox object.
-               itemCheckbox = (CheckBox) view.findViewById(R.id.user_account_list_item_checkbox);
-                boolean checkboxChecked = false;
-                if (itemCheckbox.isChecked()) {
-                    itemCheckbox.setChecked(false);
-                    checkboxChecked = false;
-                } else {
-                    itemCheckbox.setChecked(true);
-                    checkboxChecked = true;
-                }
-
-                // Add ( or remove ) userAccountDto from the instance variable userCheckedItemList.
-                addCheckListItem(userAccountDto, checkboxChecked);
-
-                // Show user select list view item id.
-              Toast.makeText(getApplicationContext(), "Select id : " + getUserCheckedItemIds(), Toast.LENGTH_SHORT).show();
-            }
-        });*/
-//
         Cursor cursorData = userInfoDBManager.getAllAccountCursor();
         if (cursorData != null && cursorData.getCount() > 0){
             while (cursorData.moveToNext()) {
@@ -270,6 +207,7 @@ public class AddListActivity extends AppCompatActivity {
 
 
 
+
         btnsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -287,46 +225,7 @@ public class AddListActivity extends AppCompatActivity {
 
 
 
-    public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-        private View mContent;
-        private View mSpinner;
-        private int mDuration;
 
-        public DownloadImageTask(ImageView bmImage, View spinner, int duration) {
-            this.bmImage = bmImage;
-            mSpinner = spinner;
-            mDuration = duration;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-
-            bmImage.setImageBitmap(result);
-
-            mSpinner.animate()
-                    .alpha(0f)
-                    .setDuration(mDuration)
-                    .setListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            mLoadingView.setVisibility(View.GONE);
-                        }
-                    });
-        }
-    }
 
 
 
@@ -442,7 +341,6 @@ public class AddListActivity extends AppCompatActivity {
 
                         SaveProductInfo tmpDto = userCheckedItemList.get(i);
 
-                       // userInfoDBManager.deleteAccount(tmpDto.getId());
 
                         userCheckedItemList.remove(i);
 

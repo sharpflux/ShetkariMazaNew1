@@ -1,14 +1,12 @@
 package com.sharpflux.shetkarimaza.fragment;
 
 import android.app.ProgressDialog;
-import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -26,9 +25,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.MyBuyerAdapter;
 import com.sharpflux.shetkarimaza.model.SellOptions;
-import com.sharpflux.shetkarimaza.model.User;
-import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
-import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
@@ -36,78 +32,35 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
-
-public class DynamicFragment extends Fragment {
-
-    SellOptions sellOptions;
-    Locale myLocale;
-    ArrayList<SellOptions> productlist;
-    RecyclerView mRecyclerView;
-    String CategoryId = "1";
+public class GroupFragment extends Fragment {
+    RecyclerView rv_cstGrp;
+    LinearLayoutManager mGridLayoutManager;
     SearchView searchView;
-    MyBuyerAdapter myAdapter;
-    boolean isLoading = false;
-    int currentItems,totalItems,scrollOutItems;
-    GridLayoutManager mGridLayoutManager;
-
-    dbLanguage mydatabase;
-    String currentLanguage,language;
-
-
-
-    public static DynamicFragment newInstance() {
-        return new DynamicFragment();
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
+    TextView txt_group;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.dynamic_fragment_layout, container, false);
+        View view = inflater.inflate(R.layout.dynamic_fragment_group_layout, container, false);
 
-        mRecyclerView = view.findViewById(R.id.recyclerview);
-         mGridLayoutManager = new GridLayoutManager(getContext(), 2);
-        mRecyclerView.setLayoutManager(mGridLayoutManager);
-
-        CategoryId = String.valueOf(getArguments().getString("CategoryId"));
+        mGridLayoutManager = new GridLayoutManager(getContext(), 1);
+        rv_cstGrp.setLayoutManager(mGridLayoutManager);
+     //   rv_cstGrp = view.findViewById(R.id.rv_cstGrp);
         searchView = view.findViewById(R.id.searchViewHome);
+        txt_group = view.findViewById(R.id.txt_group);
 
 
-        mydatabase = new dbLanguage(getContext());
-
-        User user = SharedPrefManager.getInstance(getContext()).getUser();
-        myLocale = getResources().getConfiguration().locale;
-        language = user.getLanguage();
-
-        Cursor cursor = mydatabase.LanguageGet(language);
-
-
-        while (cursor.moveToNext()) {
-            currentLanguage = cursor.getString(0);
-
-        }
-
-        productlist = new ArrayList<>();
-        myLocale = getResources().getConfiguration().locale;
-        // setDynamicFragmentToTabLayout();
-        AsyncTaskRunner runner = new AsyncTaskRunner();
+       /* GroupFragment.AsyncTaskRunner runner = new GroupFragment.AsyncTaskRunner();
         String sleepTime = "10";
-        runner.execute(sleepTime);
+        runner.execute(sleepTime);*/
 
         return view;
     }
 
-    private void setDynamicFragmentToTabLayout() {
+   /* private void setDynamicFragmentToTabLayout() {
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 URLs.URL_NAME + "?CategoryId=" + CategoryId + "&Language=" + currentLanguage,
@@ -119,36 +72,20 @@ public class DynamicFragment extends Fragment {
                             JSONArray obj = new JSONArray(response);
                             for (int i = 0; i < obj.length(); i++) {
                                 JSONObject userJson = obj.getJSONObject(i);
-                                if (!userJson.getBoolean("error"))
-                                {
-                                    if(userJson.getBoolean("IsGroup"))
-                                    {
-                                        FragmentTransaction transection = getFragmentManager().beginTransaction();
-                                        GroupFragment mfragment = new GroupFragment();
-                                        transection.commit();
-                                        break;
+                                if (!userJson.getBoolean("error")) {
+                                    sellOptions = new SellOptions
+                                            (userJson.getString("ImageUrl"),
+                                                    userJson.getString("ItemName"),
+                                                    userJson.getString("ItemTypeId"),
+                                                    CategoryId);
 
-
-                                    }
-                                    else {
-                                        sellOptions = new SellOptions
-                                                (userJson.getString("ImageUrl"),
-                                                        userJson.getString("ItemName"),
-                                                        userJson.getString("ItemTypeId"),
-                                                        CategoryId);
-
-                                        productlist.add(sellOptions);
-
-                                        myAdapter = new MyBuyerAdapter(getContext(), productlist);
-                                        mRecyclerView.setAdapter(myAdapter);
-
-                                    }
-                                }
-
-                                else {
+                                    productlist.add(sellOptions);
+                                } else {
                                     Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                                 }
 
+                                myAdapter = new MyBuyerAdapter(getContext(), productlist);
+                                mRecyclerView.setAdapter(myAdapter);
 
                                 mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                                     @Override
@@ -234,9 +171,10 @@ public class DynamicFragment extends Fragment {
         };
 
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
-    }
+    }*/
 
-    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
+
+   /* private class AsyncTaskRunner extends AsyncTask<String, String, String> {
 
         private String resp;
         ProgressDialog progressDialog;
@@ -276,7 +214,5 @@ public class DynamicFragment extends Fragment {
 
         }
 
-    }
-
-
+    }*/
 }

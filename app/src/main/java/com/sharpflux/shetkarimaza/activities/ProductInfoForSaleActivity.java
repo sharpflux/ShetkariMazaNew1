@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -474,9 +475,14 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
         extras = getIntent().getExtras();
         if (extras != null) {
-
-
+            /*Bitmap bitmap;
             String ImageUrl = extras.getString("ImageUrl");
+            byte [] encodeByte = Base64.decode(ImageUrl,Base64.DEFAULT);
+            Bitmap bitmap1 = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            img_banner_profile_placeholder.setImageBitmap(bitmap1);
+*/
+
+
 
            /* byte[] decodedString = Base64.decode(ImageUrl, Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);

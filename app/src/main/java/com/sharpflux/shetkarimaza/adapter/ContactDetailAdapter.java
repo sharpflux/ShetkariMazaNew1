@@ -25,10 +25,12 @@ public class ContactDetailAdapter extends RecyclerView.Adapter<ContactDetaiViewH
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
     private static int currentPosition = 0;
+    TextView txt_emptyView;
 
     public ContactDetailAdapter(Context mContext, List<ContactDetail> mlist) {
         this.mContext = mContext;
         this.mlist = mlist;
+
     }
 
     @Override

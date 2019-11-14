@@ -50,15 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
 
-            <TextView
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:id="@+id/user_account_list_empty_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="The user account list is empty."
-                android:textColor="@color/error_color_material"
-                android:textSize="20dp"/>
+
 
         </LinearLayout>
 

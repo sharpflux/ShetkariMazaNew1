@@ -84,7 +84,7 @@ public class ContactDetailActivity extends AppCompatActivity {
     Locale myLocale;
     JSONArray obj;
     AlertDialog.Builder builder;
-    TextView user_account_list_empty_text_view;
+    TextView txt_emptyView;
 
 
     public static final int PAGE_START = 1;
@@ -108,7 +108,7 @@ public class ContactDetailActivity extends AppCompatActivity {
         recyclerView.setAdapter(myAdapter);
 
         progressBar_filter = findViewById(R.id.progressBar_filter);
-        user_account_list_empty_text_view = findViewById(R.id.user_account_list_empty_text_view);
+        txt_emptyView = findViewById(R.id.txt_emptyView);
 
 
 
@@ -337,9 +337,12 @@ public class ContactDetailActivity extends AppCompatActivity {
 
                                     myAdapter = new ContactDetailAdapter(ContactDetailActivity.this, contactlist);
                                     recyclerView.setAdapter(myAdapter);
-                                    if(response==" "){
-                                        user_account_list_empty_text_view.setVisibility(View.VISIBLE);
+
+                                   if(myAdapter.getItemCount()==0);{
+                                       txt_emptyView.setVisibility(View.VISIBLE);
                                     }
+                                    txt_emptyView.setVisibility(View.GONE);
+
 
                                 }
 

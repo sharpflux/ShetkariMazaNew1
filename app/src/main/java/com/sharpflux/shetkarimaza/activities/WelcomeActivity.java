@@ -1,9 +1,11 @@
 package com.sharpflux.shetkarimaza.activities;
 
 import android.animation.ValueAnimator;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +26,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private int dotscount;
     private ImageView[] dots;
     Button btn_skip;
+    TextView tvTitleOne,tvDesOne;
 
     //Hello from Aparna////
 
@@ -34,14 +37,24 @@ public class WelcomeActivity extends AppCompatActivity {
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         SliderDots = (LinearLayout) findViewById(R.id.SliderDots);
-        final TextView tvTitleOne=findViewById(R.id.tvTitleOne);
-        final TextView tvDesOne=findViewById(R.id.tvDesOne);
+        tvTitleOne=findViewById(R.id.tvTitleOne);
+          tvDesOne=findViewById(R.id.tvDesOne);
        btn_skip= findViewById(R.id.btn_skip);
 
-       /*if (SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
-           finish();
-            startActivity(new Intent(getApplicationContext(), ChooseActivity.class));
-        }*/
+
+
+        SharedPreferences myPref = this.getSharedPreferences("prefName", Context.MODE_PRIVATE);
+        boolean firstLaunch = myPref.getBoolean("firstLaunch", true);
+
+        if(!firstLaunch){
+            Intent i = new Intent(getApplicationContext(),HomeActivity.class);
+            startActivity(i);
+            finish();
+        }
+        myPref.edit().putBoolean("firstLaunch", false).commit();
+        CallData();
+
+
         btn_skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,28 +64,35 @@ public class WelcomeActivity extends AppCompatActivity {
                 finish();
 
 
-                /*SharedPreferences settings = getSharedPreferences("prefs", 0);
+               /*SharedPreferences settings = getSharedPreferences("prefs", 0);
                 boolean firstRun = settings.getBoolean("firstRun", false);
                 if (firstRun == false)//if running for first time
                 {
                     SharedPreferences.Editor editor = settings.edit();
                     editor.putBoolean("firstRun", true);
                     editor.commit();
-                    Intent i = new Intent(WelcomeActivity.this, SelectLanguageActivity.class);//Activity to be  launched For the First time
-                    startActivity(i);
+                    Intent intent = new Intent(WelcomeActivity.this, SelectLanguageActivity.class);//Activity to be  launched For the First time
+                    startActivity(intent);
                     finish();
                 } else {
                     Intent a = new Intent(WelcomeActivity.this, HomeActivity.class);//Default Activity
                     startActivity(a);
                     finish();
-                }
-*/
+                }*/
+
 
 
             }
         }) ;
 
 
+
+
+
+    }
+
+
+    public void CallData(){
 
         final float startSize = 00; // Size in pixels
         final float endSize = 20;

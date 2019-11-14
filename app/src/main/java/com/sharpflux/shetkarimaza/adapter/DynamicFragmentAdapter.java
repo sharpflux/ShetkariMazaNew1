@@ -1,12 +1,15 @@
 package com.sharpflux.shetkarimaza.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
+import com.sharpflux.shetkarimaza.activities.SellerActivity;
 import com.sharpflux.shetkarimaza.fragment.DynamicFragment;
 import com.sharpflux.shetkarimaza.model.SellOptions;
 
@@ -40,6 +43,7 @@ public class DynamicFragmentAdapter extends FragmentStatePagerAdapter {
             JSONObject jObject = arrayObj.getJSONObject(position);
             b.putString("CategoryName_EN", jObject.getString("CategoryName_EN"));;
             b.putString("CategoryId",jObject.getString("CategoryId"));
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -54,5 +58,6 @@ public class DynamicFragmentAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return mNumOfTabs;
     }
+
 
 }

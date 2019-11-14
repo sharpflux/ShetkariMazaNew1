@@ -28,6 +28,12 @@
 
     </LinearLayout>
     </com.facebook.shimmer.ShimmerFrameLayout>-->
+
+    <View
+        android:id="@+id/viewSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/uiv3_divider_color" />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview_categorytype"
         android:layout_width="match_parent"

@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -40,6 +42,7 @@ public class EditRequestActivity extends AppCompatActivity {
     Bundle bundle;
     Locale myLocale;
     int userId;
+    TextView txt_emptyView;
 
     dbLanguage mydatabase;
     String currentLanguage,language;
@@ -49,6 +52,7 @@ public class EditRequestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_request);
 
         recyclerView =findViewById(R.id.edit_rvProductList);
+        txt_emptyView =findViewById(R.id.txt_emptyView);
 
         productlist=new ArrayList<>();
         recyclerView.setHasFixedSize(true);
@@ -125,6 +129,12 @@ public class EditRequestActivity extends AppCompatActivity {
                                 }
                                 EditRequestAdapter myAdapter = new EditRequestAdapter(EditRequestActivity.this, productlist);
                                 recyclerView.setAdapter(myAdapter);
+
+                                if(myAdapter.getItemCount()==0);{
+                                    txt_emptyView.setVisibility(View.VISIBLE);
+                                }
+                                txt_emptyView.setVisibility(View.GONE);
+
 
                             }
                         } catch (JSONException e) {

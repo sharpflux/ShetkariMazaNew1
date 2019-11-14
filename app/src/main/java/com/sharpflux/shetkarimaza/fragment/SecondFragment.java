@@ -190,6 +190,8 @@ public class SecondFragment extends DialogFragment {
                 bundle.putString("license", license.getText().toString());
                 bundle.putString("companyregnno", companyregnno.getText().toString());
                 bundle.putString("gstno", gstno.getText().toString());
+
+
                 FragmentTransaction transection = getFragmentManager().beginTransaction();
                 ThirdFragment mfragment = new ThirdFragment();
                 mfragment.setArguments(bundle); //data being send to SecondFragment
