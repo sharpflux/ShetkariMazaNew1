@@ -35,7 +35,7 @@ public class ContactDetailAdapter extends RecyclerView.Adapter<ContactDetaiViewH
 
     @Override
     public ContactDetaiViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.contact_details_item_view, parent, false);
+        View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_contact_detail_list, parent, false);
         return new ContactDetaiViewHolder(mView);
     }
 

@@ -40,9 +40,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class TalukaFragment extends Fragment {
     private RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
