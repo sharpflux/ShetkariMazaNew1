@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +24,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.gson.JsonObject;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.MyBuyerAdapter;
 import com.sharpflux.shetkarimaza.model.SellOptions;
@@ -76,7 +78,7 @@ public class DynamicFragment extends Fragment {
         View view = inflater.inflate(R.layout.dynamic_fragment_layout, container, false);
 
         mRecyclerView = view.findViewById(R.id.recyclerview);
-         mGridLayoutManager = new GridLayoutManager(getContext(), 2);
+        mGridLayoutManager = new GridLayoutManager(getContext(), 2);
         mRecyclerView.setLayoutManager(mGridLayoutManager);
 
         CategoryId = String.valueOf(getArguments().getString("CategoryId"));
@@ -110,7 +112,7 @@ public class DynamicFragment extends Fragment {
     private void setDynamicFragmentToTabLayout() {
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_NAME + "?CategoryId=" + CategoryId + "&Language=" + currentLanguage,
+                    URLs.URL_NAME + "?CategoryId=" + CategoryId + "&Language=" + currentLanguage,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -123,12 +125,8 @@ public class DynamicFragment extends Fragment {
                                 {
                                     if(userJson.getBoolean("IsGroup"))
                                     {
-                                        FragmentTransaction transection = getFragmentManager().beginTransaction();
-                                        GroupFragment mfragment = new GroupFragment();
-                                        transection.commit();
+                                        swapFragment(obj);
                                         break;
-
-
                                     }
                                     else {
                                         sellOptions = new SellOptions
@@ -142,76 +140,73 @@ public class DynamicFragment extends Fragment {
                                         myAdapter = new MyBuyerAdapter(getContext(), productlist);
                                         mRecyclerView.setAdapter(myAdapter);
 
+                                        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                                            @Override
+                                            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                                                super.onScrollStateChanged(recyclerView, newState);
+                                            }
+
+                                            @Override
+                                            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                                                super.onScrolled(recyclerView, dx, dy);
+
+                                                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+                                                if (!isLoading) {
+                                                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == productlist.size() - 1) {
+
+                                                        productlist.add(null);
+                                                        myAdapter.notifyItemInserted(productlist.size() - 1);
+
+                                                        Handler handler = new Handler();
+
+                                                        handler.postDelayed(new Runnable() {
+                                                            @Override
+                                                            public void run() {
+                                                                productlist.remove(productlist.size() - 1);
+                                                                int scrollPosition = productlist.size();
+                                                                myAdapter.notifyItemRemoved(scrollPosition);
+                                                                int currentSize = scrollPosition;
+                                                                int nextLimit = currentSize + 3;
+
+                                                                while (currentSize - 1 < nextLimit) {
+                                                                    // productlist.add(sellOptions);
+                                                                    currentSize++;
+                                                                }
+
+                                                                myAdapter.notifyDataSetChanged();
+                                                                isLoading = false;
+                                                            }
+                                                        }, 1000);
+
+                                                        isLoading = true;
+                                                    }
+                                                }
+                                            }
+                                        });
+
+                                        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                                            @Override
+                                            public boolean onQueryTextSubmit(String query) {
+
+                                                return false;
+                                            }
+
+                                            @Override
+                                            public boolean onQueryTextChange(String newText) {
+
+                                                myAdapter.getFilter().filter(newText);
+                                                return false;
+
+                                            }
+                                        });
+
                                     }
                                 }
 
                                 else {
                                     Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                                 }
-
-
-                                mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                                    @Override
-                                    public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                                        super.onScrollStateChanged(recyclerView, newState);
-                                    }
-
-                                    @Override
-                                    public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                                        super.onScrolled(recyclerView, dx, dy);
-
-                                        LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-
-                                        if (!isLoading) {
-                                            if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == productlist.size() - 1) {
-
-                                                productlist.add(null);
-                                                myAdapter.notifyItemInserted(productlist.size() - 1);
-
-                                                Handler handler = new Handler();
-
-                                                handler.postDelayed(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        productlist.remove(productlist.size() - 1);
-                                                        int scrollPosition = productlist.size();
-                                                        myAdapter.notifyItemRemoved(scrollPosition);
-                                                        int currentSize = scrollPosition;
-                                                        int nextLimit = currentSize + 3;
-
-                                                        while (currentSize - 1 < nextLimit) {
-                                                            // productlist.add(sellOptions);
-                                                            currentSize++;
-                                                        }
-
-                                                        myAdapter.notifyDataSetChanged();
-                                                        isLoading = false;
-                                                    }
-                                                }, 1000);
-
-                                                isLoading = true;
-                                            }
-                                        }
-                                    }
-                                });
-
-
-                                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                                    @Override
-                                    public boolean onQueryTextSubmit(String query) {
-
-                                        return false;
-                                    }
-
-                                    @Override
-                                    public boolean onQueryTextChange(String newText) {
-
-                                        myAdapter.getFilter().filter(newText);
-                                        return false;
-
-                                    }
-                                });
-
 
                             }
 
@@ -279,4 +274,14 @@ public class DynamicFragment extends Fragment {
     }
 
 
+    private void swapFragment(JSONArray obj){
+        GroupFragment categoryFragment = new GroupFragment();
+        Bundle bundle=new Bundle();
+        bundle.putString("jsonObj",obj.toString());
+        categoryFragment.setArguments(bundle);
+        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frame, categoryFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
 }

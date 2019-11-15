@@ -23,7 +23,7 @@
 
 
         <ImageView
-            android:id="@+id/img_group"
+            android:id="@+id/ivsellerplantLogo"
             android:src="@drawable/graps"
             android:layout_gravity="center_horizontal"
             android:layout_width="70dp"
@@ -40,12 +40,16 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/txt_groupName"
-                android:text="Group Name"
+                android:text="Click here to see more Nursery"
+                android:fontFamily="@font/sfpro_display_bold"
+                style="@style/ganaral_primarystylesale" />
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/ivsellerplanttype"
+                android:text="Grapes"
                 android:fontFamily="@font/sfpro_display_bold"
                 style="@style/ganaral_primarystylesale"/>
-
-
 
         </LinearLayout>
 

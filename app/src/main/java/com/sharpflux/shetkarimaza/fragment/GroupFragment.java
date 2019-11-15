@@ -22,8 +22,13 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.gson.JsonArray;
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.activities.SellerActivity;
 import com.sharpflux.shetkarimaza.adapter.MyBuyerAdapter;
+import com.sharpflux.shetkarimaza.adapter.MyGroupAdapter;
+import com.sharpflux.shetkarimaza.adapter.MySellerAdapter;
+import com.sharpflux.shetkarimaza.model.GroupData;
 import com.sharpflux.shetkarimaza.model.SellOptions;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
@@ -32,7 +37,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GroupFragment extends Fragment {
@@ -40,20 +47,63 @@ public class GroupFragment extends Fragment {
     LinearLayoutManager mGridLayoutManager;
     SearchView searchView;
     TextView txt_group;
-
+    private ArrayList<GroupData> sellOptionsList;
+    RecyclerView mRecyclerView;
+    Bundle bundle;
+    MyGroupAdapter myAdapter2;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.dynamic_fragment_group_layout, container, false);
-
-        mGridLayoutManager = new GridLayoutManager(getContext(), 1);
+        rv_cstGrp = view.findViewById(R.id.rv_cstGrp);
+        mGridLayoutManager = new LinearLayoutManager(getContext());
         rv_cstGrp.setLayoutManager(mGridLayoutManager);
-     //   rv_cstGrp = view.findViewById(R.id.rv_cstGrp);
-        searchView = view.findViewById(R.id.searchViewHome);
-        txt_group = view.findViewById(R.id.txt_group);
+
+        //searchView = view.findViewById(R.id.searchViewHome);
 
 
-       /* GroupFragment.AsyncTaskRunner runner = new GroupFragment.AsyncTaskRunner();
+       txt_group = view.findViewById(R.id.txt_group);
+
+        sellOptionsList = new ArrayList<>();
+
+        Bundle extras = getArguments();
+        if (extras != null) {
+
+            JSONArray obj = null;
+            try {
+                obj = new JSONArray(extras.getString("jsonObj").toString());
+
+                for (int i = 0; i < obj.length(); i++) {
+                    JSONObject userJson = null;
+                    try {
+                        userJson = obj.getJSONObject(i);
+
+                        GroupData sellOptions =
+                                new GroupData
+                                        (userJson.getString("ImageUrl"),
+                                                userJson.getString("ItemName")
+                                                );
+
+                        sellOptionsList.add(sellOptions);
+                        myAdapter2 = new MyGroupAdapter(getContext(), sellOptionsList);
+                        rv_cstGrp.setAdapter(myAdapter2);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+
+                }
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+/* GroupFragment.AsyncTaskRunner runner = new GroupFragment.AsyncTaskRunner();
         String sleepTime = "10";
         runner.execute(sleepTime);*/
 

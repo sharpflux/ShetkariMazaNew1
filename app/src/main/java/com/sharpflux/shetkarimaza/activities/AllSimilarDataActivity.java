@@ -558,7 +558,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                 builder.setCancelable(false);
                 builder.setTitle("File downloaded Successfully...");
                 //builder.setMessage("You don't have excel Application!Please download it!");
-                builder.setMessage("Go to diapertohome folder to your phone storage!");
+                builder.setMessage("Go to diapertohome folder in your phone storage!");
 
                 builder.setIcon(R.drawable.ic_check_circle);
 
@@ -623,7 +623,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                         sheet.addCell(new Label(8, j, productlist.get(i).getPrice()));
                         sheet.addCell(new Label(9, j, productlist.get(i).getAvailable_month()));
                         sheet.addCell(new Label(10, j, productlist.get(i).getFarm_address()));
-                        sheet.addCell(new Label(11, j, productlist.get(i).getState()));
+                        sheet.addCell(new Label(11, j, productlist.get(i).getSurveyNo()));
                         sheet.addCell(new Label(12, j, productlist.get(i).getState()));
                         sheet.addCell(new Label(13, j, productlist.get(i).getDistrict()));
                         sheet.addCell(new Label(14, j, productlist.get(i).getTaluka()));
