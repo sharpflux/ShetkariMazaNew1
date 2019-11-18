@@ -110,13 +110,14 @@ public class FirstFragment extends Fragment {
                 String regType = Rtype_edit.getText().toString();
                // String regCategory = Rcategory_edit.getText().toString();
                 String rb= Rcategory_edit.getText().toString();
+                String alterNo= AlternateMobile.getText().toString();
 
 
 
 
 
                 if (TextUtils.isEmpty(regType)) {
-                    Rtype_edit.setError("Please enter your quality");
+                    Rtype_edit.setError("Please enter your Registration Type");
                     Rtype_edit.requestFocus();
                     return;
                 }
@@ -134,6 +135,13 @@ public class FirstFragment extends Fragment {
                     rb1.requestFocus();
                     rb2.setError("please select Gender");
                     rb2.requestFocus();
+                    return;
+                }
+
+
+                if (TextUtils.isEmpty(alterNo)) {
+                    AlternateMobile.setError("Please enter your Alternate Mobile No.");
+                    AlternateMobile.requestFocus();
                     return;
                 }
 

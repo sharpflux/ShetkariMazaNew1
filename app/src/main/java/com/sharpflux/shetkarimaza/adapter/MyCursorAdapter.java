@@ -40,7 +40,7 @@ public class MyCursorAdapter extends RecyclerView.Adapter<MyCursorAdapterViewHol
     public MyCursorAdapter(Context mContext, List<CursorData> mlist) {
         this.mContext = mContext;
         this.mlist = mlist;
-       // userInfoDBManager = new UserInfoDBManager(mContext);
+        userInfoDBManager = new UserInfoDBManager(mContext);
     }
 
     @NonNull
@@ -60,7 +60,7 @@ public class MyCursorAdapter extends RecyclerView.Adapter<MyCursorAdapterViewHol
         Pkey=mlist.get(i).getPKey();
 
         Postition=i;
-        byte[] imgbytes = Base64.decode(mlist.get(i).getImageUrl(), Base64.DEFAULT);
+       byte[] imgbytes = Base64.decode(mlist.get(i).getImageUrl(), Base64.DEFAULT);
         bitmap = BitmapFactory.decodeByteArray(imgbytes, 0, imgbytes.length);
         holder.Imgage.setImageBitmap(bitmap);
 

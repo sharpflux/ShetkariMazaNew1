@@ -25,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.JsonObject;
+import com.sharpflux.shetkarimaza.Interface.RecyclerViewClickListener;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.MyBuyerAdapter;
 import com.sharpflux.shetkarimaza.model.SellOptions;
@@ -44,7 +45,7 @@ import java.util.Locale;
 import java.util.Map;
 
 
-public class DynamicFragment extends Fragment {
+public class DynamicFragment extends Fragment implements RecyclerViewClickListener {
 
     SellOptions sellOptions;
     Locale myLocale;
@@ -109,7 +110,7 @@ public class DynamicFragment extends Fragment {
         return view;
     }
 
-    private void setDynamicFragmentToTabLayout() {
+    public void setDynamicFragmentToTabLayout() {
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                     URLs.URL_NAME + "?CategoryId=" + CategoryId + "&Language=" + currentLanguage,
@@ -229,6 +230,11 @@ public class DynamicFragment extends Fragment {
         };
 
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+    }
+
+    @Override
+    public void onClick(View view, int position) {
+        setDynamicFragmentToTabLayout();
     }
 
     private class AsyncTaskRunner extends AsyncTask<String, String, String> {

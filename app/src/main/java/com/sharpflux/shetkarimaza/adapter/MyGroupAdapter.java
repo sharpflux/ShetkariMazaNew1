@@ -14,10 +14,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.sharpflux.shetkarimaza.Interface.RecyclerViewClickListener;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.ProductInfoForSaleActivity;
+import com.sharpflux.shetkarimaza.filters.FilterActivity;
 import com.sharpflux.shetkarimaza.fragment.DynamicFragment;
 import com.sharpflux.shetkarimaza.fragment.GroupFragment;
+import com.sharpflux.shetkarimaza.fragment.ThirdFragment;
 import com.sharpflux.shetkarimaza.model.GroupData;
 import com.sharpflux.shetkarimaza.model.SellOptions;
 import com.squareup.picasso.Picasso;
@@ -29,11 +32,17 @@ public class MyGroupAdapter extends RecyclerView.Adapter<GroupViewHolder1> {
 
     private Context mmContext;
     private ArrayList<GroupData> sellOptions;
+    TextView ItemTypeId;
+    RecyclerViewClickListener rv;
+
 
 
     public MyGroupAdapter(Context mContext, ArrayList<GroupData> sellOptions) {
         this.mmContext = mContext;
         this.sellOptions = sellOptions;
+
+
+
     }
 
     @Override
@@ -49,7 +58,18 @@ public class MyGroupAdapter extends RecyclerView.Adapter<GroupViewHolder1> {
         Picasso.get().load(sellOptions.get(i).getImage()).resize(300, 300)
                 .into(holder.Image);
         holder.Title.setText(sellOptions.get(i).getName());
+       // holder.ItemTypeId.getText(sellOptions.get(i).getTypeId());
 
+
+       /* holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(mmContext,DynamicFragment.class);
+                i.putExtra("ItemTypeId",ItemTypeId.toString());
+                mmContext.startActivity(i);
+            }
+        });
+*/
     }
 
 
@@ -66,7 +86,7 @@ public class MyGroupAdapter extends RecyclerView.Adapter<GroupViewHolder1> {
 class GroupViewHolder1 extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     ImageView Image;
-    TextView Title;
+    TextView Title,ItemTypeId;
     String ProductId;
 
 
@@ -74,18 +94,14 @@ class GroupViewHolder1 extends RecyclerView.ViewHolder implements View.OnClickLi
         super(itemView);
         Image = itemView.findViewById(R.id.ivsellerplantLogo);
         Title = itemView.findViewById(R.id.ivsellerplanttype);
+        itemView.setOnClickListener(this);
 
     }
 
     @Override
     public void onClick(View view) {
 
-       /* FragmentManager fragmentManager =;
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        DynamicFragment NAME = new DynamicFragment();
-        fragmentTransaction.replace(R.id.frame, NAME);
-        fragmentTransaction.commit();
-*/
+
     }
 
 }

@@ -117,7 +117,7 @@ public class SignupFragment extends Fragment {
         number = ccp.getFullNumberWithPlus();
 
         if (TextUtils.isEmpty(username)) {
-            eusername.setError("Please enter username");
+            eusername.setError("Please enter your username");
             eusername.requestFocus();
             return;
         }
@@ -251,6 +251,8 @@ public class SignupFragment extends Fragment {
                 getOtp();
                 Thread.sleep(time);
                 resp = "Slept for " + params[0] + " seconds";
+
+
             } catch (Exception e) {
                 e.printStackTrace();
                 resp = e.getMessage();
@@ -261,9 +263,9 @@ public class SignupFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String result) {
-            // execution of result of Long time consuming operation
+
             progressDialog.dismiss();
-            // finalResult.setText(result);
+
         }
 
 
@@ -277,7 +279,7 @@ public class SignupFragment extends Fragment {
 
         @Override
         protected void onProgressUpdate(String... text) {
-            // finalResult.setText(text[0]);
+
 
         }
 

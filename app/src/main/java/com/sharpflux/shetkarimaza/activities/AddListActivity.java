@@ -191,15 +191,11 @@ public class AddListActivity extends AppCompatActivity {
                         cursorData.getString(cursorData.getColumnIndex(productType)),
                         cursorData.getString(cursorData.getColumnIndex(UserInfoDBManager.productVariety)),
                         cursorData.getString(cursorData.getColumnIndex(UserInfoDBManager.quality)),
-                        cursorData.getString(cursorData.getColumnIndex(expectedPrice)),
-                        cursorData.getString(cursorData.getColumnIndex(UserInfoDBManager.TABLE_ACCOUNT_COLUMN_ID))
+                        cursorData.getString(cursorData.getColumnIndex(expectedPrice))
+                      //  cursorData.getString(cursorData.getColumnIndex(UserInfoDBManager.TABLE_ACCOUNT_COLUMN_ID))
                 );
                 cursorDataList.add(data);
             }
-
-
-
-
         }
 
         myCursorAdapter = new MyCursorAdapter(getApplicationContext(), cursorDataList);

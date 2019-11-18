@@ -81,12 +81,16 @@ public class GroupFragment extends Fragment {
                         GroupData sellOptions =
                                 new GroupData
                                         (userJson.getString("ImageUrl"),
-                                                userJson.getString("ItemName")
+                                                userJson.getString("ItemName"),
+                                                userJson.getString("ItemTypeId")
                                                 );
 
                         sellOptionsList.add(sellOptions);
                         myAdapter2 = new MyGroupAdapter(getContext(), sellOptionsList);
                         rv_cstGrp.setAdapter(myAdapter2);
+
+
+
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -101,6 +105,8 @@ public class GroupFragment extends Fragment {
                 e.printStackTrace();
             }
         }
+
+
 
 
 /* GroupFragment.AsyncTaskRunner runner = new GroupFragment.AsyncTaskRunner();
