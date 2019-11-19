@@ -17,6 +17,17 @@
         android:queryHint="@string/search_here" />
 
 
+    <TextView
+        android:drawableLeft="@drawable/ic_arrow_back"
+        android:id="@+id/txt_group"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:fontFamily="@font/sfpro_display_bold"
+        style="@style/ganaral_primarystylesale"
+        android:visibility="gone"
+        android:gravity="center"/>
+
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerview"
                 android:layout_width="match_parent"
@@ -27,5 +38,7 @@
 <FrameLayout
     android:id="@+id/frame"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"/>
+    android:layout_height="wrap_content">
+
+</FrameLayout>
 </LinearLayout>

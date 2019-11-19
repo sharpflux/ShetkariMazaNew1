@@ -28,14 +28,14 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class BuyerActivity extends AppCompatActivity implements  TabLayout.OnTabSelectedListener {
+public class BuyerActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
 
     private TabLayout mTabLayout;
     Locale myLocale;
     private ViewPager viewPager;
 
     dbLanguage mydatabase;
-    String currentLanguage,language;
+    String currentLanguage, language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +67,7 @@ public class BuyerActivity extends AppCompatActivity implements  TabLayout.OnTab
         mTabLayout = findViewById(R.id.tabs);
         viewPager.setOffscreenPageLimit(5);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
-       mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
@@ -107,8 +107,8 @@ public class BuyerActivity extends AppCompatActivity implements  TabLayout.OnTab
 
                                     mTabLayout.addTab(mTabLayout.newTab().setText(userJson.getString("CategoryName_EN")));
 
-                                    DynamicFragmentAdapter mDynamicFragmentAdapter = new   DynamicFragmentAdapter(getSupportFragmentManager(), mTabLayout.getTabCount(),
-                                            obj,BuyerActivity.this);
+                                    DynamicFragmentAdapter mDynamicFragmentAdapter = new DynamicFragmentAdapter(getSupportFragmentManager(), mTabLayout.getTabCount(),
+                                            obj, BuyerActivity.this);
 
                                     viewPager.setAdapter(mDynamicFragmentAdapter);
 

@@ -156,7 +156,15 @@ public class ContactDetailActivity extends AppCompatActivity {
             setTitle("Packer");
         } else if (ItemTypeId.equals("29")) {
             setTitle("Franchise");
+        }else if (ItemTypeId.equals("30")) {
+            setTitle("Bank Loan Consultants");
+        }else if (ItemTypeId.equals("31"))
+        {
+            setTitle("Project Consultant");
+        } else if (ItemTypeId.equals("32")) {
+            setTitle("Nursery Owner");
         }
+
 
 
         myAdapter = new ContactDetailAdapter(ContactDetailActivity.this, mList);

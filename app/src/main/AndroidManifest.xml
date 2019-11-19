@@ -40,6 +40,7 @@
             android:theme="@style/SellerDarkAppTheme" />
         <activity
             android:name=".activities.BuyerActivity"
+            android:label="Buyer"
             android:parentActivityName=".activities.HomeActivity"
             android:theme="@style/SellerDarkAppTheme" />
         <activity
@@ -101,7 +102,7 @@
             android:theme="@style/SellerDarkAppTheme" />
         <activity
             android:name=".activities.SellerActivity"
-            android:label="@string/productdetail"
+            android:label="Seller"
             android:noHistory="true"
             android:parentActivityName=".activities.HomeActivity"
             android:theme="@style/SellerDarkAppTheme" />

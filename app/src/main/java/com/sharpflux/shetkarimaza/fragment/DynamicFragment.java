@@ -1,6 +1,7 @@
 package com.sharpflux.shetkarimaza.fragment;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -27,6 +29,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.gson.JsonObject;
 import com.sharpflux.shetkarimaza.Interface.RecyclerViewClickListener;
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.activities.BuyerActivity;
 import com.sharpflux.shetkarimaza.adapter.MyBuyerAdapter;
 import com.sharpflux.shetkarimaza.model.SellOptions;
 import com.sharpflux.shetkarimaza.model.User;
@@ -61,6 +64,8 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
     dbLanguage mydatabase;
     String currentLanguage,language;
 
+    TextView txt_nurseryName;
+
 
 
     public static DynamicFragment newInstance() {
@@ -86,6 +91,8 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
         searchView = view.findViewById(R.id.searchViewHome);
 
 
+
+
         mydatabase = new dbLanguage(getContext());
 
         User user = SharedPrefManager.getInstance(getContext()).getUser();
@@ -99,6 +106,36 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
             currentLanguage = cursor.getString(0);
 
         }
+        txt_nurseryName=view.findViewById(R.id.txt_group);
+
+
+        if(getArguments().getString("IsGroup")!=null){
+            if(getArguments().getString("IsGroup").equals("True")) {
+                txt_nurseryName.setVisibility(View.VISIBLE);
+                txt_nurseryName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        CategoryId=getArguments().getString("PreviousCategoryId").toString();
+                        getActivity().getSupportFragmentManager().popBackStack();
+
+                        return;
+                     }
+                });
+            }
+            else {
+                txt_nurseryName.setVisibility(View.GONE);
+            }
+        }
+        else{
+            txt_nurseryName.setVisibility(View.GONE);
+        }
+
+
+
+
+
+
+
 
         productlist = new ArrayList<>();
         myLocale = getResources().getConfiguration().locale;
@@ -126,10 +163,19 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
                                 {
                                     if(userJson.getBoolean("IsGroup"))
                                     {
-                                        swapFragment(obj);
-                                        break;
+
+                                        searchView.setVisibility(View.INVISIBLE);
+                                       /* txt_nurseryName.setVisibility(View.GONE);
+                                      */
+
+
+                                        swapFragment(obj,CategoryId);
+
+                                       // break;
                                     }
                                     else {
+
+
                                         sellOptions = new SellOptions
                                                 (userJson.getString("ImageUrl"),
                                                         userJson.getString("ItemName"),
@@ -140,6 +186,7 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
 
                                         myAdapter = new MyBuyerAdapter(getContext(), productlist);
                                         mRecyclerView.setAdapter(myAdapter);
+
 
                                         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                                             @Override
@@ -202,7 +249,12 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
                                             }
                                         });
 
+
                                     }
+
+
+
+
                                 }
 
                                 else {
@@ -280,14 +332,17 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
     }
 
 
-    private void swapFragment(JSONArray obj){
+    private void swapFragment(JSONArray obj,String PreviousCategoryId){
         GroupFragment categoryFragment = new GroupFragment();
         Bundle bundle=new Bundle();
         bundle.putString("jsonObj",obj.toString());
+        bundle.putString("PreviousCategoryId",PreviousCategoryId);
         categoryFragment.setArguments(bundle);
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame, categoryFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
+
+
 }

@@ -176,6 +176,14 @@ class MyCategoryTypeHolder extends RecyclerView.ViewHolder implements View.OnCli
                 intent = new Intent(context, ContactDetailActivity.class);
                 intent.putExtra("ProductId",categoryId);
                 break;
+            case 19:
+                intent = new Intent(context, ContactDetailActivity.class);
+                intent.putExtra("ProductId",categoryId);
+                break;
+            case 20:
+                intent = new Intent(context, ContactDetailActivity.class);
+                intent.putExtra("ProductId",categoryId);
+                break;
 
             default:
                 intent = new Intent(context, HomeActivity.class);

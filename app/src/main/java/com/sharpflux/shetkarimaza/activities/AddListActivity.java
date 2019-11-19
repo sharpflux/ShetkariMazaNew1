@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -78,13 +79,13 @@ public class AddListActivity extends AppCompatActivity {
     private RecyclerView mrecyclerView;
 
 
-//
+    //
     private ListView userAccountListView = null;
     SQLiteCursor sqcursor;
     Bundle bundle;
     String type = "", varity = "", quality = "", unit = "", month = "", state = "", district = "", taluka = "";
 
-    String ProductId,organic,certificateno,SurveyNo,ImageUrl;
+    String ProductId, organic, certificateno, SurveyNo, ImageUrl;
     Cursor cursor;
     int UserId;
     private TextView userAccountListEmptyTextView = null;
@@ -102,12 +103,12 @@ public class AddListActivity extends AppCompatActivity {
     private int mAnimationDuration;
 
 
-    private String fromColumnArr[] = {userInfoDBManager.imagename,productType, UserInfoDBManager.productVariety, UserInfoDBManager.quality, expectedPrice};
+    private String fromColumnArr[] = {userInfoDBManager.imagename, productType, UserInfoDBManager.productVariety, UserInfoDBManager.quality, expectedPrice};
     CheckBox itemCheckbox;
-    private final int toViewIdArr[] = {R.id.ImgageAddList,R.id.user_account_list_item_id, R.id.user_account_list_item_user_name, R.id.user_account_list_item_password, R.id.user_account_list_item_email};
+    private final int toViewIdArr[] = {R.id.ImgageAddList, R.id.user_account_list_item_id, R.id.user_account_list_item_user_name, R.id.user_account_list_item_password, R.id.user_account_list_item_email};
 
     // Store user checked account DTO.
-    private List<SaveProductInfo> userCheckedItemList ;
+    private List<SaveProductInfo> userCheckedItemList;
 
     CursorData cursorData;
     MyCursorAdapter myCursorAdapter;
@@ -115,8 +116,7 @@ public class AddListActivity extends AppCompatActivity {
 
     SQLiteCursor sqcursordata;
     TextView txt_emptyView;
-
-
+    AlertDialog.Builder Alertbuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +131,7 @@ public class AddListActivity extends AppCompatActivity {
         mrecyclerView.setLayoutManager(mGridLayoutManager);
         cursorDataList = new ArrayList<>();
 
-
+        Alertbuilder = new AlertDialog.Builder(this);
         mProgressDialog = new ProgressDialog(AddListActivity.this);
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -146,13 +146,11 @@ public class AddListActivity extends AppCompatActivity {
         txt_emptyView = findViewById(R.id.txt_emptyView);
 
 
-
         Bundle bundle = getIntent().getExtras();
 
         if (bundle != null) {
            /* new DownloadImageTask((ImageView) findViewById(R.id.ImgageAddList), mLoadingView, mAnimationDuration)
                     .execute(bundle.getString("image"));*/
-
 
 
             ProductId = bundle.getString("ProductId");
@@ -164,7 +162,7 @@ public class AddListActivity extends AppCompatActivity {
             state = bundle.getString("stateId");
             district = bundle.getString("districtId");
             taluka = bundle.getString("talukaId");
-            organic= bundle.getString("organic");
+            organic = bundle.getString("organic");
             certificateno = bundle.getString("certificateno");
             SurveyNo = bundle.getString("SurveyNo");
             ImageUrl = bundle.getString("ImageUrl");
@@ -181,27 +179,43 @@ public class AddListActivity extends AppCompatActivity {
         Cursor cursor = userInfoDBManager.getAllAccountCursor();
 
 
-
-
         Cursor cursorData = userInfoDBManager.getAllAccountCursor();
-        if (cursorData != null && cursorData.getCount() > 0){
-            while (cursorData.moveToNext()) {
-                CursorData data = new CursorData(
-                        cursorData.getString(cursorData.getColumnIndex(imagename)),
-                        cursorData.getString(cursorData.getColumnIndex(productType)),
-                        cursorData.getString(cursorData.getColumnIndex(UserInfoDBManager.productVariety)),
-                        cursorData.getString(cursorData.getColumnIndex(UserInfoDBManager.quality)),
-                        cursorData.getString(cursorData.getColumnIndex(expectedPrice))
-                      //  cursorData.getString(cursorData.getColumnIndex(UserInfoDBManager.TABLE_ACCOUNT_COLUMN_ID))
-                );
-                cursorDataList.add(data);
-            }
+        cursorData.moveToPosition(-1); // in case you accessed it before
+
+
+        if(cursorData.getCount()==0){
+            Alertbuilder.setMessage("No data found to submit")
+                    .setCancelable(false)
+
+                    .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //  Action for 'NO' Button
+                            Intent i = new Intent(AddListActivity.this, SellerActivity.class);
+                            startActivity(i);
+                        }
+                    });
+
+            AlertDialog alert = Alertbuilder.create();
+            alert.setTitle("Invalid Request");
+            alert.show();
+            return;
+
         }
+        while (cursorData.moveToNext()) {
+            CursorData data = new CursorData(
+                    cursorData.getString(cursorData.getColumnIndex(imagename)),
+                    cursorData.getString(cursorData.getColumnIndex(productType)),
+                    cursorData.getString(cursorData.getColumnIndex(UserInfoDBManager.productVariety)),
+                    cursorData.getString(cursorData.getColumnIndex(UserInfoDBManager.quality)),
+                    cursorData.getString(cursorData.getColumnIndex(expectedPrice)),
+                    cursorData.getString(cursorData.getColumnIndex(UserInfoDBManager.TABLE_ACCOUNT_COLUMN_ID))
+            );
+            cursorDataList.add(data);
+        }
+
 
         myCursorAdapter = new MyCursorAdapter(getApplicationContext(), cursorDataList);
         mrecyclerView.setAdapter(myCursorAdapter);
-
-
 
 
         btnsubmit.setOnClickListener(new View.OnClickListener() {
@@ -215,14 +229,7 @@ public class AddListActivity extends AppCompatActivity {
         });
 
 
-
     }
-
-
-
-
-
-
 
 
     private String getUserCheckedItemIds() {
@@ -368,6 +375,7 @@ public class AddListActivity extends AppCompatActivity {
     private void submitToDb() {
         cursor = userInfoDBManager.getAllAccountCursor();
         array = new JSONArray();
+        Handler h = new Handler();
         builder.append("<Parent>");
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToPosition(-1);
@@ -397,52 +405,73 @@ public class AddListActivity extends AppCompatActivity {
                 builder.append("</Assign>");
                 //cursor.getString(22).replaceAll("\\<\\?xml(.+?)\\?\\>", "").trim()
             }
+            builder.append("</Parent>");
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_SAVEPRODUCTDETAILS,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(AddListActivity.this);
+                            builder.setCancelable(false);
+                            mProgressDialog.dismiss();
+                            builder.setMessage("Data submitted successfully");
+                            userInfoDBManager.deleteAll();
+                            builder.setIcon(R.drawable.ic_check_circle);
+                            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //if user pressed "yes", then he is allowed to exit from application
+                                    //dialog.cancel();
+                                    Intent i = new Intent(AddListActivity.this, HomeActivity.class);
+                                    startActivity(i);
+                                }
+                            });
+
+                            AlertDialog alert = builder.create();
+                            alert.show();
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                            Toast.makeText(AddListActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("xmlData", builder.toString());
+                    return params;
+                }
+            };
+
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+            VolleySingleton.getInstance(AddListActivity.this).addToRequestQueue(stringRequest);
+
+
+        }
+        else {
+
+
+            Alertbuilder.setMessage("No data found to submit")
+                    .setCancelable(false)
+
+                    .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //  Action for 'NO' Button
+                            dialog.cancel();
+                        }
+                    });
+
+            AlertDialog alert = Alertbuilder.create();
+            alert.setTitle("Invalid Request");
+            alert.show();
+
 
         }
 
-        builder.append("</Parent>");
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_SAVEPRODUCTDETAILS,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(AddListActivity.this);
-                        builder.setCancelable(false);
-                        mProgressDialog.dismiss();
-                        builder.setMessage("Data submitted successfully");
-                        userInfoDBManager.deleteAll();
-                        builder.setIcon(R.drawable.ic_check_circle);
-                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                //if user pressed "yes", then he is allowed to exit from application
-                                //dialog.cancel();
-                                Intent i= new Intent(AddListActivity.this,HomeActivity.class);
-                                startActivity(i);
-                            }
-                        });
 
-                        AlertDialog alert = builder.create();
-                        alert.show();
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                        Toast.makeText(AddListActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("xmlData", builder.toString());
-                return params;
-            }
-        };
-
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-        VolleySingleton.getInstance(AddListActivity.this).addToRequestQueue(stringRequest);
 
     }
 
@@ -461,6 +490,7 @@ public class AddListActivity extends AppCompatActivity {
 
             } catch (Exception e) {
                 e.printStackTrace();
+                Toast.makeText(AddListActivity.this,  e.getMessage(), Toast.LENGTH_SHORT).show();
                 resp = e.getMessage();
             }
             return resp;

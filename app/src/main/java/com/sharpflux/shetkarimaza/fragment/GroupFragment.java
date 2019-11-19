@@ -1,6 +1,7 @@
 package com.sharpflux.shetkarimaza.fragment;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.JsonArray;
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.activities.BuyerActivity;
 import com.sharpflux.shetkarimaza.activities.SellerActivity;
 import com.sharpflux.shetkarimaza.adapter.MyBuyerAdapter;
 import com.sharpflux.shetkarimaza.adapter.MyGroupAdapter;
@@ -51,6 +53,7 @@ public class GroupFragment extends Fragment {
     RecyclerView mRecyclerView;
     Bundle bundle;
     MyGroupAdapter myAdapter2;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
@@ -59,10 +62,13 @@ public class GroupFragment extends Fragment {
         mGridLayoutManager = new LinearLayoutManager(getContext());
         rv_cstGrp.setLayoutManager(mGridLayoutManager);
 
-        //searchView = view.findViewById(R.id.searchViewHome);
 
 
-       txt_group = view.findViewById(R.id.txt_group);
+
+       //searchView = view.findViewById(R.id.searchViewHome);
+
+
+     //  txt_group = view.findViewById(R.id.txt_group);
 
         sellOptionsList = new ArrayList<>();
 
@@ -86,7 +92,7 @@ public class GroupFragment extends Fragment {
                                                 );
 
                         sellOptionsList.add(sellOptions);
-                        myAdapter2 = new MyGroupAdapter(getContext(), sellOptionsList);
+                        myAdapter2 = new MyGroupAdapter(getContext(), sellOptionsList,extras.getString("PreviousCategoryId").toString(),extras.getString("jsonObj").toString());
                         rv_cstGrp.setAdapter(myAdapter2);
 
 

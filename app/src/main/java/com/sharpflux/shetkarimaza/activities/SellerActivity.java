@@ -76,7 +76,7 @@ public class SellerActivity extends AppCompatActivity {
         mydatabase = new dbLanguage(getApplicationContext());
 
 
-        setTitle(R.string.whatareyouoffering);
+        //setTitle(R.string.whatareyouoffering);
         mRecyclerView = findViewById(R.id.rvMain);
 
 
