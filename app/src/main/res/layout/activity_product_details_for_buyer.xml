@@ -193,7 +193,7 @@
                     android:layout_height="wrap_content">
 
                 </android.support.v7.widget.RecyclerView>
-
+//
                 <!--<TableLayout
                     android:id="@+id/table_transporter"
                     android:layout_width="match_parent"
