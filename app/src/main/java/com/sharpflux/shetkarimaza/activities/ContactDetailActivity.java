@@ -25,11 +25,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -85,6 +87,7 @@ public class ContactDetailActivity extends AppCompatActivity {
     JSONArray obj;
     AlertDialog.Builder builder;
     TextView txt_emptyView;
+    LinearLayout lr_filterbtn;
 
 
     public static final int PAGE_START = 1;
@@ -109,6 +112,14 @@ public class ContactDetailActivity extends AppCompatActivity {
 
         progressBar_filter = findViewById(R.id.progressBar_filter);
         txt_emptyView = findViewById(R.id.txt_emptyView);
+        lr_filterbtn = (LinearLayout) findViewById(R.id.lr_filterbtn);
+
+
+        if(mList.size()==0)
+        {
+            lr_filterbtn.setVisibility(View.GONE);
+
+        }
 
 
 
@@ -348,8 +359,12 @@ public class ContactDetailActivity extends AppCompatActivity {
 
                                    if(myAdapter.getItemCount()==0);{
                                        txt_emptyView.setVisibility(View.VISIBLE);
+                                        //lr_filterbtn.setVisibility(View.GONE);
                                     }
-                                    txt_emptyView.setVisibility(View.GONE);
+                                        txt_emptyView.setVisibility(View.GONE);
+                                        lr_filterbtn.setVisibility(View.VISIBLE);
+
+
 
 
                                 }
@@ -374,6 +389,8 @@ public class ContactDetailActivity extends AppCompatActivity {
                 }
             };
 
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
         }
     }
@@ -428,7 +445,10 @@ public class ContactDetailActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_contact_detail, menu);
+
+
         return super.onCreateOptionsMenu(menu);
+
     }
 
     @Override

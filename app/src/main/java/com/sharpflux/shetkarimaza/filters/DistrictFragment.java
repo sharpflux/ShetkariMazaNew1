@@ -117,7 +117,11 @@ public class DistrictFragment extends Fragment {
 
                 if (extras != null) {
 
-                    extras.putString("DistrictId",district_builder_id.toString());
+                    extras.putString("VarietyId", VarityId);
+                    extras.putString("QualityId", QualityId);
+                    extras.putString("DistrictId", district_builder_id.toString());
+                    extras.putString("ItemTypeId", itemTypeId);
+                    extras.putString("StatesID", StatesID);
 
                 }
 

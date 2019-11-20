@@ -37,7 +37,8 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:textColor="@color/black"
+            android:text="Shetkari Maza"
+            android:textColor="@color/white"
             android:id="@+id/textcattoolbar"
             android:layout_marginStart="19.7dp"/>
 

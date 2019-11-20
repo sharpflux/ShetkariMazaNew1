@@ -11,19 +11,17 @@ import android.widget.Button;
 import com.sharpflux.shetkarimaza.R;
 
 public class VillageFragment extends Fragment {
-    Button btn_next,btn_back,btnFilterData;
+    Button btn_next, btn_back, btnFilterData;
     Bundle extras;
-    String   StatesID="",DistrictId="",TalukaId="",VarityId="",QualityId="",itemTypeId="",priceids="";
+    String StatesID = "", DistrictId = "", TalukaId = "", VarityId = "", QualityId = "", itemTypeId = "", priceids = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_village, container, false);
-        btn_next = view.findViewById(R.id.btnnextVariety);
-        btn_back = view.findViewById(R.id.btnbackVariety);
+        btn_next = view.findViewById(R.id.btn_nextVillage);
+        btn_back = view.findViewById(R.id.btn_backVillage);
         btnFilterData = view.findViewById(R.id.btnFilterData);
-
-
 
 
         extras = getArguments();
@@ -32,17 +30,27 @@ public class VillageFragment extends Fragment {
             TalukaId = extras.getString("TalukaId");
             VarityId = extras.getString("VarietyId");
             QualityId = extras.getString("QualityId");
-            itemTypeId=extras.getString("ItemTypeId");
-            DistrictId=extras.getString("DistrictId");
-            StatesID=extras.getString("StatesID");
+            itemTypeId = extras.getString("ItemTypeId");
+            DistrictId = extras.getString("DistrictId");
+            StatesID = extras.getString("StatesID");
 
         }
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                extras = new Bundle();
+                if (extras != null) {
+                    extras.putString("VarietyId", VarityId);
+                    extras.putString("QualityId", QualityId);
+                    extras.putString("ItemTypeId", itemTypeId);
+                    extras.putString("StatesID", StatesID);
+                    extras.putString("DistrictId", DistrictId);
+                    extras.putString("TalukaId", TalukaId);
+                }
 
                 FragmentTransaction transection = getFragmentManager().beginTransaction();
-                TalukaFragment  mfragment = new TalukaFragment ();
+                TalukaFragment mfragment = new TalukaFragment();
+                mfragment.setArguments(extras);
                 transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
                 transection.commit();
 
@@ -50,25 +58,17 @@ public class VillageFragment extends Fragment {
         });
 
 
-
-
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 extras = new Bundle();
-
                 if (extras != null) {
-                    extras.putString("VarietyId",VarityId);
-                    extras.putString("QualityId",QualityId);
-                    extras.putString("TalukaId",TalukaId);
-                    extras.putString("ItemTypeId",itemTypeId);
-                    extras.putString("StatesID",StatesID);
-                    extras.putString("DistrictId",DistrictId);
-
-
-
+                    extras.putString("VarietyId", VarityId);
+                    extras.putString("QualityId", QualityId);
+                    extras.putString("ItemTypeId", itemTypeId);
+                    extras.putString("StatesID", StatesID);
+                    extras.putString("DistrictId", DistrictId);
+                    extras.putString("TalukaId", TalukaId);
                 }
                 FragmentTransaction transection = getFragmentManager().beginTransaction();
                 PriceFragment mfragment = new PriceFragment();
@@ -77,9 +77,8 @@ public class VillageFragment extends Fragment {
                 transection.commit();
 
 
-
             }
         });
-                return view;
+        return view;
     }
 }

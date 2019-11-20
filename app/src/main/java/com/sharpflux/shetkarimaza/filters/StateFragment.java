@@ -17,6 +17,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -135,9 +136,7 @@ public class StateFragment extends Fragment {
 
                 FragmentTransaction transection=getFragmentManager().beginTransaction();
                 DistrictFragment mfragment = new DistrictFragment();
-
                 mfragment.setArguments(extras);
-
                 transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
                 transection.commit();
 
@@ -250,7 +249,8 @@ public class StateFragment extends Fragment {
                 return params;
             }
         };
-
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
 

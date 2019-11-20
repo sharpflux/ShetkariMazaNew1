@@ -54,7 +54,7 @@
             android:textColor="@android:color/white"
             android:fontFamily="@font/sfpro_display_bold"
             android:background="@drawable/btn_backnext"
-            android:id="@+id/btnbackVariety"
+            android:id="@+id/btn_backVillage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -82,7 +82,7 @@
 
         <Button
             android:fontFamily="@font/sfpro_display_bold"
-            android:id="@+id/btnnextVariety"
+            android:id="@+id/btn_nextVillage"
             android:background="@drawable/btn_backnext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

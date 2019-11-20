@@ -27,6 +27,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -349,8 +350,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                 priceids = "0";
             }
 
-            //?StartIndex=1&PageSize=500
-            //    // &ItemTypeId=0&VarityId=0&StateId=0&DistrictId=0&QualityId=0&TalukaId=0&Language=en&SortByRate=ASC
+
 
             StringRequest stringRequest = new StringRequest(Request.Method.GET,
                     URLs.URL_REQESTS + "?StartIndex=" + pageIndex + "&PageSize=" + PAGE_SIZE +
@@ -409,11 +409,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
                                     myAdapter = new SimilarListAdapter(AllSimilarDataActivity.this, productlist);
                                     recyclerView.setAdapter(myAdapter);
-                                    /*isLoading = false;
-                                    if (productlist.size() > 10)
-                                        recyclerView.scrollToPosition(productlist.size() - 10);
-                                    int scrollPosition = productlist.size();
-                                    myAdapter.notifyItemRemoved(scrollPosition);*/
+
                                 }
 
                             } catch (JSONException e) {
@@ -433,7 +429,8 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                     return params;
                 }
             };
-
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
         }
     }

@@ -108,8 +108,17 @@ public class TalukaFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                if (extras != null) {
+                    extras.putString("VarietyId",VarityId);
+                    extras.putString("QualityId",QualityId);
+                    extras.putString("ItemTypeId",itemTypeId);
+                    extras.putString("StatesID",StatesID);
+                    extras.putString("DistrictId",DistrictId);
+                }
+
                 FragmentTransaction transection = getFragmentManager().beginTransaction();
                 DistrictFragment  mfragment = new DistrictFragment ();
+                mfragment.setArguments(extras);
                 transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
                 transection.commit();
 
@@ -139,9 +148,6 @@ public class TalukaFragment extends Fragment {
                     extras.putString("ItemTypeId",itemTypeId);
                     extras.putString("StatesID",StatesID);
                     extras.putString("DistrictId",DistrictId);
-
-
-
                 }
                 FragmentTransaction transection = getFragmentManager().beginTransaction();
                 VillageFragment mfragment = new VillageFragment();

@@ -98,9 +98,9 @@ public class QualityFragment extends Fragment {
 
         }
 
-
-        AssignVariables();
         BundleAssign();
+        AssignVariables();
+
 
 
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -109,8 +109,8 @@ public class QualityFragment extends Fragment {
 
                 extras = new Bundle();
                 if (extras != null) {
+                    extras.putString("VarietyId",VarityId);
                     extras.putString("ItemTypeId",itemTypeId);
-
 
                 }
 

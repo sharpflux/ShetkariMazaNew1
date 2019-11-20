@@ -77,6 +77,8 @@ public class CategoryFragment extends Fragment {
         String language = sharedPref.getString("KEY_LANGUAGE", null);*/
 
 
+
+
         User user = SharedPrefManager.getInstance(getContext()).getUser();
         myLocale = getResources().getConfiguration().locale;
         language = user.getLanguage();

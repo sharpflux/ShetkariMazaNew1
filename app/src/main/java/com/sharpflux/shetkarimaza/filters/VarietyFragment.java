@@ -25,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity;
+import com.sharpflux.shetkarimaza.activities.BuyerActivity;
 import com.sharpflux.shetkarimaza.activities.HomeActivity;
 import com.sharpflux.shetkarimaza.adapter.DataAdapter;
 import com.sharpflux.shetkarimaza.model.User;
@@ -115,11 +116,19 @@ public class VarietyFragment extends Fragment {
             categoryId = getArguments().getString("ProductId");
         }
 
+        extras = new Bundle();
+        if (extras != null) {
+            extras.putString("VarietyId", varity_builder_id.toString());
+            extras.putString("ItemTypeId", itemTypeId);
+
+        }
+
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent in = new Intent(getContext(), HomeActivity.class);
+                Intent in = new Intent(getContext(), BuyerActivity.class);
+                in.putExtra("ItemTypeId", itemTypeId);
                 startActivity(in);
             }
         });
@@ -133,12 +142,7 @@ public class VarietyFragment extends Fragment {
                         varity_builder_id.append(filter.getId() + ",");
                     }
                 }
-                extras = new Bundle();
-                if (extras != null) {
-                    extras.putString("VarietyId", varity_builder_id.toString());
-                    extras.putString("ItemTypeId", itemTypeId);
-                    // Log.e("IDS",districtIds);
-                }
+
 
 
                 if (categoryId.equals("15")) {

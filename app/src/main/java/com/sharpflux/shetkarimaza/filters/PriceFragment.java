@@ -50,12 +50,12 @@ public class PriceFragment extends Fragment {
         extras = getArguments();
 
         if (extras != null) {
-            TalukaId = extras.getString("TalukaId");
             VarityId = extras.getString("VarietyId");
             QualityId = extras.getString("QualityId");
             itemTypeId=extras.getString("ItemTypeId");
             DistrictId=extras.getString("DistrictId");
             StatesID=extras.getString("StatesID");
+            TalukaId = extras.getString("TalukaId");
 
         }
 
@@ -64,8 +64,19 @@ public class PriceFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                extras = new Bundle();
+                if (extras != null) {
+                    extras.putString("VarietyId", VarityId);
+                    extras.putString("QualityId", QualityId);
+                    extras.putString("ItemTypeId", itemTypeId);
+                    extras.putString("StatesID", StatesID);
+                    extras.putString("DistrictId", DistrictId);
+                    extras.putString("TalukaId", TalukaId);
+                }
+
                 FragmentTransaction transection = getFragmentManager().beginTransaction();
-                TalukaFragment mfragment = new TalukaFragment();
+                VillageFragment mfragment = new VillageFragment();
+                mfragment.setArguments(extras);
                 transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
                 transection.commit();
 
@@ -87,12 +98,13 @@ public class PriceFragment extends Fragment {
 
 
                 Intent intent = new Intent(getContext(), AllSimilarDataActivity.class);
-                intent.putExtra("TalukaId",TalukaId);
+
                 intent.putExtra("VarietyId",VarityId);
                 intent.putExtra("QualityId",QualityId);
                 intent.putExtra("ItemTypeId",itemTypeId);
                 intent.putExtra("DistrictId",DistrictId);
                 intent.putExtra("StatesID",StatesID);
+                intent.putExtra("TalukaId",TalukaId);
                 intent.putExtra("priceids",priceids);
                 startActivity(intent);
             }
@@ -109,12 +121,5 @@ public class PriceFragment extends Fragment {
 
         return view;
     }
-
-
-
-
-
-
-
 
 }

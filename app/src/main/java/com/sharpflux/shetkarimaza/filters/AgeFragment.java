@@ -55,7 +55,7 @@ public class AgeFragment extends Fragment {
                 extras = new Bundle();
                 if (extras != null) {
                     extras.putString("ItemTypeId", itemTypeId);
-
+                    extras.putString("VarietyId", VarityId);
 
                 }
 
