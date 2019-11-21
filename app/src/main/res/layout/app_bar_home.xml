@@ -23,11 +23,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:autoMirrored="true"
-
                 android:visibility="visible"
                 app:layout_collapseMode="pin"
+                app:titleTextColor="@color/white"
+                app:titleTextAppearance="@color/white"
                 app:layout_scrollFlags="enterAlways|scroll"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:popupTheme="@style/ActionBarOverflow"
                 app:theme="@style/ToolBarStyle">
 
             </android.support.v7.widget.Toolbar>

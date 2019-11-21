@@ -18,6 +18,7 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sharpflux.shetkarimaza.R;
@@ -42,6 +43,7 @@ public class HomeActivity extends AppCompatActivity
     Intent bundleIntent;
     String registrationTypeId="";
     String currentLanguage = "en";
+    LinearLayout llHeader;
     public static final String KEY_PREF_LANGUAGE = "pref_language";
     public String languagePref_ID;
     dbLanguage mydatabase;
@@ -55,7 +57,7 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        llHeader = findViewById(R.id.llHeader);
 
 
        // searchView = findViewById(R.id.searchViewHome);
@@ -121,6 +123,13 @@ public class HomeActivity extends AppCompatActivity
             registrationTypeId = bundleProcessor.getString("RegistrationTypeId");
 
         }
+
+        /*llHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });*/
 
         CategoryFragment categoryFragment = new CategoryFragment();
         displaySelectedFragment(categoryFragment);
@@ -195,6 +204,7 @@ public class HomeActivity extends AppCompatActivity
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
 

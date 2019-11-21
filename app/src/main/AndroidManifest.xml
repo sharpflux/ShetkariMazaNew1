@@ -84,7 +84,8 @@
         <activity
             android:name=".activities.ProductDetailsForBuyerActivity"
             android:parentActivityName=".activities.AllSimilarDataActivity"
-            android:theme="@style/ToolbarAppTheme" />
+            android:label="Detail Information"
+            android:theme="@style/SellerDarkAppTheme" />
         <activity
             android:name=".activities.DetailFormActivity"
             android:label="@string/includemoredetails"
@@ -110,9 +111,9 @@
         <activity android:name=".activities.WelcomeActivity" />
         <activity
             android:name=".activities.HomeActivity"
-            android:label=""
+
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            />
         <activity android:name=".activities.ForgotPasswordActivity" />
         <activity
             android:name=".activities.SelectLanguageActivity"

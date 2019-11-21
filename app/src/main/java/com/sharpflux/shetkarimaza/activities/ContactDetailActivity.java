@@ -99,6 +99,7 @@ public class ContactDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_contact_detail);
 
         recyclerView = findViewById(R.id.contact_Detail_rvProductList);
+
         contactlist = new ArrayList<>();
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
@@ -119,7 +120,10 @@ public class ContactDetailActivity extends AppCompatActivity {
         {
             lr_filterbtn.setVisibility(View.GONE);
 
+
         }
+
+
 
 
 
@@ -270,6 +274,7 @@ public class ContactDetailActivity extends AppCompatActivity {
     }
 
 
+
     private void SetDynamicDATA() {
 
 
@@ -343,7 +348,7 @@ public class ContactDetailActivity extends AppCompatActivity {
                                                         userJson.getString("DistrictName"),
                                                         userJson.getString("TalukaName")
                                                 );
-//
+
                                         contactlist.add(detail);
                                         contactlist.size();
 
@@ -363,6 +368,8 @@ public class ContactDetailActivity extends AppCompatActivity {
                                     }
                                         txt_emptyView.setVisibility(View.GONE);
                                         lr_filterbtn.setVisibility(View.VISIBLE);
+
+
 
 
 
@@ -445,8 +452,6 @@ public class ContactDetailActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_contact_detail, menu);
-
-
         return super.onCreateOptionsMenu(menu);
 
     }
@@ -461,6 +466,8 @@ public class ContactDetailActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 
     private void exportToExcel() {
 
