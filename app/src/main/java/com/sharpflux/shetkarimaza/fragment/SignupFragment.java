@@ -133,7 +133,7 @@ public class SignupFragment extends Fragment {
             edtlastname.requestFocus();
             return;
         }
-
+//
         if (TextUtils.isEmpty(mob)) {
             editTextMobile.setError("Please enter mobile number");
             editTextMobile.requestFocus();
