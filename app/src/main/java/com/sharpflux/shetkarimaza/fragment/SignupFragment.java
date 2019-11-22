@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -102,8 +104,15 @@ public class SignupFragment extends Fragment {
                 m.start();*/
             }
         });
+
+
+
         return view;
     }
+
+
+
+
 
     private void getOtp() {
 
@@ -136,6 +145,11 @@ public class SignupFragment extends Fragment {
 //
         if (TextUtils.isEmpty(mob)) {
             editTextMobile.setError("Please enter mobile number");
+            editTextMobile.requestFocus();
+            return;
+        }
+        if(mob.length()>10){
+            editTextMobile.setError("Please enter valid mobile number");
             editTextMobile.requestFocus();
             return;
         }

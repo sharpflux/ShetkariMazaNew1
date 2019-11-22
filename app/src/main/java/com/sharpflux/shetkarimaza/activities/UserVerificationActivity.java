@@ -1,11 +1,14 @@
 package com.sharpflux.shetkarimaza.activities;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -18,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.fragment.SignupFragment;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 import com.sharpflux.shetkarimaza.volley.URLs;
@@ -77,9 +81,10 @@ public class UserVerificationActivity extends AppCompatActivity {
         tv_verify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* Intent i = new Intent(UserVerificationActivity.this,ChooseActivity.class);
-                startActivity(i);*/
 
+               /* UserVerificationActivity.AsyncTaskRunner runner = new UserVerificationActivity.AsyncTaskRunner();
+                String sleepTime = "1";
+                runner.execute(sleepTime);*/
                 registerUser();
                 //myCountDownTimer1.onFinish();
             }
@@ -101,6 +106,12 @@ public class UserVerificationActivity extends AppCompatActivity {
 
 
         enteredOtp = edtenterOTP.getText().toString();
+
+        if (TextUtils.isEmpty(enteredOtp)) {
+            edtenterOTP.setError("Please enter your OTP");
+            edtenterOTP.requestFocus();
+            return;
+        }
 
         if (Otp.equals(enteredOtp)||resendOtp.equals(enteredOtp)) {
 
@@ -124,7 +135,8 @@ public class UserVerificationActivity extends AppCompatActivity {
                                     );
                                     SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
                                     finish();
-                                    startActivity(new Intent(getApplicationContext(), DetailFormActivity.class));
+                                   Intent intent = new Intent(getApplicationContext(),DetailFormActivity.class);
+                                   startActivity(intent);
                                 } else {
                                     Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
                                 }
@@ -203,7 +215,7 @@ public class UserVerificationActivity extends AppCompatActivity {
                     params.put("ImageUrl", "0");
 
                     params.put("UserPassword", Password);
-                    params.put("AgentId", "");
+                    params.put("AgentId", "0");
 
                     return params;
                 }
@@ -358,4 +370,58 @@ public class UserVerificationActivity extends AppCompatActivity {
 
     }
 
+
+    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
+
+        private String resp;
+        ProgressDialog progressDialog;
+
+        @Override
+        protected String doInBackground(String... params) {
+            publishProgress("Sleeping..."); // Calls onProgressUpdate()
+            try {
+                int time = Integer.parseInt(params[0]) * 1000;
+                registerUser();
+                Thread.sleep(time);
+                resp = "Slept for " + params[0] + " seconds";
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                resp = e.getMessage();
+            }
+            return resp;
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            progressDialog.dismiss();
+
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(getApplicationContext(),
+                    "Loading...",
+                    "Wait for result..");
+        }
+
+
+        @Override
+        protected void onProgressUpdate(String... text) {
+
+
+        }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(UserVerificationActivity.this, TabLayoutLogRegActivity.class));
+        finish();
+    }
 }

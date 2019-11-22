@@ -140,7 +140,7 @@ public class LoginFragment extends Fragment {
         return view;
     }
 
-    class AsyncTaskRunner extends AsyncTask<String, String, String> {
+  /*  class AsyncTaskRunner extends AsyncTask<String, String, String> {
 
         private String resp;
 
@@ -185,7 +185,7 @@ public class LoginFragment extends Fragment {
         }
 
     }
-
+*/
     private void userLogin() {
         final String username = eusername.getText().toString();
         final String password = epassword.getText().toString();
@@ -228,7 +228,25 @@ public class LoginFragment extends Fragment {
 
                                     );
 
-                                } else {
+                                } else if (obj.length() == 0) {
+                                    builder.setMessage("Invalid User Name or Password?")
+                                            .setCancelable(false)
+
+                                            .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    //  Action for 'NO' Button
+                                                    dialog.cancel();
+
+                                                }
+                                            });
+
+                                    builder.create();
+                                    builder.setTitle("Invalid User");
+                                    builder.show();
+                                    progressDialog.dismiss();
+
+                                }
+                                else {
                                     builder.setMessage("Invalid User Name or Password?")
                                             .setCancelable(false)
 
@@ -253,24 +271,7 @@ public class LoginFragment extends Fragment {
                                 startActivity(new Intent(getContext(), HomeActivity.class));
                             }
 
-                            if (obj.length() == 0) {
-                                builder.setMessage("Invalid User Name or Password?")
-                                        .setCancelable(false)
 
-                                        .setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-                                                //  Action for 'NO' Button
-                                                dialog.cancel();
-
-                                            }
-                                        });
-
-                                builder.create();
-                                builder.setTitle("Invalid User");
-                                builder.show();
-                                progressDialog.dismiss();
-                                return;
-                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -309,7 +310,7 @@ public class LoginFragment extends Fragment {
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
 
-   /* private class AsyncTaskRunner extends AsyncTask<String, String, String> {
+    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
 
         private String resp;
         ProgressDialog progressDialog;
@@ -352,7 +353,7 @@ public class LoginFragment extends Fragment {
 
         }
 
-    }*/
+    }
 
 
 }
