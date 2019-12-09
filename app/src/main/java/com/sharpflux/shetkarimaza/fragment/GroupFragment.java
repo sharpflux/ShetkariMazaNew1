@@ -8,6 +8,9 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +27,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.JsonArray;
+import com.sharpflux.shetkarimaza.Interface.RecyclerViewClickListener;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.BuyerActivity;
 import com.sharpflux.shetkarimaza.activities.SellerActivity;
@@ -44,7 +48,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GroupFragment extends Fragment {
+public class GroupFragment extends Fragment  implements RecyclerViewClickListener {
     RecyclerView rv_cstGrp;
     LinearLayoutManager mGridLayoutManager;
     SearchView searchView;
@@ -53,11 +57,12 @@ public class GroupFragment extends Fragment {
     RecyclerView mRecyclerView;
     Bundle bundle;
     MyGroupAdapter myAdapter2;
+    String ItemTypeId,PreviousCategoryId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.dynamic_fragment_group_layout, container, false);
+        View view = inflater.inflate(R.layout.dynamic_fragment_group_layout_one, container, false);
         rv_cstGrp = view.findViewById(R.id.rv_cstGrp);
         mGridLayoutManager = new LinearLayoutManager(getContext());
         rv_cstGrp.setLayoutManager(mGridLayoutManager);
@@ -89,10 +94,15 @@ public class GroupFragment extends Fragment {
                                         (userJson.getString("ImageUrl"),
                                                 userJson.getString("ItemName"),
                                                 userJson.getString("ItemTypeId")
-                                                );
+
+
+                                        );
+                        ItemTypeId= userJson.getString("ItemTypeId");
+                        PreviousCategoryId= extras.getString("PreviousCategoryId");
 
                         sellOptionsList.add(sellOptions);
-                        myAdapter2 = new MyGroupAdapter(getContext(), sellOptionsList,extras.getString("PreviousCategoryId").toString(),extras.getString("jsonObj").toString());
+                        myAdapter2 = new MyGroupAdapter(getContext(), sellOptionsList,extras.getString("PreviousCategoryId").toString(),
+                                extras.getString("jsonObj").toString());
                         rv_cstGrp.setAdapter(myAdapter2);
 
 
@@ -115,12 +125,32 @@ public class GroupFragment extends Fragment {
 
 
 
+
 /* GroupFragment.AsyncTaskRunner runner = new GroupFragment.AsyncTaskRunner();
         String sleepTime = "10";
         runner.execute(sleepTime);*/
 
         return view;
     }
+
+    @Override
+    public void onClick(View view, int position) {
+ /*       AppCompatActivity activity = (AppCompatActivity) getActivity().getBaseContext();
+        DynamicFragment newFragment = new DynamicFragment();
+        Bundle bundle=new Bundle();
+        bundle.putString("CategoryId",ItemTypeId);
+        bundle.putString("IsGroup","True");
+        bundle.putString("PreviousCategoryId",PreviousCategoryId);
+        newFragment.setArguments(bundle);
+        String backStateName = newFragment.getClass().getName();
+        FragmentManager manager = activity.getSupportFragmentManager();
+        FragmentTransaction ft = manager.beginTransaction();
+        ft.replace(R.id.frame, newFragment, backStateName);
+        ft.addToBackStack(backStateName);
+        ft.commit();*/
+    }
+
+
 
    /* private void setDynamicFragmentToTabLayout() {
 

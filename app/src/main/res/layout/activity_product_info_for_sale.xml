@@ -121,6 +121,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
+                android:id="@+id/lr_quality"
                 android:fontFamily="@font/sfpro_display_medium">
 
                 <android.support.design.widget.TextInputEditText

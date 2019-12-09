@@ -36,6 +36,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -180,6 +181,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
     DataAdapter dataAdapter;
         public  static  int MY_PERMISSIONS_REQUEST=1;
+        ScrollView scrollableContents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -233,6 +235,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         LinearLayout1= findViewById(R.id.LinearLayout1);
         edtcertifiedno=findViewById(R.id.edtcertifiedno);
         edtsurveyNo=findViewById(R.id.edtsurveyNo);
+        scrollableContents=findViewById(R.id.scrollableContents);
 
 
         edtDays = findViewById(R.id.edtDays);

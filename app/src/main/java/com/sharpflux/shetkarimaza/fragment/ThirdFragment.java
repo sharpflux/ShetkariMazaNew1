@@ -69,7 +69,7 @@ public class ThirdFragment extends Fragment {
 
     String address = "", city = "", district = "", state = "", companyname = "",
             license = "", companyregnno = "", gstno = "", name = "", registrationTypeId = "",
-            registrationCategoryId = "", gender = "", mobile = "", alternateMobile = "", email = "";
+            registrationCategoryId = "", gender = "", mobile = "", alternateMobile = "", email = "",stateId="",districtId="",TalukaId="";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -94,6 +94,9 @@ public class ThirdFragment extends Fragment {
             license = bundle.getString("license");
             companyregnno = bundle.getString("companyregnno");
             gstno = bundle.getString("gstno");
+            stateId=bundle.getString("stateId");
+            districtId=bundle.getString("districtId");
+            TalukaId=bundle.getString("TalukaId");
         }
 
         int requestCode = 200;
@@ -204,6 +207,7 @@ public class ThirdFragment extends Fragment {
                     intent.putExtra("accno", accno.getText().toString());
                     intent.putExtra("ifsc", ifsc.getText().toString());
                     intent.putExtra("check", ChequeImageBlob);
+                    intent.putExtra("adhar", AdharImageBlob);
                     intent.putExtra("adhar", AdharImageBlob);
 
                     startActivity(intent);

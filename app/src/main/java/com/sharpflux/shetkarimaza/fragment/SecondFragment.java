@@ -184,8 +184,11 @@ public class SecondFragment extends DialogFragment {
                 bundle.putString("Email", email);
                 bundle.putString("address", address.getText().toString());
                 bundle.putString("city", city.getText().toString());
+                bundle.putString("TalukaId", hideTalukaId.getText().toString());
                 bundle.putString("district", edtdistrict.getText().toString());
+                bundle.putString("districtId", hideDistrictId.getText().toString());
                 bundle.putString("state", edtstate.getText().toString());
+                bundle.putString("stateId", hideStateId.getText().toString());
                 bundle.putString("companyname", companyname.getText().toString());
                 bundle.putString("license", license.getText().toString());
                 bundle.putString("companyregnno", companyregnno.getText().toString());

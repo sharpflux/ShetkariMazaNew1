@@ -31,6 +31,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+
         <activity android:name=".filters.Filter1Activity" />
         <activity android:name=".filters.BuyerFilterActivity" />
         <activity android:name=".activities.AddListActivityTest"/>

@@ -3,17 +3,20 @@ package com.sharpflux.shetkarimaza.model;
 public class GroupData {
     String Image;
     String Name;
-    String TypeId;
+    String ItemTypeId;
 
-    public GroupData(String image, String name, String typeId) {
-        Image = image;
-        Name = name;
-        TypeId = typeId;
-    }
+
+
 
     public GroupData(String image, String name) {
         Image = image;
         Name = name;
+    }
+
+    public GroupData(String image, String name, String itemTypeId) {
+        Image = image;
+        Name = name;
+        ItemTypeId = itemTypeId;
     }
 
     public String getImage() {
@@ -32,11 +35,11 @@ public class GroupData {
         Name = name;
     }
 
-    public String getTypeId() {
-        return TypeId;
+    public String getItemTypeId() {
+        return ItemTypeId;
     }
 
-    public void setTypeId(String typeId) {
-        TypeId = typeId;
+    public void setItemTypeId(String itemTypeId) {
+        ItemTypeId = itemTypeId;
     }
 }

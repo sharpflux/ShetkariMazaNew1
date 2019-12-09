@@ -394,11 +394,11 @@ public class SelfieActivity extends AppCompatActivity {
                 params.put("Address", address);
                 params.put("EmailId", email);
 
-                params.put("Gender", "male");
+                params.put("Gender", gender);
                 params.put("StateId", "1");
                 params.put("CityId", "1");
 
-                params.put("TahasilId", "1");
+                params.put("TahasilId","1");
                 params.put("CompanyFirmName", companyname);
                 params.put("LandLineNo", "1");
                 params.put("APMCLicence", license);

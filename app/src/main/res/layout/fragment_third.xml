@@ -109,6 +109,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfpro_display_medium"
                     android:hint="@string/account_no"
+                    android:inputType="number"
                     android:textSize="15dp" />
             </android.support.design.widget.TextInputLayout>
 
@@ -125,6 +126,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfpro_display_medium"
                     android:hint="@string/IFSC_code"
+                    android:inputType="textCapCharacters"
                     android:textSize="15dp" />
             </android.support.design.widget.TextInputLayout>
 

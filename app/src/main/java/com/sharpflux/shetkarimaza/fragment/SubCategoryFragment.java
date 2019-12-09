@@ -1,7 +1,6 @@
 package com.sharpflux.shetkarimaza.fragment;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,9 +8,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,10 +25,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.google.gson.JsonObject;
 import com.sharpflux.shetkarimaza.Interface.RecyclerViewClickListener;
 import com.sharpflux.shetkarimaza.R;
-import com.sharpflux.shetkarimaza.activities.BuyerActivity;
 import com.sharpflux.shetkarimaza.adapter.MyBuyerAdapter;
 import com.sharpflux.shetkarimaza.model.SellOptions;
 import com.sharpflux.shetkarimaza.model.User;
@@ -50,7 +45,7 @@ import java.util.Locale;
 import java.util.Map;
 
 
-public class DynamicFragment extends Fragment implements RecyclerViewClickListener {
+public class SubCategoryFragment extends Fragment implements RecyclerViewClickListener {
 
     SellOptions sellOptions;
     Locale myLocale;
@@ -70,8 +65,8 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
 
 
 
-    public static DynamicFragment newInstance() {
-        return new DynamicFragment();
+    public static SubCategoryFragment newInstance() {
+        return new SubCategoryFragment();
     }
 
     @Override
@@ -164,22 +159,9 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
                             for (int i = 0; i < obj.length(); i++) {
                                 JSONObject userJson = obj.getJSONObject(i);
                                 if (!userJson.getBoolean("error"))
+
                                 {
-                                    if(userJson.getBoolean("IsGroup"))
-                                    {
-
-                                        searchView.setVisibility(View.INVISIBLE);
-                                       /* txt_nurseryName.setVisibility(View.GONE);
-                                      */
-
-
-                                        showDriverAssignedFragment(obj,CategoryId);
-                                        break;
-                                    }
-                                    else {
-
-
-                                        sellOptions = new SellOptions
+                                    sellOptions = new SellOptions
                                                 (userJson.getString("ImageUrl"),
                                                         userJson.getString("ItemName"),
                                                         userJson.getString("ItemTypeId"),
@@ -253,7 +235,7 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
                                         });
 
 
-                                    }
+
                                 }
 
                                 else {

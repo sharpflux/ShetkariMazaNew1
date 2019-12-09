@@ -155,4 +155,6 @@ public class BuyerActivity extends AppCompatActivity implements TabLayout.OnTabS
     public void onTabReselected(TabLayout.Tab tab) {
 
     }
+
+
 }
