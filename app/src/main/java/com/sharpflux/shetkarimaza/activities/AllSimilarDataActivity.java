@@ -197,7 +197,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
 
 
-
+//
 
         View showModalBottomSheet = findViewById(R.id.bottom);
         showModalBottomSheet.setOnClickListener(new View.OnClickListener() {
