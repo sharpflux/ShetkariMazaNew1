@@ -33,10 +33,12 @@ import com.sharpflux.shetkarimaza.activities.ProductInfoForSaleActivity;
 import com.sharpflux.shetkarimaza.filters.FilterActivity;
 import com.sharpflux.shetkarimaza.fragment.DynamicFragment;
 import com.sharpflux.shetkarimaza.fragment.GroupFragment;
+import com.sharpflux.shetkarimaza.fragment.SecondFragment;
 import com.sharpflux.shetkarimaza.fragment.SubCategoryFragment;
 import com.sharpflux.shetkarimaza.fragment.ThirdFragment;
 import com.sharpflux.shetkarimaza.model.GroupData;
 import com.sharpflux.shetkarimaza.model.SellOptions;
+import com.sharpflux.shetkarimaza.model.SubCategory;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 import com.squareup.picasso.Picasso;
@@ -59,10 +61,10 @@ public class MyGroupAdapter extends RecyclerView.Adapter<GroupViewHolder1> {
     String ItemTypeId;
     String Obj;
     private BuyerActivity mParent;
-    public MyGroupAdapter(Context mContext, ArrayList<GroupData> sellOptions,String PreviousCategoryId,String Obj) {
+    public MyGroupAdapter(Context mContext, ArrayList<GroupData> sellOptions,String Obj) {
         this.mmContext = mContext;
         this.sellOptions = sellOptions;
-        this.PreviousCategoryId=PreviousCategoryId;
+     //   this.PreviousCategoryId=PreviousCategoryId;
         this.Obj=Obj;
         mParent=new BuyerActivity();
 
@@ -149,32 +151,17 @@ class GroupViewHolder1 extends RecyclerView.ViewHolder implements View.OnClickLi
         newFragment.setArguments(bundle);
         activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame, newFragment).addToBackStack(null).commit();*/
 
-       /* DynamicFragment newFragment = new DynamicFragment();
+        SubCategoryFragment newFragment = new SubCategoryFragment();
         Bundle bundle=new Bundle();
         bundle.putString("CategoryId",ItemTypeId);
-        bundle.putString("IsGroup","True");
-        bundle.putString("PreviousCategoryId",PreviousCategoryId);
         newFragment.setArguments(bundle);
         String backStateName = newFragment.getClass().getName();
         FragmentManager manager = activity.getSupportFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
         ft.replace(R.id.frame, newFragment, backStateName);
         ft.addToBackStack(backStateName);
-        ft.commit();*/
-
-
-
-        BuyerActivity act = (BuyerActivity) mContext;
-        FragmentTransaction ft = act.getSupportFragmentManager().beginTransaction();
-        SubCategoryFragment fragment = new SubCategoryFragment();
-        Bundle bundle=new Bundle();
-        bundle.putString("CategoryId",ItemTypeId);
-        bundle.putString("IsGroup","True");
-        bundle.putString("PreviousCategoryId",PreviousCategoryId);
-        fragment.setArguments(bundle);
-        ft.replace(R.id.frame, fragment,"Tag1");
-        ft.addToBackStack("Tag1");
         ft.commit();
+
 
 
 

@@ -85,7 +85,7 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
 
         View view = inflater.inflate(R.layout.dynamic_fragment_layout, container, false);
 
-        mRecyclerView = view.findViewById(R.id.recyclerview);
+        mRecyclerView = view.findViewById(R.id.recyclerviewsub);
         mGridLayoutManager = new GridLayoutManager(getContext(), 2);
         mRecyclerView.setLayoutManager(mGridLayoutManager);
 
@@ -173,7 +173,7 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
                                       */
 
 
-                                        showDriverAssignedFragment(obj,CategoryId);
+                                        showDriverAssignedFragment(obj);
                                         break;
                                     }
                                     else {
@@ -251,11 +251,8 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
 
                                             }
                                         });
-
-
                                     }
                                 }
-
                                 else {
                                     Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                                 }
@@ -359,12 +356,12 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
     }*/
 
 
-    private void showDriverAssignedFragment(JSONArray obj,String PreviousCategoryId) {
+    private void showDriverAssignedFragment(JSONArray obj) {
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
         GroupFragment fragment = new GroupFragment();
         Bundle bundle=new Bundle();
         bundle.putString("jsonObj",obj.toString());
-        bundle.putString("PreviousCategoryId",PreviousCategoryId);
+      //  bundle.putString("PreviousCategoryId",PreviousCategoryId);
         fragment.setArguments(bundle);
         ft.replace(R.id.frame, fragment);
         ft.addToBackStack(null);

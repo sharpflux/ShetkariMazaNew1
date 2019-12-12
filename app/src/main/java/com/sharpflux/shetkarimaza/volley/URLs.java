@@ -26,6 +26,7 @@ public class URLs {
     public static String URL_VEHICLETYPE="http://apimaza.supergo.in/api/Vehical/Get_VehicalTypeAPI";
     public static String URL_ALL_TRANSPORTER="http://apimaza.supergo.in/api/TransporterAPI/Get_TransporterDetailsAPI?Search=s";
     public static String URL_TRANSPORTER_DETAILS="http://apimaza.supergo.in/api/TransporterAPI/TransporterVehicalDetails?UserId=1";
+    public static String URL_SUBcATEGORY="http://apimaza.supergo.in/api/ItemMasterApi/Get_SubCatItems?ItemTypeId=";
 
 
 }

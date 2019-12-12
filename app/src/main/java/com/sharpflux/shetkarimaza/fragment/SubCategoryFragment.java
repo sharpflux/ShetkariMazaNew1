@@ -28,7 +28,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.Interface.RecyclerViewClickListener;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.MyBuyerAdapter;
+import com.sharpflux.shetkarimaza.adapter.MyCategoryTypeAdapter;
+import com.sharpflux.shetkarimaza.adapter.SubCategoryAdapter;
+import com.sharpflux.shetkarimaza.model.MyCategoryType;
 import com.sharpflux.shetkarimaza.model.SellOptions;
+import com.sharpflux.shetkarimaza.model.SubCategory;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
@@ -45,15 +49,15 @@ import java.util.Locale;
 import java.util.Map;
 
 
-public class SubCategoryFragment extends Fragment implements RecyclerViewClickListener {
+public class SubCategoryFragment extends Fragment {
 
-    SellOptions sellOptions;
+    SubCategory myCategoryType;
     Locale myLocale;
-    ArrayList<SellOptions> productlist;
+    ArrayList<SubCategory> productlist;
     RecyclerView mRecyclerView;
     String CategoryId = "1";
     SearchView searchView;
-    MyBuyerAdapter myAdapter;
+    SubCategoryAdapter myAdapter;
     boolean isLoading = false;
     int currentItems,totalItems,scrollOutItems;
     GridLayoutManager mGridLayoutManager;
@@ -80,14 +84,12 @@ public class SubCategoryFragment extends Fragment implements RecyclerViewClickLi
 
         View view = inflater.inflate(R.layout.dynamic_fragment_layout, container, false);
 
-        mRecyclerView = view.findViewById(R.id.recyclerview);
+        mRecyclerView = view.findViewById(R.id.recyclerviewsub);
         mGridLayoutManager = new GridLayoutManager(getContext(), 2);
         mRecyclerView.setLayoutManager(mGridLayoutManager);
 
         CategoryId = String.valueOf(getArguments().getString("CategoryId"));
         searchView = view.findViewById(R.id.searchViewHome);
-
-
 
 
         mydatabase = new dbLanguage(getContext());
@@ -103,53 +105,35 @@ public class SubCategoryFragment extends Fragment implements RecyclerViewClickLi
             currentLanguage = cursor.getString(0);
 
         }
-        txt_nurseryName=view.findViewById(R.id.txt_group);
-
-
-        if(getArguments().getString("IsGroup")!=null){
-            if(getArguments().getString("IsGroup").equals("True")) {
-                txt_nurseryName.setVisibility(View.VISIBLE);
-                txt_nurseryName.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                     //   CategoryId=getArguments().getString("PreviousCategoryId").toString();
-                        //CategoryId=getArguments().getString("CategoryId").toString();
-                        getActivity().getSupportFragmentManager().popBackStack();
-
-                        return;
-                     }
-                });
-            }
-            else {
-                txt_nurseryName.setVisibility(View.GONE);
-            }
-        }
-        else{
-            txt_nurseryName.setVisibility(View.GONE);
-        }
-
-
-
-
-
-
-
-
+        txt_nurseryName = view.findViewById(R.id.txt_group);
         productlist = new ArrayList<>();
         myLocale = getResources().getConfiguration().locale;
 
-        // setDynamicFragmentToTabLayout();
-        AsyncTaskRunner runner = new AsyncTaskRunner();
+
+        if (getArguments() != null) {
+            CategoryId = getArguments().getString("CategoryId").toString();
+
+        }
+        //setDynamicFragmentToTabLayout();
+
+
+
+        SubCategoryFragment.AsyncTaskRunner runner = new SubCategoryFragment.AsyncTaskRunner();
         String sleepTime = "10";
         runner.execute(sleepTime);
 
+
+
+
         return view;
+
     }
 
-    public void setDynamicFragmentToTabLayout() {
+
+    private void setDynamicFragmentToTabLayout(){
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                    URLs.URL_NAME + "?CategoryId=" + CategoryId + "&Language=" + currentLanguage,
+                URLs.URL_NAME+"?CategoryId="+CategoryId +"&Language="+currentLanguage,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -158,97 +142,33 @@ public class SubCategoryFragment extends Fragment implements RecyclerViewClickLi
                             JSONArray obj = new JSONArray(response);
                             for (int i = 0; i < obj.length(); i++) {
                                 JSONObject userJson = obj.getJSONObject(i);
-                                if (!userJson.getBoolean("error"))
 
-                                {
-                                    sellOptions = new SellOptions
-                                                (userJson.getString("ImageUrl"),
-                                                        userJson.getString("ItemName"),
-                                                        userJson.getString("ItemTypeId"),
-                                                        CategoryId);
-
-                                        productlist.add(sellOptions);
-
-                                        myAdapter = new MyBuyerAdapter(getContext(), productlist);
-                                        mRecyclerView.setAdapter(myAdapter);
+                                if (!userJson.getBoolean("error")) {
+                                    myCategoryType = new SubCategory
+                                            (       userJson.getString("ImageUrl"),
+                                                    userJson.getString("CategoryId"),
+                                                    userJson.getString("ItemName"));
 
 
-                                        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                                            @Override
-                                            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                                                super.onScrollStateChanged(recyclerView, newState);
-                                            }
-
-                                            @Override
-                                            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                                                super.onScrolled(recyclerView, dx, dy);
-
-                                                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-
-                                                if (!isLoading) {
-                                                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == productlist.size() - 1) {
-
-                                                        productlist.add(null);
-                                                        myAdapter.notifyItemInserted(productlist.size() - 1);
-
-                                                        Handler handler = new Handler();
-
-                                                        handler.postDelayed(new Runnable() {
-                                                            @Override
-                                                            public void run() {
-                                                                productlist.remove(productlist.size() - 1);
-                                                                int scrollPosition = productlist.size();
-                                                                myAdapter.notifyItemRemoved(scrollPosition);
-                                                                int currentSize = scrollPosition;
-                                                                int nextLimit = currentSize + 3;
-
-                                                                while (currentSize - 1 < nextLimit) {
-                                                                    // productlist.add(sellOptions);
-                                                                    currentSize++;
-                                                                }
-
-                                                                myAdapter.notifyDataSetChanged();
-                                                                isLoading = false;
-                                                            }
-                                                        }, 1000);
-
-                                                        isLoading = true;
-                                                    }
-                                                }
-                                            }
-                                        });
-
-                                        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                                            @Override
-                                            public boolean onQueryTextSubmit(String query) {
-
-                                                return false;
-                                            }
-
-                                            @Override
-                                            public boolean onQueryTextChange(String newText) {
-
-                                                myAdapter.getFilter().filter(newText);
-                                                return false;
-
-                                            }
-                                        });
-
-
-
-                                }
-
-                                else {
+                                    productlist.add(myCategoryType);
+                                } else {
                                     Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                                 }
 
+                                myAdapter = new SubCategoryAdapter(getContext(), productlist);
+                                mRecyclerView.setAdapter(myAdapter);
+
+
                             }
+                          /*  parentShimmerLayout.stopShimmerAnimation();
+                            parentShimmerLayout.setVisibility(View.GONE);*/
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
                 },
+//
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
@@ -261,15 +181,12 @@ public class SubCategoryFragment extends Fragment implements RecyclerViewClickLi
                 return params;
             }
         };
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
 
-    @Override
-    public void onClick(View view, int position) {
-        setDynamicFragmentToTabLayout();
-    }
+
+
 
     private class AsyncTaskRunner extends AsyncTask<String, String, String> {
 
@@ -313,46 +230,6 @@ public class SubCategoryFragment extends Fragment implements RecyclerViewClickLi
 
     }
 
-
-/*    private void swapFragment(JSONArray obj,String PreviousCategoryId){
-
-
-        AppCompatActivity activity = (AppCompatActivity) getActivity().getBaseContext();
-        GroupFragment categoryFragment = new GroupFragment();
-        Bundle bundle=new Bundle();
-        bundle.putString("jsonObj",obj.toString());
-        bundle.putString("PreviousCategoryId",PreviousCategoryId);
-        categoryFragment.setArguments(bundle);
-        activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame, categoryFragment).addToBackStack(null).commit();
-
-
-
-
-
-       *//* GroupFragment categoryFragment = new GroupFragment();
-        Bundle bundle=new Bundle();
-        bundle.putString("jsonObj",obj.toString());
-        bundle.putString("PreviousCategoryId",PreviousCategoryId);
-        categoryFragment.setArguments(bundle);
-        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame, categoryFragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();*//*
-    }*/
-
-
-    private void showDriverAssignedFragment(JSONArray obj,String PreviousCategoryId) {
-        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        GroupFragment fragment = new GroupFragment();
-        Bundle bundle=new Bundle();
-        bundle.putString("jsonObj",obj.toString());
-        bundle.putString("PreviousCategoryId",PreviousCategoryId);
-        fragment.setArguments(bundle);
-        ft.replace(R.id.frame, fragment);
-        ft.addToBackStack(null);
-        ft.commit();
-
-    }
 
 
 }

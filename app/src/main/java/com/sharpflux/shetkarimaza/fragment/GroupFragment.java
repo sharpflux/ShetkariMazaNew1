@@ -98,11 +98,10 @@ public class GroupFragment extends Fragment  implements RecyclerViewClickListene
 
                                         );
                         ItemTypeId= userJson.getString("ItemTypeId");
-                        PreviousCategoryId= extras.getString("PreviousCategoryId");
+                        //PreviousCategoryId= extras.getString("PreviousCategoryId");
 
                         sellOptionsList.add(sellOptions);
-                        myAdapter2 = new MyGroupAdapter(getContext(), sellOptionsList,extras.getString("PreviousCategoryId").toString(),
-                                extras.getString("jsonObj").toString());
+                        myAdapter2 = new MyGroupAdapter(getContext(), sellOptionsList,extras.getString("jsonObj").toString());
                         rv_cstGrp.setAdapter(myAdapter2);
 
 
