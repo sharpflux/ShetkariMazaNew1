@@ -84,7 +84,7 @@ public class SubCategoryFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.dynamic_fragment_layout, container, false);
 
-        mRecyclerView = view.findViewById(R.id.recyclerviewsub);
+        mRecyclerView = view.findViewById(R.id.recyclerviewsub1);
         mGridLayoutManager = new GridLayoutManager(getContext(), 2);
         mRecyclerView.setLayoutManager(mGridLayoutManager);
 
@@ -121,9 +121,6 @@ public class SubCategoryFragment extends Fragment {
         SubCategoryFragment.AsyncTaskRunner runner = new SubCategoryFragment.AsyncTaskRunner();
         String sleepTime = "10";
         runner.execute(sleepTime);
-
-
-
 
         return view;
 

@@ -448,7 +448,7 @@ public class ContactDetailActivity extends AppCompatActivity {
 
     }
 
-    @Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_contact_detail, menu);
@@ -466,7 +466,7 @@ public class ContactDetailActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
+*/
 
 
     private void exportToExcel() {

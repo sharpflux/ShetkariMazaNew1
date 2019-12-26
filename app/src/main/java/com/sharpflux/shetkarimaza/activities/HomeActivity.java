@@ -202,6 +202,7 @@ public class HomeActivity extends AppCompatActivity
           startActivity(lin);
         }
 
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
@@ -215,12 +216,6 @@ public class HomeActivity extends AppCompatActivity
         fragmentTransaction.commit();
     }
 
-   /* @Override
-    protected void onStart() {
-        super.onStart();
-
-
-    }*/
 
     public void setLocale(String localeName) {
 

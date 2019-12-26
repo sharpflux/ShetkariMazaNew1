@@ -133,12 +133,14 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
         }
 
+        AssignVariables();
+        BundleAssign();
+
         AllSimilarDataActivity.AsyncTaskRunner runner = new AllSimilarDataActivity.AsyncTaskRunner();
         String sleepTime = String.valueOf(currentPage);
         runner.execute(sleepTime);
 
-        AssignVariables();
-        BundleAssign();
+
 
        /* recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -197,7 +199,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
 
 
-//
+
 
         View showModalBottomSheet = findViewById(R.id.bottom);
         showModalBottomSheet.setOnClickListener(new View.OnClickListener() {

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,7 +19,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
+import android.support.v7.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,12 +86,15 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
 
         View view = inflater.inflate(R.layout.dynamic_fragment_layout, container, false);
 
-        mRecyclerView = view.findViewById(R.id.recyclerviewsub);
+       mRecyclerView = view.findViewById(R.id.recyclerviewsub);
         mGridLayoutManager = new GridLayoutManager(getContext(), 2);
         mRecyclerView.setLayoutManager(mGridLayoutManager);
+        productlist = new ArrayList<>();
+        myAdapter = new MyBuyerAdapter(getContext(), productlist);
+        mRecyclerView.setAdapter(myAdapter);
 
         CategoryId = String.valueOf(getArguments().getString("CategoryId"));
-        searchView = view.findViewById(R.id.searchViewHome);
+        searchView = view.findViewById(R.id.searchViewone);
 
 
 
@@ -111,17 +115,20 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
         txt_nurseryName=view.findViewById(R.id.txt_group);
 
 
-        if(getArguments().getString("IsGroup")!=null){
+       /* if(getArguments().getString("IsGroup")!=null){
             if(getArguments().getString("IsGroup").equals("True")) {
-                txt_nurseryName.setVisibility(View.VISIBLE);
+
+                if(getArguments().getString("PreviousCategoryId")!=null)
+                    CategoryId=getArguments().getString("PreviousCategoryId").toString();
+
+
+              txt_nurseryName.setVisibility(View.VISIBLE);
                 txt_nurseryName.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                     //   CategoryId=getArguments().getString("PreviousCategoryId").toString();
+                     CategoryId=getArguments().getString("PreviousCategoryId").toString();
                         //CategoryId=getArguments().getString("CategoryId").toString();
-                        getActivity().getSupportFragmentManager().popBackStack();
-
-                        return;
+                        //getActivity().getSupportFragmentManager().popBackStack();
                      }
                 });
             }
@@ -131,7 +138,7 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
         }
         else{
             txt_nurseryName.setVisibility(View.GONE);
-        }
+        }*/
 
 
 
@@ -140,7 +147,7 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
 
 
 
-        productlist = new ArrayList<>();
+
         myLocale = getResources().getConfiguration().locale;
 
         // setDynamicFragmentToTabLayout();
@@ -153,11 +160,15 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
 
     public void setDynamicFragmentToTabLayout() {
 
+     //   Handler handler = new Handler();
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                     URLs.URL_NAME + "?CategoryId=" + CategoryId + "&Language=" + currentLanguage,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+
+
+
 
                         try {
                             JSONArray obj = new JSONArray(response);
@@ -169,11 +180,7 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
                                     {
 
                                         searchView.setVisibility(View.INVISIBLE);
-                                       /* txt_nurseryName.setVisibility(View.GONE);
-                                      */
-
-
-                                        showDriverAssignedFragment(obj);
+                                        showGroupFragment(obj);
                                         break;
                                     }
                                     else {
@@ -187,9 +194,13 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
 
                                         productlist.add(sellOptions);
 
-                                        myAdapter = new MyBuyerAdapter(getContext(), productlist);
-                                        mRecyclerView.setAdapter(myAdapter);
-
+                                        Handler handler = new Handler(Looper.getMainLooper());
+                                        handler.post(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                myAdapter.notifyDataSetChanged();
+                                            }
+                                        });
 
                                         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                                             @Override
@@ -201,7 +212,11 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
                                             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                                                 super.onScrolled(recyclerView, dx, dy);
 
-                                                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                                                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+                                                linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+
+                                                //LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
                                                 if (!isLoading) {
                                                     if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == productlist.size() - 1) {
@@ -214,7 +229,7 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
                                                         handler.postDelayed(new Runnable() {
                                                             @Override
                                                             public void run() {
-                                                                productlist.remove(productlist.size() - 1);
+                                                                //productlist.remove(productlist.size() - 1);
                                                                 int scrollPosition = productlist.size();
                                                                 myAdapter.notifyItemRemoved(scrollPosition);
                                                                 int currentSize = scrollPosition;
@@ -235,7 +250,6 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
                                                 }
                                             }
                                         });
-
                                         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                                             @Override
                                             public boolean onQueryTextSubmit(String query) {
@@ -356,7 +370,7 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
     }*/
 
 
-    private void showDriverAssignedFragment(JSONArray obj) {
+    private void showGroupFragment(JSONArray obj) {
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
         GroupFragment fragment = new GroupFragment();
         Bundle bundle=new Bundle();

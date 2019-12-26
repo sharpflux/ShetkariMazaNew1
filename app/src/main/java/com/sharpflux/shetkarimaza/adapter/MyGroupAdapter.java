@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -61,35 +62,45 @@ public class MyGroupAdapter extends RecyclerView.Adapter<GroupViewHolder1> {
     String ItemTypeId;
     String Obj;
     private BuyerActivity mParent;
-    public MyGroupAdapter(Context mContext, ArrayList<GroupData> sellOptions,String Obj) {
+    GroupFragment frag;
+
+    public MyGroupAdapter(Context mContext, ArrayList<GroupData> sellOptions, String Obj,GroupFragment frag) {
         this.mmContext = mContext;
         this.sellOptions = sellOptions;
-     //   this.PreviousCategoryId=PreviousCategoryId;
-        this.Obj=Obj;
-        mParent=new BuyerActivity();
+        //   this.PreviousCategoryId=PreviousCategoryId;
+        this.Obj = Obj;
+        this.frag=frag;
+        mParent = new BuyerActivity();
 
     }
 
     @Override
     public GroupViewHolder1 onCreateViewHolder(ViewGroup parent, int viewType) {
 
-            View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_group_layout, parent, false);
-            return new GroupViewHolder1(mView);
+        View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_group_layout, parent, false);
+        return new GroupViewHolder1(mView);
 
     }
 
     @Override
-    public void onBindViewHolder(GroupViewHolder1 holder, int i) {
+    public void onBindViewHolder(GroupViewHolder1 holder, final int i) {
 
 
-        Picasso.get().load(sellOptions.get(i).getImage()).resize(300, 300)
-                .into(holder.Image);
+        Picasso.get().load(sellOptions.get(i).getImage()).resize(300, 300).into(holder.Image);
         holder.Title.setText(sellOptions.get(i).getName());
         holder.ItemTypeId = sellOptions.get(i).getItemTypeId();
-        holder.PreviousCategoryId=PreviousCategoryId;
-        holder.mContext=mmContext;
+        holder.PreviousCategoryId = PreviousCategoryId;
+        holder.mContext = mmContext;
+        holder.jsonObj = Obj;
 
-        holder.jsonObj=Obj;
+        holder.lr_group.setOnClickListener(new View.OnClickListener() {
+            int position=i;
+            public void onClick(View view) {
+                frag.GOPrevious( sellOptions.get(position).getItemTypeId(),"True",sellOptions.get(position).getItemTypeId());
+            }
+        });
+
+
 
        /* holder.lr_group.setOnClickListener(new View.OnClickListener() {
 
@@ -116,7 +127,6 @@ public class MyGroupAdapter extends RecyclerView.Adapter<GroupViewHolder1> {
     }
 
 
-
 }
 
 
@@ -125,7 +135,9 @@ class GroupViewHolder1 extends RecyclerView.ViewHolder implements View.OnClickLi
     ImageView Image;
     TextView Title;
     LinearLayout lr_group;
-    String ItemTypeId,PreviousCategoryId,jsonObj; Context mContext;
+    String ItemTypeId, PreviousCategoryId, jsonObj;
+    Context mContext;
+
 
 
     GroupViewHolder1(View itemView) {
@@ -133,6 +145,7 @@ class GroupViewHolder1 extends RecyclerView.ViewHolder implements View.OnClickLi
         Image = itemView.findViewById(R.id.ivsellerplantLogo);
         Title = itemView.findViewById(R.id.ivsellerplanttype);
         lr_group = itemView.findViewById(R.id.lr_group);
+
         itemView.setOnClickListener(this);
 
     }
@@ -141,9 +154,50 @@ class GroupViewHolder1 extends RecyclerView.ViewHolder implements View.OnClickLi
     public void onClick(View view) {
 
 
+        //frag.GOPrevious(ItemTypeId,"True",PreviousCategoryId);
 
-            AppCompatActivity activity = (AppCompatActivity) view.getContext();
-          /* DynamicFragment newFragment = new DynamicFragment();
+/*        Intent intent;
+        intent = new Intent(view.getContext(), BuyerActivity.class);
+        intent.putExtra("ProductId",ItemTypeId);
+        intent.putExtra("PreviousCategoryId",PreviousCategoryId);
+        view.getContext().startActivity(intent);*/
+
+   /*     AppCompatActivity activity = (AppCompatActivity) view.getContext();
+        DynamicFragment newFragment = new DynamicFragment();
+        Bundle bundle=new Bundle();
+        bundle.putString("CategoryId",ItemTypeId);
+        bundle.putString("IsGroup","True");
+        bundle.putString("PreviousCategoryId",PreviousCategoryId);
+        newFragment.setArguments(bundle);
+        activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame, newFragment).commit();*/
+
+
+      //  AppCompatActivity activity = (AppCompatActivity) view.getContext();
+       /* DynamicFragment newFragment = new DynamicFragment();
+        FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
+        Bundle bundle = new Bundle();
+        bundle.putString("CategoryId", ItemTypeId);
+        bundle.putString("PreviousCategoryId", PreviousCategoryId);
+        newFragment.setArguments(bundle);
+        transaction.replace(R.id.frame, newFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();*/
+
+
+        /*activity.getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        DynamicFragment frag = new DynamicFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("CategoryId", ItemTypeId);
+        bundle.putString("PreviousCategoryId", PreviousCategoryId);
+        frag.setArguments(bundle);
+        FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frame, frag, "Dynamic");
+        fragmentTransaction.addToBackStack("Dynamic");
+        fragmentTransaction.commit();*/
+
+
+        /*AppCompatActivity activity = (AppCompatActivity) view.getContext();
+        DynamicFragment newFragment = new DynamicFragment();
         Bundle bundle=new Bundle();
         bundle.putString("CategoryId",ItemTypeId);
         bundle.putString("IsGroup","True");
@@ -151,7 +205,7 @@ class GroupViewHolder1 extends RecyclerView.ViewHolder implements View.OnClickLi
         newFragment.setArguments(bundle);
         activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame, newFragment).addToBackStack(null).commit();*/
 
-        SubCategoryFragment newFragment = new SubCategoryFragment();
+       /* SubCategoryFragment newFragment = new SubCategoryFragment();
         Bundle bundle=new Bundle();
         bundle.putString("CategoryId",ItemTypeId);
         newFragment.setArguments(bundle);
@@ -160,7 +214,7 @@ class GroupViewHolder1 extends RecyclerView.ViewHolder implements View.OnClickLi
         FragmentTransaction ft = manager.beginTransaction();
         ft.replace(R.id.frame, newFragment, backStateName);
         ft.addToBackStack(backStateName);
-        ft.commit();
+        ft.commit();*/
 
 
 
@@ -188,11 +242,7 @@ class GroupViewHolder1 extends RecyclerView.ViewHolder implements View.OnClickLi
                     ft.commit();*/
 
 
-
-
-
     }
-
 
 }
 

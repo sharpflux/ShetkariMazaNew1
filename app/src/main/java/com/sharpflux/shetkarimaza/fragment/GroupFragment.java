@@ -17,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,7 +59,7 @@ public class GroupFragment extends Fragment  implements RecyclerViewClickListene
     Bundle bundle;
     MyGroupAdapter myAdapter2;
     String ItemTypeId,PreviousCategoryId;
-
+        Button btnBack;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
@@ -66,9 +67,25 @@ public class GroupFragment extends Fragment  implements RecyclerViewClickListene
         rv_cstGrp = view.findViewById(R.id.rv_cstGrp);
         mGridLayoutManager = new LinearLayoutManager(getContext());
         rv_cstGrp.setLayoutManager(mGridLayoutManager);
+        //btnBack= view.findViewById(R.id.btnBack);
 
-
-
+       /* btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DynamicFragment newFragment = new DynamicFragment();
+                Bundle bundle=new Bundle();
+                bundle.putString("CategoryId",ItemTypeId);
+                bundle.putString("IsGroup","False");
+                bundle.putString("PreviousCategoryId",ItemTypeId);
+                newFragment.setArguments(bundle);
+                String backStateName = newFragment.getClass().getName();
+                FragmentManager manager = getFragmentManager();
+                FragmentTransaction ft = manager.beginTransaction();
+                ft.replace(R.id.frame, newFragment, backStateName);
+                ft.addToBackStack(backStateName);
+                ft.commit();
+            }
+        });*/
 
        //searchView = view.findViewById(R.id.searchViewHome);
 
@@ -101,7 +118,7 @@ public class GroupFragment extends Fragment  implements RecyclerViewClickListene
                         //PreviousCategoryId= extras.getString("PreviousCategoryId");
 
                         sellOptionsList.add(sellOptions);
-                        myAdapter2 = new MyGroupAdapter(getContext(), sellOptionsList,extras.getString("jsonObj").toString());
+                        myAdapter2 = new MyGroupAdapter(getContext(), sellOptionsList,extras.getString("jsonObj").toString(),GroupFragment.this);
                         rv_cstGrp.setAdapter(myAdapter2);
 
 
@@ -134,7 +151,7 @@ public class GroupFragment extends Fragment  implements RecyclerViewClickListene
 
     @Override
     public void onClick(View view, int position) {
- /*       AppCompatActivity activity = (AppCompatActivity) getActivity().getBaseContext();
+        AppCompatActivity activity = (AppCompatActivity) getActivity().getBaseContext();
         DynamicFragment newFragment = new DynamicFragment();
         Bundle bundle=new Bundle();
         bundle.putString("CategoryId",ItemTypeId);
@@ -146,10 +163,23 @@ public class GroupFragment extends Fragment  implements RecyclerViewClickListene
         FragmentTransaction ft = manager.beginTransaction();
         ft.replace(R.id.frame, newFragment, backStateName);
         ft.addToBackStack(backStateName);
-        ft.commit();*/
+        ft.commit();
     }
 
-
+    public void GOPrevious(String ItemTypeId,String Group,String PreviousCategoryId) {
+        DynamicFragment newFragment = new DynamicFragment();
+        Bundle bundle=new Bundle();
+        bundle.putString("CategoryId",ItemTypeId);
+        bundle.putString("IsGroup",Group);
+        bundle.putString("PreviousCategoryId",PreviousCategoryId);
+        newFragment.setArguments(bundle);
+        String backStateName = newFragment.getClass().getName();
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction ft = manager.beginTransaction();
+        ft.replace(R.id.frame, newFragment, backStateName);
+        ft.addToBackStack(backStateName);
+        ft.commit();
+    }
 
    /* private void setDynamicFragmentToTabLayout() {
 

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.filters.FilterActivity;
 import com.sharpflux.shetkarimaza.filters.SubCategoryFilter;
+import com.sharpflux.shetkarimaza.model.Product;
 import com.sharpflux.shetkarimaza.model.SellOptions;
 import com.squareup.picasso.Picasso;
 
@@ -33,10 +34,10 @@ public class MyBuyerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public String id;
     private static int currentPosition = 0;
 
-    private List<SellOptions> mList;
+    private ArrayList<SellOptions> mList;
     private List<SellOptions> exampleListFull;
 
-    public MyBuyerAdapter(Context mContext, List<SellOptions> mList) {
+    public MyBuyerAdapter(Context mContext, ArrayList<SellOptions> mList) {
         this.mContext = mContext;
         this.mList = mList;
         exampleListFull = new ArrayList<>(mList);
@@ -103,13 +104,45 @@ public class MyBuyerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
 
+
     @Override
-    public Filter getFilter() {
-        return exampleFilter;
+    public Filter getFilter(){
+        return new Filter(){
+
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+
+                List<SellOptions> filteredList = new ArrayList<>();
+
+                if (constraint == null || constraint.length() == 0) {
+                    filteredList.addAll(exampleListFull);
+                } else {
+                    String filterPattern = constraint.toString().toLowerCase().trim();
+
+                    for (SellOptions item : exampleListFull) {
+                        if (item.getProductlist().toLowerCase().contains(filterPattern)) {
+                            filteredList.add(item);
+                        }
+                    }
+                }
+
+                FilterResults results = new FilterResults();
+                results.values = filteredList;
+
+                return results;
+
+            }
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                mList.clear();
+                mList.addAll((List) results.values);
+                notifyDataSetChanged();
+            }
+        };
     }
 
 
-    private Filter exampleFilter = new Filter() {
+   /* private Filter exampleFilter = new Filter() {
 
 
         @Override
@@ -140,7 +173,7 @@ public class MyBuyerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             mList.addAll((List) results.values);
             notifyDataSetChanged();
         }
-    };
+    };*/
 
 
     private void showLoadingView(LoadingViewHolder viewHolder, int position) {
