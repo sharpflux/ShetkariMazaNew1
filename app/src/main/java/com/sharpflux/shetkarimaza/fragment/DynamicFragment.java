@@ -267,6 +267,7 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
                                         });
                                     }
                                 }
+                                //
                                 else {
                                     Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                                 }
