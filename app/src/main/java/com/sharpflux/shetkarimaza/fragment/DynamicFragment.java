@@ -19,7 +19,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v7.widget.SearchView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -267,7 +267,7 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
                                         });
                                     }
                                 }
-                                //
+
                                 else {
                                     Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                                 }

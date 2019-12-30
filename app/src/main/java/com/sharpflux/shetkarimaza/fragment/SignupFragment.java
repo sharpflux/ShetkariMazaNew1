@@ -96,6 +96,53 @@ public class SignupFragment extends Fragment {
                 }
 
 
+
+
+                number = ccp.getFullNumberWithPlus();
+
+                if (TextUtils.isEmpty(eusername.getText().toString())) {
+                    eusername.setError("Please enter your username");
+                    eusername.requestFocus();
+
+                    return;
+                }
+
+
+                if (TextUtils.isEmpty(edtmiddlename.getText().toString())) {
+                    edtlastname.setError("Please enter your last name");
+                    edtlastname.requestFocus();
+
+                    return;
+                }
+
+                if (TextUtils.isEmpty(edtlastname.getText().toString())) {
+                    editTextMobile.setError("Please enter mobile number");
+                    editTextMobile.requestFocus();
+                    return;
+                }
+                if(editTextMobile.getText().toString().length()>10){
+                    editTextMobile.setError("Please enter valid mobile number");
+                    editTextMobile.requestFocus();
+                    return;
+                }
+                if (TextUtils.isEmpty(epassword.getText().toString())) {
+                    epassword.setError("Please Enter a password");
+                    epassword.requestFocus();
+                    return;
+                }
+                if (TextUtils.isEmpty(edtcpassword.getText().toString())) {
+                    edtcpassword.setError("Please Enter a confirm password");
+                    edtcpassword.requestFocus();
+                    return;
+                }
+                if (!epassword.getText().toString().equals(edtcpassword.getText().toString())) {
+                    edtcpassword.setError("Please enter correct password");
+                    edtcpassword.requestFocus();
+                    return;
+                }
+
+
+
                 SignupFragment.AsyncTaskRunner runner = new AsyncTaskRunner();
                 String sleepTime = "1";
                 runner.execute(sleepTime);
@@ -128,6 +175,7 @@ public class SignupFragment extends Fragment {
         if (TextUtils.isEmpty(username)) {
             eusername.setError("Please enter your username");
             eusername.requestFocus();
+
             return;
         }
 
@@ -140,6 +188,7 @@ public class SignupFragment extends Fragment {
         if (TextUtils.isEmpty(lastname)) {
             edtlastname.setError("Please enter your last name");
             edtlastname.requestFocus();
+
             return;
         }
 //
@@ -278,7 +327,7 @@ public class SignupFragment extends Fragment {
         @Override
         protected void onPostExecute(String result) {
 
-            progressDialog.dismiss();
+
 
         }
 

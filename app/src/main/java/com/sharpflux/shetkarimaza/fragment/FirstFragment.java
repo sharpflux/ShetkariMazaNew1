@@ -159,6 +159,7 @@ public class FirstFragment extends Fragment {
                 SecondFragment mfragment = new SecondFragment();
                 mfragment.setArguments(bundle); //data being send to SecondFragment
                 transection.replace(R.id.dynamic_fragment_frame_layout, mfragment);
+
                 transection.commit();
 
             }

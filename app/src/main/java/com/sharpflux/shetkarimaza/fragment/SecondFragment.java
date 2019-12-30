@@ -199,6 +199,7 @@ public class SecondFragment extends DialogFragment {
                 ThirdFragment mfragment = new ThirdFragment();
                 mfragment.setArguments(bundle); //data being send to SecondFragment
                 transection.replace(R.id.dynamic_fragment_frame_layout, mfragment);
+                transection.addToBackStack("back");
                 transection.commit();
 
 
@@ -295,5 +296,7 @@ public class SecondFragment extends DialogFragment {
         }
 
     }
+
+
 
 }

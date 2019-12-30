@@ -80,7 +80,7 @@
         <activity
             android:name=".activities.AllSimilarDataActivity"
             android:noHistory="true"
-            android:parentActivityName=".activities.HomeActivity"
+            android:parentActivityName=".activities.BuyerActivity"
             android:theme="@style/ToolbarAppTheme" />
         <activity
             android:name=".activities.ProductDetailsForBuyerActivity"

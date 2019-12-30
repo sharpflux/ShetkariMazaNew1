@@ -91,15 +91,15 @@ public class StateFragment extends Fragment {
         }
 
         BundleAssign();
-        /*extras = getArguments();
+        extras = getArguments();
 
         if (extras != null) {
 
-            VarityId = extras.getString("VarietyId");
-            QualityId = extras.getString("QualityId");
+            //VarityId = extras.getString("VarietyId");
+            //QualityId = extras.getString("QualityId");
             itemTypeId=extras.getString("ItemTypeId");
 
-        }*/
+        }
 
 
 
@@ -153,6 +153,7 @@ public class StateFragment extends Fragment {
                 intent.putExtra("VarietyId",VarityId);
                 intent.putExtra("QualityId",QualityId);
                 intent.putExtra("StatesID",state_builder_id.toString());
+                intent.putExtra("Search","Filter");
                 startActivity(intent);
 
             }

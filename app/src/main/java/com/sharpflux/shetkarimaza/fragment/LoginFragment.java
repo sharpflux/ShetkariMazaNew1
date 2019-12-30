@@ -127,6 +127,22 @@ public class LoginFragment extends Fragment {
                     return;
                 } else {
                    // userLogin();
+
+
+                    number = ccp.getFullNumberWithPlus();
+                    if (TextUtils.isEmpty(eusername.getText().toString())) {
+                        eusername.setError("Please enter your username");
+                        eusername.requestFocus();
+                        return;
+                    }
+
+                    if (TextUtils.isEmpty(epassword.getText().toString())) {
+                        epassword.setError("Please enter your password");
+                        epassword.requestFocus();
+                        return;
+                    }
+
+
                     AsyncTaskRunner runner = new AsyncTaskRunner();
                     String sleepTime = "1";
                     runner.execute(sleepTime);

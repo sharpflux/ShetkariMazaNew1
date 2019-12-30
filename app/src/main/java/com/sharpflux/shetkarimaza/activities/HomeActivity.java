@@ -191,6 +191,11 @@ public class HomeActivity extends AppCompatActivity
             startActivity(lin);
         }
 
+        else if(id ==R.id.nav_prof){
+
+
+        }
+
         else if (id == R.id.nav_logout) {
             finish();
             SharedPrefManager.getInstance(getApplicationContext()).logout();

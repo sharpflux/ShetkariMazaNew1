@@ -238,12 +238,12 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         bundle = getIntent().getExtras();
         if (bundle != null) {
             ItemTypeId = bundle.getString("ItemTypeId");
-            TalukaId = bundle.getString("TalukaId");
-            VarityId = bundle.getString("VarietyId");
-            QualityId = bundle.getString("QualityId");
-            StatesID = bundle.getString("StatesID");
-            DistrictId = bundle.getString("DistrictId");
-            priceids=bundle.getString("priceids");
+            //TalukaId = bundle.getString("TalukaId");
+           //VarityId = bundle.getString("VarietyId");
+          // QualityId = bundle.getString("QualityId");
+           //StatesID = bundle.getString("StatesID");
+           //DistrictId = bundle.getString("DistrictId");
+           //priceids=bundle.getString("priceids");
 
         }
 
@@ -302,6 +302,10 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                         DistrictId = DistrictId + DISTRICTCursor.getString(0) + ",";
                     }
                     while (TALUKACursor.moveToNext()) {
+                        if(TalukaId==null)
+                        {
+                            TalukaId="";
+                        }
                         TalukaId = TalukaId + TALUKACursor.getString(0) + ",";
                     }
                 }
@@ -350,6 +354,12 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                     priceids = "0";
             } else {
                 priceids = "0";
+            }
+
+            if(ItemTypeId==null)
+            {
+                Toast.makeText(getApplicationContext(), "ITEM TYPE IS NULL", Toast.LENGTH_SHORT).show();
+                return;
             }
 
 
@@ -461,14 +471,14 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-         //   progressDialog.dismiss();
+          progressDialog.dismiss();
         }
 
         @Override
         protected void onPreExecute() {
-           /* progressDialog = ProgressDialog.show(AllSimilarDataActivity.this,
+            progressDialog = ProgressDialog.show(AllSimilarDataActivity.this,
                     "Loading...",
-                    "");*/
+                    "");
         }
 
         @Override
@@ -657,5 +667,9 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         }
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

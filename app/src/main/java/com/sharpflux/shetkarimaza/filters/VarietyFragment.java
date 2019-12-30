@@ -143,8 +143,6 @@ public class VarietyFragment extends Fragment {
                     }
                 }
 
-
-
                 if (categoryId.equals("15")) {
                     FragmentTransaction transection = getFragmentManager().beginTransaction();
                     AgeFragment mfragment = new AgeFragment();
@@ -170,11 +168,13 @@ public class VarietyFragment extends Fragment {
                         varity_builder_id.append(filter.getId() + ",");
                     }
                 }
+              //  myDatabase.DeleteRecordAll();
                 Intent intent = new Intent(getContext(), AllSimilarDataActivity.class);
                /* intent.putExtra("TalukaId","0");
                    intent.putExtra("QualityId","0");*/
                 intent.putExtra("ItemTypeId", itemTypeId);
                 intent.putExtra("VarietyId", varity_builder_id.toString());
+                intent.putExtra("Search","Filter");
                 startActivity(intent);
 
             }

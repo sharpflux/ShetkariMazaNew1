@@ -105,7 +105,7 @@ public class MyBuyerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
 
-    @Override
+    /*@Override
     public Filter getFilter(){
         return new Filter(){
 
@@ -139,10 +139,15 @@ public class MyBuyerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 notifyDataSetChanged();
             }
         };
+    }*/
+
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
     }
 
 
-   /* private Filter exampleFilter = new Filter() {
+    private Filter exampleFilter = new Filter() {
 
 
         @Override
@@ -173,7 +178,7 @@ public class MyBuyerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             mList.addAll((List) results.values);
             notifyDataSetChanged();
         }
-    };*/
+    };
 
 
     private void showLoadingView(LoadingViewHolder viewHolder, int position) {

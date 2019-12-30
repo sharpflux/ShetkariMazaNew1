@@ -25,6 +25,7 @@ public class DetailFormActivity extends AppCompatActivity {
 
         FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.dynamic_fragment_frame_layout, new FirstFragment());
+
         fragmentTransaction.commit();
 
         setTitle(R.string.includemoredetails);
@@ -32,6 +33,13 @@ public class DetailFormActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
 
-
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

@@ -54,54 +54,55 @@ public class VarietyAdapter extends RecyclerView.Adapter<VarietytViewHolder> imp
         holder.ProductId = exampleList.get(position).getId();
         holder.FilterBy = exampleList.get(position).getFilterBy();
         ProductId = exampleList.get(position).getId();
-         holder.myDatabase=myDatabase;
-
-        switch (holder.FilterBy) {
-            case "VARIETY":
-                Cursor VARIETYCursor = myDatabase.FilterGetByFilterName("VARIETY");
-                while (VARIETYCursor.moveToNext()) {
-                    if (VARIETYCursor.getString(0).equals(holder.ProductId)) {
-                        holder.mTextView.setCheckMarkDrawable(R.drawable.ic_check_box_black_24dp);
-                        holder.mTextView.setChecked(true);
+        holder.myDatabase = myDatabase;
+        if (holder.FilterBy != null) {
+            switch (holder.FilterBy) {
+                case "VARIETY":
+                    Cursor VARIETYCursor = myDatabase.FilterGetByFilterName("VARIETY");
+                    while (VARIETYCursor.moveToNext()) {
+                        if (VARIETYCursor.getString(0).equals(holder.ProductId)) {
+                            holder.mTextView.setCheckMarkDrawable(R.drawable.ic_check_box_black_24dp);
+                            holder.mTextView.setChecked(true);
+                        }
                     }
-                }
-                break;
-            case "QUALITY":
-                Cursor QUALITYCursor = myDatabase.FilterGetByFilterName("QUALITY");
-                while (QUALITYCursor.moveToNext()) {
-                    if (QUALITYCursor.getString(0).equals(holder.ProductId)) {
-                        holder.mTextView.setCheckMarkDrawable(R.drawable.ic_check_box_black_24dp);
-                        holder.mTextView.setChecked(true);
+                    break;
+                case "QUALITY":
+                    Cursor QUALITYCursor = myDatabase.FilterGetByFilterName("QUALITY");
+                    while (QUALITYCursor.moveToNext()) {
+                        if (QUALITYCursor.getString(0).equals(holder.ProductId)) {
+                            holder.mTextView.setCheckMarkDrawable(R.drawable.ic_check_box_black_24dp);
+                            holder.mTextView.setChecked(true);
+                        }
                     }
-                }
-                break;
-            case "STATE":
-                Cursor STATECursor = myDatabase.FilterGetByFilterName("STATE");
-                while (STATECursor.moveToNext()) {
-                    if (STATECursor.getString(0).equals(holder.ProductId)) {
-                        holder.mTextView.setCheckMarkDrawable(R.drawable.ic_check_box_black_24dp);
-                        holder.mTextView.setChecked(true);
+                    break;
+                case "STATE":
+                    Cursor STATECursor = myDatabase.FilterGetByFilterName("STATE");
+                    while (STATECursor.moveToNext()) {
+                        if (STATECursor.getString(0).equals(holder.ProductId)) {
+                            holder.mTextView.setCheckMarkDrawable(R.drawable.ic_check_box_black_24dp);
+                            holder.mTextView.setChecked(true);
+                        }
                     }
-                }
-                break;
-            case "DISTRICT":
-                Cursor DISTRICTCursor = myDatabase.FilterGetByFilterName("DISTRICT");
-                while (DISTRICTCursor.moveToNext()) {
-                    if (DISTRICTCursor.getString(0).equals(holder.ProductId)) {
-                        holder.mTextView.setCheckMarkDrawable(R.drawable.ic_check_box_black_24dp);
-                        holder.mTextView.setChecked(true);
+                    break;
+                case "DISTRICT":
+                    Cursor DISTRICTCursor = myDatabase.FilterGetByFilterName("DISTRICT");
+                    while (DISTRICTCursor.moveToNext()) {
+                        if (DISTRICTCursor.getString(0).equals(holder.ProductId)) {
+                            holder.mTextView.setCheckMarkDrawable(R.drawable.ic_check_box_black_24dp);
+                            holder.mTextView.setChecked(true);
+                        }
                     }
-                }
-                break;
-            case "TALUKA":
-                Cursor TALUKACursor = myDatabase.FilterGetByFilterName("TALUKA");
-                while (TALUKACursor.moveToNext()) {
-                    if (TALUKACursor.getString(0).equals(holder.ProductId)) {
-                        holder.mTextView.setCheckMarkDrawable(R.drawable.ic_check_box_black_24dp);
-                        holder.mTextView.setChecked(true);
+                    break;
+                case "TALUKA":
+                    Cursor TALUKACursor = myDatabase.FilterGetByFilterName("TALUKA");
+                    while (TALUKACursor.moveToNext()) {
+                        if (TALUKACursor.getString(0).equals(holder.ProductId)) {
+                            holder.mTextView.setCheckMarkDrawable(R.drawable.ic_check_box_black_24dp);
+                            holder.mTextView.setChecked(true);
+                        }
                     }
-                }
-                break;
+                    break;
+            }
         }
 
     }
