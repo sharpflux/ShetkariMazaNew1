@@ -806,7 +806,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         Intent intent = new Intent(this,SellerActivity.class);
         startActivity(intent);
     }
-
+//
     public void openDialog() {
         RateDialogFragment rateDialogFragment = new RateDialogFragment();
         Bundle b;
