@@ -11,7 +11,7 @@
         <item
             android:id="@+id/nav_prof"
             android:icon="@drawable/ic_profile"
-            android:title="@string/menu_home" />
+            android:title="@string/profile" />
         <item
             android:id="@+id/nav_cart"
             android:icon="@drawable/ic_shopping_cart"
@@ -41,7 +41,7 @@
             android:title="@string/menu_aboutus" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="@string/communicate">
         <menu>
            <!-- <item
                 android:id="@+id/nav_share"

@@ -107,13 +107,13 @@ public class SignupFragment extends Fragment {
                     return;
                 }
 
-
+/*
                 if (TextUtils.isEmpty(edtmiddlename.getText().toString())) {
                     edtlastname.setError("Please enter your last name");
                     edtlastname.requestFocus();
 
                     return;
-                }
+                }*/
 
                 if (TextUtils.isEmpty(edtlastname.getText().toString())) {
                     editTextMobile.setError("Please enter mobile number");

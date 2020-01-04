@@ -244,7 +244,7 @@ public class LoginFragment extends Fragment {
 
                                     );
 
-                                } else if (obj.length() == 0) {
+                                } /*else if (obj.length() == 0) {
                                     builder.setMessage("Invalid User Name or Password?")
                                             .setCancelable(false)
 
@@ -261,7 +261,7 @@ public class LoginFragment extends Fragment {
                                     builder.show();
                                     progressDialog.dismiss();
 
-                                }
+                                }*/
                                 else {
                                     builder.setMessage("Invalid User Name or Password?")
                                             .setCancelable(false)

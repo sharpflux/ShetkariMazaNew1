@@ -1,12 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-android:id="@+id/fragment_order_list_llContainer"
-android:background="@drawable/backgroundlogo"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-xmlns:android="http://schemas.android.com/apk/res/android">
+    android:id="@+id/fragment_order_list_llContainer"
+    android:background="@drawable/backgroundlogo"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!--<android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarCustom"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="?attr/colorPrimary"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_arrow_white" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/toolbarTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="Text tittle"
+            android:textAppearance="@android:style/TextAppearance.WindowTitle"
+            android:visibility="visible" />
+    </android.support.v7.widget.Toolbar>-->
 <android.support.v7.widget.RecyclerView
     android:id="@+id/contact_Detail_rvProductList"
     android:scrollbars="vertical"
@@ -33,7 +63,7 @@ xmlns:android="http://schemas.android.com/apk/res/android">
         android:id="@+id/txt_emptyView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sorry No Data Available."
+        android:text="@string/no_data"
         android:textColor="@color/error_color_material"
         android:textSize="20dp"/>
 

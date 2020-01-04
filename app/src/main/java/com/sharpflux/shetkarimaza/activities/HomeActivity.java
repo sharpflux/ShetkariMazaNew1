@@ -155,7 +155,26 @@ public class HomeActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            finish();
+            final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this, R.style.AlertDialogTheme);
+            builder.setCancelable(false);
+            builder.setMessage("Do you want to Exit?");
+
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //if user pressed "yes", then he is allowed to exit from application
+                    finish();
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    dialog.cancel();
+                }
+            });
+            android.app.AlertDialog alert = builder.create();
+            alert.show();
         }
 
 
@@ -192,7 +211,8 @@ public class HomeActivity extends AppCompatActivity
         }
 
         else if(id ==R.id.nav_prof){
-
+            Intent i = new Intent(HomeActivity.this, DetailFormActivity.class);
+            startActivity(i);
 
         }
 

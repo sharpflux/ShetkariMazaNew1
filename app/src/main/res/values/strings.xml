@@ -235,6 +235,34 @@
     <string name="guide_your_rate_here"><u>Rate Guide!</u></string>
 
     <string name="sort">Sort</string>
+    <string name="profile">Profile</string>
+    <string name="processor">Processor </string>
+    <string name="producer">Producer </string>
+    <string name="commission_agent">Commission Agent </string>
+    <string name="service_Provider">Service Provider</string>
+    <string name="individual_farmers">Individual Farmers</string>
+    <string name="farmer_group">Farmer Group</string>
+    <string name="trader">Trader</string>
+    <string name="fpo">FPO/FPC</string>
+    <string name="govt_agency">Govt. Agency</string>
+    <string name="individual_customer">Individual Customer</string>
+    <string name="exporter">Exporter</string>
+    <string name="retailer">Retailer</string>
+    <string name="warehouse">Warehouse</string>
+    <string name="transporter">Transporter</string>
+    <string name="packer">Packer</string>
+    <string name="franchise">Franchise</string>
+    <string name="bank_loan">Bank Loan Consultants</string>
+    <string name="project_con">Project Consultant</string>
+    <string name="nursery_owner">Nursery Owner</string>
+    <string name="no_data">Sorry No Data Available.</string>
+    <string name="filter">Filter</string>
+    <string name="detail_information">Detail Information</string>
+
+
+
+
+
 
 
 </resources>

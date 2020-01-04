@@ -21,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -98,6 +99,10 @@ public class ContactDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_detail);
 
+        /*Toolbar toolbar = findViewById(R.id.toolbarCustom);
+        setSupportActionBar(toolbar);
+*/
+
         recyclerView = findViewById(R.id.contact_Detail_rvProductList);
 
         contactlist = new ArrayList<>();
@@ -140,7 +145,7 @@ public class ContactDetailActivity extends AppCompatActivity {
 
 
         if (ItemTypeId.equals("1")) {
-            setTitle("Processor ");
+            setTitle("Processor");
         } else if (ItemTypeId.equals("4")) {
             setTitle("Producer");
         } else if (ItemTypeId.equals("5")) {

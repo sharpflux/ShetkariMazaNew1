@@ -236,7 +236,35 @@
     <string name="update">अद्यतनित करा</string>
 
 
-    <string name="sort">Sort</string>
+    <string name="sort">क्रमवारी लावा</string>
+    <string name="profile">प्रोफाइल</string>
+    <string name="processor">प्रोसेसर </string>
+    <string name="producer">निर्माता </string>
+    <string name="commission_agent">कमिशन एजंट</string>
+    <string name="service_Provider">सेवा प्रदाता</string>
+    <string name="individual_farmers">वैयक्तिक शेतकरी</string>
+    <string name="farmer_group">शेतकरी गट</string>
+    <string name="trader">व्यापारी</string>
+    <string name="fpo">एफपीओ / एफपीसी</string>
+    <string name="govt_agency">सरकार एजन्सी</string>
+    <string name="individual_customer">वैयक्तिक ग्राहक</string>
+    <string name="exporter">निर्यातक</string>
+    <string name="retailer">किरकोळ विक्रेता</string>
+    <string name="warehouse">कोठार</string>
+    <string name="transporter">ट्रान्सपोर्टर</string>
+    <string name="packer">पॅकर</string>
+    <string name="franchise">मताधिकार</string>
+    <string name="bank_loan">बँक कर्ज सल्लागार</string>
+    <string name="project_con">प्रकल्प सल्लागार</string>
+    <string name="nursery_owner">नर्सरी मालक</string>
+    <string name="no_data">क्षमस्व कोणताही डेटा उपलब्ध नाही.</string>
+    <string name="filter">फिल्टर करा</string>
+    <string name="detail_information">तपशील माहिती</string>
+
+
+
+
+
 
 
 
