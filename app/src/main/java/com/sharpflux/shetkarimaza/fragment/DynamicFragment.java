@@ -19,7 +19,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
+import android.support.v7.widget.SearchView;
+import android.widget.AbsListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,6 +72,7 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
 
 
 
+
     public static DynamicFragment newInstance() {
         return new DynamicFragment();
     }
@@ -95,6 +97,7 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
 
         CategoryId = String.valueOf(getArguments().getString("CategoryId"));
         searchView = view.findViewById(R.id.searchViewone);
+
 
 
 
@@ -206,6 +209,11 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
                                             @Override
                                             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                                                 super.onScrollStateChanged(recyclerView, newState);
+                                                if(newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
+                                                    isLoading = true;
+                                                }
+
+
                                             }
 
                                             @Override
@@ -250,7 +258,27 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
                                                 }
                                             }
                                         });
-                                        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                                      /*  searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                                            @Override
+                                            public boolean onQueryTextSubmit(String query) {
+
+                                                return false;
+                                            }
+
+                                            @Override
+                                            public boolean onQueryTextChange(String newText) {
+
+                                                myAdapter.getFilter().filter(newText);
+                                                return false;
+
+                                            }
+                                        });*/
+
+
+
+
+
+                                            searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
                                             @Override
                                             public boolean onQueryTextSubmit(String query) {
 
@@ -265,6 +293,13 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
 
                                             }
                                         });
+
+
+
+
+
+
+
                                     }
                                 }
 

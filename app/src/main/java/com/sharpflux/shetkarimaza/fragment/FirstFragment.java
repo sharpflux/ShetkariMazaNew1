@@ -33,7 +33,7 @@ import java.util.Locale;
 
 public class FirstFragment extends Fragment {
 
-    TextInputEditText Rtype_edit, Rcategory_edit, editfullname, mobileNo, AlternateMobile, Email;
+    TextInputEditText Rtype_edit, Rcategory_edit, editfullname, mobileNo, AlternateMobile, Email,name_botanical;
 
     ArrayList<Product> list;
     private ArrayList<MyProcessor> processorList;
@@ -76,6 +76,8 @@ public class FirstFragment extends Fragment {
         btn_next = (Button) (view.findViewById(R.id.firstbtnnext));
         editfullname = view.findViewById(R.id.editfullname);
         mobileNo = view.findViewById(R.id.mobileNo);
+        name_botanical = view.findViewById(R.id.name_botanical);
+
         AlternateMobile = view.findViewById(R.id.AlternateMobile);
         Email = view.findViewById(R.id.Email);
         list = new ArrayList<Product>();
@@ -167,7 +169,7 @@ public class FirstFragment extends Fragment {
 
 
 
-        fetcher = new DataFetcher(sellOptions, customDialog, list, getContext());
+        fetcher = new DataFetcher(sellOptions, customDialog, list, getContext(),name_botanical);
 
         Rtype_edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -240,11 +242,11 @@ public class FirstFragment extends Fragment {
 
                 if (params[0].toString() == "type")
                     fetcher.loadList("RegistrationType", Rtype_edit, URLs.URL_RType+currentLanguage,
-                            "RegistrationTypeId", hidRegTypeId, "", "","Registration Type");
+                            "RegistrationTypeId", hidRegTypeId, "", "","Registration Type","");
                 else if (params[0].toString() == "cate")
                     fetcher.loadList("RegistrationCategoryName",
                             Rcategory_edit, URLs.URL_RCategary, "RegistrationCategoryId", hidRegCagteId,
-                            "", "","Registration Category Name");
+                            "", "","Registration Category Name","");
 
                 Thread.sleep(500);
 

@@ -2,11 +2,13 @@ package com.sharpflux.shetkarimaza.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.sharpflux.shetkarimaza.R;
@@ -28,6 +30,10 @@ public class MyCategoryTypeAdapter extends RecyclerView.Adapter<MyCategoryTypeHo
     private static int currentPosition = 0;
 
 
+    private final int VIEW_TYPE_ITEM = 0;
+    private final int VIEW_TYPE_LOADING = 1;
+
+
     private ArrayList<MyCategoryType> mList;
 
     public MyCategoryTypeAdapter(Context mContext, ArrayList<MyCategoryType> mList) {
@@ -38,8 +44,17 @@ public class MyCategoryTypeAdapter extends RecyclerView.Adapter<MyCategoryTypeHo
 
     @Override
     public MyCategoryTypeHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+
+
+        if (viewType == VIEW_TYPE_ITEM) {
             View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_category, parent, false);
             return new MyCategoryTypeHolder(mView);
+        } else {
+            View nview = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading, parent, false);
+            return new MyCategoryTypeHolder(nview);
+        }
+
 
 
     }
@@ -47,12 +62,20 @@ public class MyCategoryTypeAdapter extends RecyclerView.Adapter<MyCategoryTypeHo
     @Override
     public void onBindViewHolder(MyCategoryTypeHolder holder, final int position) {
         View view;
+        String categoryId="";
 
-                String categoryId="";
-                    Picasso.get().load(mList.get(position).getImage()).resize(300, 300)
-                            .into(holder.mImage);
-                     holder.mTitle.setText(mList.get(position).getCategoryTypeName());
-                     holder.categoryId = mList.get(position).getCategoryTypeId();
+        if (holder instanceof MyCategoryTypeHolder)
+            try {
+                Picasso.get().load(mList.get(position).getImage()).into(((MyCategoryTypeHolder) holder).mImage);
+                ((MyCategoryTypeHolder) holder).mTitle.setText(mList.get(position).getCategoryTypeName());
+                ((MyCategoryTypeHolder) holder).categoryId = mList.get(position).getCategoryTypeId();
+            } catch (Exception d) {
+
+            }
+      /*  else if (holder instanceof LoadingViewHolderSeller1)
+        {
+            showLoadingView1((LoadingViewHolderSeller1) holder, position);
+        }*/
 
 
     }
@@ -64,7 +87,14 @@ public class MyCategoryTypeAdapter extends RecyclerView.Adapter<MyCategoryTypeHo
         return  mList.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return mList.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+    }
 
+
+    private void showLoadingView1(LoadingViewHolderSeller1 viewHolder, int position) {
+    }
 }
 
 class MyCategoryTypeHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -199,3 +229,19 @@ class MyCategoryTypeHolder extends RecyclerView.ViewHolder implements View.OnCli
 
 
 }
+
+
+
+class LoadingViewHolderSeller1 extends RecyclerView.ViewHolder {
+
+    ProgressBar progressBar;
+
+    public LoadingViewHolderSeller1(@NonNull View itemView) {
+        super(itemView);
+        progressBar = itemView.findViewById(R.id.progressBar);
+    }
+
+
+}
+
+

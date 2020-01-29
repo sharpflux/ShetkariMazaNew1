@@ -29,7 +29,7 @@ import java.util.Locale;
 
 public class SecondFragment extends DialogFragment {
     TextView hideStateId, hideDistrictId,hideTalukaId;
-    TextInputEditText address, city, edtdistrict,edttaluka, edtstate, companyname, license, companyregnno, gstno;
+    TextInputEditText address, city, edtdistrict,edttaluka, edtstate, companyname, license, companyregnno, gstno,name_botanical;
     ArrayList<Product> list;
     Button btn_next;
     Bundle bundle;
@@ -60,6 +60,7 @@ public class SecondFragment extends DialogFragment {
         edtdistrict = view.findViewById(R.id.edtdistrict);
         edttaluka=view.findViewById(R.id.edttaluka);
         city = view.findViewById(R.id.edtcity);
+        name_botanical = view.findViewById(R.id.name_botanical);
 
         companyname = view.findViewById(R.id.edtcompanyname);
         license = view.findViewById(R.id.edtlicense);
@@ -206,7 +207,7 @@ public class SecondFragment extends DialogFragment {
             }
         });
 
-        fetcher = new DataFetcher(sellOptions, customDialog, list, getContext());
+        fetcher = new DataFetcher(sellOptions, customDialog, list, getContext(),name_botanical);
         edtstate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -252,14 +253,14 @@ public class SecondFragment extends DialogFragment {
             publishProgress("Sleeping..."); // Calls onProgressUpdate()
             try {
                 if (params[0].toString() == "state")
-                    fetcher.loadList("StatesName", edtstate, URLs.URL_STATE + "?StatesID=15&Language=en", "StatesID", hideStateId, "", "","State");
+                    fetcher.loadList("StatesName", edtstate, URLs.URL_STATE + "?StatesID=15&Language=en", "StatesID", hideStateId, "", "","State","");
                    // fetcher.loadList("StatesName", edtstate, URLs.URL_STATE, "StatesID", hideStateId, "", "");
 
                 else if (params[0].toString() == "district")
-                    fetcher.loadList("DistrictName", edtdistrict, URLs.URL_DISTRICT + hideStateId.getText()+"," + "&Language=en", "DistrictId", hideDistrictId, "", "","District");
+                    fetcher.loadList("DistrictName", edtdistrict, URLs.URL_DISTRICT + hideStateId.getText()+"," + "&Language=en", "DistrictId", hideDistrictId, "", "","District","");
 
                 else if (params[0].toString() == "taluka")
-                    fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText()+"," + "&Language=en", "TalukasId", hideTalukaId, "", "","Taluka");
+                    fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText()+"," + "&Language=en", "TalukasId", hideTalukaId, "", "","Taluka","");
 
 
                 Thread.sleep(500);

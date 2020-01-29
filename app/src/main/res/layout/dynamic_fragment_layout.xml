@@ -6,15 +6,15 @@
     android:background="@drawable/backgroundlogo"
     android:orientation="vertical">
 
-    <SearchView
+    <android.support.v7.widget.SearchView
         android:id="@+id/searchViewone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_tittle"
         android:background="@drawable/edit"
-        android:queryHint="@string/search_here"
         android:iconifiedByDefault="false"
-        android:layout_alignParentTop="true"
-        />
+        android:queryHint="@string/search_here" />
+
 
 
     <TextView

@@ -105,7 +105,7 @@ public class MyBuyerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
 
-    /*@Override
+    @Override
     public Filter getFilter(){
         return new Filter(){
 
@@ -139,7 +139,8 @@ public class MyBuyerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 notifyDataSetChanged();
             }
         };
-    }*/
+    }
+/*
 
     @Override
     public Filter getFilter() {
@@ -179,6 +180,7 @@ public class MyBuyerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             notifyDataSetChanged();
         }
     };
+*/
 
 
     private void showLoadingView(LoadingViewHolder viewHolder, int position) {
@@ -214,7 +216,6 @@ class FlowerViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         intent.putExtra("ProductId",categoryId);
         context.startActivity(intent);
     }
-
 
 }
 

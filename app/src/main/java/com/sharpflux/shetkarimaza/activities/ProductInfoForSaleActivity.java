@@ -89,7 +89,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
     private TextInputEditText edtTotalamt, edtproductType, edtdistrict, edtstate, edtproductVariety,
             edtDays, edtavailablityInMonths, edtAQuality, edtAQuantity, edtUnit, edtExpectedPrice,
-            edttaluka, edtaddres, edtvillage, edtareahector,edtcertifiedno,edtsurveyNo;
+            edttaluka, edtaddres, edtvillage, edtareahector,edtcertifiedno,edtsurveyNo,name_botanical;
     RadioGroup rg;
     RadioButton rb1,rb2;
     LinearLayout LinearLayout1;
@@ -222,6 +222,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         edtproductType = findViewById(R.id.name_edit);
         edtproductVariety = findViewById(R.id.edtVarity);
         edtAQuality = findViewById(R.id.edtAQuality);
+        name_botanical = findViewById(R.id.name_botanical);
 
         edtAQuantity = findViewById(R.id.edtquant);
         edtUnit = findViewById(R.id.edtquantUnit);
@@ -269,6 +270,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView);
 
         EnableRuntimePermission();
+
         btn_take_selfie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -314,7 +316,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         myLocale = getResources().getConfiguration().locale;
 
 
-        fetcher = new DataFetcher(sellOptions, customDialog, list, ProductInfoForSaleActivity.this);
+        fetcher = new DataFetcher(sellOptions, customDialog, list, ProductInfoForSaleActivity.this,name_botanical);
 
 
 
@@ -493,6 +495,11 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
             */
             String ItemName = extras.getString("ItemName");
             edtproductType.setText(ItemName);
+
+            /*String BotanicalName = extras.getString("BotanicalName");
+            name_botanical.setText(BotanicalName);*/
+
+
             String VarietyName = extras.getString("VarietyName");
             edtproductVariety.setText(VarietyName);
             String QualityType = extras.getString("QualityType");
@@ -871,6 +878,14 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         runner.execute(sleepTime);
     }
 
+
+    /*public void clickHereBotanical(View view) {
+        AsyncTaskRunner runner = new AsyncTaskRunner();
+        String sleepTime = "ItemName";
+        runner.execute(sleepTime);
+    }*/
+
+
     public void clickHereVariety(View view) {
         AsyncTaskRunner runner = new AsyncTaskRunner();
         String sleepTime = "Variety";
@@ -904,19 +919,25 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
             try {
 
                 if (params[0].toString() == "ItemName")
-                    fetcher.loadList("ItemName", edtproductType, URLs.URL_NAME + "?CategoryId=" + ProductId + "&Language=" + currentLanguage, "ItemTypeId", hidItemTypeId, "CategoryId", ProductId,"Botanical Name");
+                    fetcher.loadList("ItemName", edtproductType, URLs.URL_NAME + "&CategoryId=" + ProductId + "&Language=" + currentLanguage, "ItemTypeId", hidItemTypeId, "CategoryId", ProductId,"Product Name","BotanicalName");
+
+
+              /*  else if (params[0].toString() == "BotinicalName")
+                    fetcher.loadList("BotinicalName", name_botanical, URLs.URL_NAME + "?CategoryId=" + ProductId + "&Language=" + currentLanguage, "", hidItemTypeId, "CategoryId", ProductId,"Product Name","BotinicalName");*/
+
+
                 else if (params[0].toString() == "Variety")
-                    fetcher.loadList("VarietyName", edtproductVariety, URLs.URL_VARIATY + hidItemTypeId.getText() + "&Language=" + currentLanguage, "VarietyId", hidVarietyId, "", "","Variety");
+                    fetcher.loadList("VarietyName", edtproductVariety, URLs.URL_VARIATY + hidItemTypeId.getText() + "&Language=" + currentLanguage, "VarietyId", hidVarietyId, "", "","Variety","");
                 else if (params[0].toString() == "Quality")
-                    fetcher.loadList("QualityType", edtAQuality, URLs.URL_QUALITY + "?Language=" + currentLanguage, "QualityId", hidQualityId, "", "","Available Quality");
+                    fetcher.loadList("QualityType", edtAQuality, URLs.URL_QUALITY + "?Language=" + currentLanguage, "QualityId", hidQualityId, "", "","Available Quality","");
                 else if (params[0].toString() == "Unit")
-                    fetcher.loadList("MeasurementType", edtUnit, URLs.URL_UNIT + "?Language=" + currentLanguage, "MeasurementId", hidMeasurementId, "", "","Unit");
+                    fetcher.loadList("MeasurementType", edtUnit, URLs.URL_UNIT + "?Language=" + currentLanguage, "MeasurementId", hidMeasurementId, "", "","Unit","");
                 else if (params[0].toString() == "state")
-                    fetcher.loadList("StatesName", edtstate, URLs.URL_STATE + "?Language=" + currentLanguage, "StatesID", hideStateId, "", "","State");
+                    fetcher.loadList("StatesName", edtstate, URLs.URL_STATE + "?Language=" + currentLanguage, "StatesID", hideStateId, "", "","State","");
                 else if (params[0].toString() == "district")
-                    fetcher.loadList("DistrictName", edtdistrict, URLs.URL_DISTRICT + hideStateId.getText() + ",&Language=" + currentLanguage, "DistrictId", hideDistrictId, "", "","District");
+                    fetcher.loadList("DistrictName", edtdistrict, URLs.URL_DISTRICT + hideStateId.getText() + ",&Language=" + currentLanguage, "DistrictId", hideDistrictId, "", "","District","");
                 else if (params[0].toString() == "taluka")
-                    fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText() + ",&Language=" + currentLanguage, "TalukasId", hideTalukaId, "", "","Taluka");
+                    fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText() + ",&Language=" + currentLanguage, "TalukasId", hideTalukaId, "", "","Taluka","");
 
                 else if (params[0].toString() == "Update") {
                     submitToDb();

@@ -198,7 +198,7 @@
     <string name="otp_verification">OTP VERIFICATION</string>
     <string name="otp_code_has_been_sent">OTP code has been sent to your registered mobile number. Please verify the code. </string>
     <string name="enter_otp_code">Enter OTP Code</string>
-    <string name="verify">verify</string>
+    <string name="verify">Verify</string>
     <string name="resendOtp">Resend OTP</string>
     <string name="txtExit">You want to add product in list</string>
     <string name="txtYes">Yes</string>
@@ -258,6 +258,11 @@
     <string name="no_data">Sorry No Data Available.</string>
     <string name="filter">Filter</string>
     <string name="detail_information">Detail Information</string>
+
+
+
+    <string name="product_name">Product Name</string>
+    <string name="botanical_name">Botanical Name</string>
 
 
 

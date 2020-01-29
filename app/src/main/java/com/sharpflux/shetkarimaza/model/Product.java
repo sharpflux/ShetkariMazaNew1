@@ -7,15 +7,30 @@ public class Product {
     private String name;
     private String productId;
     private ArrayList<Product> productlist;
+    private String BotanicalName;
+    public Product(String name, String productId,String BotanicalName) {
+        this.name = name;
+        this.productId = productId;
+        this.BotanicalName = BotanicalName;
+    }
 
-    public Product(String name, String productId, ArrayList productlist) {
+    public Product(String name, String productId, ArrayList productlist,String BotanicalName) {
         this.name = name;
         this.productId = productId;
         this.productlist = productlist;
+        this.BotanicalName = BotanicalName;
     }
     public Product(String name, String productId) {
         this.name = name;
         this.productId = productId;
+    }
+
+    public String getBotanicalName() {
+        return BotanicalName;
+    }
+
+    public void setBotanicalName(String botanicalName) {
+        BotanicalName = botanicalName;
     }
 
     public ArrayList<Product> getProductlist() {

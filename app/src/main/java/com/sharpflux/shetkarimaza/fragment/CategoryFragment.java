@@ -5,12 +5,17 @@ import android.app.ProgressDialog;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -24,6 +29,7 @@ import com.sharpflux.shetkarimaza.adapter.MyCategoryTypeAdapter;
 import com.sharpflux.shetkarimaza.model.MyCategoryType;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
+import com.sharpflux.shetkarimaza.utils.EndlessRecyclerViewScrollListener;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
@@ -50,6 +56,12 @@ public class CategoryFragment extends Fragment {
     MyCategoryType myCategoryType;
     dbLanguage mydatabase;
     String currentLanguage;
+    boolean isLoading = false;
+    ProgressBar progressBar;
+
+    Boolean isScrolling = false;
+    int currentItems, totalItems, scrollOutItems;
+
    // ShimmerFrameLayout parentShimmerLayout;
 
     public CategoryFragment() {
@@ -83,16 +95,67 @@ public class CategoryFragment extends Fragment {
         User user = SharedPrefManager.getInstance(getContext()).getUser();
         myLocale = getResources().getConfiguration().locale;
         language = user.getLanguage();
-
+        progressBar = view.findViewById(R.id.progressBar);
         Cursor cursor = mydatabase.LanguageGet(language);
 
         while (cursor.moveToNext()) {
             currentLanguage = cursor.getString(0);
 
         }
-       CategoryFragment.AsyncTaskRunner runner = new CategoryFragment.AsyncTaskRunner();
-        String sleepTime = "1";
-        runner.execute(sleepTime);
+
+
+
+       /* mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if(newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL)
+                {
+                    isScrolling = true;
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                currentItems = mGridLayoutManager.getChildCount();
+                totalItems = mGridLayoutManager.getItemCount();
+                scrollOutItems = mGridLayoutManager.findFirstVisibleItemPosition();
+
+                if(isScrolling && (currentItems + scrollOutItems == totalItems))
+                {
+                    isScrolling = false;
+                    setDynamicFragmentToTabLayout();
+
+
+                }
+            }
+        });*/
+
+        AsyncTaskRunner runner = new AsyncTaskRunner();
+        runner.execute("1");
+
+
+        mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(mGridLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                isLoading = true;
+                int currentSize = myCategoryTypeAdapter.getItemCount();
+
+
+
+                CategoryFragment.AsyncTaskRunner runner = new CategoryFragment.AsyncTaskRunner();
+                String sleepTime = String.valueOf(page+1);
+                runner.execute(sleepTime);
+
+
+            }
+        });
+
+
+
+
+
 
         //parentShimmerLayout.startShimmerAnimation();
       // setDynamicFragmentToTabLayout();
@@ -102,16 +165,25 @@ public class CategoryFragment extends Fragment {
 
 
 
-    private void setDynamicFragmentToTabLayout() {
+
+
+
+
+
+    private void setDynamicFragmentToTabLayout(Integer PageSize) {
 
        StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_RType+currentLanguage,
+                URLs.URL_RType+PageSize+"&PageSize=15&Language="+currentLanguage,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
 
                         try {
                             JSONArray obj = new JSONArray(response);
+
+
+                            progressBar.setVisibility(View.VISIBLE);
+
                             for (int i = 0; i < obj.length(); i++) {
                                 JSONObject userJson = obj.getJSONObject(i);
 
@@ -131,7 +203,65 @@ public class CategoryFragment extends Fragment {
                                 mRecyclerView.setAdapter(myCategoryTypeAdapter);
 
 
+
+                                /*mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                                    @Override
+                                    public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                                        super.onScrollStateChanged(recyclerView, newState);
+                                    }
+
+                                    @Override
+                                    public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                                        super.onScrolled(recyclerView, dx, dy);
+
+                                        LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+                                        if (!isLoading) {
+                                            if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == categoryList.size() - 1) {
+
+                                                categoryList.add(null);
+                                                myCategoryTypeAdapter.notifyItemInserted(categoryList.size() - 1);
+
+                                                Handler handler = new Handler();
+
+                                                handler.postDelayed(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        categoryList.remove(categoryList.size() - 1);
+                                                        int scrollPosition = categoryList.size();
+                                                        myCategoryTypeAdapter.notifyItemRemoved(scrollPosition);
+                                                        int currentSize = scrollPosition;
+                                                        int nextLimit = currentSize + 3;
+
+                                                        while (currentSize - 1 < nextLimit) {
+                                                            // productlist.add(sellOptions);
+                                                            currentSize++;
+                                                        }
+
+                                                        myCategoryTypeAdapter.notifyDataSetChanged();
+                                                        isLoading = false;
+                                                    }
+                                                }, 1000);
+
+                                                isLoading = true;
+                                            }
+                                        }
+                                    }
+                                });*/
+
+
+
+
+
+
                             }
+
+                            myCategoryTypeAdapter.notifyDataSetChanged();
+                            isLoading = false;
+                            progressBar.setVisibility(View.GONE);
+
+
+
                           /*  parentShimmerLayout.stopShimmerAnimation();
                             parentShimmerLayout.setVisibility(View.GONE);*/
 
@@ -173,10 +303,17 @@ public class CategoryFragment extends Fragment {
 
                 resp = "Slept for " + params[0] + " seconds";*/
 
-                int time = Integer.parseInt(params[0]) * 1000;
+                /*int time = Integer.parseInt(params[0]) * 1000;
                 setDynamicFragmentToTabLayout();
                 Thread.sleep(time);
+                resp = "Slept for " + params[0] + " seconds";*/
+
+
+                setDynamicFragmentToTabLayout(Integer.valueOf( params[0]));
+                Thread.sleep(10);
                 resp = "Slept for " + params[0] + " seconds";
+
+
 
             } catch (Exception e) {
                 e.printStackTrace();

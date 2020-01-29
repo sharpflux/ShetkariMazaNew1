@@ -202,6 +202,30 @@
                         android:textSize="15dp" />
                 </android.support.design.widget.TextInputLayout>
 
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:visibility="gone"
+                    android:fontFamily="@font/sfpro_display_medium">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/name_botanical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:fontFamily="@font/sfpro_display_medium"
+                        android:hint="@string/botanical_name"
+                        android:inputType="none"
+
+                        android:textColorHint="@color/colorGray"
+                        android:textSize="15dp" />
+
+
+                </android.support.design.widget.TextInputLayout>
+
             </LinearLayout>
 
 

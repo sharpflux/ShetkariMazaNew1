@@ -136,9 +136,14 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         AssignVariables();
         BundleAssign();
 
-        AllSimilarDataActivity.AsyncTaskRunner runner = new AllSimilarDataActivity.AsyncTaskRunner();
+       /* AllSimilarDataActivity.AsyncTaskRunner runner = new AllSimilarDataActivity.AsyncTaskRunner();
         String sleepTime = String.valueOf(currentPage);
         runner.execute(sleepTime);
+*/
+        AllSimilarDataActivity.AsyncTaskRunner runner = new AllSimilarDataActivity.AsyncTaskRunner();
+        String sleepTime = "1";
+        runner.execute(sleepTime);
+
 
 
 
@@ -470,7 +475,8 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(String result)
+        {
           progressDialog.dismiss();
         }
 

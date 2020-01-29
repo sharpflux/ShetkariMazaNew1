@@ -17,6 +17,7 @@ package com.sharpflux.shetkarimaza.activities;
         import com.android.volley.VolleyError;
         import com.android.volley.toolbox.StringRequest;
         import com.sharpflux.shetkarimaza.R;
+        import com.sharpflux.shetkarimaza.fragment.LoginFragment;
         import com.sharpflux.shetkarimaza.volley.URLs;
         import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
@@ -152,4 +153,31 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
+
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setMessage("Do you want to Exit?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //if user pressed "yes", then he is allowed to exit from application
+                Intent intent = new Intent(getApplicationContext(), TabLayoutLogRegActivity.class);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //if user select "No", just cancel this dialog and continue with app
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+
 }

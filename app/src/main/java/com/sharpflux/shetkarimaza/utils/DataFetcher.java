@@ -1,6 +1,7 @@
 package com.sharpflux.shetkarimaza.utils;
 
 import android.content.Context;
+import android.support.design.widget.TextInputEditText;
 import android.widget.EditText;
 import android.support.v7.widget.SearchView;
 import android.widget.TextView;
@@ -32,22 +33,27 @@ public class DataFetcher {
     private ArrayList<Product>  list;
     SearchView searchView;
     DataAdapter dataAdapter;
+    TextInputEditText name_botanical;
+
 
     private  Context context;
 
 
-    public DataFetcher(Product prod, CustomRecyclerViewDialog customDialog, ArrayList<Product> list, Context context) {
+    public DataFetcher(Product prod, CustomRecyclerViewDialog customDialog, ArrayList<Product> list, Context context,TextInputEditText name_botanical) {
         this.prod = prod;
         this.customDialog = customDialog;
         this.list = list;
         this.context = context;
         this.searchView = searchView;
+        this.name_botanical = name_botanical;
+
     }
 
 
 
 
-    public void loadList(final String ColumnName, final EditText editText, final  String URL,final String id,final TextView hiddenText,final String ParameterName, final String ParameterValue,final String Title) {
+    public void loadList(final String ColumnName, final EditText editText, final  String URL,final String id,final TextView hiddenText,
+                         final String ParameterName, final String ParameterValue,final String Title,final  String BotinicalName) {
         list.clear();
 
 
@@ -69,7 +75,7 @@ public class DataFetcher {
 
 
                                     prod = new Product(userJson.getString(ColumnName),
-                                            userJson.getString(id));
+                                            userJson.getString(id), userJson.getString("BotanicalName"));
 
                                     list.add(prod);
 
@@ -83,7 +89,9 @@ public class DataFetcher {
                                 @Override
                                 public void clickOnItem(Product data) {
                                     editText.setText(data.getName());
+                                    name_botanical.setText(data.getBotanicalName());
                                     hiddenText.setText(data.getProductId());
+
                                     if (customDialog != null) {
                                         customDialog.dismiss();
                                     }
