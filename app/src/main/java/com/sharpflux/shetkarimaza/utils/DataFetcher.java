@@ -53,7 +53,7 @@ public class DataFetcher {
 
 
     public void loadList(final String ColumnName, final EditText editText, final  String URL,final String id,final TextView hiddenText,
-                         final String ParameterName, final String ParameterValue,final String Title,final  String BotinicalName) {
+                         final String ParameterName, final String ParameterValue,final String Title,final  String BotinicalName,final EditText name_botanical) {
         list.clear();
 
 
@@ -73,9 +73,16 @@ public class DataFetcher {
 
                                 if (!userJson.getBoolean("error")) {
 
+                                    String botnilcalName="";
+                                    if(userJson.has(BotinicalName)) {
+                                        botnilcalName = userJson.getString(BotinicalName);
+                                    }
 
-                                    prod = new Product(userJson.getString(ColumnName),
-                                            userJson.getString(id), userJson.getString("BotanicalName"));
+                                    prod = new Product(
+                                            userJson.getString(ColumnName),
+                                            userJson.getString(id),
+                                            botnilcalName
+                                    );
 
                                     list.add(prod);
 
@@ -88,8 +95,13 @@ public class DataFetcher {
                            dataAdapter = new DataAdapter(list, new DataAdapter.RecyclerViewItemClickListener() {
                                 @Override
                                 public void clickOnItem(Product data) {
+
+
                                     editText.setText(data.getName());
-                                    name_botanical.setText(data.getBotanicalName());
+                                    if(name_botanical!=null) {
+                                        name_botanical.setText(data.getBotanicalName());
+                                    }
+                                   // name_botanical.setText("Test");
                                     hiddenText.setText(data.getProductId());
 
                                     if (customDialog != null) {

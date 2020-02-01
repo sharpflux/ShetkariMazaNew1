@@ -9,7 +9,7 @@ public class URLs {
     public static final String URL_QUALITY="http://apimaza.supergo.in/api/Quality/GetQuality";
     public static final String URL_BANK="http://apimaza.supergo.in/api/Bank/GetBank";
     public static final String URL_UNIT="http://apimaza.supergo.in/api/Measurement/GetMeasurementAPI";
-    public static final String URL_NAME="http://apimaza.supergo.in/api/ItemMasterApi/Get_ItemMaster?StartIndex=1&PageSize=500";
+    public static final String URL_NAME="http://apimaza.supergo.in/api/ItemMasterApi/Get_ItemMaster?StartIndex=";
     public static final String URL_VARIATY="http://apimaza.supergo.in/api/VarietyMaster/Get_VarietyMaster?ItemTypeId=";
     public static final String URL_SAVEPRODUCTDETAILS = "http://apimaza.supergo.in/api/RequestAPI/request";
     public static  final String URL_REQESTS="http://apimaza.supergo.in/api/request/RequestsGET";
@@ -27,6 +27,7 @@ public class URLs {
     public static String URL_ALL_TRANSPORTER="http://apimaza.supergo.in/api/TransporterAPI/Get_TransporterDetailsAPI?Search=s";
     public static String URL_TRANSPORTER_DETAILS="http://apimaza.supergo.in/api/TransporterAPI/TransporterVehicalDetails?UserId=1";
     public static String URL_SUBcATEGORY="http://apimaza.supergo.in/api/ItemMasterApi/Get_SubCatItems?ItemTypeId=";
+    public static String URL_AGE="http://apimaza.supergo.in/api/AgeGroupAPI/GetAgeGroupAPI?";
 
 
 }

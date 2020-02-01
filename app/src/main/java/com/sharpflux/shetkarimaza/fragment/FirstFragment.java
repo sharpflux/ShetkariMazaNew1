@@ -241,12 +241,12 @@ public class FirstFragment extends Fragment {
             try {
 
                 if (params[0].toString() == "type")
-                    fetcher.loadList("RegistrationType", Rtype_edit, URLs.URL_RType+currentLanguage,
-                            "RegistrationTypeId", hidRegTypeId, "", "","Registration Type","");
+                    fetcher.loadList("RegistrationType", Rtype_edit, URLs.URL_RType+"1&PageSize=15&Language="+currentLanguage,
+                            "RegistrationTypeId", hidRegTypeId, "", "","Registration Type","",null);
                 else if (params[0].toString() == "cate")
                     fetcher.loadList("RegistrationCategoryName",
                             Rcategory_edit, URLs.URL_RCategary, "RegistrationCategoryId", hidRegCagteId,
-                            "", "","Registration Category Name","");
+                            "", "","Registration Category Name","",null);
 
                 Thread.sleep(500);
 

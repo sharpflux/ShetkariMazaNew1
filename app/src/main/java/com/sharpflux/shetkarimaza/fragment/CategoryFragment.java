@@ -166,10 +166,6 @@ public class CategoryFragment extends Fragment {
 
 
 
-
-
-
-
     private void setDynamicFragmentToTabLayout(Integer PageSize) {
 
        StringRequest stringRequest = new StringRequest(Request.Method.GET,

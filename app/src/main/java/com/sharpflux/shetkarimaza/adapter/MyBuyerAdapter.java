@@ -77,6 +77,7 @@ public class MyBuyerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     ((FlowerViewHolder) holder).mTitle.setText(mList.get(position).getProductlist());
                     ((FlowerViewHolder) holder).ItemTypeId = mList.get(position).getProductId();
                     ((FlowerViewHolder) holder).categoryId = mList.get(position).getCategoryId();
+
                 }
             } catch (Exception d) {
 
@@ -214,6 +215,7 @@ class FlowerViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         intent =  new Intent(context, FilterActivity.class);
         intent.putExtra("ItemTypeId",ItemTypeId);
         intent.putExtra("ProductId",categoryId);
+
         context.startActivity(intent);
     }
 

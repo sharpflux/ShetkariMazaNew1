@@ -4,7 +4,7 @@
     android:focusable="true"
     android:clickable="true"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="120dp"
     app:cardCornerRadius="8dp"
     app:cardElevation="0.0dip"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -12,8 +12,8 @@
 
 
     <LinearLayout
+        android:layout_marginTop="20dp"
         android:id="@+id/lr_group"
-        android:layout_marginTop="30dp"
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
@@ -22,7 +22,7 @@
             android:id="@+id/ivsellerplantLogo"
             android:src="@drawable/graps"
             android:layout_gravity="center_horizontal"
-            android:layout_width="70dp"
+            android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"

@@ -166,12 +166,13 @@ public class GroupFragment extends Fragment  implements RecyclerViewClickListene
         ft.commit();
     }
 
-    public void GOPrevious(String ItemTypeId,String Group,String PreviousCategoryId) {
+    public void GOPrevious(String ItemTypeId,String Group,String PreviousCategoryId,String SubCategoryName) {
         DynamicFragment newFragment = new DynamicFragment();
         Bundle bundle=new Bundle();
         bundle.putString("CategoryId",ItemTypeId);
         bundle.putString("IsGroup",Group);
         bundle.putString("PreviousCategoryId",PreviousCategoryId);
+        bundle.putString("SubCategoryName",SubCategoryName);
         newFragment.setArguments(bundle);
         String backStateName = newFragment.getClass().getName();
         FragmentManager manager = getFragmentManager();

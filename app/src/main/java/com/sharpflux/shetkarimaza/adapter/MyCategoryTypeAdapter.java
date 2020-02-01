@@ -23,7 +23,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyCategoryTypeAdapter extends RecyclerView.Adapter<MyCategoryTypeHolder>  {
+public class MyCategoryTypeAdapter extends RecyclerView.Adapter<MyCategoryTypeHolder> {
 
     private Context mContext;
     public String id;
@@ -46,7 +46,6 @@ public class MyCategoryTypeAdapter extends RecyclerView.Adapter<MyCategoryTypeHo
     public MyCategoryTypeHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
 
-
         if (viewType == VIEW_TYPE_ITEM) {
             View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_category, parent, false);
             return new MyCategoryTypeHolder(mView);
@@ -56,13 +55,12 @@ public class MyCategoryTypeAdapter extends RecyclerView.Adapter<MyCategoryTypeHo
         }
 
 
-
     }
 
     @Override
     public void onBindViewHolder(MyCategoryTypeHolder holder, final int position) {
         View view;
-        String categoryId="";
+        String categoryId = "";
 
         if (holder instanceof MyCategoryTypeHolder)
             try {
@@ -81,10 +79,9 @@ public class MyCategoryTypeAdapter extends RecyclerView.Adapter<MyCategoryTypeHo
     }
 
 
-
     @Override
     public int getItemCount() {
-        return  mList.size();
+        return mList.size();
     }
 
     @Override
@@ -97,11 +94,11 @@ public class MyCategoryTypeAdapter extends RecyclerView.Adapter<MyCategoryTypeHo
     }
 }
 
-class MyCategoryTypeHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+class MyCategoryTypeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     ImageView mImage;
     TextView mTitle;
-    String categoryId="";
+    String categoryId = "";
     List<SubCategoryFilter> mlist;
 
     MyCategoryTypeHolder(View itemView) {
@@ -111,125 +108,30 @@ class MyCategoryTypeHolder extends RecyclerView.ViewHolder implements View.OnCli
         mTitle = itemView.findViewById(R.id.tvTitleCategory);
         itemView.setOnClickListener(this);
     }
+
     @Override
     public void onClick(View v) {
-        Context context=v.getContext();
+        Context context = v.getContext();
 
-        final Intent intent;
-        switch (getAdapterPosition()) {
-            case 0:
-                intent = new Intent(context, ContactDetailActivity.class);
-                intent.putExtra("ProductId",categoryId);
-                break;
 
-            case 1:
-                intent = new Intent(context, SellerActivity.class);
-                intent.putExtra("ProductId",categoryId);
-                break;
-
-            case 2:
-                intent = new Intent(context, BuyerActivity.class);
-                intent.putExtra("ProductId",categoryId);
-                break;
-
-            case 3:
-                intent = new Intent(context, ContactDetailActivity.class);
-                intent.putExtra("ProductId",categoryId);
-                break;
-
-            case 4:
-                intent = new Intent(context, ContactDetailActivity.class);
-                intent.putExtra("ProductId",categoryId);
-                break;
-
-            case 5:
-                intent = new Intent(context, ContactDetailActivity.class);
-                intent.putExtra("ProductId",categoryId);
-                break;
-            case 6:
-                intent = new Intent(context, ContactDetailActivity.class);
-                intent.putExtra("ProductId",categoryId);
-                break;
-
-            case 7:
-                intent = new Intent(context, ContactDetailActivity.class);
-                intent.putExtra("ProductId",categoryId);
-                break;
-            case 8:
-                intent = new Intent(context, ContactDetailActivity.class);
-                intent.putExtra("ProductId",categoryId);
-                break;
-
-            case 9:
-                intent = new Intent(context, ContactDetailActivity.class);
-                intent.putExtra("ProductId",categoryId);
-                break;
-            case 10:
-                intent = new Intent(context, ContactDetailActivity.class);
-                intent.putExtra("ProductId",categoryId);
-                break;
-
-            case 11:
-                intent = new Intent(context, ContactDetailActivity.class);
-                intent.putExtra("ProductId",categoryId);
-                break;
-            case 12:
-                intent = new Intent(context, ContactDetailActivity.class);
-                intent.putExtra("ProductId",categoryId);
-                break;
-
-            case 13:
-                intent = new Intent(context, ContactDetailActivity.class);
-                intent.putExtra("ProductId",categoryId);
-                break;
-            case 14:
-                intent = new Intent(context, ContactDetailActivity.class);
-                intent.putExtra("ProductId",categoryId);
-                break;
-
-            case 15:
-                intent = new Intent(context, ContactDetailActivity.class);
-                intent.putExtra("ProductId",categoryId);
-                break;
-
-            case 16:
-                intent = new Intent(context, ContactDetailActivity.class);
-                intent.putExtra("ProductId",categoryId);
-                break;
-
-            case 17:
-                intent = new Intent(context, ContactDetailActivity.class);
-                intent.putExtra("ProductId",categoryId);
-                break;
-
-            case 18:
-                intent = new Intent(context, ContactDetailActivity.class);
-                intent.putExtra("ProductId",categoryId);
-                break;
-            case 19:
-                intent = new Intent(context, ContactDetailActivity.class);
-                intent.putExtra("ProductId",categoryId);
-                break;
-            case 20:
-                intent = new Intent(context, ContactDetailActivity.class);
-                intent.putExtra("ProductId",categoryId);
-                break;
-
-            default:
-                intent = new Intent(context, HomeActivity.class);
-                break;
+        if (categoryId .equals("2")) {
+            Intent intent = new Intent(context, SellerActivity.class);
+            intent.putExtra("ProductId", categoryId);
+            context.startActivity(intent);
+        } else if (categoryId .equals("3") ) {
+            Intent intent = new Intent(context, BuyerActivity.class);
+            intent.putExtra("ProductId", categoryId);
+            context.startActivity(intent);
+        } else
+        {
+            Intent intent = new Intent(context, ContactDetailActivity.class);
+            intent.putExtra("ProductId", categoryId);
+            context.startActivity(intent);
         }
-        context.startActivity(intent);
-
-
     }
 
 
-
-
-
 }
-
 
 
 class LoadingViewHolderSeller1 extends RecyclerView.ViewHolder {

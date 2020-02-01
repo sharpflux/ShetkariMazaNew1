@@ -89,6 +89,38 @@
 
             </android.support.design.widget.TextInputLayout>
 
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/lr_subCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:fontFamily="@font/sfpro_display_medium"
+                android:visibility="gone">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/sub_category_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:fontFamily="@font/sfpro_display_medium"
+                    android:hint="Category Name"
+                    android:inputType="none"
+                    android:onClick="clickHereCategory"
+                    android:textColorHint="@color/colorGray"
+                    android:textSize="15dp"
+                  />
+
+
+            </android.support.design.widget.TextInputLayout>
+
+
+
+
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -138,8 +170,6 @@
             </android.support.design.widget.TextInputLayout>
 
 
-
-
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -160,6 +190,31 @@
                     android:onClick="clickHereQuality"
                     android:textColorHint="@color/colorGray"
                     android:textSize="15dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/lt_txtAge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:fontFamily="@font/sfpro_display_medium">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtDays"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:fontFamily="@font/sfpro_display_medium"
+                    android:hint="@string/seller_age_days"
+                    android:inputType="none"
+                    android:onClick="clickHereAge"
+                    android:textColorHint="@color/colorGray"
+                    android:textSize="15dp" />
+
 
             </android.support.design.widget.TextInputLayout>
 
@@ -343,24 +398,7 @@
 
             </LinearLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:fontFamily="@font/sfpro_display_medium">
 
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/edtDays"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/sfpro_display_medium"
-                    android:hint="@string/seller_age_days"
-                    android:inputType="number"
-                    android:textColorHint="@color/colorGray"
-                    android:textSize="15dp"
-                    android:visibility="gone" />
-
-            </android.support.design.widget.TextInputLayout>
 
 
             <android.support.design.widget.TextInputLayout
@@ -633,6 +671,15 @@
                 android:text="0"
                 android:textSize="20dp"
                 android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/hideAgeId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="20dp"
+                android:visibility="gone" />
+
 
 
         </LinearLayout>
