@@ -6,7 +6,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -29,6 +32,8 @@ import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.ChooseActivity;
 import com.sharpflux.shetkarimaza.activities.ForgotPasswordActivity;
 import com.sharpflux.shetkarimaza.activities.HomeActivity;
+import com.sharpflux.shetkarimaza.activities.TabLayoutLogRegActivity;
+import com.sharpflux.shetkarimaza.filters.AgeFragment;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.utils.CheckDeviceIsOnline;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
@@ -52,7 +57,8 @@ public class LoginFragment extends Fragment {
     ProgressDialog progressDialog;
     EditText eusername, epassword;
     AlertDialog.Builder builder;
-
+    TabLayout tabLayout;
+    ViewPager viewPager;
 
     User user;
     CountryCodePicker ccp;
@@ -67,6 +73,25 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_login, container, false);
+
+        viewPager = ((TabLayoutLogRegActivity)getActivity()).findViewById(R.id.pager);
+        tabLayout = ((TabLayoutLogRegActivity)getActivity()).findViewById(R.id.tabLayout);
+        /*tabLayout.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });*/
 
         Animation animation1 =
                 AnimationUtils.loadAnimation(getContext(),
@@ -92,7 +117,7 @@ public class LoginFragment extends Fragment {
         epassword = view.findViewById(R.id.password);
 
         ccp = (CountryCodePicker) view.findViewById(R.id.ccp);
-        ccp.registerCarrierNumberEditText(eusername);
+        //ccp.registerCarrierNumberEditText(eusername);
 
 
         forgotpw.setOnClickListener(new View.OnClickListener() {
@@ -228,7 +253,29 @@ public class LoginFragment extends Fragment {
                         try {
 
                             JSONArray obj = new JSONArray(response);
+/*                            if(obj.length()==0){
+                                builder.setMessage("Please Sign Up First !!!")
+                                        .setCancelable(false)
 
+                                        .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                //  Action for 'NO' Button
+                                                // dialog.cancel();
+                                                *//*FragmentTransaction transection = getFragmentManager().beginTransaction();
+                                                SignupFragment mfragment = new SignupFragment();
+                                                transection.replace(R.id.pager, mfragment);
+                                                transection.commit();*//*
+
+                                                //viewPager.setCurrentItem(1);
+
+                                            }
+                                        });
+
+                                AlertDialog alert = builder.create();
+                                alert.setTitle("New User");
+                                alert.show();
+                                return;
+                            }*/
 
                             for (int i = 0; i < obj.length(); i++) {
                                 //getting the user from the response

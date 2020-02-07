@@ -85,11 +85,13 @@
         <activity
             android:name=".activities.ProductDetailsForBuyerActivity"
             android:label="Detail Information"
+
             android:parentActivityName=".activities.AllSimilarDataActivity"
             android:theme="@style/SellerDarkAppTheme" />
         <activity
             android:name=".activities.DetailFormActivity"
             android:label="@string/includemoredetails"
+
             android:parentActivityName=".activities.ChooseActivity"
             android:theme="@style/SellerDarkAppTheme" />
         <activity
@@ -105,7 +107,7 @@
         <activity
             android:name=".activities.SellerActivity"
             android:label="@string/seller"
-            android:noHistory="true"
+
             android:parentActivityName=".activities.HomeActivity"
             android:theme="@style/SellerDarkAppTheme" />
         <activity android:name=".activities.ChooseActivity" />

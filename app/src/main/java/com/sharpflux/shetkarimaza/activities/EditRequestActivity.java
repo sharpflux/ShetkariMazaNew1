@@ -54,6 +54,10 @@ public class EditRequestActivity extends AppCompatActivity {
         recyclerView =findViewById(R.id.edit_rvProductList);
         txt_emptyView =findViewById(R.id.txt_emptyView);
 
+
+        User user = SharedPrefManager.getInstance(new EditRequestActivity()).getUser();
+        userId = user.getId();
+
         productlist=new ArrayList<>();
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
@@ -79,8 +83,7 @@ public class EditRequestActivity extends AppCompatActivity {
         runner.execute(sleepTime);
     }
     private void loadProducts() {
-        User user = SharedPrefManager.getInstance(new EditRequestActivity()).getUser();
-        userId = user.getId();
+
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 URLs.URL_ORDERDETAILS+userId+"&Language="+currentLanguage,
@@ -118,7 +121,7 @@ public class EditRequestActivity extends AppCompatActivity {
                                                             String.valueOf(userJson.getInt("DistrictId")),
                                                             String.valueOf(userJson.getInt("TalukaId")),
                                                             String.valueOf(userJson.getInt("RequstId")),
-                                                            "",
+                                                            userJson.getString("SurveyNo"),
                                                             String.valueOf(userJson.getInt("CategoryId"))
 
                                             );

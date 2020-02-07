@@ -72,6 +72,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
                                 Intent in = new Intent(ForgotPasswordActivity.this,OtpActivity.class);
                                 in.putExtra("otp",obj.getString("OTP"));
+                                in.putExtra("MobileNo",mobNo);
                                 in.putExtra("UserId",obj.getInt("UserId"));
                                 startActivity(in);
 

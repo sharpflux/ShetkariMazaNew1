@@ -50,17 +50,15 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:text="TEXT"
-                android:textAllCaps="true"
-                android:textSize="@dimen/_8sdp"
                 />
 
             <TextView
                 android:id="@+id/row_cartlist_tvQuality"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:text="Unit"
+                android:layout_height="wrap_content"
                 android:paddingTop="@dimen/_2sdp"
-                android:paddingBottom="@dimen/_2sdp" />
+                android:paddingBottom="@dimen/_2sdp"
+                android:text="Unit" />
 
             <TextView
                 android:id="@+id/row_cartlist_tvPrice"

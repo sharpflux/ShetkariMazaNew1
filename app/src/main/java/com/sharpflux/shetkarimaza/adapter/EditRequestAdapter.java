@@ -49,12 +49,47 @@ public class EditRequestAdapter extends RecyclerView.Adapter<EditRequesViewHolde
         holder.mName.setText(mlist.get(currentPosition).getName());
         holder.mvarity.setText(mlist.get(currentPosition).getVarietyName());
         holder.mQuality.setText(String.valueOf(  mlist.get(currentPosition).getQuality()));
-        holder.mPrice.setText(String.valueOf( mlist.get(currentPosition).getPrice()));
+
+        double priceperunit=0.00;
+        double quant=0.00;
+
+        try {
+            quant = new Double(mlist.get(currentPosition).getQuantity());
+        } catch (NumberFormatException e) {
+            quant = 0; // your default value
+        }
+        //quant = Double.parseDouble(edtAQuantity.getText().toString());
+
+
+        //String expectedPrice = edtExpectedPrice.getText().toString();
+
+        try {
+            priceperunit = new Double(mlist.get(currentPosition).getPrice());
+        } catch (NumberFormatException e) {
+            priceperunit = 0; // your default value
+        }
+        //   priceperunit = Double.parseDouble(edtExpectedPrice.getText().toString());
+
+        double total = quant * priceperunit;
+        holder.mPrice.setText(total + "₹");
+
+
+
+
+        //holder.mPrice.setText(String.valueOf( mlist.get(currentPosition).getPrice()));
+
+        if(mlist.get(currentPosition).getVarietyName().equals("") )
+            holder.mvarity.setText("Not Available");
+        if( mlist.get(currentPosition).getQuality().equals(""))
+            holder.mQuality.setText("Not Available");
 
         holder.btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Context context=v.getContext();
+
+
+
                 Intent i= new Intent(context, ProductInfoForSaleActivity.class);
                 i.putExtra("Type","flag");
                 i.putExtra("ImageUrl",mlist.get(currentPosition).getImageUrl());
@@ -80,6 +115,7 @@ public class EditRequestAdapter extends RecyclerView.Adapter<EditRequesViewHolde
                 i.putExtra("TalukaId",mlist.get(currentPosition).getTalukaId());
                 i.putExtra("RequstId",mlist.get(currentPosition).getRequstId());
                 i.putExtra("ProductId",mlist.get(currentPosition).getCategoryId());
+                i.putExtra("SurveyNo",mlist.get(currentPosition).getSurveyNo());
 
                 context.startActivity(i);
             }

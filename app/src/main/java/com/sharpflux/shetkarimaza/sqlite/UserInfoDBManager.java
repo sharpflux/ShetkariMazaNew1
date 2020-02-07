@@ -61,6 +61,8 @@ public class UserInfoDBManager {
     public static final String certificateno = "certificateno";//24
 
     public static final String SurveyNo = "SurveyNo";//25
+    public static final String AgeGroupId = "AgeGroupId";//26
+   // public static final String SurveyNo = "SurveyNo";//25
 
     //public static final String video="video";
 
@@ -175,7 +177,11 @@ public class UserInfoDBManager {
         sqlBuf.append(" text, ");
 
         sqlBuf.append(SurveyNo);//24
+        sqlBuf.append(" text, ");
+
+        sqlBuf.append(AgeGroupId);//24
         sqlBuf.append(" text) ");
+
 
 
         this.createTableSqlList.add(sqlBuf.toString());
@@ -196,7 +202,7 @@ public class UserInfoDBManager {
                               String quality, String qualityId, String quantity, String unit, String unitId, String expectedPrice,
                               String days, String availablityInMonths, String address, String state, String stateId,
                               String district, String districtId, String taluka, String talukaId, String villagenam,
-                              String areaheactor,String imagename,String organic, String certificateno,String SurveyNo) {
+                              String areaheactor,String imagename,String organic, String certificateno,String SurveyNo,String AgeGroupId) {
         // Create table column list.
         List<TableColumn> tableColumnList = new ArrayList<TableColumn>();
 
@@ -340,6 +346,12 @@ public class UserInfoDBManager {
         surveyNoColumn.setColumnName(this.SurveyNo);
         surveyNoColumn.setColumnValue(SurveyNo);
         tableColumnList.add(surveyNoColumn);
+
+
+        TableColumn AgeGroupIdColumn = new TableColumn();
+        AgeGroupIdColumn.setColumnName(this.AgeGroupId);
+        AgeGroupIdColumn.setColumnValue(AgeGroupId);
+        tableColumnList.add(AgeGroupIdColumn);
 
 
 

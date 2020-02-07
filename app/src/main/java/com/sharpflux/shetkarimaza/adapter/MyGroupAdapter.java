@@ -64,10 +64,10 @@ public class MyGroupAdapter extends RecyclerView.Adapter<GroupViewHolder1> {
     private BuyerActivity mParent;
     GroupFragment frag;
 
-    public MyGroupAdapter(Context mContext, ArrayList<GroupData> sellOptions, String Obj,GroupFragment frag) {
+    public MyGroupAdapter(Context mContext, ArrayList<GroupData> sellOptions, String Obj,GroupFragment frag,String PreviousCategoryId) {
         this.mmContext = mContext;
         this.sellOptions = sellOptions;
-        //   this.PreviousCategoryId=PreviousCategoryId;
+        this.PreviousCategoryId=PreviousCategoryId;
         this.Obj = Obj;
         this.frag=frag;
         mParent = new BuyerActivity();
@@ -96,7 +96,7 @@ public class MyGroupAdapter extends RecyclerView.Adapter<GroupViewHolder1> {
         holder.lr_group.setOnClickListener(new View.OnClickListener() {
             int position=i;
             public void onClick(View view) {
-                frag.GOPrevious( sellOptions.get(position).getItemTypeId(),"True",sellOptions.get(position).getItemTypeId(),sellOptions.get(i).getName());
+                frag.GOPrevious( sellOptions.get(position).getItemTypeId(),"True",PreviousCategoryId,sellOptions.get(i).getName());
             }
         });
 

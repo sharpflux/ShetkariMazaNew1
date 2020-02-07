@@ -187,12 +187,12 @@ public class UserVerificationActivity extends AppCompatActivity {
                     params.put("UserId", "");
                     params.put("RegistrationTypeId", "0");
                     params.put("RegistrationCategoryId", "0");
-                    params.put("FullName", FullName);
+                    params.put("FullName", FullName+" "+Lastname);
                     params.put("MobileNo", MobileNo);
 
                     params.put("AlternateMobile", "0");
                     params.put("Address", "0");
-                    params.put("EmailId", Lastname);
+                    params.put("EmailId", "");
                     params.put("Gender", "0");
                     params.put("StateId", "1");
 

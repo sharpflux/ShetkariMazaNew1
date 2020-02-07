@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/fr_signUp"
     tools:context=".fragment.SignupFragment">
 
     <LinearLayout
@@ -134,7 +135,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentTop="true"
-
+                                android:maxLength="10"
                                 android:hint="@string/mobile_no"
                                 android:background="@null"
 

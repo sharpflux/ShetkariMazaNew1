@@ -35,12 +35,12 @@ public class MyBuyerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static int currentPosition = 0;
 
     private ArrayList<SellOptions> mList;
-    private List<SellOptions> exampleListFull;
+    private ArrayList<SellOptions> exampleListFull;
 
-    public MyBuyerAdapter(Context mContext, ArrayList<SellOptions> mList) {
+    public MyBuyerAdapter(Context mContext, ArrayList<SellOptions> mList, ArrayList<SellOptions> tempProductList) {
         this.mContext = mContext;
         this.mList = mList;
-        exampleListFull = new ArrayList<>(mList);
+        exampleListFull =tempProductList ;
 
     }
 
@@ -136,7 +136,7 @@ public class MyBuyerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 mList.clear();
-                mList.addAll((List) results.values);
+                mList.addAll((List)results.values);
                 notifyDataSetChanged();
             }
         };

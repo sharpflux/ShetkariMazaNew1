@@ -85,7 +85,7 @@ public class AddListActivity extends AppCompatActivity {
     Bundle bundle;
     String type = "", varity = "", quality = "", unit = "", month = "", state = "", district = "", taluka = "";
 
-    String ProductId, organic, certificateno, SurveyNo, ImageUrl;
+    String ProductId, organic, certificateno, SurveyNo, ImageUrl,AgeGroupId,productVarietyId;
     Cursor cursor;
     int UserId;
     private TextView userAccountListEmptyTextView = null;
@@ -166,6 +166,8 @@ public class AddListActivity extends AppCompatActivity {
             certificateno = bundle.getString("certificateno");
             SurveyNo = bundle.getString("SurveyNo");
             ImageUrl = bundle.getString("ImageUrl");
+            AgeGroupId = bundle.getString("AgeGroupId");
+            productVarietyId = bundle.getString("productVarietyId");
 
 
         }
@@ -181,7 +183,10 @@ public class AddListActivity extends AppCompatActivity {
 
         Cursor cursorData = userInfoDBManager.getAllAccountCursor();
         cursorData.moveToPosition(-1); // in case you accessed it before
-
+        if(productVarietyId.equals("")&&quality.equals("")){
+            productVarietyId="0";
+            quality="0";
+        }
 
         if(cursorData.getCount()==0){
             Alertbuilder.setMessage("No data found to submit")
@@ -375,7 +380,7 @@ public class AddListActivity extends AppCompatActivity {
     private void submitToDb() {
         cursor = userInfoDBManager.getAllAccountCursor();
         array = new JSONArray();
-        Handler h = new Handler();
+      //  Handler h = new Handler();
         builder.append("<Parent>");
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToPosition(-1);
@@ -390,7 +395,7 @@ public class AddListActivity extends AppCompatActivity {
                 builder.append("<quantity>" + cursor.getString(7) + "</quantity>");
                 builder.append("<unitId>" + cursor.getString(9) + "</unitId>");
                 builder.append("<expectedPrice>" + cursor.getString(10) + "</expectedPrice>");
-                builder.append("<days>" + cursor.getString(11) + "</days>");
+                builder.append("<days>" + cursor.getString(11) +"</days>");
                 builder.append("<availablityInMonths>" + cursor.getString(12) + "</availablityInMonths>");
                 builder.append("<address>" + cursor.getString(13) + "</address>");
                 builder.append("<stateId>" + cursor.getString(15) + "</stateId>");
@@ -402,6 +407,7 @@ public class AddListActivity extends AppCompatActivity {
                 builder.append("<organic>" + cursor.getString(23) + "</organic>");
                 builder.append("<certificateno>" + cursor.getString(24) + "</certificateno>");
                 builder.append("<SurveyNo>" + cursor.getString(25) + "</SurveyNo>");
+                builder.append("<AgeGroupId>" + cursor.getString(26) + "</AgeGroupId>");
                 builder.append("</Assign>");
                 //cursor.getString(22).replaceAll("\\<\\?xml(.+?)\\?\\>", "").trim()
             }
@@ -490,7 +496,7 @@ public class AddListActivity extends AppCompatActivity {
 
             } catch (Exception e) {
                 e.printStackTrace();
-                Toast.makeText(AddListActivity.this,  e.getMessage(), Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(AddListActivity.this,  e.getMessage(), Toast.LENGTH_SHORT).show();
                 resp = e.getMessage();
             }
             return resp;

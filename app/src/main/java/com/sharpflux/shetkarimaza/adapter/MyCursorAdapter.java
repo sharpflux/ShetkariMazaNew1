@@ -26,21 +26,27 @@ import com.squareup.picasso.Picasso;
 
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyCursorAdapter extends RecyclerView.Adapter<MyCursorAdapterViewHolder> {
     private Context mContext;
-    private List<CursorData> mlist;
+    private ArrayList<CursorData> mlist;
     Bitmap bitmap;
     private static int currentPosition = 0;
     String Pkey;
     int Postition;
-     public UserInfoDBManager userInfoDBManager;
+    public UserInfoDBManager userInfoDBManager;
 
-    public MyCursorAdapter(Context mContext, List<CursorData> mlist) {
+    public MyCursorAdapter(Context mContext, ArrayList<CursorData> mlist, UserInfoDBManager userInfoDBManager) {
         this.mContext = mContext;
         this.mlist = mlist;
         userInfoDBManager = new UserInfoDBManager(mContext);
+    }
+
+    public MyCursorAdapter(Context applicationContext, ArrayList<CursorData> cursorDataList) {
+        this.mContext = applicationContext;
+        this.mlist = cursorDataList;
     }
 
     @NonNull
@@ -53,14 +59,16 @@ public class MyCursorAdapter extends RecyclerView.Adapter<MyCursorAdapterViewHol
 
     @Override
     public void onBindViewHolder(@NonNull MyCursorAdapterViewHolder holder, int i) {
-       // Picasso.get().load(mlist.get(i).getImageUrl()).resize(300, 300).into(((MyCursorAdapterViewHolder) holder).Imgage);
+        // Picasso.get().load(mlist.get(i).getImageUrl()).resize(300, 300).into(((MyCursorAdapterViewHolder) holder).Imgage);
 
 
+        Pkey = mlist.get(i).getPKey();
 
-        Pkey=mlist.get(i).getPKey();
-
-        Postition=i;
-       byte[] imgbytes = Base64.decode(mlist.get(i).getImageUrl(), Base64.DEFAULT);
+        Postition = i;
+        byte[] imgbytes = new byte[]{};
+        if (mlist.get(i).getImageUrl() != null) {
+            imgbytes = Base64.decode(mlist.get(i).getImageUrl(), Base64.DEFAULT);
+        }
         bitmap = BitmapFactory.decodeByteArray(imgbytes, 0, imgbytes.length);
         holder.Imgage.setImageBitmap(bitmap);
 
@@ -77,11 +85,10 @@ public class MyCursorAdapter extends RecyclerView.Adapter<MyCursorAdapterViewHol
                         new DialogInterface.OnClickListener() {
 
                             @Override
-                            public void onClick(DialogInterface arg0, int arg1)
-                            {
-                                userInfoDBManager= new UserInfoDBManager(view.getRootView().getContext());
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                userInfoDBManager = new UserInfoDBManager(view.getRootView().getContext());
                                 userInfoDBManager.open();
-                                if(userInfoDBManager!=null) {
+                                if (userInfoDBManager != null) {
                                     userInfoDBManager.deleteAccount(Integer.valueOf(Pkey));
                                     mlist.remove(Postition);
                                     notifyItemRemoved(Postition);
@@ -107,25 +114,27 @@ public class MyCursorAdapter extends RecyclerView.Adapter<MyCursorAdapterViewHol
 
     }
 
-       @Override
+    @Override
     public int getItemCount() {
-        return mlist.size();
+
+            return mlist.size();
+
     }
 }
 
 
-class MyCursorAdapterViewHolder  extends RecyclerView.ViewHolder implements View.OnClickListener {
-    ImageView Imgage,row_cartlist_ivDelete;
-    TextView mname,mvarity,mquality,mrate;
+class MyCursorAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    ImageView Imgage, row_cartlist_ivDelete;
+    TextView mname, mvarity, mquality, mrate;
 
     MyCursorAdapterViewHolder(View itemView) {
         super(itemView);
         Imgage = itemView.findViewById(R.id.ImgageAddList);
         mname = itemView.findViewById(R.id.user_account_list_item_id);
-        mvarity= itemView.findViewById(R.id.user_account_list_item_user_name);
+        mvarity = itemView.findViewById(R.id.user_account_list_item_user_name);
         mquality = itemView.findViewById(R.id.user_account_list_item_password);
         mrate = itemView.findViewById(R.id.user_account_list_item_email);
-        row_cartlist_ivDelete=itemView.findViewById(R.id.row_cartlist_ivDelete);
+        row_cartlist_ivDelete = itemView.findViewById(R.id.row_cartlist_ivDelete);
         itemView.setOnClickListener(this);
     }
 

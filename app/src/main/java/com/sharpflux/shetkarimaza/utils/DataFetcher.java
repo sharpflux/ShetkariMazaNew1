@@ -110,6 +110,7 @@ public class DataFetcher {
 
                                 }
                             });
+
                             customDialog = new CustomRecyclerViewDialog(context, dataAdapter);
                             customDialog.show();
                             customDialog.setCanceledOnTouchOutside(false);

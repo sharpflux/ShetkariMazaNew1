@@ -71,6 +71,7 @@
                     android:hint="@string/enter_otp_code"
                     android:inputType="number"
                     android:padding="08dp"
+                    android:maxLength="4"
                     android:textColor="@color/lightGrey"
                     android:textSize="12.5dp" />
 

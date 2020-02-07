@@ -78,6 +78,7 @@
             android:drawableStart="@drawable/ic_verify"
             android:hint="@string/enter_otp_code"
             android:inputType="number"
+            android:maxLength="4"
             android:textColor="@color/lightGrey"
             android:textSize="12.5dp"
             />
@@ -109,7 +110,17 @@
         android:text="@string/resendOtp"
         android:textColor="@color/black"
         android:textSize="14dp"
+        android:visibility="gone"
         />
+            <TextView
+                android:id="@+id/tv_timerotp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:text="23"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
         </LinearLayout>
     </ScrollView>
 

@@ -69,7 +69,7 @@ public class SignupFragment extends Fragment {
         epassword = view.findViewById(R.id.epassword);
         edtcpassword = view.findViewById(R.id.ecpassword);
         ccp = (CountryCodePicker) view.findViewById(R.id.ccp);
-        ccp.registerCarrierNumberEditText(editTextMobile);
+       // ccp.registerCarrierNumberEditText(editTextMobile);
         builder = new AlertDialog.Builder(getContext());
         signup = view.findViewById(R.id.rSignup);
 
@@ -95,8 +95,8 @@ public class SignupFragment extends Fragment {
                     return;
                 }
 
-
-
+                final String mob = editTextMobile.getText().toString();
+               // String MobilePattern = "[0-9]{10}";
 
                 number = ccp.getFullNumberWithPlus();
 
@@ -116,16 +116,22 @@ public class SignupFragment extends Fragment {
                 }*/
 
                 if (TextUtils.isEmpty(edtlastname.getText().toString())) {
+                    edtlastname.setError("Please enter your last name");
+                    edtlastname.requestFocus();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(mob)) {
                     editTextMobile.setError("Please enter mobile number");
                     editTextMobile.requestFocus();
                     return;
                 }
-                if(editTextMobile.getText().toString().length()>10){
+                if(!(mob.length()==10)) {
                     editTextMobile.setError("Please enter valid mobile number");
                     editTextMobile.requestFocus();
                     return;
-                }
-                if (TextUtils.isEmpty(epassword.getText().toString())) {
+
+                }if (TextUtils.isEmpty(epassword.getText().toString())) {
                     epassword.setError("Please Enter a password");
                     epassword.requestFocus();
                     return;
@@ -170,20 +176,19 @@ public class SignupFragment extends Fragment {
         final String password = epassword.getText().toString();
         final String cpassword = edtcpassword.getText().toString();
 
-        number = ccp.getFullNumberWithPlus();
+        //number = ccp.getFullNumberWithPlus();
 
-        if (TextUtils.isEmpty(username)) {
-            eusername.setError("Please enter your username");
-            eusername.requestFocus();
-
+/*
+        if(editTextMobile.getText().toString().length()>10){
+            editTextMobile.setError("Please enter valid mobile number");
+            editTextMobile.requestFocus();
             return;
         }
-
-      /*  if (TextUtils.isEmpty(middlename)) {
+          if (TextUtils.isEmpty(middlename)) {
             edtmiddlename.setError("Please enter middle name");
             edtmiddlename.requestFocus();
             return;
-        }*/
+        }
 
         if (TextUtils.isEmpty(lastname)) {
             edtlastname.setError("Please enter your last name");
@@ -192,11 +197,7 @@ public class SignupFragment extends Fragment {
             return;
         }
 //
-        if (TextUtils.isEmpty(mob)) {
-            editTextMobile.setError("Please enter mobile number");
-            editTextMobile.requestFocus();
-            return;
-        }
+
         if(mob.length()>10){
             editTextMobile.setError("Please enter valid mobile number");
             editTextMobile.requestFocus();
@@ -216,8 +217,7 @@ public class SignupFragment extends Fragment {
             edtcpassword.setError("Please enter correct password");
             edtcpassword.requestFocus();
             return;
-        }
-
+        }*/
         //if everything is fine
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_OTP2 + mob,
                 new Response.Listener<String>() {
@@ -228,13 +228,17 @@ public class SignupFragment extends Fragment {
                             //converting response to json object
                             JSONObject obj = new JSONObject(response);
                             //if no error in response
+
+
+
+
                             if (!obj.getBoolean("error")) {
 
                                 Intent intent = new Intent(getContext(), UserVerificationActivity.class);
 
                                 intent.putExtra("OTP", obj.getString("OTP"));
                                 intent.putExtra("FullName", username);
-                                intent.putExtra("Middlename", middlename);
+                                intent.putExtra("Middlename", "");
                                 intent.putExtra("Lastname", lastname);
                                 intent.putExtra("MobileNo", mob);
                                 intent.putExtra("Password", password);
@@ -326,8 +330,7 @@ public class SignupFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String result) {
-
-
+            progressDialog.dismiss();
 
         }
 
