@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
+
     <uses-feature android:name="android.hardware.camera2" />
 
     <uses-permission
@@ -42,6 +43,7 @@
         <activity
             android:name=".activities.BuyerActivity"
             android:label="@string/buyer"
+
             android:parentActivityName=".activities.HomeActivity"
             android:theme="@style/SellerDarkAppTheme" />
         <activity
@@ -73,7 +75,8 @@
             android:name=".filters.FilterActivity"
             android:noHistory="true"
             android:parentActivityName=".activities.AllSimilarDataActivity"
-            android:theme="@style/ToolbarAppTheme" />
+            android:theme="@style/ToolbarAppTheme"
+            android:label=""/>
         <activity
             android:name=".activities.TabLayoutLogRegActivity"
             android:noHistory="true" />
@@ -114,7 +117,8 @@
         <activity android:name=".activities.WelcomeActivity" />
         <activity
             android:name=".activities.HomeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:noHistory="true"/>
         <activity android:name=".activities.ForgotPasswordActivity" />
         <activity
             android:name=".activities.SelectLanguageActivity"
@@ -157,6 +161,11 @@
         <meta-data
             android:name="com.razorpay.ApiKey"
             android:value="rzp_test_vsghhmsETnM91Z" />
+
+
+
     </application>
+
+
 
 </manifest>

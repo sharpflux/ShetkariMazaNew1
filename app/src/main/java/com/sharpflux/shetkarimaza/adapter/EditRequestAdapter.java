@@ -71,7 +71,7 @@ public class EditRequestAdapter extends RecyclerView.Adapter<EditRequesViewHolde
         //   priceperunit = Double.parseDouble(edtExpectedPrice.getText().toString());
 
         double total = quant * priceperunit;
-        holder.mPrice.setText(total + "₹");
+        holder.mPrice.setText(Double.toString(total));
 
 
 

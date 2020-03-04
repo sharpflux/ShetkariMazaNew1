@@ -7,6 +7,7 @@ public class SellOptions {
     private String productlist;
     private String productId;
     private  String CategoryId;
+    private  String ItemName;
 
     public SellOptions(String image, String productlist, String productId) {
         this.image = image;
@@ -19,6 +20,23 @@ public class SellOptions {
         this.productlist = productlist;
         this.productId = productId;
         CategoryId = categoryId;
+    }
+
+
+    public SellOptions(String image, String productlist, String productId, String categoryId, String itemName) {
+        this.image = image;
+        this.productlist = productlist;
+        this.productId = productId;
+        CategoryId = categoryId;
+        ItemName = itemName;
+    }
+
+    public String getItemName() {
+        return ItemName;
+    }
+
+    public void setItemName(String itemName) {
+        ItemName = itemName;
     }
 
     public SellOptions(String image, String productlist) {

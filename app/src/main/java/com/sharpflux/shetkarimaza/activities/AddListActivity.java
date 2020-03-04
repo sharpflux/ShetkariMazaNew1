@@ -83,9 +83,9 @@ public class AddListActivity extends AppCompatActivity {
     private ListView userAccountListView = null;
     SQLiteCursor sqcursor;
     Bundle bundle;
-    String type = "", varity = "", quality = "", unit = "", month = "", state = "", district = "", taluka = "";
+    String type = "", varity = "", quality = "", unit = "", month = "", state = "", district = "", taluka = "",TotalAmt="";
 
-    String ProductId, organic, certificateno, SurveyNo, ImageUrl,AgeGroupId,productVarietyId;
+    String ProductId, organic, certificateno, SurveyNo, ImageUrl,AgeGroupId,productVarietyId="";
     Cursor cursor;
     int UserId;
     private TextView userAccountListEmptyTextView = null;
@@ -158,6 +158,7 @@ public class AddListActivity extends AppCompatActivity {
             varity = bundle.getString("productVariety");
             quality = bundle.getString("qualityId");
             unit = bundle.getString("unitId");
+            TotalAmt = bundle.getString("TotalAmt");
             //month = bundle.getString("monthId");
             state = bundle.getString("stateId");
             district = bundle.getString("districtId");
@@ -183,6 +184,27 @@ public class AddListActivity extends AppCompatActivity {
 
         Cursor cursorData = userInfoDBManager.getAllAccountCursor();
         cursorData.moveToPosition(-1); // in case you accessed it before
+
+
+
+        while (cursorData.moveToNext()) {
+            CursorData data = new CursorData(
+                    cursorData.getString(cursorData.getColumnIndex(imagename)),
+                    cursorData.getString(cursorData.getColumnIndex(productType)),
+                    cursorData.getString(cursorData.getColumnIndex(UserInfoDBManager.productVariety)),
+                    cursorData.getString(cursorData.getColumnIndex(UserInfoDBManager.quality)),
+                    cursorData.getString(cursorData.getColumnIndex(expectedPrice)),
+                    cursorData.getString(cursorData.getColumnIndex(UserInfoDBManager.TABLE_ACCOUNT_COLUMN_ID))
+            );
+            cursorDataList.add(data);
+        }
+
+
+        myCursorAdapter = new MyCursorAdapter(getApplicationContext(), cursorDataList);
+        mrecyclerView.setAdapter(myCursorAdapter);
+
+
+
         if(productVarietyId.equals("")&&quality.equals("")){
             productVarietyId="0";
             quality="0";
@@ -206,21 +228,7 @@ public class AddListActivity extends AppCompatActivity {
             return;
 
         }
-        while (cursorData.moveToNext()) {
-            CursorData data = new CursorData(
-                    cursorData.getString(cursorData.getColumnIndex(imagename)),
-                    cursorData.getString(cursorData.getColumnIndex(productType)),
-                    cursorData.getString(cursorData.getColumnIndex(UserInfoDBManager.productVariety)),
-                    cursorData.getString(cursorData.getColumnIndex(UserInfoDBManager.quality)),
-                    cursorData.getString(cursorData.getColumnIndex(expectedPrice)),
-                    cursorData.getString(cursorData.getColumnIndex(UserInfoDBManager.TABLE_ACCOUNT_COLUMN_ID))
-            );
-            cursorDataList.add(data);
-        }
 
-
-        myCursorAdapter = new MyCursorAdapter(getApplicationContext(), cursorDataList);
-        mrecyclerView.setAdapter(myCursorAdapter);
 
 
         btnsubmit.setOnClickListener(new View.OnClickListener() {
@@ -378,12 +386,14 @@ public class AddListActivity extends AppCompatActivity {
 
 
     private void submitToDb() {
+
         cursor = userInfoDBManager.getAllAccountCursor();
         array = new JSONArray();
       //  Handler h = new Handler();
         builder.append("<Parent>");
-        if (cursor != null && cursor.getCount() > 0) {
+        if (cursor != null && cursor.getCount()>0) {
             cursor.moveToPosition(-1);
+           // cursor.moveToFirst();
             while (cursor.moveToNext()) {
                 builder.append("<Assign>");
                 builder.append("<RequestId>" + 0 + "</RequestId>");
@@ -411,6 +421,13 @@ public class AddListActivity extends AppCompatActivity {
                 builder.append("</Assign>");
                 //cursor.getString(22).replaceAll("\\<\\?xml(.+?)\\?\\>", "").trim()
             }
+            cursor.close();
+            /*while(!cursor.isAfterLast())
+            {
+                String s = cursor.getString(cursor.getColumnCount()-1);
+
+                cursor.moveToNext();
+            }*/
             builder.append("</Parent>");
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_SAVEPRODUCTDETAILS,
                     new Response.Listener<String>() {
@@ -494,6 +511,8 @@ public class AddListActivity extends AppCompatActivity {
 
                 submitToDb();
 
+
+
             } catch (Exception e) {
                 e.printStackTrace();
              //   Toast.makeText(AddListActivity.this,  e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -517,7 +536,7 @@ public class AddListActivity extends AppCompatActivity {
 
         @Override
         protected void onProgressUpdate(String... text) {
-            mProgressDialog.setProgress(92);
+            //mProgressDialog.setProgress(92);
 
         }
 

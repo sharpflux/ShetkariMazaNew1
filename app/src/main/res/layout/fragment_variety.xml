@@ -1,23 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
+<LinearLayout android:orientation="vertical"
     android:background="@drawable/backgroundlogo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:layout_marginTop="10dp"
-        android:id="@+id/tvTitleOne"
+
+    <!--<LinearLayout
+        android:id="@+id/main_layout"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/click_here_to_choose_variety"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="#4CAF50"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        />
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+
+        >
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/tvTitleVarity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Variety"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            />
+
+
+
+
+    </LinearLayout>-->
+
 
     <SearchView
         android:id="@+id/searchView"

@@ -573,7 +573,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                 builder.setCancelable(false);
                 builder.setTitle("File downloaded Successfully...");
                 //builder.setMessage("You don't have excel Application!Please download it!");
-                builder.setMessage("Go to diapertohome folder in your phone storage!");
+                builder.setMessage("Go to ShetkariMaza folder in your phone storage!");
 
                 builder.setIcon(R.drawable.ic_check_circle);
 

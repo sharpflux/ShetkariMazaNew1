@@ -243,7 +243,7 @@ public class ContactDetailActivity extends AppCompatActivity {
                 }
 
 
-   if (isLoading && (currentItems + scrollOutItems == totalItems)) {
+     if (isLoading && (currentItems + scrollOutItems == totalItems)) {
                     currentPage++;
                     AllSimilarDataActivity.AsyncTaskRunner runner = new AllSimilarDataActivity.AsyncTaskRunner();
                     String sleepTime =String.valueOf( currentPage);

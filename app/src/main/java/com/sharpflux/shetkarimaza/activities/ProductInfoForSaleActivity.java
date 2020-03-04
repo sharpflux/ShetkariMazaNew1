@@ -131,7 +131,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     private ArrayList<Uri> arrayList;
     private ArrayList<String> ImagesList;
     StringBuilder builder;
-    TextInputLayout lt_txtAge,lr_subCategory,lr_quality, lr_botanicalName,lr_variety;
+    TextInputLayout lt_txtAge,lr_subCategory,lr_quality, lr_botanicalName,lr_variety,lr_areaInHector;
     Integer REQUEST_CAMERA = 1, SELECT_FILE = 0;
 
     private UserInfoDBManager userInfoDBManager = null;
@@ -244,6 +244,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         lr_subCategory = findViewById(R.id.lr_subCategory);
         lr_botanicalName = findViewById(R.id.lr_botanicalName);
         lr_variety = findViewById(R.id.lr_variety);
+        lr_areaInHector = findViewById(R.id.lr_areaInHector);
 
 
         rg = findViewById(R.id.radioGroup1);
@@ -312,6 +313,18 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
          if (ProductId.equals("15")||ProductId.equals("6")||ProductId.equals("8")||ProductId.equals("35")) {
              lt_txtAge.setVisibility(View.VISIBLE);
 
+        }
+
+            //Area in hector
+        if (!(ProductId.equals("4")||ProductId.equals("6")||ProductId.equals("10")||ProductId.equals("35"))) {
+            lr_areaInHector.setVisibility(View.VISIBLE);
+
+
+        }
+
+        if(lr_areaInHector.getVisibility()==View.INVISIBLE)
+        {
+            edtareahector.setText("0");
         }
 
          // clear CategoryName
@@ -442,7 +455,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 //   priceperunit = Double.parseDouble(edtExpectedPrice.getText().toString());
 
                 total = quant * priceperunit;
-                edtTotalamt.setText(total + "₹");
+                edtTotalamt.setText(Double.toString(total));
             }
 
             @Override
@@ -478,7 +491,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
             //   priceperunit = Double.parseDouble(edtExpectedPrice.getText().toString());
 
                 total = quant * priceperunit;
-                edtTotalamt.setText(total + "₹");
+                edtTotalamt.setText(Double.toString(total));
             }
         });
 
@@ -770,6 +783,15 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                     days ="0";
                 }
 
+                if(edtcertifiedno.getVisibility()==View.VISIBLE)
+                {
+                    certificateno = edtcertifiedno.getText().toString();
+                }
+                else {
+                    certificateno ="0";
+                }
+
+
                /* if(LinearLayout1.getVisibility()==View.VISIBLE)
                 {
                     org = edtDays.getText().toString();
@@ -915,6 +937,17 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                         hidQualityId.setText("0");
                     }
 
+                    if(edtcertifiedno.getText().toString().equals(""))
+                    {
+                        certificateno="0";
+
+                    }
+
+                    if(AgeGroupId.equals(""))
+                    {
+                        hideAgeId.setText("0");
+                    }
+
                     if (userId == -1) {
                         // Insert new user account.
                         userInfoDBManager.insertAccount(productType, hidItemTypeId.getText().toString(), productVariety, hidVarietyId.getText().toString(),
@@ -924,6 +957,13 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                                 villagenam, areaheactor, ImageUrl,org,certificateno,surveyNo,hideAgeId.getText().toString());
 
 
+                        /*userInfoDBManager.newInsert(productType, hidItemTypeId.getText().toString(), productVariety, hidVarietyId.getText().toString(),
+                                quality, hidQualityId.getText().toString(), quantity, unit, hidMeasurementId.getText().toString(), total,
+                                days,availablityInMonths, address, state, hideStateId.getText().toString(),
+                                district, hideDistrictId.getText().toString(), taluka, hideTalukaId.getText().toString(),
+                                villagenam, areaheactor, ImageUrl,org,certificateno,surveyNo,hideAgeId.getText().toString());
+
+*/
                     } else {
                         // Update exist user account.
                         userInfoDBManager.updateAccount(userId, productVariety, days, productType);
@@ -945,7 +985,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                             edtExpectedPrice.setText("");
                             edtUnit.setText("");
                             edtTotalamt.setText("");
-                           edtcertifiedno.setText("");
+                         // edtcertifiedno.setText("");
 
 
                         }
@@ -968,11 +1008,12 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                             startUserAccountListIntent.putExtra("stateId", hideStateId.getText().toString());
                             startUserAccountListIntent.putExtra("districtId", hideDistrictId.getText().toString());
                             startUserAccountListIntent.putExtra("talukaId", hideTalukaId.getText().toString());
-                           startUserAccountListIntent.putExtra("organic", org);
+                            startUserAccountListIntent.putExtra("organic", org);
                             startUserAccountListIntent.putExtra("certificateno", edtcertifiedno.getText().toString());
                             startUserAccountListIntent.putExtra("SurveyNo",edtsurveyNo.getText().toString());
                             startUserAccountListIntent.putExtra("ImageUrl",ImageUrl);
                             startUserAccountListIntent.putExtra("AgeGroupId",hideAgeId.getText().toString());
+                            startUserAccountListIntent.putExtra("TotalAmt",edtTotalamt.getText().toString());
                             startActivity(startUserAccountListIntent);
 
                         }
@@ -1321,18 +1362,27 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     }
 
     private void onSelectFromGalleryResult(Intent data) {
-        Bitmap bm = null;
+        Bitmap bitmap = null;
         if (data != null) {
             try {
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
-                ImageUrl = Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);
-                bm.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+                bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+                ImageUrl = getStringImage(bitmap);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        img_banner_profile_placeholder.setImageBitmap(bm);
+        img_banner_profile_placeholder.setImageBitmap(bitmap);
+
+    }
+    public String getStringImage(Bitmap bmp){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
     }
 
     private void onCaptureImageResult(Intent data) {
@@ -1417,7 +1467,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         builder.append("<talukaId>" + hideTalukaId.getText() + "</talukaId>");
         builder.append("<villagenam>" + edtvillage.getText() + "</villagenam>");
         builder.append("<areaheactor>" + edtareahector.getText() + "</areaheactor>");
-        builder.append("<imagename></imagename>");
+        builder.append("<imagename>"+ImageUrl+"</imagename>");
         builder.append("<orgnic>"+org+"</orgnic>");
         builder.append("<certificateno>"+edtcertifiedno.getText()+"</certificateno>");
         builder.append("<SurveyNo>"+edtsurveyNo.getText()+"</SurveyNo>");

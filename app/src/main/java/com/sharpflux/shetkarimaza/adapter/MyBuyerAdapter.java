@@ -31,7 +31,7 @@ public class MyBuyerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
     private Context mContext;
-    public String id;
+    public String id,ItemName;
     private static int currentPosition = 0;
 
     private ArrayList<SellOptions> mList;
@@ -77,6 +77,7 @@ public class MyBuyerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     ((FlowerViewHolder) holder).mTitle.setText(mList.get(position).getProductlist());
                     ((FlowerViewHolder) holder).ItemTypeId = mList.get(position).getProductId();
                     ((FlowerViewHolder) holder).categoryId = mList.get(position).getCategoryId();
+                    ((FlowerViewHolder) holder).ItemName=mList.get(position).getItemName();
 
                 }
             } catch (Exception d) {
@@ -198,6 +199,7 @@ class FlowerViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
     TextView mTitle;
     String ItemTypeId,categoryId;
     List<SubCategoryFilter> mlist;
+    String ItemName="";
 
     FlowerViewHolder(View itemView) {
         super(itemView);
@@ -215,6 +217,7 @@ class FlowerViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         intent =  new Intent(context, FilterActivity.class);
         intent.putExtra("ItemTypeId",ItemTypeId);
         intent.putExtra("ProductId",categoryId);
+        intent.putExtra("ItemName",ItemName);
 
         context.startActivity(intent);
     }
