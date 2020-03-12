@@ -15,6 +15,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.DynamicFragmentAdapter;
 import com.sharpflux.shetkarimaza.model.User;
+import com.sharpflux.shetkarimaza.sqlite.dbBuyerFilter;
 import com.sharpflux.shetkarimaza.sqlite.dbFilter;
 import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
@@ -38,6 +39,8 @@ public class BuyerActivity extends AppCompatActivity implements TabLayout.OnTabS
     dbLanguage mydatabase;
     String currentLanguage, language;
     dbFilter myDatabase;
+
+    dbBuyerFilter myDatabaseCategoryItemTypeId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +61,9 @@ public class BuyerActivity extends AppCompatActivity implements TabLayout.OnTabS
 
         initViews();
         myDatabase = new dbFilter(getApplicationContext());
+        myDatabaseCategoryItemTypeId = new dbBuyerFilter(getApplicationContext());
         myDatabase.DeleteRecordAll();
+        myDatabaseCategoryItemTypeId.DeleteRecordAll();
     }
 
     private void initViews() {
@@ -155,8 +160,5 @@ public class BuyerActivity extends AppCompatActivity implements TabLayout.OnTabS
 
     }
 
-    @Override
-    public void onBackPressed() {
-        finish();
-    }
+
 }

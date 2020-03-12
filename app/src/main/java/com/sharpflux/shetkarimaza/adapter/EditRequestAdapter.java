@@ -49,6 +49,7 @@ public class EditRequestAdapter extends RecyclerView.Adapter<EditRequesViewHolde
         holder.mName.setText(mlist.get(currentPosition).getName());
         holder.mvarity.setText(mlist.get(currentPosition).getVarietyName());
         holder.mQuality.setText(String.valueOf(  mlist.get(currentPosition).getQuality()));
+        holder.Imageupload=mlist.get(currentPosition).getImageUrl();
 
         double priceperunit=0.00;
         double quant=0.00;
@@ -116,6 +117,7 @@ public class EditRequestAdapter extends RecyclerView.Adapter<EditRequesViewHolde
                 i.putExtra("RequstId",mlist.get(currentPosition).getRequstId());
                 i.putExtra("ProductId",mlist.get(currentPosition).getCategoryId());
                 i.putExtra("SurveyNo",mlist.get(currentPosition).getSurveyNo());
+                i.putExtra("BotanicalName",mlist.get(currentPosition).getBotanicalName());
 
                 context.startActivity(i);
             }
@@ -144,7 +146,7 @@ abstract class EditRequesViewHolder extends RecyclerView.ViewHolder implements V
     Button btn_update,btnCancel;
     String ItemName,VarietyName,QualityType,AvailableQuantity,
             MeasurementType,ExpectedPrice,AvailableMonths,FarmAddress,
-            SurveyNo,StatesName,DistrictName,TalukaName,VillageName,Hector;
+            SurveyNo,StatesName,DistrictName,TalukaName,VillageName,Hector,Imageupload;
     EditRequesViewHolder(View itemView) {
         super(itemView);
 

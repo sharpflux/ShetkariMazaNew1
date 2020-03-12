@@ -7,15 +7,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <!--<LinearLayout
+   <!-- <LinearLayout
         android:id="@+id/main_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorPrimary"
 
+
         >
-        <TextView
+       &lt;!&ndash; <TextView
             android:layout_marginTop="10dp"
             android:id="@+id/tvTitleVarity"
             android:layout_width="match_parent"
@@ -26,12 +27,36 @@
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold"
+            />&ndash;&gt;
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/tvTitleOne"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Variety"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold"
+
             />
 
 
-
-
     </LinearLayout>-->
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/tvTitleOne"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Variety"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#4CAF50"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        />
 
 
     <SearchView

@@ -587,4 +587,10 @@ public class ContactDetailActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragment_order_list_llContainer, fragment);
         fragmentTransaction.commit();
     }
+
+    @Override
+    public void onBackPressed() {
+      Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+      startActivity(intent);
+    }
 }

@@ -75,7 +75,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
     List<SimilarList> productlist;
     Bundle bundle;
 
-    String TalukaId = "", VarityId = "", QualityId = "", ItemTypeId = "", StatesID = "", DistrictId = "",priceids="";
+    String TalukaId = "", VarityId = "", QualityId = "", ItemTypeId = "", StatesID = "", DistrictId = "",priceids="",ItemName;
     boolean isLoading = false;
     int currentItems;
     int totalItems;
@@ -135,6 +135,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
         AssignVariables();
         BundleAssign();
+        setTitle(ItemName);
 
        /* AllSimilarDataActivity.AsyncTaskRunner runner = new AllSimilarDataActivity.AsyncTaskRunner();
         String sleepTime = String.valueOf(currentPage);
@@ -243,6 +244,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         bundle = getIntent().getExtras();
         if (bundle != null) {
             ItemTypeId = bundle.getString("ItemTypeId");
+            ItemName = bundle.getString("ItemName");
             //TalukaId = bundle.getString("TalukaId");
            //VarityId = bundle.getString("VarietyId");
           // QualityId = bundle.getString("QualityId");
@@ -504,7 +506,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_download) {
+        if (itemId == R.id.download) {
             exportToExcel();
         }
 

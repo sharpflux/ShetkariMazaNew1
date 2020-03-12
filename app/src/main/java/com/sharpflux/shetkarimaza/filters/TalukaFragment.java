@@ -45,7 +45,7 @@ public class TalukaFragment extends Fragment {
     LinearLayoutManager layoutManager;
     ArrayList<SubCategoryFilter> productlist;
     Button btn_next,btn_back,btnFilterData;
-    String  DistrictId="", TalukaId="",VarityId="",QualityId="",itemTypeId="",StatesID="";
+    String  DistrictId="", TalukaId="",VarityId="",QualityId="",itemTypeId="",StatesID="",ItemName;
     Bundle extras;
     StringBuilder taluka_builder_id = new StringBuilder();
     SearchView searchView;
@@ -101,6 +101,7 @@ public class TalukaFragment extends Fragment {
             itemTypeId=extras.getString("ItemTypeId");
             QualityId = extras.getString("QualityId");
             StatesID = extras.getString("StatesID");
+            ItemName = extras.getString("ItemName");
         }
 
 
@@ -114,6 +115,7 @@ public class TalukaFragment extends Fragment {
                     extras.putString("ItemTypeId",itemTypeId);
                     extras.putString("StatesID",StatesID);
                     extras.putString("DistrictId",DistrictId);
+                    extras.putString("ItemName",ItemName);
                 }
 
                 FragmentTransaction transection = getFragmentManager().beginTransaction();
@@ -148,6 +150,7 @@ public class TalukaFragment extends Fragment {
                     extras.putString("ItemTypeId",itemTypeId);
                     extras.putString("StatesID",StatesID);
                     extras.putString("DistrictId",DistrictId);
+                    extras.putString("ItemName",ItemName);
                 }
                 FragmentTransaction transection = getFragmentManager().beginTransaction();
                 VillageFragment mfragment = new VillageFragment();
@@ -169,6 +172,7 @@ public class TalukaFragment extends Fragment {
                 intent.putExtra("DistrictId", DistrictId);
                 intent.putExtra("TalukaId",taluka_builder_id.toString());
                 intent.putExtra("StatesID", StatesID);
+                intent.putExtra("ItemName", ItemName);
                 startActivity(intent);
 
             }

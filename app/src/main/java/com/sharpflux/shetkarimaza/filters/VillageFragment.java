@@ -13,7 +13,7 @@ import com.sharpflux.shetkarimaza.R;
 public class VillageFragment extends Fragment {
     Button btn_next, btn_back, btnFilterData;
     Bundle extras;
-    String StatesID = "", DistrictId = "", TalukaId = "", VarityId = "", QualityId = "", itemTypeId = "", priceids = "";
+    String StatesID = "", DistrictId = "", TalukaId = "", VarityId = "", QualityId = "", itemTypeId = "", priceids = "",ItemName;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,6 +33,7 @@ public class VillageFragment extends Fragment {
             itemTypeId = extras.getString("ItemTypeId");
             DistrictId = extras.getString("DistrictId");
             StatesID = extras.getString("StatesID");
+            ItemName = extras.getString("ItemName");
 
         }
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +47,7 @@ public class VillageFragment extends Fragment {
                     extras.putString("StatesID", StatesID);
                     extras.putString("DistrictId", DistrictId);
                     extras.putString("TalukaId", TalukaId);
+                    extras.putString("ItemName", ItemName);
                 }
 
                 FragmentTransaction transection = getFragmentManager().beginTransaction();
@@ -69,6 +71,7 @@ public class VillageFragment extends Fragment {
                     extras.putString("StatesID", StatesID);
                     extras.putString("DistrictId", DistrictId);
                     extras.putString("TalukaId", TalukaId);
+                    extras.putString("ItemName", ItemName);
                 }
                 FragmentTransaction transection = getFragmentManager().beginTransaction();
                 PriceFragment mfragment = new PriceFragment();

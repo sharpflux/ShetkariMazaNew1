@@ -25,6 +25,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity;
 import com.sharpflux.shetkarimaza.model.User;
+import com.sharpflux.shetkarimaza.sqlite.dbBuyerFilter;
 import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.utils.Constant;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
@@ -44,17 +45,17 @@ public class StateFragment extends Fragment {
     private RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     ArrayList<SubCategoryFilter> productlist;
-    Button btn_next,btn_back,btnFilterData;
+    Button btn_next, btn_back, btnFilterData;
     Locale myLocale;
-    String VarityId="",QualityId="", DistrictId="",itemTypeId="",StatesID="";
+    String VarityId = "", QualityId = "", DistrictId = "", itemTypeId = "", StatesID = "", ItemName;
     StringBuilder state_builder_id;
-    String StateIds="";
+    String StateIds = "";
     Bundle extras;
     SearchView searchView;
     VarietyAdapter myAdapter;
-
+    dbBuyerFilter myDatabase;
     dbLanguage mydatabase;
-    String currentLanguage,language;
+    String currentLanguage, language;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,7 +84,7 @@ public class StateFragment extends Fragment {
         language = user.getLanguage();
 
         Cursor cursor = mydatabase.LanguageGet(language);
-
+        myDatabase = new dbBuyerFilter(getContext());
 
         while (cursor.moveToNext()) {
             currentLanguage = cursor.getString(0);
@@ -92,15 +93,18 @@ public class StateFragment extends Fragment {
 
         BundleAssign();
         extras = getArguments();
-
+        if (QualityId.equals(null)&&VarityId.equals(null)) {
+            QualityId.equals("0");
+            VarityId.equals("0");
+        }
         if (extras != null) {
 
             //VarityId = extras.getString("VarietyId");
             //QualityId = extras.getString("QualityId");
-            itemTypeId=extras.getString("ItemTypeId");
+            itemTypeId = extras.getString("ItemTypeId");
+            ItemName = extras.getString("ItemName");
 
         }
-
 
 
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -108,12 +112,12 @@ public class StateFragment extends Fragment {
             public void onClick(View view) {
                 BundleAssign();
                 FragmentTransaction transection = getFragmentManager().beginTransaction();
-                QualityFragment  mfragment = new QualityFragment ();
+                QualityFragment mfragment = new QualityFragment();
+                mfragment.setArguments(extras);
                 transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
                 transection.commit();
             }
         });
-
 
 
         btn_next.setOnClickListener(new View.OnClickListener() {
@@ -128,18 +132,35 @@ public class StateFragment extends Fragment {
                 }
                 extras = new Bundle();
                 if (extras != null) {
-                    extras.putString("VarietyId",VarityId);
-                    extras.putString("QualityId",QualityId);
-                    extras.putString("StatesID",state_builder_id.toString());
-                    extras.putString("ItemTypeId",itemTypeId);
+                    extras.putString("VarietyId", VarityId);
+                    extras.putString("QualityId", QualityId);
+                    extras.putString("StatesID", state_builder_id.toString());
+                    extras.putString("ItemTypeId", itemTypeId);
+                    extras.putString("ItemName", ItemName);
                 }
 
-                FragmentTransaction transection=getFragmentManager().beginTransaction();
-                DistrictFragment mfragment = new DistrictFragment();
-                mfragment.setArguments(extras);
-                transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
-                transection.commit();
 
+
+
+                Cursor STATECursor = myDatabase.FilterGetByFilterName("STATE");
+                //Cursor DISTRICTCursor = myDatabase.FilterGetByFilterName("DISTRICT");
+               // Cursor TALUKACursor = myDatabase.FilterGetByFilterName("TALUKA");
+
+
+                if (STATECursor.getCount()==0) {
+                    FragmentTransaction transection = getFragmentManager().beginTransaction();
+                    PriceFragment mfragment = new PriceFragment();
+                    mfragment.setArguments(extras);
+                    transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
+                    transection.commit();
+
+                } else {
+                    FragmentTransaction transection = getFragmentManager().beginTransaction();
+                    DistrictFragment mfragment = new DistrictFragment();
+                    mfragment.setArguments(extras);
+                    transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
+                    transection.commit();
+                }
             }
         });
 
@@ -149,16 +170,16 @@ public class StateFragment extends Fragment {
             public void onClick(View view) {
                 BundleAssign();
                 Intent intent = new Intent(getContext(), AllSimilarDataActivity.class);
-                intent.putExtra("ItemTypeId",itemTypeId);
-                intent.putExtra("VarietyId",VarityId);
-                intent.putExtra("QualityId",QualityId);
-                intent.putExtra("StatesID",state_builder_id.toString());
-                intent.putExtra("Search","Filter");
+                intent.putExtra("ItemTypeId", itemTypeId);
+                intent.putExtra("VarietyId", VarityId);
+                intent.putExtra("QualityId", QualityId);
+                intent.putExtra("StatesID", state_builder_id.toString());
+                intent.putExtra("ItemName", ItemName);
+                intent.putExtra("Search", "Filter");
                 startActivity(intent);
 
             }
         });
-
 
 
         AsyncTaskRunner runner = new AsyncTaskRunner();
@@ -170,14 +191,13 @@ public class StateFragment extends Fragment {
 
     }
 
-    private void BundleAssign()
-    {
+    private void BundleAssign() {
         extras = new Bundle();
         if (extras != null) {
-            extras.putString("VarietyId",VarityId);
-            extras.putString("QualityId",QualityId);
-            extras.putString("StatesID",state_builder_id.toString());
-            extras.putString("ItemTypeId",itemTypeId);
+            extras.putString("VarietyId", VarityId);
+            extras.putString("QualityId", QualityId);
+            extras.putString("StatesID", state_builder_id.toString());
+            extras.putString("ItemTypeId", itemTypeId);
         }
 
     }
@@ -186,7 +206,7 @@ public class StateFragment extends Fragment {
     private void SetDynamicDATA() {
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_STATE +"?Language="+currentLanguage,
+                URLs.URL_STATE + "?Language=" + currentLanguage,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -203,7 +223,7 @@ public class StateFragment extends Fragment {
                                                             userJson.getString("StatesID"),
                                                             userJson.getString("StatesName"),
                                                             Constant.STATE
-                                                            );
+                                                    );
 
                                     productlist.add(sellOptions);
 
@@ -212,7 +232,7 @@ public class StateFragment extends Fragment {
                                     Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                                 }
 
-                              myAdapter = new VarietyAdapter(getContext(), productlist);
+                                myAdapter = new VarietyAdapter(getContext(), productlist);
                                 recyclerView.setAdapter(myAdapter);
 
                                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

@@ -36,16 +36,28 @@
         <activity android:name=".filters.Filter1Activity" />
         <activity android:name=".filters.BuyerFilterActivity" />
         <activity android:name=".activities.AddListActivityTest" />
+       
         <activity
             android:name=".activities.ContactDetailActivity"
+            android:noHistory="true"
             android:parentActivityName=".activities.HomeActivity"
             android:theme="@style/SellerDarkAppTheme" />
+
+       
         <activity
             android:name=".activities.BuyerActivity"
-            android:label="@string/buyer"
 
+            android:label="@string/buyer"
             android:parentActivityName=".activities.HomeActivity"
             android:theme="@style/SellerDarkAppTheme" />
+       
+        <activity
+            android:name=".activities.SellerActivity"
+            android:noHistory="true"
+            android:label="@string/seller"
+            android:parentActivityName=".activities.HomeActivity"
+            android:theme="@style/SellerDarkAppTheme" />
+
         <activity
             android:name=".activities.TranspoterActivity"
             android:label="Transpoter"
@@ -73,10 +85,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".filters.FilterActivity"
+            android:label=""
             android:noHistory="true"
             android:parentActivityName=".activities.AllSimilarDataActivity"
-            android:theme="@style/ToolbarAppTheme"
-            android:label=""/>
+            android:theme="@style/SellerDarkAppTheme" />
         <activity
             android:name=".activities.TabLayoutLogRegActivity"
             android:noHistory="true" />
@@ -84,7 +96,7 @@
             android:name=".activities.AllSimilarDataActivity"
             android:noHistory="true"
             android:parentActivityName=".activities.BuyerActivity"
-            android:theme="@style/ToolbarAppTheme" />
+            android:theme="@style/SellerDarkAppTheme" />
         <activity
             android:name=".activities.ProductDetailsForBuyerActivity"
             android:label="Detail Information"
@@ -107,18 +119,13 @@
             android:label="@string/productdetail"
             android:parentActivityName=".activities.SellerActivity"
             android:theme="@style/SellerDarkAppTheme" />
-        <activity
-            android:name=".activities.SellerActivity"
-            android:label="@string/seller"
 
-            android:parentActivityName=".activities.HomeActivity"
-            android:theme="@style/SellerDarkAppTheme" />
         <activity android:name=".activities.ChooseActivity" />
         <activity android:name=".activities.WelcomeActivity" />
         <activity
             android:name=".activities.HomeActivity"
-            android:screenOrientation="portrait"
-            android:noHistory="true"/>
+
+            android:screenOrientation="portrait" />
         <activity android:name=".activities.ForgotPasswordActivity" />
         <activity
             android:name=".activities.SelectLanguageActivity"
@@ -163,9 +170,7 @@
             android:value="rzp_test_vsghhmsETnM91Z" />
 
 
-
     </application>
-
 
 
 </manifest>

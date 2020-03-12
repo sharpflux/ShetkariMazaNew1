@@ -51,7 +51,7 @@ public class VarietyFragment extends Fragment {
     LinearLayoutManager layoutManager;
     ArrayList<SubCategoryFilter> productlist;
     Button btn_next, btn_back, btnFilterData;
-    String itemTypeId = "", categoryId = "";
+    String itemTypeId = "", categoryId = "",ItemName="";
     Bundle extras;
     StringBuilder varity_builder_id;
     TextView errortv;
@@ -59,7 +59,7 @@ public class VarietyFragment extends Fragment {
     SearchView searchView;
     VarietyAdapter myAdapter;
     Locale myLocale;
-    dbBuyerFilter myDatabase;
+    dbBuyerFilter myDatabasefilter;
 
     dbLanguage mydatabase;
     String currentLanguage,language;
@@ -89,7 +89,7 @@ public class VarietyFragment extends Fragment {
         varity_builder_id = new StringBuilder();
         searchView = view.findViewById(R.id.searchView);
 
-        myDatabase = new dbBuyerFilter(getContext());
+        myDatabasefilter = new dbBuyerFilter(getContext());
 
 
 
@@ -102,6 +102,17 @@ public class VarietyFragment extends Fragment {
         Cursor cursor = mydatabase.LanguageGet(language);
 
 
+
+        Cursor cursorid = myDatabasefilter.GetAllCategory();
+
+        while (cursorid.moveToNext()) {
+            categoryId=cursorid.getString(0);
+            itemTypeId=cursorid.getString(1);
+
+        }
+
+
+
         while (cursor.moveToNext()) {
             currentLanguage = cursor.getString(0);
 
@@ -109,17 +120,23 @@ public class VarietyFragment extends Fragment {
 
 
 
-        extras = new Bundle();
+      /*  extras = new Bundle();
 
         if (extras != null) {
             itemTypeId = getArguments().getString("ItemTypeId");
             categoryId = getArguments().getString("ProductId");
-        }
+            ItemName = getArguments().getString("ItemName");
+        }*/
+
+
+
 
         extras = new Bundle();
         if (extras != null) {
             extras.putString("VarietyId", varity_builder_id.toString());
             extras.putString("ItemTypeId", itemTypeId);
+           // extras.putString("ItemName", ItemName);
+          //  extras.putString("categoryId", categoryId);
 
         }
 
@@ -127,15 +144,22 @@ public class VarietyFragment extends Fragment {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                myDatabasefilter.DeleteRecordAll();
+                myDatabasefilter.DeleteRecordCategory();
                 Intent in = new Intent(getContext(), BuyerActivity.class);
                 in.putExtra("ItemTypeId", itemTypeId);
                 startActivity(in);
+
+
             }
         });
 
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+
                 for (int i = 0; i < productlist.size(); i++) {
                     SubCategoryFilter filter = productlist.get(i);
                     if (filter.getSelected()) {
@@ -143,18 +167,27 @@ public class VarietyFragment extends Fragment {
                     }
                 }
 
-                if (categoryId.equals("15")) {
-                    FragmentTransaction transection = getFragmentManager().beginTransaction();
-                    AgeFragment mfragment = new AgeFragment();
-                    mfragment.setArguments(extras);
-                    transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
-                    transection.commit();
-                } else {
-                    FragmentTransaction transection = getFragmentManager().beginTransaction();
-                    QualityFragment mfragment = new QualityFragment();
-                    mfragment.setArguments(extras);
-                    transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
-                    transection.commit();
+                if(categoryId!=null) {
+                    if (categoryId.equals("3") || categoryId.equals("4") || categoryId.equals("6") ||
+                            categoryId.equals("10") || categoryId.equals("43")) {
+                        FragmentTransaction transection = getFragmentManager().beginTransaction();
+                        StateFragment mfragment = new StateFragment();
+                        mfragment.setArguments(extras);
+                        transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
+                        transection.commit();
+                    } else if (categoryId.equals("15") || categoryId.equals("35")) {
+                        FragmentTransaction transection = getFragmentManager().beginTransaction();
+                        AgeFragment mfragment = new AgeFragment();
+                        mfragment.setArguments(extras);
+                        transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
+                        transection.commit();
+                    } else {
+                        FragmentTransaction transection = getFragmentManager().beginTransaction();
+                        QualityFragment mfragment = new QualityFragment();
+                        mfragment.setArguments(extras);
+                        transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
+                        transection.commit();
+                    }
                 }
 
             }
@@ -175,6 +208,7 @@ public class VarietyFragment extends Fragment {
                 intent.putExtra("ItemTypeId", itemTypeId);
                 intent.putExtra("VarietyId", varity_builder_id.toString());
                 intent.putExtra("Search","Filter");
+              //  intent.putExtra("ItemName",ItemName);
                 startActivity(intent);
 
             }
@@ -198,6 +232,15 @@ public class VarietyFragment extends Fragment {
                         try {
 
                             JSONArray obj = new JSONArray(response);
+
+                           /* if(obj.length()==0){
+                                FragmentTransaction transection = getFragmentManager().beginTransaction();
+                                QualityFragment mfragment = new QualityFragment();
+                                mfragment.setArguments(extras);
+                                transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
+                                transection.commit();
+
+                            }*/
                             for (int i = 0; i < obj.length(); i++) {
                                 JSONObject userJson = obj.getJSONObject(i);
                                 if (!userJson.getBoolean("error")) {
@@ -260,6 +303,8 @@ public class VarietyFragment extends Fragment {
 
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
+
+
 
 
     private class AsyncTaskRunner extends AsyncTask<String, String, String> {

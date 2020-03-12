@@ -5,16 +5,21 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 /**
  * Created by Sagar Hatikat on 10 September 2019
  */
 public class dbBuyerFilter extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME = "Filter.db";
+    public static final String DATABASE_NAME = "MazaShetkari.db";
     public static final String TABLE_NAME = "Filter";
+    private static final String TABLE_CATEGORY= "CategoryTable";
     public static final String ID = "ID";
     public static final String FILTERBY = "FilterBy";
     public static final String COORESPONDENCEID = "CorespondenceId";
+
+    public static final String  CATEGORYID = "CategoryId";
+    public static final String ITEMTYPEID = "ItemTypeId";
 
 
     public dbBuyerFilter(Context context) {
@@ -24,11 +29,13 @@ public class dbBuyerFilter extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + TABLE_NAME +" (ID INTEGER PRIMARY KEY AUTOINCREMENT,FILTERBY TEXT,CORESPONDENCEID TEXT)");
+        db.execSQL("create table " + TABLE_CATEGORY +" (ID INTEGER PRIMARY KEY AUTOINCREMENT,CATEGORYID TEXT,ITEMTYPEID TEXT)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_CATEGORY);
         onCreate(db);
     }
 
@@ -44,6 +51,29 @@ public class dbBuyerFilter extends SQLiteOpenHelper {
             return true;
     }
 
+
+    public boolean CategoryInsert(String CategoryId, String ItemTypeId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(CATEGORYID,CategoryId);
+        contentValues.put(ITEMTYPEID,ItemTypeId);
+        long result = db.insert(TABLE_CATEGORY,null ,contentValues);
+        if(result == -1)
+            return false;
+        else
+            return true;
+    }
+    public Cursor GetAllCategory() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT CATEGORYID,ITEMTYPEID FROM " + TABLE_CATEGORY ;
+        Cursor cursor =  db.rawQuery(query,null);
+        return cursor;
+
+    }
+    public Integer DeleteRecordCategory () {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return   db.delete(TABLE_CATEGORY, null, null);
+    }
     public Cursor FilterGetByFilterName(String FilterBy) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT CORESPONDENCEID FROM " + TABLE_NAME + " WHERE FILTERBY = ?";
@@ -63,8 +93,7 @@ public class dbBuyerFilter extends SQLiteOpenHelper {
     }
     public Integer DeleteRecordAll () {
         SQLiteDatabase db = this.getWritableDatabase();
-        return   db.delete(TABLE_NAME, null, null);
-
+        return   db.delete(TABLE_CATEGORY, null, null);
     }
     public String GETExist(String itemId){
         SQLiteDatabase db = this.getWritableDatabase();

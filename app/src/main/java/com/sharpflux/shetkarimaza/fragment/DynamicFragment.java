@@ -1,26 +1,18 @@
 package com.sharpflux.shetkarimaza.fragment;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.SearchView;
-import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -33,14 +25,12 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.google.gson.JsonObject;
 import com.sharpflux.shetkarimaza.Interface.RecyclerViewClickListener;
 import com.sharpflux.shetkarimaza.R;
-import com.sharpflux.shetkarimaza.activities.BuyerActivity;
-import com.sharpflux.shetkarimaza.activities.SubGroupActivity;
 import com.sharpflux.shetkarimaza.adapter.MyBuyerAdapter;
 import com.sharpflux.shetkarimaza.model.SellOptions;
 import com.sharpflux.shetkarimaza.model.User;
+import com.sharpflux.shetkarimaza.sqlite.dbBuyerFilter;
 import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.utils.EndlessRecyclerViewScrollListener;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
@@ -80,6 +70,7 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
     LinearLayout subcategoryLinear;
     String SubCategoryName="";
     ImageView imgBack;
+    dbBuyerFilter myFilter;
 
 
 
@@ -103,7 +94,8 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
         mRecyclerView.setLayoutManager(mGridLayoutManager);
         productlist = new ArrayList<>();
         tempProductList = new ArrayList<>();
-        myAdapter = new MyBuyerAdapter(getContext(), productlist, tempProductList);
+        myFilter = new dbBuyerFilter(getContext());
+        myAdapter = new MyBuyerAdapter(getContext(), productlist,tempProductList,myFilter);
         mRecyclerView.setAdapter(myAdapter);
         progressBar = view.findViewById(R.id.progressBar);
         CategoryId = String.valueOf(getArguments().getString("CategoryId"));
@@ -114,7 +106,13 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
         imgBack=view.findViewById(R.id.imgBack);
 
 
+        myFilter.DeleteRecordAll();
+        myFilter.DeleteRecordCategory();
+
+
         mydatabase = new dbLanguage(getContext());
+
+
         User user = SharedPrefManager.getInstance(getContext()).getUser();
         myLocale = getResources().getConfiguration().locale;
         language = user.getLanguage();
@@ -224,10 +222,16 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
                                                 (userJson.getString("ImageUrl"),
                                                         userJson.getString("ItemName"),
                                                         userJson.getString("ItemTypeId"),
-                                                        CategoryId);
+                                                        CategoryId,
+                                                        "",
+                                                        userJson.getBoolean("IsVarietyAvailable"));
 
                                         productlist.add(sellOptions);
-                                        tempProductList.add(sellOptions);
+                                        String ItemTypeId =userJson.getString("ItemTypeId");
+
+
+                                     tempProductList.add(sellOptions);
+                                       // myAdapter = new MyBuyerAdapter(getContext(), productlist,tempProductList);
 
 
                                         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

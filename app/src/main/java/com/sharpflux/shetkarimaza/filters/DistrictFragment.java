@@ -25,6 +25,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity;
 import com.sharpflux.shetkarimaza.model.User;
+import com.sharpflux.shetkarimaza.sqlite.dbBuyerFilter;
 import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.utils.Constant;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
@@ -52,13 +53,13 @@ public class DistrictFragment extends Fragment {
     StringBuilder district_builder_id;
     String districtIds;
     Bundle extras;
-    String VarityId="",QualityId="",itemTypeId="",StatesID="";
+    String VarityId="",QualityId="",itemTypeId="",StatesID="",ItemName;
     SearchView searchView;
     VarietyAdapter myAdapter;
     Locale myLocale;
     dbLanguage mydatabase;
     String currentLanguage,language;
-
+    dbBuyerFilter myDatabaseFilter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -82,6 +83,7 @@ public class DistrictFragment extends Fragment {
 
 
         mydatabase = new dbLanguage(getContext());
+        myDatabaseFilter = new dbBuyerFilter(getContext());
 
         User user = SharedPrefManager.getInstance(getContext()).getUser();
         myLocale = getResources().getConfiguration().locale;
@@ -97,13 +99,22 @@ public class DistrictFragment extends Fragment {
 
         extras = getArguments();
 
+
+
+
         if (extras != null) {
             StatesID=extras.getString("StatesID");
             VarityId = extras.getString("VarietyId");
             QualityId = extras.getString("QualityId");
             itemTypeId=extras.getString("ItemTypeId");
+            ItemName=extras.getString("ItemName");
         }
 
+        Cursor STATECursor = myDatabaseFilter.FilterGetByFilterName("STATE");
+
+        while (STATECursor.moveToNext()) {
+            StatesID = StatesID + STATECursor.getString(0) + ",";
+        }
 
 
         districtIds="";
@@ -122,6 +133,7 @@ public class DistrictFragment extends Fragment {
                     extras.putString("DistrictId", district_builder_id.toString());
                     extras.putString("ItemTypeId", itemTypeId);
                     extras.putString("StatesID", StatesID);
+                    extras.putString("ItemName", ItemName);
 
                 }
 
@@ -156,17 +168,30 @@ public class DistrictFragment extends Fragment {
                     extras.putString("DistrictId", district_builder_id.toString());
                     extras.putString("ItemTypeId", itemTypeId);
                     extras.putString("StatesID", StatesID);
+                    extras.putString("ItemName", ItemName);
 
 
                 }
-                FragmentTransaction transection = getFragmentManager().beginTransaction();
-                TalukaFragment mfragment = new TalukaFragment();
 
 
-                mfragment.setArguments(extras);
 
-                transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
-                transection.commit();
+                if (district_builder_id.toString().equals("")) {
+                    FragmentTransaction transection = getFragmentManager().beginTransaction();
+                    PriceFragment mfragment = new PriceFragment();
+                    mfragment.setArguments(extras);
+                    transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
+                    transection.commit();
+
+                } else {
+                    FragmentTransaction transection = getFragmentManager().beginTransaction();
+                    TalukaFragment mfragment = new TalukaFragment();
+                    mfragment.setArguments(extras);
+                    transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
+                    transection.commit();
+                }
+
+
+
             }
         });
 
@@ -179,6 +204,7 @@ public class DistrictFragment extends Fragment {
                 intent.putExtra("VarietyId",VarityId);
                 intent.putExtra("QualityId",QualityId);
                 intent.putExtra("StatesID",StatesID);
+                intent.putExtra("ItemName",ItemName);
                 intent.putExtra("DistrictId", district_builder_id.toString());
                 startActivity(intent);
 

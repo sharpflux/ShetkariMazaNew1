@@ -46,8 +46,8 @@ public class QualityFragment extends Fragment {
     private RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     ArrayList<SubCategoryFilter> productlist;
-    Button btn_next,btn_back,btnFilterData;
-    String VarityId="",itemTypeId="",ItemTypeId;
+    Button btn_next, btn_back, btnFilterData;
+    String VarityId = "", itemTypeId = "", ItemTypeId, ItemName, categoryId = "";
     Bundle extras;
     Locale myLocale;
     SearchView searchView;
@@ -56,7 +56,7 @@ public class QualityFragment extends Fragment {
     StringBuilder quality_builder_id;
 
     dbLanguage mydatabase;
-    String currentLanguage,language;
+    String currentLanguage, language;
 
     public QualityFragment() {
 
@@ -102,15 +102,15 @@ public class QualityFragment extends Fragment {
         AssignVariables();
 
 
-
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 extras = new Bundle();
                 if (extras != null) {
-                    extras.putString("VarietyId",VarityId);
-                    extras.putString("ItemTypeId",itemTypeId);
+                    extras.putString("VarietyId", VarityId);
+                    extras.putString("ItemTypeId", itemTypeId);
+                    extras.putString("ItemName", ItemName);
 
                 }
 
@@ -128,29 +128,32 @@ public class QualityFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                for(int i=0;i<productlist.size();i++){
-                    SubCategoryFilter filter= productlist.get(i);
-                    if(filter.getSelected()){
+                for (int i = 0; i < productlist.size(); i++) {
+                    SubCategoryFilter filter = productlist.get(i);
+                    if (filter.getSelected()) {
                         quality_builder_id.append(filter.getId() + ",");
                     }
                 }
                 extras = new Bundle();
                 if (extras != null) {
-                    extras.putString("VarietyId",VarityId);
-                    extras.putString("QualityId",quality_builder_id.toString());
-                    extras.putString("ItemTypeId",itemTypeId);
+                    extras.putString("VarietyId", VarityId);
+                    extras.putString("QualityId", quality_builder_id.toString());
+                    extras.putString("ItemTypeId", itemTypeId);
+                    extras.putString("ItemName", ItemName);
 
                 }
 
-                FragmentTransaction transection = getFragmentManager().beginTransaction();
-                StateFragment mfragment = new StateFragment();
-                mfragment.setArguments(extras);
-                transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
-                transection.commit();
+
+                    FragmentTransaction transection = getFragmentManager().beginTransaction();
+                    StateFragment mfragment = new StateFragment();
+                    mfragment.setArguments(extras);
+                    transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
+                    transection.commit();
+
+
 
             }
         });
-
 
 
         btnFilterData.setOnClickListener(new View.OnClickListener() {
@@ -158,15 +161,14 @@ public class QualityFragment extends Fragment {
             public void onClick(View view) {
                 BundleAssign();
                 Intent intent = new Intent(getContext(), AllSimilarDataActivity.class);
-                intent.putExtra("ItemTypeId",itemTypeId);
-                intent.putExtra("VarietyId",VarityId);
-                intent.putExtra("QualityId",quality_builder_id.toString());
+                intent.putExtra("ItemTypeId", itemTypeId);
+                intent.putExtra("VarietyId", VarityId);
+                intent.putExtra("QualityId", quality_builder_id.toString());
+                intent.putExtra("ItemName", ItemName);
                 startActivity(intent);
 
             }
         });
-
-
 
 
         AsyncTaskRunner runner = new AsyncTaskRunner();
@@ -176,20 +178,19 @@ public class QualityFragment extends Fragment {
         return view;
     }
 
-    private void BundleAssign()
-    {
+    private void BundleAssign() {
         extras = getArguments();
 
         if (extras != null) {
 
             VarityId = extras.getString("VarietyId");
             itemTypeId = extras.getString("ItemTypeId");
+            categoryId = extras.getString("categoryId");
         }
 
     }
 
-    private void AssignVariables()
-    {
+    private void AssignVariables() {
         ItemTypeId = "";
 
         VarityId = "";
@@ -200,7 +201,7 @@ public class QualityFragment extends Fragment {
         AssignVariables();
         BundleAssign();
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_QUALITY + "?Language="+currentLanguage,
+                URLs.URL_QUALITY + "?Language=" + currentLanguage,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -217,7 +218,7 @@ public class QualityFragment extends Fragment {
                                                             userJson.getString("QualityId"),
                                                             userJson.getString("QualityType"),
                                                             Constant.QUALITY
-                                                            );
+                                                    );
 
                                     productlist.add(sellOptions);
                                 } else {

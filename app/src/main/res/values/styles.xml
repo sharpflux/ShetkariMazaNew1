@@ -14,6 +14,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:homeAsUpIndicator">@drawable/backspace_24dp</item>
     </style>
 
     <style name="tab_item">
@@ -74,6 +75,15 @@
 
     <!-- Base application theme. -->
     <style name="ToolbarAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <!-- <item name="android:icon">@drawable/ic_keyboard_arrow_left_black_24dp</item>-->
+        <item name="android:homeAsUpIndicator">@drawable/backspace_24dp</item>
+    </style>
+
+    <style name="Toolbarfragment" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>

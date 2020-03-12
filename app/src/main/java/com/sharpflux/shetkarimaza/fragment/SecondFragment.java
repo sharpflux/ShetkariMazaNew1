@@ -253,14 +253,14 @@ public class SecondFragment extends DialogFragment {
             publishProgress("Sleeping..."); // Calls onProgressUpdate()
             try {
                 if (params[0].toString() == "state")
-                    fetcher.loadList("StatesName", edtstate, URLs.URL_STATE + "?StatesID=15&Language=en", "StatesID", hideStateId, "", "","State","",null);
+                    fetcher.loadList("StatesName", edtstate, URLs.URL_STATE + "?StatesID=15&Language=en", "StatesID", hideStateId, "", "","State","",null,null);
                    // fetcher.loadList("StatesName", edtstate, URLs.URL_STATE, "StatesID", hideStateId, "", "");
 
                 else if (params[0].toString() == "district")
-                    fetcher.loadList("DistrictName", edtdistrict, URLs.URL_DISTRICT + hideStateId.getText()+"," + "&Language=en", "DistrictId", hideDistrictId, "", "","District","",null);
+                    fetcher.loadList("DistrictName", edtdistrict, URLs.URL_DISTRICT + hideStateId.getText()+"," + "&Language=en", "DistrictId", hideDistrictId, "", "","District","",null,null);
 
                 else if (params[0].toString() == "taluka")
-                    fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText()+"," + "&Language=en", "TalukasId", hideTalukaId, "", "","Taluka","",null);
+                    fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText()+"," + "&Language=en", "TalukasId", hideTalukaId, "", "","Taluka","",null,null);
 
 
                 Thread.sleep(500);

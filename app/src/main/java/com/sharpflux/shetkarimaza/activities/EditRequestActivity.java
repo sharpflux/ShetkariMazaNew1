@@ -3,6 +3,7 @@ package com.sharpflux.shetkarimaza.activities;
 import android.app.ProgressDialog;
 import android.database.Cursor;
 import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,9 +44,11 @@ public class EditRequestActivity extends AppCompatActivity {
     Locale myLocale;
     int userId;
     TextView txt_emptyView;
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     dbLanguage mydatabase;
     String currentLanguage,language;
+    List mList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +56,8 @@ public class EditRequestActivity extends AppCompatActivity {
 
         recyclerView =findViewById(R.id.edit_rvProductList);
         txt_emptyView =findViewById(R.id.txt_emptyView);
-
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimaryDark);
 
         User user = SharedPrefManager.getInstance(new EditRequestActivity()).getUser();
         userId = user.getId();
@@ -63,8 +67,12 @@ public class EditRequestActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         List<SimilarList> mList = new ArrayList<>();
-        EditRequestAdapter myAdapter = new EditRequestAdapter(EditRequestActivity.this, mList);
-        recyclerView.setAdapter(myAdapter);
+
+
+
+
+
+
 
         myLocale = getResources().getConfiguration().locale;
         mydatabase = new dbLanguage(getApplicationContext());
@@ -76,12 +84,34 @@ public class EditRequestActivity extends AppCompatActivity {
 
         }
 
-
-
         EditRequestActivity.AsyncTaskRunner runner = new EditRequestActivity.AsyncTaskRunner();
         String sleepTime = "10";
         runner.execute(sleepTime);
+
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //shuffle();
+               /* EditRequestActivity.AsyncTaskRunner runner = new EditRequestActivity.AsyncTaskRunner();
+                String sleepTime = "10";
+                runner.execute(sleepTime);*/
+
+                loadProducts();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+
+
+
     }
+
+
+  /*  public void shuffle(){
+        EditRequestAdapter myAdapter = new EditRequestAdapter(EditRequestActivity.this, mList);
+        recyclerView.setAdapter(myAdapter);
+    }*/
     private void loadProducts() {
 
 
@@ -92,6 +122,10 @@ public class EditRequestActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONArray array = new JSONArray(response);
+
+                            if( array.length()==0){
+                                txt_emptyView.setVisibility(View.VISIBLE);
+                            }
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject userJson = array.getJSONObject(i);
                                 if (!userJson.getBoolean("error")) {
@@ -122,7 +156,8 @@ public class EditRequestActivity extends AppCompatActivity {
                                                             String.valueOf(userJson.getInt("TalukaId")),
                                                             String.valueOf(userJson.getInt("RequstId")),
                                                             userJson.getString("SurveyNo"),
-                                                            String.valueOf(userJson.getInt("CategoryId"))
+                                                            String.valueOf(userJson.getInt("CategoryId")),
+                                                            userJson.getString("BotanicalName")
 
                                             );
 
@@ -132,6 +167,8 @@ public class EditRequestActivity extends AppCompatActivity {
                                 }
                                 EditRequestAdapter myAdapter = new EditRequestAdapter(EditRequestActivity.this, productlist);
                                 recyclerView.setAdapter(myAdapter);
+                                myAdapter.notifyDataSetChanged();
+
 
                                 if(myAdapter.getItemCount()==0);{
                                     txt_emptyView.setVisibility(View.VISIBLE);

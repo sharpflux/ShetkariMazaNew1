@@ -75,6 +75,15 @@ public class VarietyAdapter extends RecyclerView.Adapter<VarietytViewHolder> imp
                         }
                     }
                     break;
+                case "AGE":
+                    Cursor AGECursor = myDatabase.FilterGetByFilterName("AGE");
+                    while (AGECursor.moveToNext()) {
+                        if (AGECursor.getString(0).equals(holder.ProductId)) {
+                            holder.mTextView.setCheckMarkDrawable(R.drawable.ic_check_box_black_24dp);
+                            holder.mTextView.setChecked(true);
+                        }
+                    }
+                    break;
                 case "STATE":
                     Cursor STATECursor = myDatabase.FilterGetByFilterName("STATE");
                     while (STATECursor.moveToNext()) {

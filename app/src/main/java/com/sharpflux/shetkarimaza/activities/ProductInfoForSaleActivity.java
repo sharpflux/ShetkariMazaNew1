@@ -1,6 +1,7 @@
 package com.sharpflux.shetkarimaza.activities;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -12,11 +13,13 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
@@ -70,6 +73,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -94,25 +99,25 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
     private TextInputEditText edtTotalamt, edtproductType, edtdistrict, edtstate, edtproductVariety,
             edtDays, edtavailablityInMonths, edtAQuality, edtAQuantity, edtUnit, edtExpectedPrice,
-            edttaluka, edtaddres, edtvillage, edtareahector,edtcertifiedno,edtsurveyNo,name_botanical,sub_category_name;
+            edttaluka, edtaddres, edtvillage, edtareahector, edtcertifiedno, edtsurveyNo, name_botanical, sub_category_name;
     RadioGroup rg;
-    RadioButton rb1,rb2;
+    RadioButton rb1, rb2;
     LinearLayout LinearLayout1;
     ImageView imageviewcam1, imageviewcam2, imageviewcam3, imageviewcam4;
     ArrayList<Product> list;
     Product sellOptions;
     Button btn_take_selfie, btnFormSubmit, btnAdd, btnAddMore;
-    TextView hideImageTvSelfie, tv_rate,hideAgeId;
+    TextView hideImageTvSelfie, tv_rate, hideAgeId;
     CustomRecyclerViewDialog customDialog;
     public static String DATEFORMATTED = "";
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private Date date1;
     DataFetcher fetcher;
-    TextView hidItemTypeId, hidVarietyId, hidQualityId, hidMeasurementId, hideStateId, hideDistrictId, hideTalukaId, hideRequstId,hideSubCatId;
+    TextView hidItemTypeId, hidVarietyId, hidQualityId, hidMeasurementId, hideStateId, hideDistrictId, hideTalukaId, hideRequstId, hideSubCatId;
     Locale myLocale;
-    String ProductId, productTypeId, productVarietyId, qualityId, unitId, monthId, stateId, districtId, talukaId,certificateno;
+    String ProductId, productTypeId, productVarietyId, qualityId, unitId, monthId, stateId, districtId, talukaId, certificateno;
     String StateId;
-    private String UserId, RequstId,AgeGroupId;
+    private String UserId, RequstId, AgeGroupId;
     private Integer userid;
     ProgressDialog mProgressDialog;
     public String ImageUrl;
@@ -131,7 +136,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     private ArrayList<Uri> arrayList;
     private ArrayList<String> ImagesList;
     StringBuilder builder;
-    TextInputLayout lt_txtAge,lr_subCategory,lr_quality, lr_botanicalName,lr_variety,lr_areaInHector;
+    TextInputLayout lt_txtAge, lr_subCategory, lr_quality, lr_botanicalName, lr_variety, lr_areaInHector;
     Integer REQUEST_CAMERA = 1, SELECT_FILE = 0;
 
     private UserInfoDBManager userInfoDBManager = null;
@@ -168,9 +173,9 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
     private static final String INPUT_ORGNIC = "orgnic";
 
-    private static final String INPUT_CERTIFICATENO= "certificateno";
+    private static final String INPUT_CERTIFICATENO = "certificateno";
 
-    private static final String INPUT_SURVEYNO= "SurveyNo";
+    private static final String INPUT_SURVEYNO = "SurveyNo";
 
     int year;
     int month;
@@ -178,28 +183,29 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     Bundle extras;
     public String ClickedImage;
     String itemId, varityId, qualityid;
-    double total=0.00;
-    String org,productVariety,orgnic,SurveyNo;
+    double total = 0.00;
+    String org, productVariety, orgnic, SurveyNo;
 
     dbLanguage mydatabase;
-    String currentLanguage,language;
+    String currentLanguage, language;
+    String ImageUrlupload = "", ImageUrlUpdate = "", imageString = "";
 
-
-    double priceperunit=0.00;
-    double quant=0.00;
+    double priceperunit = 0.00;
+    double quant = 0.00;
     DataAdapter dataAdapter;
-        public  static  int MY_PERMISSIONS_REQUEST=1;
-        ScrollView scrollableContents;
+    public static int MY_PERMISSIONS_REQUEST = 1;
+    ScrollView scrollableContents;
 
+    @SuppressLint("WrongThread")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_info_for_sale);
         builder = new StringBuilder();
         builder.append("<?xml version=\"1.0\" ?>");
-        org="0";
-        productVariety="";
-        orgnic="";
+        org = "0";
+        productVariety = "";
+        orgnic = "";
         ClickedImage = "";
         mydatabase = new dbLanguage(getApplicationContext());
 
@@ -248,12 +254,12 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
 
         rg = findViewById(R.id.radioGroup1);
-        rb1=findViewById(R.id.radio1);
-        rb2=findViewById(R.id.radio2);
-        LinearLayout1= findViewById(R.id.LinearLayout1);
-        edtcertifiedno=findViewById(R.id.edtcertifiedno);
-        edtsurveyNo=findViewById(R.id.edtsurveyNo);
-        scrollableContents=findViewById(R.id.scrollableContents);
+        rb1 = findViewById(R.id.radio1);
+        rb2 = findViewById(R.id.radio2);
+        LinearLayout1 = findViewById(R.id.LinearLayout1);
+        edtcertifiedno = findViewById(R.id.edtcertifiedno);
+        edtsurveyNo = findViewById(R.id.edtsurveyNo);
+        scrollableContents = findViewById(R.id.scrollableContents);
 
 
         edtDays = findViewById(R.id.edtDays);
@@ -284,7 +290,6 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         //  imageView = findViewById(R.id.imageView);
 
 
-
         parentView = findViewById(R.id.parent_layout);
         listView = findViewById(R.id.listView);
 
@@ -310,25 +315,24 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         }
 
         //age
-         if (ProductId.equals("15")||ProductId.equals("6")||ProductId.equals("8")||ProductId.equals("35")) {
-             lt_txtAge.setVisibility(View.VISIBLE);
+        if (ProductId.equals("15") || ProductId.equals("6") || ProductId.equals("8") || ProductId.equals("35")) {
+            lt_txtAge.setVisibility(View.VISIBLE);
 
         }
 
-            //Area in hector
-        if (!(ProductId.equals("4")||ProductId.equals("6")||ProductId.equals("10")||ProductId.equals("35"))) {
+        //Area in hector
+        if (!(ProductId.equals("4") || ProductId.equals("6") || ProductId.equals("10") || ProductId.equals("35"))) {
             lr_areaInHector.setVisibility(View.VISIBLE);
 
 
         }
 
-        if(lr_areaInHector.getVisibility()==View.INVISIBLE)
-        {
+        if (lr_areaInHector.getVisibility() == View.INVISIBLE) {
             edtareahector.setText("0");
         }
 
-         // clear CategoryName
-        if (ProductId.equals("15")||ProductId.equals("7")||ProductId.equals("43")) {
+        // clear CategoryName
+        if (ProductId.equals("15") || ProductId.equals("7") || ProductId.equals("43")) {
             edtproductType.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -352,43 +356,42 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         }
 
 
-         //  SubCategory Name
-        if (ProductId.equals("15")||ProductId.equals("43")) {
+        //  SubCategory Name
+        if (ProductId.equals("15") || ProductId.equals("43")) {
             lr_subCategory.setVisibility(View.VISIBLE);
             hidItemTypeId.setText(hideSubCatId.getText());
 
         }
 
         //Botanical Name
-        if (ProductId.equals("4")||ProductId.equals("6")||ProductId.equals("10")||ProductId.equals("35")
-                ||ProductId.equals("14")||ProductId.equals("42")||ProductId.equals("43")||ProductId.equals("7")) {
+        if (ProductId.equals("4") || ProductId.equals("6") || ProductId.equals("10") || ProductId.equals("35")
+                || ProductId.equals("14") || ProductId.equals("42") || ProductId.equals("43") || ProductId.equals("7")) {
             lr_botanicalName.setVisibility(View.GONE);
 
 
         }
 
         //Variety
-        if (ProductId.equals("4")||ProductId.equals("6")||ProductId.equals("10")) {
+        if (ProductId.equals("4") || ProductId.equals("6") || ProductId.equals("10")) {
             lr_variety.setVisibility(View.GONE);
 
 
         }
 
 
-
-         // organic
-       if (ProductId.equals("2")||ProductId.equals("9")||ProductId.equals("3")||ProductId.equals("7")||ProductId.equals("14")||ProductId.equals("17")||ProductId.equals("42")){
+        // organic
+        if (ProductId.equals("2") || ProductId.equals("9") || ProductId.equals("3") || ProductId.equals("7") || ProductId.equals("14") || ProductId.equals("17") || ProductId.equals("42")) {
             LinearLayout1.setVisibility(View.VISIBLE);
         }
 
-       // certificate
-        if (ProductId.equals("2")||ProductId.equals("9")||ProductId.equals("3")||ProductId.equals("7")||ProductId.equals("14")||ProductId.equals("17")||ProductId.equals("42")){
+        // certificate
+        if (ProductId.equals("2") || ProductId.equals("9") || ProductId.equals("3") || ProductId.equals("7") || ProductId.equals("14") || ProductId.equals("17") || ProductId.equals("42")) {
             edtcertifiedno.setVisibility(View.VISIBLE);
         }
 
-       //quality
-       if (ProductId.equals("1")||ProductId.equals("2")||ProductId.equals("14")||ProductId.equals("17")||ProductId.equals("42")||ProductId.equals("7")) {
-           lr_quality.setVisibility(View.VISIBLE);
+        //quality
+        if (ProductId.equals("1") || ProductId.equals("2") || ProductId.equals("14") || ProductId.equals("17") || ProductId.equals("42") || ProductId.equals("7")) {
+            lr_quality.setVisibility(View.VISIBLE);
         }
 
         list = new ArrayList<Product>();
@@ -396,8 +399,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         myLocale = getResources().getConfiguration().locale;
 
 
-        fetcher = new DataFetcher(sellOptions, customDialog, list, ProductInfoForSaleActivity.this,name_botanical);
-
+        fetcher = new DataFetcher(sellOptions, customDialog, list, ProductInfoForSaleActivity.this, name_botanical);
 
 
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -405,7 +407,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
                 rb1 = (RadioButton) findViewById(checkedId);
-                rb2 = (RadioButton)findViewById(checkedId);
+                rb2 = (RadioButton) findViewById(checkedId);
 
                 if (rb1 != null) {
 
@@ -414,9 +416,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),
                             org,
                             Toast.LENGTH_LONG).show();
-                }
-                else if (rb2 != null)
-                {
+                } else if (rb2 != null) {
                     org = rb2.getHint().toString();
 
                     Toast.makeText(getApplicationContext(),
@@ -468,9 +468,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-              //  String quantity = edtAQuantity.getText().toString();
-
-
+                //  String quantity = edtAQuantity.getText().toString();
 
 
                 try {
@@ -478,7 +476,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 } catch (NumberFormatException e) {
                     quant = 0; // your default value
                 }
-              //quant = Double.parseDouble(edtAQuantity.getText().toString());
+                //quant = Double.parseDouble(edtAQuantity.getText().toString());
 
 
                 //String expectedPrice = edtExpectedPrice.getText().toString();
@@ -488,7 +486,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 } catch (NumberFormatException e) {
                     priceperunit = 0; // your default value
                 }
-            //   priceperunit = Double.parseDouble(edtExpectedPrice.getText().toString());
+                //   priceperunit = Double.parseDouble(edtExpectedPrice.getText().toString());
 
                 total = quant * priceperunit;
                 edtTotalamt.setText(Double.toString(total));
@@ -511,7 +509,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                         year, month, day);
 
                 int day = getApplicationContext().getResources().getIdentifier("android:id/day", null, null);
-               if (day != 0) {
+                if (day != 0) {
                     View yearPicker = dialog.getDatePicker().findViewById(day);
                     if (yearPicker != null) {
                         yearPicker.setVisibility(View.GONE);
@@ -591,55 +589,36 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         });
 
 
-        if(ProductId.equals("1")){
+        if (ProductId.equals("1")) {
             edtproductType.setHint("Fruit Name");
-        }
-        else if(ProductId.equals("2")){
+        } else if (ProductId.equals("2")) {
             edtproductType.setHint("Vegetable Name");
-        }
-        else if(ProductId.equals("3")){
+        } else if (ProductId.equals("3")) {
             edtproductType.setHint("Flowers Name");
-        }
-        else if(ProductId.equals("4")){
+        } else if (ProductId.equals("4")) {
             edtproductType.setHint("Milk & Milk Products Name");
-        }
-
-        else if(ProductId.equals("6")){
+        } else if (ProductId.equals("6")) {
             edtproductType.setHint("Fish name");
-        }
-
-        else if(ProductId.equals("7")){
+        } else if (ProductId.equals("7")) {
             edtproductType.setHint("Sugarcane & Sugarcane Products");
-        }
-
-        else if(ProductId.equals("10")){
+        } else if (ProductId.equals("10")) {
             edtproductType.setHint("Tools");
-        }
-        else if(ProductId.equals("14")){
+        } else if (ProductId.equals("14")) {
             edtproductType.setHint("Honey");
-        }
-        else if(ProductId.equals("15")){
+        } else if (ProductId.equals("15")) {
             edtproductType.setHint("Nursery");
-        }
-
-        else if(ProductId.equals("17")){
+        } else if (ProductId.equals("17")) {
             edtproductType.setHint("Pulses");
-        }
-
-        else if(ProductId.equals("35")){
+        } else if (ProductId.equals("35")) {
             edtproductType.setHint("Animals");
-        }
-        else if(ProductId.equals("42")){
+        } else if (ProductId.equals("42")) {
             edtproductType.setHint("Jaggery");
-        }
-        else if(ProductId.equals("43")){
+        } else if (ProductId.equals("43")) {
             edtproductType.setHint("Poultry");
 
         }
 
         edtproductType.setHintTextColor(Color.GRAY);
-
-
 
 
         // Get input extra user account data from UserAccountListViewActivity activity.
@@ -730,8 +709,22 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
             edtsurveyNo.setText(SurveyNo);
 
 
-
             Picasso.get().load(extras.getString("ImageUrl")).into(img_banner_profile_placeholder);
+            ImageUrlupload = extras.getString("ImageUrl");
+
+            ImageUrl=convertUrlToBase64(ImageUrlupload);
+
+
+          /*  BitmapDrawable drawable = (BitmapDrawable) img_banner_profile_placeholder.getDrawable();
+            Bitmap bitmap = drawable.getBitmap();
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] imageBytes = baos.toByteArray();
+            imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);*/
+
+            String BotanicalName = extras.getString("BotanicalName");
+            name_botanical.setText(BotanicalName);
 
             if (extras.getString("Type") != null) {
                 btnFormSubmit.setVisibility(View.VISIBLE);
@@ -741,11 +734,11 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
         }
 
-            if(edtAQuality.equals("")){
-             edtAQuality.setText(null);
-            }
+        if (edtAQuality.equals("")) {
+            edtAQuality.setText(null);
+        }
 
-        if(edtAQuality.equals("")){
+        if (edtAQuality.equals("")) {
             edtDays.setText(null);
         }
 
@@ -757,7 +750,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 String productVariety = edtproductVariety.getText().toString();
                 String quality = edtAQuality.getText().toString();
                 String quantity = edtAQuantity.getText().toString();
-               String certificateno = edtcertifiedno.getText().toString();
+                String certificateno = edtcertifiedno.getText().toString();
                 String unit = edtUnit.getText().toString();
                 String days;
                 String expectedPrice = edtExpectedPrice.getText().toString();
@@ -775,20 +768,16 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 StringBuffer errorMessageBuf = new StringBuffer();
 
 
-                if(lt_txtAge.getVisibility()==View.VISIBLE)
-                {
+                if (lt_txtAge.getVisibility() == View.VISIBLE) {
                     days = edtDays.getText().toString();
-                }
-                else {
-                    days ="0";
+                } else {
+                    days = "0";
                 }
 
-                if(edtcertifiedno.getVisibility()==View.VISIBLE)
-                {
+                if (edtcertifiedno.getVisibility() == View.VISIBLE) {
                     certificateno = edtcertifiedno.getText().toString();
-                }
-                else {
-                    certificateno ="0";
+                } else {
+                    certificateno = "0";
                 }
 
 
@@ -800,30 +789,27 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                     org ="0";
                 }*/
 
-                if(lr_subCategory.getVisibility()==View.VISIBLE)
-                {
-                    String catId  = hideSubCatId.getText().toString();
+                if (lr_subCategory.getVisibility() == View.VISIBLE) {
+                    String catId = hideSubCatId.getText().toString();
                     hidItemTypeId.setText(catId);
                 }
 
 
-
                 // organic
-                if (ProductId.equals("2")||ProductId.equals("9")||ProductId.equals("3")||ProductId.equals("7")||ProductId.equals("14")||ProductId.equals("17")||ProductId.equals("42")){
+                if (ProductId.equals("2") || ProductId.equals("9") || ProductId.equals("3") || ProductId.equals("7") || ProductId.equals("14") || ProductId.equals("17") || ProductId.equals("42")) {
                     LinearLayout1.setVisibility(View.VISIBLE);
                 }
 
                 // certificate
-                if (ProductId.equals("2")||ProductId.equals("9")||ProductId.equals("3")||ProductId.equals("7")||ProductId.equals("14")||ProductId.equals("17")||ProductId.equals("42")){
+                if (ProductId.equals("2") || ProductId.equals("9") || ProductId.equals("3") || ProductId.equals("7") || ProductId.equals("14") || ProductId.equals("17") || ProductId.equals("42")) {
                     edtcertifiedno.setVisibility(View.VISIBLE);
                 }
 
                 //quality
-                if (ProductId.equals("6")||ProductId.equals("4")||ProductId.equals("8")||ProductId.equals("15")||ProductId.equals("3")||ProductId.equals("10")||ProductId.equals("35")||ProductId.equals("43 ")) {
+                if (ProductId.equals("6") || ProductId.equals("4") || ProductId.equals("8") || ProductId.equals("15") || ProductId.equals("3") || ProductId.equals("10") || ProductId.equals("35") || ProductId.equals("43 ")) {
                     edtAQuality.setVisibility(View.GONE);
                 }
 //
-
 
 
                 if (TextUtils.isEmpty(productType)) {
@@ -831,8 +817,6 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                     edtproductType.requestFocus();
                     return;
                 }
-
-
 
 
                 if (TextUtils.isEmpty(quantity)) {
@@ -924,27 +908,23 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), errorMessageBuf.toString(), Toast.LENGTH_SHORT).show();
                 } else {
 
-                    if(hidVarietyId.equals("") || productVariety.equals("")  )
-                    {
+                    if (hidVarietyId.equals("") || productVariety.equals("")) {
                         hidVarietyId.setText("0");
-                        productVariety="0";
+                        productVariety = "0";
 
                     }
 
-                    if(quality.equals("") || hidQualityId.equals(""))
-                    {
-                        quality="0";
+                    if (quality.equals("") || hidQualityId.equals("")) {
+                        quality = "0";
                         hidQualityId.setText("0");
                     }
 
-                    if(edtcertifiedno.getText().toString().equals(""))
-                    {
-                        certificateno="0";
+                    if (edtcertifiedno.getText().toString().equals("")) {
+                        certificateno = "0";
 
                     }
 
-                    if(AgeGroupId.equals(""))
-                    {
+                    if (AgeGroupId.equals("")) {
                         hideAgeId.setText("0");
                     }
 
@@ -952,9 +932,9 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                         // Insert new user account.
                         userInfoDBManager.insertAccount(productType, hidItemTypeId.getText().toString(), productVariety, hidVarietyId.getText().toString(),
                                 quality, hidQualityId.getText().toString(), quantity, unit, hidMeasurementId.getText().toString(), total,
-                                days,availablityInMonths, address, state, hideStateId.getText().toString(),
+                                days, availablityInMonths, address, state, hideStateId.getText().toString(),
                                 district, hideDistrictId.getText().toString(), taluka, hideTalukaId.getText().toString(),
-                                villagenam, areaheactor, ImageUrl,org,certificateno,surveyNo,hideAgeId.getText().toString());
+                                villagenam, areaheactor, ImageUrl, org, certificateno, surveyNo, hideAgeId.getText().toString());
 
 
                         /*userInfoDBManager.newInsert(productType, hidItemTypeId.getText().toString(), productVariety, hidVarietyId.getText().toString(),
@@ -985,11 +965,13 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                             edtExpectedPrice.setText("");
                             edtUnit.setText("");
                             edtTotalamt.setText("");
-                         // edtcertifiedno.setText("");
+                            // edtcertifiedno.setText("");
 
 
                         }
                     });
+
+
                     builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -1000,7 +982,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
                             startUserAccountListIntent.putExtra("productTypeId", hidItemTypeId.getText().toString());
                             startUserAccountListIntent.putExtra("productVarietyId", hidVarietyId.getText().toString());
-                            startUserAccountListIntent.putExtra("productVariety",edtproductVariety.getText().toString());
+                            startUserAccountListIntent.putExtra("productVariety", edtproductVariety.getText().toString());
                             startUserAccountListIntent.putExtra("qualityId", hidQualityId.getText().toString());
 
                             //startUserAccountListIntent.putExtra("monthId", edtavailablityInMonths.getText().toString());
@@ -1010,10 +992,10 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                             startUserAccountListIntent.putExtra("talukaId", hideTalukaId.getText().toString());
                             startUserAccountListIntent.putExtra("organic", org);
                             startUserAccountListIntent.putExtra("certificateno", edtcertifiedno.getText().toString());
-                            startUserAccountListIntent.putExtra("SurveyNo",edtsurveyNo.getText().toString());
-                            startUserAccountListIntent.putExtra("ImageUrl",ImageUrl);
-                            startUserAccountListIntent.putExtra("AgeGroupId",hideAgeId.getText().toString());
-                            startUserAccountListIntent.putExtra("TotalAmt",edtTotalamt.getText().toString());
+                            startUserAccountListIntent.putExtra("SurveyNo", edtsurveyNo.getText().toString());
+                            startUserAccountListIntent.putExtra("ImageUrl", ImageUrl);
+                            startUserAccountListIntent.putExtra("AgeGroupId", hideAgeId.getText().toString());
+                            startUserAccountListIntent.putExtra("TotalAmt", edtTotalamt.getText().toString());
                             startActivity(startUserAccountListIntent);
 
                         }
@@ -1023,7 +1005,6 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 }
             }
         });
-
 
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -1050,7 +1031,26 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         });
 
 
+    }
 
+
+
+    public String convertUrlToBase64(String url) {
+        URL newurl;
+        Bitmap bitmap;
+        String base64 = "";
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            newurl = new URL(url);
+            bitmap = BitmapFactory.decodeStream(newurl.openConnection().getInputStream());
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            base64 = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return base64;
     }
 
     @Override
@@ -1058,14 +1058,14 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         super.onBackPressed();
         finish();
     }
-//
+
+    //
     public void openDialog() {
         RateDialogFragment rateDialogFragment = new RateDialogFragment();
         Bundle b;
         b = new Bundle();
 
-        if(hidVarietyId.equals("") && hidQualityId.equals(""))
-        {
+        if (hidVarietyId.equals("") && hidQualityId.equals("")) {
             hidQualityId.setText("0");
             hidVarietyId.setText("0");
 
@@ -1173,7 +1173,6 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     }
 
 
-
     private class AsyncTaskRunner extends AsyncTask<String, String, String> {
 
         private String resp;
@@ -1183,73 +1182,56 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             publishProgress("Sleeping..."); // Calls onProgressUpdate()
             try {
-                String TittleName="";
-                if(ProductId.equals("1")){
-                    TittleName="Fruit Name";
-                }
-                else if(ProductId.equals("2")){
-                    TittleName="Vegetable Name";
-                }
-                else if(ProductId.equals("3")){
-                    TittleName="Flowers Name";
-                }
-                else if(ProductId.equals("4")){
-                    TittleName="Milk & Milk Products Name";
-                }
-
-                else if(ProductId.equals("6")){
-                    TittleName="Fish Name";
-                }
-
-                else if(ProductId.equals("7")){
-                    TittleName="Sugarcane & Sugarcane Products";
-                }
-
-                else if(ProductId.equals("10")){
-                    TittleName="Tools";
-                }
-                else if(ProductId.equals("14")){
-                    TittleName="Honey";
-                }
-                else if(ProductId.equals("15")){
-                    TittleName="Nursery";
-                }
-
-                else if(ProductId.equals("17")){
-                    TittleName="Pulses";
-                }
-
-                else if(ProductId.equals("35")){
-                    TittleName="Animals";
-                }
-                else if(ProductId.equals("42")){
-                    TittleName="Jaggery";
-                }
-                else if(ProductId.equals("43")){
-                    TittleName="Poultry";
+                String TittleName = "";
+                if (ProductId.equals("1")) {
+                    TittleName = "Fruit Name";
+                } else if (ProductId.equals("2")) {
+                    TittleName = "Vegetable Name";
+                } else if (ProductId.equals("3")) {
+                    TittleName = "Flowers Name";
+                } else if (ProductId.equals("4")) {
+                    TittleName = "Milk & Milk Products Name";
+                } else if (ProductId.equals("6")) {
+                    TittleName = "Fish Name";
+                } else if (ProductId.equals("7")) {
+                    TittleName = "Sugarcane & Sugarcane Products";
+                } else if (ProductId.equals("10")) {
+                    TittleName = "Tools";
+                } else if (ProductId.equals("14")) {
+                    TittleName = "Honey";
+                } else if (ProductId.equals("15")) {
+                    TittleName = "Nursery";
+                } else if (ProductId.equals("17")) {
+                    TittleName = "Pulses";
+                } else if (ProductId.equals("35")) {
+                    TittleName = "Animals";
+                } else if (ProductId.equals("42")) {
+                    TittleName = "Jaggery";
+                } else if (ProductId.equals("43")) {
+                    TittleName = "Poultry";
 
                 }
 
 
                 if (params[0].toString() == "ItemName")
-                    fetcher.loadList("ItemName", edtproductType, URLs.URL_NAME + "1&PageSize=500&CategoryId=" + ProductId + "&Language=" + currentLanguage, "ItemTypeId", hidItemTypeId, "CategoryId", ProductId,TittleName,"BotanicalName",name_botanical);
+                    fetcher.loadList("ItemName", edtproductType, URLs.URL_NAME + "1&PageSize=500&CategoryId=" + ProductId + "&Language=" + currentLanguage, "ItemTypeId", hidItemTypeId, "CategoryId", ProductId, TittleName, "BotanicalName", name_botanical, edtproductVariety);
                 else if (params[0].toString() == "Variety")
-                    fetcher.loadList("VarietyName", edtproductVariety, URLs.URL_VARIATY + hidItemTypeId.getText() + "&Language=" + currentLanguage, "VarietyId", hidVarietyId, "", "","Variety","",null);
+                    fetcher.loadList("VarietyName", edtproductVariety, URLs.URL_VARIATY + hidItemTypeId.getText() + "&Language=" + currentLanguage, "VarietyId", hidVarietyId, "", "", "Variety", "", null, null);
                 else if (params[0].toString() == "Quality")
-                    fetcher.loadList("QualityType", edtAQuality, URLs.URL_QUALITY + "?Language=" + currentLanguage, "QualityId", hidQualityId, "", "","Available Quality","",null);
+                    fetcher.loadList("QualityType", edtAQuality, URLs.URL_QUALITY + "?Language=" + currentLanguage, "QualityId", hidQualityId, "", "", "Available Quality", "", null, null);
                 else if (params[0].toString() == "Unit")
-                    fetcher.loadList("MeasurementType", edtUnit, URLs.URL_UNIT + "?CategoryId="+ProductId+"&Language=" + currentLanguage, "MeasurementId", hidMeasurementId, "", "","Unit","",null);
+                    fetcher.loadList("MeasurementType", edtUnit, URLs.URL_UNIT + "?CategoryId=" + ProductId + "&Language=" + currentLanguage, "MeasurementId", hidMeasurementId, "", "", "Unit", "", null, null);
                 else if (params[0].toString() == "state")
-                    fetcher.loadList("StatesName", edtstate, URLs.URL_STATE + "?Language=" + currentLanguage, "StatesID", hideStateId, "", "","State","",null);
+                    fetcher.loadList("StatesName", edtstate, URLs.URL_STATE + "?Language=" + currentLanguage, "StatesID", hideStateId, "", "", "State", "", null, null);
                 else if (params[0].toString() == "district")
-                    fetcher.loadList("DistrictName", edtdistrict, URLs.URL_DISTRICT + hideStateId.getText() + ",&Language=" + currentLanguage, "DistrictId", hideDistrictId, "", "","District","",null);
+                    fetcher.loadList("DistrictName", edtdistrict, URLs.URL_DISTRICT + hideStateId.getText() + ",&Language=" + currentLanguage, "DistrictId", hideDistrictId, "", "", "District", "", null, null);
                 else if (params[0].toString() == "taluka")
-                    fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText() + ",&Language=" + currentLanguage, "TalukasId", hideTalukaId, "", "","Taluka","",null);
+                    fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText() + ",&Language=" + currentLanguage, "TalukasId", hideTalukaId, "", "", "Taluka", "", null, null);
                 else if (params[0].toString() == "Age")
-                    fetcher.loadList("AgeGroupName", edtDays, URLs.URL_AGE+ "Language=" + currentLanguage, "AgeGroupId", hideAgeId, "", "","Age","",null);
+                    fetcher.loadList("AgeGroupName", edtDays, URLs.URL_AGE + "Language=" + currentLanguage, "AgeGroupId", hideAgeId, "", "", "Age", "", null, null);
 
                 if (params[0].toString() == "CategoryName")
-                    fetcher.loadList("ItemName", sub_category_name, URLs.URL_NAME + "1&PageSize=500&CategoryId="+hidItemTypeId.getText()+"&Language=" + currentLanguage, "ItemTypeId", hideSubCatId, "CategoryId", ProductId,"Category Name","BotanicalName",null);
+                    fetcher.loadList("ItemName", sub_category_name, URLs.URL_NAME + "1&PageSize=500&CategoryId=" + hidItemTypeId.getText() + "&Language=" + currentLanguage, "ItemTypeId", hideSubCatId, "CategoryId", ProductId, "Category Name", "BotanicalName", null, null);
 
                 else if (params[0].toString() == "Update") {
                     submitToDb();
@@ -1316,8 +1298,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(ProductInfoForSaleActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_GRANTED) {
             // Permission is granted
-        }
-        else {
+        } else {
             //Permission is not granted so you have to request it
             ActivityCompat.requestPermissions(ProductInfoForSaleActivity.this,
                     new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
@@ -1377,7 +1358,8 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         img_banner_profile_placeholder.setImageBitmap(bitmap);
 
     }
-    public String getStringImage(Bitmap bmp){
+
+    public String getStringImage(Bitmap bmp) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 50, baos);
         byte[] imageBytes = baos.toByteArray();
@@ -1467,11 +1449,11 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         builder.append("<talukaId>" + hideTalukaId.getText() + "</talukaId>");
         builder.append("<villagenam>" + edtvillage.getText() + "</villagenam>");
         builder.append("<areaheactor>" + edtareahector.getText() + "</areaheactor>");
-        builder.append("<imagename>"+ImageUrl+"</imagename>");
-        builder.append("<orgnic>"+org+"</orgnic>");
-        builder.append("<certificateno>"+edtcertifiedno.getText()+"</certificateno>");
-        builder.append("<SurveyNo>"+edtsurveyNo.getText()+"</SurveyNo>");
-        builder.append("<AgeGroupId>" + hideAgeId.getText()+ "</AgeGroupId>");
+        builder.append("<imagename>" + ImageUrl + "</imagename>");
+        builder.append("<orgnic>" + org + "</orgnic>");
+        builder.append("<certificateno>" + edtcertifiedno.getText() + "</certificateno>");
+        builder.append("<SurveyNo>" + edtsurveyNo.getText() + "</SurveyNo>");
+        builder.append("<AgeGroupId>" + hideAgeId.getText() + "</AgeGroupId>");
         builder.append("</Assign>");
         builder.append("</Parent>");
 

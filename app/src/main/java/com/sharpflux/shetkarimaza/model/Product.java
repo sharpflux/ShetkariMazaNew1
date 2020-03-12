@@ -8,6 +8,8 @@ public class Product {
     private String productId;
     private ArrayList<Product> productlist;
     private String BotanicalName;
+    private  boolean IsVarietyAvailable;
+
     public Product(String name, String productId,String BotanicalName) {
         this.name = name;
         this.productId = productId;
@@ -20,6 +22,15 @@ public class Product {
         this.productlist = productlist;
         this.BotanicalName = BotanicalName;
     }
+
+    public Product(String name, String productId,String BotanicalName,boolean IsVarietyAvailable) {
+        this.name = name;
+        this.productId = productId;
+        this.productlist = productlist;
+        this.BotanicalName = BotanicalName;
+        this.IsVarietyAvailable=IsVarietyAvailable;
+    }
+
     public Product(String name, String productId) {
         this.name = name;
         this.productId = productId;
@@ -59,5 +70,13 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isVarietyAvailable() {
+        return IsVarietyAvailable;
+    }
+
+    public void setVarietyAvailable(boolean varietyAvailable) {
+        IsVarietyAvailable = varietyAvailable;
     }
 }

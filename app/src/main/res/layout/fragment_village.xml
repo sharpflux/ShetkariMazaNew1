@@ -11,7 +11,7 @@
         android:id="@+id/tvTitleOne"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/click_here_to_choose_village"
+        android:text="Village"
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textColor="#4CAF50"

@@ -8,6 +8,7 @@ public class SellOptions {
     private String productId;
     private  String CategoryId;
     private  String ItemName;
+    private boolean IsVarietyAvailable;
 
     public SellOptions(String image, String productlist, String productId) {
         this.image = image;
@@ -29,6 +30,24 @@ public class SellOptions {
         this.productId = productId;
         CategoryId = categoryId;
         ItemName = itemName;
+    }
+
+    public SellOptions(String image, String productlist, String productId, String categoryId, String itemName, boolean isVarietyAvailable) {
+        this.image = image;
+        this.productlist = productlist;
+        this.productId = productId;
+        CategoryId = categoryId;
+        ItemName = itemName;
+        IsVarietyAvailable = isVarietyAvailable;
+    }
+
+
+    public boolean isVarietyAvailable() {
+        return IsVarietyAvailable;
+    }
+
+    public void setVarietyAvailable(boolean varietyAvailable) {
+        IsVarietyAvailable = varietyAvailable;
     }
 
     public String getItemName() {

@@ -2,6 +2,7 @@ package com.sharpflux.shetkarimaza.utils;
 
 import android.content.Context;
 import android.support.design.widget.TextInputEditText;
+import android.view.View;
 import android.widget.EditText;
 import android.support.v7.widget.SearchView;
 import android.widget.TextView;
@@ -53,7 +54,7 @@ public class DataFetcher {
 
 
     public void loadList(final String ColumnName, final EditText editText, final  String URL,final String id,final TextView hiddenText,
-                         final String ParameterName, final String ParameterValue,final String Title,final  String BotinicalName,final EditText name_botanical) {
+                         final String ParameterName, final String ParameterValue,final String Title,final  String BotinicalName,final EditText name_botanical,final EditText edtproductVariety) {
         list.clear();
 
 
@@ -74,17 +75,27 @@ public class DataFetcher {
                                 if (!userJson.getBoolean("error")) {
 
                                     String botnilcalName="";
+                                    boolean IsVarietyAvailable=false;
                                     if(userJson.has(BotinicalName)) {
                                         botnilcalName = userJson.getString(BotinicalName);
                                     }
 
+                                    if(userJson.has("IsVarietyAvailable")) {
+                                        IsVarietyAvailable = userJson.getBoolean("IsVarietyAvailable");
+                                    }
                                     prod = new Product(
                                             userJson.getString(ColumnName),
                                             userJson.getString(id),
-                                            botnilcalName
+                                            botnilcalName,
+                                            IsVarietyAvailable
                                     );
 
                                     list.add(prod);
+
+
+
+
+
 
                                 } else {
                                     Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
@@ -103,6 +114,16 @@ public class DataFetcher {
                                     }
                                    // name_botanical.setText("Test");
                                     hiddenText.setText(data.getProductId());
+
+                                    if(ColumnName=="ItemName"){
+                                        if(edtproductVariety!=null){
+                                            if(data.isVarietyAvailable()==false) {
+                                                edtproductVariety.setVisibility(View.GONE);
+                                            }else {
+                                                edtproductVariety.setVisibility(View.VISIBLE);
+                                            }
+                                        }
+                                    }
 
                                     if (customDialog != null) {
                                         customDialog.dismiss();

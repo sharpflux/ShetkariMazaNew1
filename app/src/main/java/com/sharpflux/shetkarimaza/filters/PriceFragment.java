@@ -1,6 +1,7 @@
 package com.sharpflux.shetkarimaza.filters;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -13,6 +14,7 @@ import android.widget.Button;
 
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity;
+import com.sharpflux.shetkarimaza.sqlite.dbBuyerFilter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +28,9 @@ public class PriceFragment extends Fragment {
     LinearLayoutManager layoutManager;
     List<SubCategoryFilter> productlist;
     Button btn_next,btn_back;
-    String   StatesID="",DistrictId="",TalukaId="",VarityId="",QualityId="",itemTypeId="",priceids="";
+    String   StatesID="",DistrictId="",TalukaId="",VarityId="",QualityId="",itemTypeId="",priceids="",ItemName;
     Bundle extras;
+    dbBuyerFilter myDatabase;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,7 +47,7 @@ public class PriceFragment extends Fragment {
 
         priceids_builder_id = new StringBuilder();
 
-
+        myDatabase = new dbBuyerFilter(getContext());
 
 
         extras = getArguments();
@@ -56,6 +59,7 @@ public class PriceFragment extends Fragment {
             DistrictId=extras.getString("DistrictId");
             StatesID=extras.getString("StatesID");
             TalukaId = extras.getString("TalukaId");
+            ItemName = extras.getString("ItemName");
 
         }
 
@@ -63,6 +67,16 @@ public class PriceFragment extends Fragment {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+               /* Cursor VARIETYCursor = myDatabase.FilterGetByFilterName("VARIETY");
+                Cursor QUALITYCursor = myDatabase.FilterGetByFilterName("QUALITY");
+                Cursor STATECursor = myDatabase.FilterGetByFilterName("STATE");*/
+                Cursor DISTRICTCursor = myDatabase.FilterGetByFilterName("DISTRICT");
+                Cursor TALUKACursor = myDatabase.FilterGetByFilterName("TALUKA");
+
+
+
 
                 extras = new Bundle();
                 if (extras != null) {
@@ -72,13 +86,31 @@ public class PriceFragment extends Fragment {
                     extras.putString("StatesID", StatesID);
                     extras.putString("DistrictId", DistrictId);
                     extras.putString("TalukaId", TalukaId);
+                    extras.putString("ItemName", ItemName);
                 }
 
-                FragmentTransaction transection = getFragmentManager().beginTransaction();
-                VillageFragment mfragment = new VillageFragment();
-                mfragment.setArguments(extras);
-                transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
-                transection.commit();
+
+                if(TALUKACursor.getCount()==0&&DISTRICTCursor.getCount()==0) {
+                    FragmentTransaction transection = getFragmentManager().beginTransaction();
+                    StateFragment mfragment = new StateFragment();
+                    mfragment.setArguments(extras);
+                    transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
+                    transection.commit();
+                }
+                else if(TALUKACursor.getCount()==0){
+                    FragmentTransaction transection = getFragmentManager().beginTransaction();
+                    DistrictFragment mfragment = new DistrictFragment();
+                    mfragment.setArguments(extras);
+                    transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
+                    transection.commit();
+                }
+                else {
+                    FragmentTransaction transection = getFragmentManager().beginTransaction();
+                    VillageFragment mfragment = new VillageFragment();
+                    mfragment.setArguments(extras);
+                    transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
+                    transection.commit();
+                }
 
             }
         });
@@ -106,6 +138,7 @@ public class PriceFragment extends Fragment {
                 intent.putExtra("StatesID",StatesID);
                 intent.putExtra("TalukaId",TalukaId);
                 intent.putExtra("priceids",priceids);
+                intent.putExtra("ItemName",ItemName);
                 startActivity(intent);
             }
         });

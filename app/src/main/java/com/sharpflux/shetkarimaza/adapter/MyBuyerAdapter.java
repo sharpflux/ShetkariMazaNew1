@@ -18,6 +18,7 @@ import com.sharpflux.shetkarimaza.filters.FilterActivity;
 import com.sharpflux.shetkarimaza.filters.SubCategoryFilter;
 import com.sharpflux.shetkarimaza.model.Product;
 import com.sharpflux.shetkarimaza.model.SellOptions;
+import com.sharpflux.shetkarimaza.sqlite.dbBuyerFilter;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -27,19 +28,23 @@ public class MyBuyerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
-
+      dbBuyerFilter myFilter;
 
 
     private Context mContext;
-    public String id,ItemName;
+    public String id;
     private static int currentPosition = 0;
 
     private ArrayList<SellOptions> mList;
     private ArrayList<SellOptions> exampleListFull;
 
-    public MyBuyerAdapter(Context mContext, ArrayList<SellOptions> mList, ArrayList<SellOptions> tempProductList) {
+
+
+    public MyBuyerAdapter(Context mContext, ArrayList<SellOptions> mList,ArrayList<SellOptions> tempProductList, dbBuyerFilter myFilter) {
         this.mContext = mContext;
         this.mList = mList;
+        this.myFilter=myFilter;
+
         exampleListFull =tempProductList ;
 
     }
@@ -77,8 +82,9 @@ public class MyBuyerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     ((FlowerViewHolder) holder).mTitle.setText(mList.get(position).getProductlist());
                     ((FlowerViewHolder) holder).ItemTypeId = mList.get(position).getProductId();
                     ((FlowerViewHolder) holder).categoryId = mList.get(position).getCategoryId();
-                    ((FlowerViewHolder) holder).ItemName=mList.get(position).getItemName();
-
+                    ((FlowerViewHolder) holder).ItemName=mList.get(position).getProductlist();
+                    ((FlowerViewHolder) holder).IsVarietyAvailable=mList.get(position).isVarietyAvailable();
+                    ((FlowerViewHolder) holder).myFilter=this.myFilter;
                 }
             } catch (Exception d) {
 
@@ -197,9 +203,10 @@ class FlowerViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
 
     ImageView mImage;
     TextView mTitle;
-    String ItemTypeId,categoryId;
+    String ItemTypeId,categoryId,ItemName;
     List<SubCategoryFilter> mlist;
-    String ItemName="";
+    Boolean IsVarietyAvailable;
+    dbBuyerFilter myFilter;
 
     FlowerViewHolder(View itemView) {
         super(itemView);
@@ -214,12 +221,17 @@ class FlowerViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         Context context=v.getContext();
         Intent intent;
 
+        myFilter.CategoryInsert(categoryId,ItemTypeId);
+
         intent =  new Intent(context, FilterActivity.class);
         intent.putExtra("ItemTypeId",ItemTypeId);
         intent.putExtra("ProductId",categoryId);
         intent.putExtra("ItemName",ItemName);
+        intent.putExtra("IsVarietyAvailable",IsVarietyAvailable);
 
         context.startActivity(intent);
+
+
     }
 
 }

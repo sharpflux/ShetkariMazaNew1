@@ -1,198 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/first_lr"
+    android:orientation="vertical"
     android:background="@drawable/backgroundlogo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-    <ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    >
+
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/tvTitleOne"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:text="Age"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#4CAF50"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        />
 
-            <LinearLayout
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp">
-
-
-                <TextView
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/tvTitleOne"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/click_here_to_choose_age"
-                    android:textAlignment="center"
-                    android:textAllCaps="true"
-                    android:textColor="#4CAF50"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    />
+    <SearchView
+        android:id="@+id/searchViewAge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit"
+        android:queryHint="@string/search_here"
+        android:iconifiedByDefault="false"
+        android:layout_alignParentTop="true"
+        />
 
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="100dp"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="5dp"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rcv_age"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_weight="1.0"
+        android:visibility="visible" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:background="@drawable/edit">
+    <!-- <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:gravity="bottom"
+         android:orientation="vertical">
 
-                        <EditText
-                            android:textColor="@color/color_black"
-                            android:textColorHint="@color/color_gray_light"
-                            android:id="@+id/editMinAge"
-                            android:fontFamily="@font/sfpro_display_medium"
-                            android:padding="8dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:hint="Enter Minimum Age"
-                            android:background="@null"
-                            android:inputType="number" />
-                    </LinearLayout>
-                </RelativeLayout>
+         <Button
+             android:fontFamily="@font/sfpro_display_bold"
+             android:id="@+id/qualitybtnnext"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:background="@drawable/btn_plain"
+             android:textColor="@android:color/white"
+             android:text="@string/next"
+             android:textSize="20dp"
+             android:textAllCaps="true"
+             android:textStyle="bold"
+             android:height="60dp"
+             />
 
-                <TextView
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/to"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="To"
-                    android:layout_gravity="center"
-                    android:textAlignment="center"
-                    android:textAllCaps="true"
-                    android:textColor="#4CAF50"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    />
+     </LinearLayout>
+ -->
+    <View
+        android:id="@+id/viewSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dip"
+        android:background="@color/uiv3_divider_color" />
 
-                <RelativeLayout
-                    android:id="@+id/activity_login_etCPasswordS"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="5dp"
-                    android:padding="8dp">
+    <LinearLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:weightSum="3">
 
-                    <EditText
-                        android:id="@+id/editMaxAge"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/edit"
-                        android:fontFamily="@font/sfpro_display_medium"
-                        android:hint="Enter Maximum Age"
-                        android:inputType="number"
-                        android:padding="8dp"
-                        android:textColor="@color/color_black"
-                        android:textColorHint="@color/color_gray_light" />
-                </RelativeLayout>
+        <Button
+            android:textSize="20dp"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:height="40dp"
+            android:textColor="@android:color/white"
+            android:fontFamily="@font/sfpro_display_bold"
+            android:background="@drawable/btn_backnext"
+            android:id="@+id/btnbackVariety"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="@string/back"
+            android:layout_weight="1"
 
+            />
+        <Button
+            android:textSize="20dp"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:height="40dp"
+            android:textColor="@android:color/white"
+            android:fontFamily="@font/sfpro_display_bold"
+            android:background="@drawable/btn_backnext"
+            android:id="@+id/btnFilterData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
+            android:text="@string/select_data"
 
-
-
-            </LinearLayout>
-
-
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="bottom"
-                android:orientation="horizontal">
+            />
 
 
-
-                <Button
-                    android:textSize="20dp"
-                    android:textAllCaps="true"
-                    android:textStyle="bold"
-                    android:height="40dp"
-                    android:textColor="@android:color/white"
-                    android:fontFamily="@font/sfpro_display_bold"
-                    android:background="@drawable/btn_backnext"
-                    android:id="@+id/btnbackAge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:text="@string/back"
-                    android:layout_weight="1"
-
-                    />
-                <Button
-                    android:textSize="20dp"
-                    android:textAllCaps="true"
-                    android:textStyle="bold"
-                    android:height="40dp"
-                    android:textColor="@android:color/white"
-                    android:fontFamily="@font/sfpro_display_bold"
-                    android:background="@drawable/btn_backnext"
-                    android:id="@+id/btnSkipAge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_weight="1"
-                    android:text="@string/select_data"
-
-                    />
+        <Button
+            android:fontFamily="@font/sfpro_display_bold"
+            android:id="@+id/btnnextVariety"
+            android:background="@drawable/btn_backnext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textSize="20dp"
+            android:layout_weight="1"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:height="40dp"
+            android:text="@string/next"
+            android:textColor="@android:color/white" />
 
 
-                <Button
-                    android:fontFamily="@font/sfpro_display_bold"
-                    android:id="@+id/btnnextAge"
-                    android:background="@drawable/btn_backnext"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:textSize="20dp"
-                    android:layout_weight="1"
-                    android:textAllCaps="true"
-                    android:textStyle="bold"
-                    android:height="40dp"
-                    android:text="@string/next"
-                    android:textColor="@android:color/white" />
+    </LinearLayout>
 
-
-            </LinearLayout>
-            <TextView android:id="@+id/hidRegTypeId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="hidden value"
-                android:textSize="20dp"
-                android:visibility="gone"
-                />
-
-            <TextView android:id="@+id/hidRegCagteId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="hidden value"
-                android:textSize="20dp"
-                android:visibility="gone"
-                />
-        </LinearLayout>
-    </ScrollView>
 </LinearLayout>
