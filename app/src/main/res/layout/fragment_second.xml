@@ -1,233 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@color/white">
 
-    <RelativeLayout
-        android:id="@+id/footer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="bottom"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/secondbtnnext"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:height="60dp"
-                android:background="@drawable/btn_plain"
-                android:fontFamily="@font/sfpro_display_bold"
-                android:text="@string/next"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:textSize="20dp"
-                android:textStyle="bold" />
-        </LinearLayout>
-    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/footer"
-        android:fillViewport="true">
+        android:layout_marginBottom="55dp"
+        android:layout_marginTop="10dp"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:paddingLeft="9dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="13dp"
             android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/hidRegTypeId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="hidden value"
+                android:textSize="20dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/hidRegCagteId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="hidden value"
+                android:textSize="20dp"
+                android:visibility="gone" />
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginRight="20dp"
-                android:orientation="vertical">
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/sfpro_display_medium"
+                >
 
-
-                <android.support.design.widget.TextInputLayout
+                <EditText
+                    android:id="@+id/edtaddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/sfpro_display_medium">
+                    android:fontFamily="@font/sfpro_display_medium"
+                    android:hint="@string/address"
+                    android:textSize="15dp" />
 
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/edtaddress"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sfpro_display_medium"
-                        android:hint="@string/address"
-                        android:textSize="15dp" />
-                </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/sfpro_display_medium"
+                >
+
+                <EditText
+                    android:id="@+id/edtstate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/sfpro_display_medium">
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:fontFamily="@font/sfpro_display_medium"
+                    android:hint="@string/state"
+                    android:inputType="none"
+                    android:textSize="15dp" />
 
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/edtstate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:cursorVisible="false"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"
-                        android:fontFamily="@font/sfpro_display_medium"
-                        android:hint="@string/state"
-                        android:inputType="none"
-                        android:textSize="15dp" />
-                </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/sfpro_display_medium"
+                >
 
-                <android.support.design.widget.TextInputLayout
+                <EditText
+                    android:id="@+id/edtdistrict"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/sfpro_display_medium">
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:fontFamily="@font/sfpro_display_medium"
+                    android:hint="@string/dist"
+                    android:inputType="none"
+                    android:textSize="15dp"  />
 
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/edtdistrict"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:cursorVisible="false"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"
-                        android:fontFamily="@font/sfpro_display_medium"
-                        android:hint="@string/dist"
-                        android:inputType="none"
-                        android:textSize="15dp" />
-                </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/sfpro_display_medium"
+                >
+
+                <EditText
+                    android:id="@+id/edttaluka"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/sfpro_display_medium">
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:fontFamily="@font/sfpro_display_medium"
+                    android:hint="@string/Name_of_Taluka"
+                    android:inputType="none"
+                    android:textSize="15dp"/>
 
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/edttaluka"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:cursorVisible="false"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"
-                        android:fontFamily="@font/sfpro_display_medium"
-                        android:hint="@string/Name_of_Taluka"
-                        android:inputType="none"
-                        android:textSize="15dp" />
-                </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-                <android.support.design.widget.TextInputLayout
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/sfpro_display_medium"
+                >
+
+                <EditText
+                    android:id="@+id/edtcity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/sfpro_display_medium">
+                    android:hint="@string/Cityorvillage"
+                    android:textSize="15dp"/>
 
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/edtcity"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/Cityorvillage"
-                        android:textSize="15dp" />
-                </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/sfpro_display_medium"
+                >
+
+                <EditText
+                    android:id="@+id/edtcompanyname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/sfpro_display_medium">
+                    android:fontFamily="@font/sfpro_display_medium"
+                    android:hint="@string/company_name"
+                    android:textSize="15dp"/>
 
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/edtcompanyname"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sfpro_display_medium"
-                        android:hint="@string/company_name"
-                        android:textSize="15dp" />
-                </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/sfpro_display_medium"
+                >
 
-                <android.support.design.widget.TextInputLayout
+                <EditText
+                    android:id="@+id/edtlicense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/sfpro_display_medium">
+                    android:fontFamily="@font/sfpro_display_medium"
+                    android:hint="@string/APMC_licance"
+                    android:textSize="15dp"/>
 
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/edtlicense"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sfpro_display_medium"
-                        android:hint="@string/APMC_licance"
-                        android:textSize="15dp" />
-                </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/sfpro_display_medium"
+                >
+
+                <EditText
+                    android:id="@+id/edtcompanyregno"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/sfpro_display_medium">
+                    android:fontFamily="@font/sfpro_display_medium"
+                    android:hint="@string/Company_Regin_no"
+                    android:textSize="15dp"/>
 
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/edtcompanyregno"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sfpro_display_medium"
-                        android:hint="@string/Company_Regin_no"
-                        android:textSize="15dp" />
-                </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/sfpro_display_medium"
+                >
 
-                <android.support.design.widget.TextInputLayout
+                <EditText
+                    android:id="@+id/edtgstno"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/sfpro_display_medium">
+                    android:fontFamily="@font/sfpro_display_medium"
+                    android:hint="@string/GST_no"
+                    android:textSize="15dp" />
 
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/edtgstno"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sfpro_display_medium"
-                        android:hint="@string/GST_no"
-                        android:textSize="15dp" />
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:visibility="gone"
-                    android:fontFamily="@font/sfpro_display_medium">
-
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/name_botanical"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:cursorVisible="false"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"
-                        android:fontFamily="@font/sfpro_display_medium"
-                        android:hint="@string/botanical_name"
-                        android:inputType="none"
-
-                        android:textColorHint="@color/colorGray"
-                        android:textSize="15dp" />
-
-
-                </android.support.design.widget.TextInputLayout>
-
-            </LinearLayout>
-
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/hideStateId"
@@ -252,8 +233,49 @@
                 android:text="hidden value"
                 android:textSize="20dp"
                 android:visibility="gone" />
-
         </LinearLayout>
     </ScrollView>
 
+
+
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="18dp"
+        android:background="@drawable/ripple_orange"
+        android:orientation="horizontal"
+        android:id="@+id/secondbtnnext">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:fontFamily="@font/sfpro_display_bold"
+                android:gravity="center"
+                android:text="@string/next"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+
+
+
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+
+
 </RelativeLayout>
+

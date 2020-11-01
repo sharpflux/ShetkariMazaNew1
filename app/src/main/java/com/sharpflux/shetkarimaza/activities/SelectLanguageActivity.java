@@ -8,15 +8,17 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.LanguageAdapter;
@@ -31,10 +33,10 @@ import java.util.Locale;
 public class SelectLanguageActivity extends AppCompatActivity {
 
 
-    private android.support.v7.widget.RecyclerView recyclerView;
+    private RecyclerView recyclerView;
     private ArrayList<MyLanguage> employees = new ArrayList<>();
     private LanguageAdapter adapter;
-    private android.support.v7.widget.AppCompatButton btnGetSelected;
+    private AppCompatButton btnGetSelected;
     Button spinner;
     Locale myLocale;
     String currentLanguage = "en", currentLang;

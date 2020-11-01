@@ -6,10 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +15,20 @@ import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity;
+import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.utils.Constant;
@@ -55,7 +59,7 @@ public class AgeFragment extends Fragment {
     VarietyAdapter myAdapter;
     String VarityId="",itemTypeId="",ItemTypeId,ItemName,QualityId;
     Bundle extras;
-
+    private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
     StringBuilder age_builder_id;
 
 
@@ -195,16 +199,13 @@ public class AgeFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String result) {
-            // execution of result of Long time consuming operation
-            progressDialog.dismiss();
-            // finalResult.setText(result);
+
         }
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(getContext(),
-                    "Loading...",
-                    "");
+            customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(getContext());
+            customDialogLoadingProgressBar.show();
         }
 
         @Override
@@ -261,6 +262,7 @@ public class AgeFragment extends Fragment {
                                     }
                                 });
 
+                                customDialogLoadingProgressBar.dismiss();
                             }
 
                         } catch (JSONException e) {
@@ -281,6 +283,8 @@ public class AgeFragment extends Fragment {
             }
         };
 
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
     private void BundleAssign()

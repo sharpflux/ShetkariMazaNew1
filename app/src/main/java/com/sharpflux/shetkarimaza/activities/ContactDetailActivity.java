@@ -10,26 +10,27 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -38,9 +39,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.adapter.AddPersonAdapter;
 import com.sharpflux.shetkarimaza.adapter.ContactDetailAdapter;
+import com.sharpflux.shetkarimaza.customviews.CustomDialogAddFarm;
+import com.sharpflux.shetkarimaza.customviews.CustomDialogAddVehicle;
 import com.sharpflux.shetkarimaza.filters.BottomSheetDialogSorting;
 import com.sharpflux.shetkarimaza.filters.Filter1Activity;
+import com.sharpflux.shetkarimaza.model.AddPersonModel;
 import com.sharpflux.shetkarimaza.model.ContactDetail;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
@@ -90,10 +95,13 @@ public class ContactDetailActivity extends AppCompatActivity {
     TextView txt_emptyView;
     LinearLayout lr_filterbtn;
 
-
+    private RecyclerView
+            recyclerView_addFarm;
     public static final int PAGE_START = 1;
     private static final int PAGE_SIZE = 10;
-
+    private AddPersonAdapter  addPersonAdapter_farm;
+    private ArrayList<AddPersonModel>  addPersonModelArrayList_farm;
+    ImageView imageView_addFarm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,6 +120,7 @@ public class ContactDetailActivity extends AppCompatActivity {
         List<ContactDetail> mList = new ArrayList<>();
 
 
+        addPersonModelArrayList_farm = new ArrayList<>();
 
 
         recyclerView.setAdapter(myAdapter);
@@ -120,7 +129,7 @@ public class ContactDetailActivity extends AppCompatActivity {
         txt_emptyView = findViewById(R.id.txt_emptyView);
         lr_filterbtn = (LinearLayout) findViewById(R.id.lr_filterbtn);
 
-
+        imageView_addFarm = findViewById(R.id.imageView_addFarm);
         if(mList.size()==0)
         {
             lr_filterbtn.setVisibility(View.GONE);
@@ -129,7 +138,13 @@ public class ContactDetailActivity extends AppCompatActivity {
         }
 
 
-
+        recyclerView_addFarm = findViewById(R.id.recyclerView_addFarm);
+        addPersonAdapter_farm = new AddPersonAdapter(ContactDetailActivity.this, addPersonModelArrayList_farm,
+                "Farm");
+        recyclerView_addFarm.setAdapter(addPersonAdapter_farm);
+        recyclerView_addFarm.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager_farm = new LinearLayoutManager(ContactDetailActivity.this);
+        recyclerView_addFarm.setLayoutManager(linearLayoutManager_farm);
 
 
         bundle = getIntent().getExtras();
@@ -142,7 +157,58 @@ public class ContactDetailActivity extends AppCompatActivity {
             StatesID = bundle.getString("StatesID");
             DistrictId = bundle.getString("DistrictId");
         }
+        imageView_addFarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+
+                if (ItemTypeId.equals("1")) {
+                    setTitle("Processor");
+                } else if (ItemTypeId.equals("4")) {
+                    setTitle("Producer");
+                } else if (ItemTypeId.equals("5")) {
+                    setTitle("Commission Agent");
+                } else if (ItemTypeId.equals("6")) {
+                    setTitle("Service Provider");
+                } else if (ItemTypeId.equals("16")) {
+                    setTitle("Individual Farmers");
+                } else if (ItemTypeId.equals("17")) {
+                    setTitle("Farmer Group");
+                } else if (ItemTypeId.equals("18")) {
+                    setTitle("Trader");
+                } else if (ItemTypeId.equals("20")) {
+                    setTitle("FPO/FPC");
+                } else if (ItemTypeId.equals("21")) {
+                    setTitle("Govt. Agency");
+                } else if (ItemTypeId.equals("22")) {
+                    setTitle("Individual Customer");
+                } else if (ItemTypeId.equals("23")) {
+                    setTitle("Exporter");
+                } else if (ItemTypeId.equals("24")) {
+                    setTitle("Retailer");
+                } else if (ItemTypeId.equals("26")) {
+                    setTitle("Warehouse");
+                    CustomDialogAddFarm customDialogAddFarm = new CustomDialogAddFarm(ContactDetailActivity.this, "0", "0", addPersonAdapter_farm, addPersonModelArrayList_farm, 0);
+                    customDialogAddFarm.show();
+
+                } else if (ItemTypeId.equals("27")) {
+                    setTitle("Transporter");
+                    CustomDialogAddVehicle customDialogAddVehicle = new CustomDialogAddVehicle(ContactDetailActivity.this, "0", "0", addPersonAdapter_farm, addPersonModelArrayList_farm, 0);
+                    customDialogAddVehicle.show();
+                } else if (ItemTypeId.equals("28")) {
+                    setTitle("Packer");
+                } else if (ItemTypeId.equals("29")) {
+                    setTitle("Franchise");
+                }else if (ItemTypeId.equals("30")) {
+                    setTitle("Bank Loan Consultants");
+                }else if (ItemTypeId.equals("31"))
+                {
+                    setTitle("Project Consultant");
+                } else if (ItemTypeId.equals("32")) {
+                    setTitle("Nursery Owner");
+                }
+            }
+        });
 
         if (ItemTypeId.equals("1")) {
             setTitle("Processor");

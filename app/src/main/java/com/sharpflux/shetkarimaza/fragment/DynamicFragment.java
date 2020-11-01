@@ -4,20 +4,24 @@ import android.app.ProgressDialog;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v7.widget.SearchView;
+
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -28,6 +32,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.Interface.RecyclerViewClickListener;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.MyBuyerAdapter;
+import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
 import com.sharpflux.shetkarimaza.model.SellOptions;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.sqlite.dbBuyerFilter;
@@ -71,7 +76,7 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
     String SubCategoryName="";
     ImageView imgBack;
     dbBuyerFilter myFilter;
-
+    private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
 
 
     public static DynamicFragment newInstance() {
@@ -340,6 +345,7 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
                                 }
 
                                 else {
+                                    customDialogLoadingProgressBar.dismiss();
                                     Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                                 }
 
@@ -349,7 +355,7 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
                             isLoading = false;
                             progressBar.setVisibility(View.GONE);
 
-
+                            customDialogLoadingProgressBar.dismiss();
 
 
 
@@ -357,13 +363,14 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
 
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            customDialogLoadingProgressBar.dismiss();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        customDialogLoadingProgressBar.dismiss();
                     }
                 }) {
             @Override
@@ -417,14 +424,13 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
         @Override
         protected void onPostExecute(String result)
         {
-            progressDialog.dismiss();
+
         }
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(getContext(),
-                    "Loading...",
-                    "");
+            customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(getContext());
+            customDialogLoadingProgressBar.show();
         }
 
         @Override

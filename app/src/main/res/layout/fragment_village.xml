@@ -18,13 +18,13 @@
         android:textSize="20dp"
         android:textStyle="bold"
         />
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:fontFamily="@font/sfpro_display_medium">
 
-        <android.support.design.widget.TextInputEditText
+        <EditText
             android:id="@+id/edtvillage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
             android:inputType="none"
 
             android:textSize="15dp" />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
     <LinearLayout
         android:id="@+id/relativeLayout1"
         android:layout_width="match_parent"

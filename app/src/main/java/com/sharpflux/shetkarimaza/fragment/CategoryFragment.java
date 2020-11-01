@@ -6,17 +6,17 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -26,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.MyCategoryTypeAdapter;
+import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
 import com.sharpflux.shetkarimaza.model.MyCategoryType;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
@@ -58,7 +59,7 @@ public class CategoryFragment extends Fragment {
     String currentLanguage;
     boolean isLoading = false;
     ProgressBar progressBar;
-
+    private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
     Boolean isScrolling = false;
     int currentItems, totalItems, scrollOutItems;
 
@@ -79,7 +80,7 @@ public class CategoryFragment extends Fragment {
         mRecyclerView.setLayoutManager(mGridLayoutManager);
 
         mydatabase = new dbLanguage(getContext());
-
+        customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(getContext());
         categoryList = new ArrayList<>();
        // parentShimmerLayout =view.findViewById(R.id.shimmer_view_container);
 
@@ -178,7 +179,7 @@ public class CategoryFragment extends Fragment {
                             JSONArray obj = new JSONArray(response);
 
 
-                            progressBar.setVisibility(View.VISIBLE);
+
 
                             for (int i = 0; i < obj.length(); i++) {
                                 JSONObject userJson = obj.getJSONObject(i);
@@ -254,8 +255,7 @@ public class CategoryFragment extends Fragment {
 
                             myCategoryTypeAdapter.notifyDataSetChanged();
                             isLoading = false;
-                            progressBar.setVisibility(View.GONE);
-
+                            customDialogLoadingProgressBar.dismiss();
 
 
                           /*  parentShimmerLayout.stopShimmerAnimation();
@@ -263,6 +263,7 @@ public class CategoryFragment extends Fragment {
 
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            customDialogLoadingProgressBar.dismiss();
                         }
                     }
                 },
@@ -270,7 +271,7 @@ public class CategoryFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        customDialogLoadingProgressBar.dismiss();
                     }
                 }) {
             @Override
@@ -293,23 +294,8 @@ public class CategoryFragment extends Fragment {
         protected String doInBackground(String... params) {
             publishProgress("Sleeping..."); // Calls onProgressUpdate()
             try {
-
-               /* setDynamicFragmentToTabLayout();
-                Thread.sleep(100);
-
-                resp = "Slept for " + params[0] + " seconds";*/
-
-                /*int time = Integer.parseInt(params[0]) * 1000;
-                setDynamicFragmentToTabLayout();
-                Thread.sleep(time);
-                resp = "Slept for " + params[0] + " seconds";*/
-
-
                 setDynamicFragmentToTabLayout(Integer.valueOf( params[0]));
-                Thread.sleep(10);
-                resp = "Slept for " + params[0] + " seconds";
-
-
+                Thread.sleep(5);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -318,21 +304,25 @@ public class CategoryFragment extends Fragment {
             return resp;
         }
 
+
         @Override
-        protected void onPostExecute(String result)
-        {
-            progressDialog.dismiss();
+        protected void onPostExecute(String result) {
+            // execution of result of Long time consuming operation
+          //  progressDialog.dismiss();
+            // finalResult.setText(result);
         }
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(getContext(),
-                    "Loading...",
-                    "");
+            customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(getContext());
+            customDialogLoadingProgressBar.show();
         }
+
 
         @Override
         protected void onProgressUpdate(String... text) {
+            // finalResult.setText(text[0]);
 
         }
 

@@ -14,15 +14,17 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -31,6 +33,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 import com.sharpflux.shetkarimaza.volley.URLs;
@@ -59,7 +62,7 @@ public class SelfieActivity extends AppCompatActivity {
     File imageFile = null;
     Button btn_submit;
     AlertDialog.Builder builder;
-
+    private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
     private String address = "", city = "", district = "", state = "", companyname = "",
             license = "", companyregnno = "", gstno = "", names = "", registrationTypeId = "",
             registrationCategoryId = "", gender = "", mobile = "", alternateMobile = "", email = "",
@@ -87,7 +90,7 @@ public class SelfieActivity extends AppCompatActivity {
         UserId = userid.toString();
 
         builder = new AlertDialog.Builder(SelfieActivity.this);
-
+        customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(SelfieActivity.this);
         EnableRuntimePermission();
 
         btn_submit.setOnClickListener(new View.OnClickListener() {
@@ -471,16 +474,13 @@ public class SelfieActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            // execution of result of Long time consuming operation
-            progressDialog.dismiss();
-            // finalResult.setText(result);
+
         }
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(SelfieActivity.this,
-                    "Save your Data",
-                    "Loading...");
+            customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(SelfieActivity.this);
+            customDialogLoadingProgressBar.show();
         }
 
         @Override

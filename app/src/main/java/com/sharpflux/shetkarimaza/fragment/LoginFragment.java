@@ -6,11 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,18 +17,24 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.material.tabs.TabLayout;
 import com.hbb20.CountryCodePicker;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.ChooseActivity;
 import com.sharpflux.shetkarimaza.activities.ForgotPasswordActivity;
 import com.sharpflux.shetkarimaza.activities.HomeActivity;
 import com.sharpflux.shetkarimaza.activities.TabLayoutLogRegActivity;
+import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
 import com.sharpflux.shetkarimaza.filters.AgeFragment;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.utils.CheckDeviceIsOnline;
@@ -59,7 +61,7 @@ public class LoginFragment extends Fragment {
     AlertDialog.Builder builder;
     TabLayout tabLayout;
     ViewPager viewPager;
-
+    private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
     User user;
     CountryCodePicker ccp;
 
@@ -105,7 +107,7 @@ public class LoginFragment extends Fragment {
             getActivity().finish();
             startActivity(new Intent(getContext(), ChooseActivity.class));
         }
-
+        customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(getContext());
         builder = new AlertDialog.Builder(getContext());
 
         //progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -330,10 +332,10 @@ public class LoginFragment extends Fragment {
                                 //storing the user in shared preferences
                                 SharedPrefManager.getInstance(getContext()).userLogin(user);
                                 //starting the profile activity
-                                getActivity().finish();
+                               // getActivity().finish();
                                 startActivity(new Intent(getContext(), HomeActivity.class));
                             }
-
+                            customDialogLoadingProgressBar.dismiss();
 
 
                         } catch (JSONException e) {
@@ -396,17 +398,14 @@ public class LoginFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String result) {
-            // execution of result of Long time consuming operation
-            progressDialog.dismiss();
-            // finalResult.setText(result);
+
         }
 
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(getContext(),
-                    "Loading...",
-                    "Wait for result..");
+            customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(getContext());
+            customDialogLoadingProgressBar.show();
         }
 
 

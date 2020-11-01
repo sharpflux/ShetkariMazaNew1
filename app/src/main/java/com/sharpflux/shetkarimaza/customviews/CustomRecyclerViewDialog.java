@@ -3,13 +3,16 @@ package com.sharpflux.shetkarimaza.customviews;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.support.v7.widget.SearchView;
+
 import android.widget.TextView;
+
+import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.DataAdapter;

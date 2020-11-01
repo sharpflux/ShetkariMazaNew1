@@ -21,13 +21,7 @@ import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -38,6 +32,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -47,14 +42,22 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.material.textfield.TextInputLayout;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.DataAdapter;
+import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
 import com.sharpflux.shetkarimaza.customviews.CustomRecyclerViewDialog;
 import com.sharpflux.shetkarimaza.fragment.RateDialogFragment;
 import com.sharpflux.shetkarimaza.model.Product;
@@ -67,6 +70,8 @@ import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -95,9 +100,9 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
 
     ImageView img_banner_profile_placeholder;
+    private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
 
-
-    private TextInputEditText edtTotalamt, edtproductType, edtdistrict, edtstate, edtproductVariety,
+    private EditText edtTotalamt, edtproductType, edtdistrict, edtstate, edtproductVariety,
             edtDays, edtavailablityInMonths, edtAQuality, edtAQuantity, edtUnit, edtExpectedPrice,
             edttaluka, edtaddres, edtvillage, edtareahector, edtcertifiedno, edtsurveyNo, name_botanical, sub_category_name;
     RadioGroup rg;
@@ -106,7 +111,8 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     ImageView imageviewcam1, imageviewcam2, imageviewcam3, imageviewcam4;
     ArrayList<Product> list;
     Product sellOptions;
-    Button btn_take_selfie, btnFormSubmit, btnAdd, btnAddMore;
+    Button btn_take_selfie, btnAdd;
+    LinearLayout btnFormSubmit,btnAddMore;
     TextView hideImageTvSelfie, tv_rate, hideAgeId;
     CustomRecyclerViewDialog customDialog;
     public static String DATEFORMATTED = "";
@@ -215,7 +221,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
             currentLanguage = cursor.getString(0);
 
         }
-
+        customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(ProductInfoForSaleActivity.this);
         User user = SharedPrefManager.getInstance(this).getUser();
         userid = (Integer) user.getId();
         UserId = userid.toString();
@@ -272,7 +278,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         edtareahector = findViewById(R.id.edthector);
         btn_take_selfie = findViewById(R.id.btn_take_selfie);
         img_banner_profile_placeholder = (ImageView) findViewById(R.id.imageView);
-        btnFormSubmit = findViewById(R.id.btnFormSubmit);
+        //btnFormSubmit = findViewById(R.id.footer);
         mProgressDialog = new ProgressDialog(ProductInfoForSaleActivity.this);
         mProgressDialog.setIndeterminate(false);
         // Progress dialog horizontal style
@@ -569,15 +575,13 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
         });
 
-        btnFormSubmit.setOnClickListener(new View.OnClickListener() {
+     /*   btnFormSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*AsyncTaskRunner runner = new AsyncTaskRunner();
-                String sleepTime = "Update";
-                runner.execute(sleepTime);*/
+
                 submitToDb();
             }
-        });
+        });*/
         tv_rate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -712,7 +716,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
             Picasso.get().load(extras.getString("ImageUrl")).into(img_banner_profile_placeholder);
             ImageUrlupload = extras.getString("ImageUrl");
 
-            ImageUrl=convertUrlToBase64(ImageUrlupload);
+            ImageUrl = convertUrlToBase64(ImageUrlupload);
 
 
           /*  BitmapDrawable drawable = (BitmapDrawable) img_banner_profile_placeholder.getDrawable();
@@ -929,12 +933,43 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                     }
 
                     if (userId == -1) {
+
+
+                        builder.append("<Parent>");
+                        builder.append("<Assign>");
+                        builder.append("<RequestId>" + 0 + "</RequestId>");
+                        builder.append("<Id>" + 1 + "</Id>");
+                        builder.append("<UserId>" + UserId + "</UserId>");
+                        builder.append("<productTypeId>" + hidItemTypeId.getText().toString() + "</productTypeId>");
+                        builder.append("<productVarietyId>" + hidVarietyId.getText().toString() + "</productVarietyId>");
+                        builder.append("<qualityId>" + hidQualityId.getText().toString() + "</qualityId>");
+                        builder.append("<quantity>" + quantity + "</quantity>");
+                        builder.append("<unitId>" + hidMeasurementId.getText().toString() + "</unitId>");
+                        builder.append("<expectedPrice>" + total + "</expectedPrice>");
+                        builder.append("<days>" + days + "</days>");
+                        builder.append("<availablityInMonths>" + availablityInMonths + "</availablityInMonths>");
+                        builder.append("<address>" + address + "</address>");
+                        builder.append("<stateId>" + hideStateId.getText().toString() + "</stateId>");
+                        builder.append("<districtId>" + hideDistrictId.getText().toString() + "</districtId>");
+                        builder.append("<talukaId>" + hideTalukaId.getText().toString() + "</talukaId>");
+                        builder.append("<villagenam>" + villagenam + "</villagenam>");
+                        builder.append("<areaheactor>" + areaheactor + "</areaheactor>");
+                        builder.append("<imagename>" + ImageUrl + "</imagename>");
+                        builder.append("<organic>" + org + "</organic>");
+                        builder.append("<certificateno>" + certificateno + "</certificateno>");
+                        builder.append("<SurveyNo>" + surveyNo + "</SurveyNo>");
+                        builder.append("<AgeGroupId>" + hideAgeId.getText().toString() + "</AgeGroupId>");
+                        builder.append("</Assign>");
+                        builder.append("</Parent>");
+                        AsyncTaskRunnerNewEntry runner = new AsyncTaskRunnerNewEntry();
+                        runner.execute("0"); // No meaning for 0
+
                         // Insert new user account.
-                        userInfoDBManager.insertAccount(productType, hidItemTypeId.getText().toString(), productVariety, hidVarietyId.getText().toString(),
+/*                        userInfoDBManager.insertAccount(productType, hidItemTypeId.getText().toString(), productVariety, hidVarietyId.getText().toString(),
                                 quality, hidQualityId.getText().toString(), quantity, unit, hidMeasurementId.getText().toString(), total,
                                 days, availablityInMonths, address, state, hideStateId.getText().toString(),
                                 district, hideDistrictId.getText().toString(), taluka, hideTalukaId.getText().toString(),
-                                villagenam, areaheactor, ImageUrl, org, certificateno, surveyNo, hideAgeId.getText().toString());
+                                villagenam, areaheactor, ImageUrl, org, certificateno, surveyNo, hideAgeId.getText().toString());*/
 
 
                         /*userInfoDBManager.newInsert(productType, hidItemTypeId.getText().toString(), productVariety, hidVarietyId.getText().toString(),
@@ -952,87 +987,15 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                  /*    Toast.makeText(getApplicationContext(), "User account is saved successfully.", Toast.LENGTH_SHORT).show();
                    finish();
                 */
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ProductInfoForSaleActivity.this);
-                    builder.setCancelable(false);
-                    builder.setMessage("Do you want to Add more Quality?");
-                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
 
-                            edtUnit.setText("");
-                            edtAQuantity.setText("");
-                            edtAQuality.setText("");
-                            edtExpectedPrice.setText("");
-                            edtUnit.setText("");
-                            edtTotalamt.setText("");
-                            // edtcertifiedno.setText("");
-
-
-                        }
-                    });
-
-
-                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                            Intent startUserAccountListIntent = new Intent(getApplicationContext(), AddListActivity.class);
-                            startUserAccountListIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startUserAccountListIntent.putExtra("ProductId", ProductId);
-
-                            startUserAccountListIntent.putExtra("productTypeId", hidItemTypeId.getText().toString());
-                            startUserAccountListIntent.putExtra("productVarietyId", hidVarietyId.getText().toString());
-                            startUserAccountListIntent.putExtra("productVariety", edtproductVariety.getText().toString());
-                            startUserAccountListIntent.putExtra("qualityId", hidQualityId.getText().toString());
-
-                            //startUserAccountListIntent.putExtra("monthId", edtavailablityInMonths.getText().toString());
-                            startUserAccountListIntent.putExtra("unitId", hidMeasurementId.getText().toString());
-                            startUserAccountListIntent.putExtra("stateId", hideStateId.getText().toString());
-                            startUserAccountListIntent.putExtra("districtId", hideDistrictId.getText().toString());
-                            startUserAccountListIntent.putExtra("talukaId", hideTalukaId.getText().toString());
-                            startUserAccountListIntent.putExtra("organic", org);
-                            startUserAccountListIntent.putExtra("certificateno", edtcertifiedno.getText().toString());
-                            startUserAccountListIntent.putExtra("SurveyNo", edtsurveyNo.getText().toString());
-                            startUserAccountListIntent.putExtra("ImageUrl", ImageUrl);
-                            startUserAccountListIntent.putExtra("AgeGroupId", hideAgeId.getText().toString());
-                            startUserAccountListIntent.putExtra("TotalAmt", edtTotalamt.getText().toString());
-                            startActivity(startUserAccountListIntent);
-
-                        }
-                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
                 }
             }
         });
 
 
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent startUserAccountListIntent = new Intent(getApplicationContext(), AddListActivity.class);
-               /* startUserAccountListIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startUserAccountListIntent.putExtra("ProductId", ProductId);
-
-                startUserAccountListIntent.putExtra("productTypeId", hidItemTypeId.getText().toString());
-                startUserAccountListIntent.putExtra("productVarietyId", hidVarietyId.getText().toString());
-                startUserAccountListIntent.putExtra("qualityId", hidQualityId.getText().toString());
-                startUserAccountListIntent.putExtra("qualityId", hidQualityId.getText().toString());
-
-                //startUserAccountListIntent.putExtra("monthId", edtavailablityInMonths.getText().toString());
-                startUserAccountListIntent.putExtra("unitId",   hidMeasurementId.getText().toString());
-                startUserAccountListIntent.putExtra("stateId",    hideStateId.getText().toString());
-                startUserAccountListIntent.putExtra("districtId",   hideDistrictId.getText().toString());
-                startUserAccountListIntent.putExtra("talukaId",    hideTalukaId.getText().toString());*/
-                startActivity(startUserAccountListIntent);
-
-
-            }
-        });
 
 
     }
-
 
 
     public String convertUrlToBase64(String url) {
@@ -1214,24 +1177,24 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
 
                 if (params[0].toString() == "ItemName")
-                    fetcher.loadList("ItemName", edtproductType, URLs.URL_NAME + "1&PageSize=500&CategoryId=" + ProductId + "&Language=" + currentLanguage, "ItemTypeId", hidItemTypeId, "CategoryId", ProductId, TittleName, "BotanicalName", name_botanical, edtproductVariety);
+                    fetcher.loadList("ItemName", edtproductType, URLs.URL_NAME + "1&PageSize=500&CategoryId=" + ProductId + "&Language=" + currentLanguage, "ItemTypeId", hidItemTypeId, "CategoryId", ProductId, TittleName, "BotanicalName", name_botanical, edtproductVariety, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "Variety")
-                    fetcher.loadList("VarietyName", edtproductVariety, URLs.URL_VARIATY + hidItemTypeId.getText() + "&Language=" + currentLanguage, "VarietyId", hidVarietyId, "", "", "Variety", "", null, null);
+                    fetcher.loadList("VarietyName", edtproductVariety, URLs.URL_VARIATY + hidItemTypeId.getText() + "&Language=" + currentLanguage, "VarietyId", hidVarietyId, "", "", "Variety", "", null, null, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "Quality")
-                    fetcher.loadList("QualityType", edtAQuality, URLs.URL_QUALITY + "?Language=" + currentLanguage, "QualityId", hidQualityId, "", "", "Available Quality", "", null, null);
+                    fetcher.loadList("QualityType", edtAQuality, URLs.URL_QUALITY + "?Language=" + currentLanguage, "QualityId", hidQualityId, "", "", "Available Quality", "", null, null, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "Unit")
-                    fetcher.loadList("MeasurementType", edtUnit, URLs.URL_UNIT + "?CategoryId=" + ProductId + "&Language=" + currentLanguage, "MeasurementId", hidMeasurementId, "", "", "Unit", "", null, null);
+                    fetcher.loadList("MeasurementType", edtUnit, URLs.URL_UNIT + "?CategoryId=" + ProductId + "&Language=" + currentLanguage, "MeasurementId", hidMeasurementId, "", "", "Unit", "", null, null, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "state")
-                    fetcher.loadList("StatesName", edtstate, URLs.URL_STATE + "?Language=" + currentLanguage, "StatesID", hideStateId, "", "", "State", "", null, null);
+                    fetcher.loadList("StatesName", edtstate, URLs.URL_STATE + "?Language=" + currentLanguage, "StatesID", hideStateId, "", "", "State", "", null, null, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "district")
-                    fetcher.loadList("DistrictName", edtdistrict, URLs.URL_DISTRICT + hideStateId.getText() + ",&Language=" + currentLanguage, "DistrictId", hideDistrictId, "", "", "District", "", null, null);
+                    fetcher.loadList("DistrictName", edtdistrict, URLs.URL_DISTRICT + hideStateId.getText() + ",&Language=" + currentLanguage, "DistrictId", hideDistrictId, "", "", "District", "", null, null, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "taluka")
-                    fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText() + ",&Language=" + currentLanguage, "TalukasId", hideTalukaId, "", "", "Taluka", "", null, null);
+                    fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText() + ",&Language=" + currentLanguage, "TalukasId", hideTalukaId, "", "", "Taluka", "", null, null, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "Age")
-                    fetcher.loadList("AgeGroupName", edtDays, URLs.URL_AGE + "Language=" + currentLanguage, "AgeGroupId", hideAgeId, "", "", "Age", "", null, null);
+                    fetcher.loadList("AgeGroupName", edtDays, URLs.URL_AGE + "Language=" + currentLanguage, "AgeGroupId", hideAgeId, "", "", "Age", "", null, null, customDialogLoadingProgressBar);
 
                 if (params[0].toString() == "CategoryName")
-                    fetcher.loadList("ItemName", sub_category_name, URLs.URL_NAME + "1&PageSize=500&CategoryId=" + hidItemTypeId.getText() + "&Language=" + currentLanguage, "ItemTypeId", hideSubCatId, "CategoryId", ProductId, "Category Name", "BotanicalName", null, null);
+                    fetcher.loadList("ItemName", sub_category_name, URLs.URL_NAME + "1&PageSize=500&CategoryId=" + hidItemTypeId.getText() + "&Language=" + currentLanguage, "ItemTypeId", hideSubCatId, "CategoryId", ProductId, "Category Name", "BotanicalName", null, null, customDialogLoadingProgressBar);
 
                 else if (params[0].toString() == "Update") {
                     submitToDb();
@@ -1261,15 +1224,14 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             // execution of result of Long time consuming operation
-            progressDialog.dismiss();
+            //    progressDialog.dismiss();
             // finalResult.setText(result);
         }
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(ProductInfoForSaleActivity.this,
-                    "Loading...",
-                    "");
+            customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(ProductInfoForSaleActivity.this);
+            customDialogLoadingProgressBar.show();
         }
 
         @Override
@@ -1462,7 +1424,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(ProductInfoForSaleActivity.this);
+                        /*AlertDialog.Builder builder = new AlertDialog.Builder(ProductInfoForSaleActivity.this);
                         builder.setCancelable(false);
                         mProgressDialog.dismiss();
                         builder.setMessage("Data submitted successfully");
@@ -1476,6 +1438,57 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                             }
                         });
 
+                        AlertDialog alert = builder.create();
+                        alert.show();*/
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ProductInfoForSaleActivity.this);
+                        builder.setCancelable(false);
+                        builder.setMessage("Data submitted successfully, Do you want to Add more Quality?");
+                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                edtUnit.setText("");
+                                edtAQuantity.setText("");
+                                edtAQuality.setText("");
+                                edtExpectedPrice.setText("");
+                                edtUnit.setText("");
+                                edtTotalamt.setText("");
+                                // edtcertifiedno.setText("");
+
+
+                            }
+                        });
+
+
+                        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                Intent startUserAccountListIntent = new Intent(getApplicationContext(), AddListActivity.class);
+                                startUserAccountListIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startUserAccountListIntent.putExtra("ProductId", ProductId);
+
+                                startUserAccountListIntent.putExtra("productTypeId", hidItemTypeId.getText().toString());
+                                startUserAccountListIntent.putExtra("productVarietyId", hidVarietyId.getText().toString());
+                                startUserAccountListIntent.putExtra("productVariety", edtproductVariety.getText().toString());
+                                startUserAccountListIntent.putExtra("qualityId", hidQualityId.getText().toString());
+
+                                //startUserAccountListIntent.putExtra("monthId", edtavailablityInMonths.getText().toString());
+                                startUserAccountListIntent.putExtra("unitId", hidMeasurementId.getText().toString());
+                                startUserAccountListIntent.putExtra("stateId", hideStateId.getText().toString());
+                                startUserAccountListIntent.putExtra("districtId", hideDistrictId.getText().toString());
+                                startUserAccountListIntent.putExtra("talukaId", hideTalukaId.getText().toString());
+                                startUserAccountListIntent.putExtra("organic", org);
+                                startUserAccountListIntent.putExtra("certificateno", edtcertifiedno.getText().toString());
+                                startUserAccountListIntent.putExtra("SurveyNo", edtsurveyNo.getText().toString());
+                                startUserAccountListIntent.putExtra("ImageUrl", ImageUrl);
+                                startUserAccountListIntent.putExtra("AgeGroupId", hideAgeId.getText().toString());
+                                startUserAccountListIntent.putExtra("TotalAmt", edtTotalamt.getText().toString());
+                                startActivity(startUserAccountListIntent);
+
+                            }
+                        });
                         AlertDialog alert = builder.create();
                         alert.show();
 
@@ -1509,4 +1522,95 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     }
 
 
+    private void submitNewEntry() {
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_SAVEPRODUCTDETAILS,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ProductInfoForSaleActivity.this);
+                        builder.setCancelable(false);
+                        mProgressDialog.dismiss();
+                        builder.setMessage("Data submitted successfully");
+                        userInfoDBManager.deleteAll();
+                        builder.setIcon(R.drawable.ic_check_circle);
+                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //if user pressed "yes", then he is allowed to exit from application
+                                //dialog.cancel();
+                                Intent i = new Intent(ProductInfoForSaleActivity.this, HomeActivity.class);
+                                startActivity(i);
+                            }
+                        });
+
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Toast.makeText(ProductInfoForSaleActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("xmlData", builder.toString());
+                return params;
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleySingleton.getInstance(ProductInfoForSaleActivity.this).addToRequestQueue(stringRequest);
+
+
+    }
+
+
+    private class AsyncTaskRunnerNewEntry extends AsyncTask<String, String, String> {
+
+        private String resp;
+
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+
+            submitNewEntry();
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                //   Toast.makeText(AddListActivity.this,  e.getMessage(), Toast.LENGTH_SHORT).show();
+                resp = e.getMessage();
+            }
+            return resp;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // execution of result of Long time consuming operation
+            // mProgressDialog.dismiss();
+
+            // finalResult.setText(result);
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected void onProgressUpdate(String... text) {
+            //mProgressDialog.setProgress(92);
+
+        }
+
+
+    }
 }

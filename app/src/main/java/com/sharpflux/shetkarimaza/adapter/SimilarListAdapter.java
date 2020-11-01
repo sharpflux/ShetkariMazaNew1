@@ -3,12 +3,14 @@ package com.sharpflux.shetkarimaza.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.model.SimilarList;
@@ -41,9 +43,14 @@ public class SimilarListAdapter extends RecyclerView.Adapter<SimilarListViewHold
         holder.mfullname.setText(mlist.get(position).getFullName());
         holder.mMobNo.setText(mlist.get(position).getMobileNo());
         holder.mName.setText(mlist.get(position).getName());
-        holder.mvarity.setText(mlist.get(position).getVarietyName());
-        holder.mQuality.setText(mlist.get(position).getQuality().toString());
-        holder.mPrice.setText(String.valueOf( mlist.get(position).getPrice()));
+        holder.mvarity.setText("VARIETY :"+mlist.get(position).getVarietyName());
+        holder.mQuality.setText("QUALITY :"+mlist.get(position).getQuality().toString());
+        holder.mPrice.setText(String.valueOf("₹ "+mlist.get(position).getPrice()));
+        holder.tvFarmerAddress.setText(mlist.get(position).getFarm_address()+", "+mlist.get(position).getState()+", "+mlist.get(position).getTaluka());
+
+        holder.tvAvailableQty.setText(mlist.get(position).getQuantity().toString());
+        holder.tvExpectedPrice.setText( String.valueOf(Double.valueOf(mlist.get(position).getPrice())/ Double.valueOf(mlist.get(position).getQuantity())  ));
+        holder.tvPriceDetails.setText("Quantity avaialable in "+mlist.get(position).getUnit().toString());
 
         holder.mMobNo.setOnClickListener(new View.OnClickListener() {
 
@@ -71,7 +78,7 @@ class SimilarListViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     ImageView mImage;
     TextView mMobNo;
-    TextView mName,mfullname,mvarity,mQuality,mPrice;
+    TextView mName,mfullname,mvarity,mQuality,mPrice,tvFarmerAddress,tvAvailableQty,tvExpectedPrice,tvPriceDetails;
 
     SimilarListViewHolder(View itemView) {
         super(itemView);
@@ -83,7 +90,10 @@ class SimilarListViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         mvarity = itemView.findViewById(R.id.row_cartlist_tvVarity);
         mQuality = itemView.findViewById(R.id.row_cartlist_tvQuality);
         mPrice = itemView.findViewById(R.id.row_cartlist_tvPrice);
-
+        tvFarmerAddress=itemView.findViewById(R.id.tvFarmerAddress);
+        tvAvailableQty=itemView.findViewById(R.id.tvAvailableQty);
+        tvExpectedPrice=itemView.findViewById(R.id.tvExpectedPrice);
+        tvPriceDetails=itemView.findViewById(R.id.tvPriceDetails);
         itemView.setOnClickListener(this);
     }
 

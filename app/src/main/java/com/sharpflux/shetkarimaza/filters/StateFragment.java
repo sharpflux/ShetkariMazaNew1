@@ -5,16 +5,19 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.SearchView;
+
 import android.widget.Toast;
+
+import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -24,6 +27,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity;
+import com.sharpflux.shetkarimaza.activities.BuyerActivity;
+import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.sqlite.dbBuyerFilter;
 import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
@@ -56,7 +61,7 @@ public class StateFragment extends Fragment {
     dbBuyerFilter myDatabase;
     dbLanguage mydatabase;
     String currentLanguage, language;
-
+    private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -250,17 +255,20 @@ public class StateFragment extends Fragment {
 
                                     }
                                 });
+                                customDialogLoadingProgressBar.dismiss();
 
                             }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            customDialogLoadingProgressBar.dismiss();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        customDialogLoadingProgressBar.dismiss();
                         // Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
@@ -301,16 +309,13 @@ public class StateFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String result) {
-            // execution of result of Long time consuming operation
-            progressDialog.dismiss();
-            // finalResult.setText(result);
+
         }
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(getContext(),
-                    "Loading...",
-                    "");
+            customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(getContext());
+            customDialogLoadingProgressBar.show();
         }
 
         @Override

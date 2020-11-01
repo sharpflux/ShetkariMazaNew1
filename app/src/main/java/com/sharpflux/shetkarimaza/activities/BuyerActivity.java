@@ -1,19 +1,24 @@
 package com.sharpflux.shetkarimaza.activities;
 
 import android.database.Cursor;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.material.tabs.TabLayout;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.DynamicFragmentAdapter;
+import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.sqlite.dbBuyerFilter;
 import com.sharpflux.shetkarimaza.sqlite.dbFilter;
@@ -35,7 +40,7 @@ public class BuyerActivity extends AppCompatActivity implements TabLayout.OnTabS
     private TabLayout mTabLayout;
     Locale myLocale;
     private ViewPager viewPager;
-
+    private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
     dbLanguage mydatabase;
     String currentLanguage, language;
     dbFilter myDatabase;
@@ -88,7 +93,49 @@ public class BuyerActivity extends AppCompatActivity implements TabLayout.OnTabS
             }
         });
 
-        setDynamicFragmentToTabLayout();
+        AsyncTaskRunner runner = new AsyncTaskRunner();
+        runner.execute("500");
+
+    }
+
+    private class  AsyncTaskRunner extends AsyncTask<String, String, String> {
+
+        private String resp;
+
+
+        @Override
+        protected String doInBackground(String... params) {
+            publishProgress("Sleeping..."); // Calls onProgressUpdate()
+            try {
+
+
+                setDynamicFragmentToTabLayout();
+                Thread.sleep(500);
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                resp = e.getMessage();
+            }
+            return resp;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(BuyerActivity.this);
+            customDialogLoadingProgressBar.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(String... text) {
+            // finalResult.setText(text[0]);
+
+        }
 
     }
 
@@ -111,8 +158,7 @@ public class BuyerActivity extends AppCompatActivity implements TabLayout.OnTabS
 
                                     mTabLayout.addTab(mTabLayout.newTab().setText(userJson.getString("CategoryName_EN")));
 
-                                    DynamicFragmentAdapter mDynamicFragmentAdapter = new DynamicFragmentAdapter(getSupportFragmentManager(), mTabLayout.getTabCount(),
-                                            obj, BuyerActivity.this);
+                                    DynamicFragmentAdapter mDynamicFragmentAdapter = new DynamicFragmentAdapter(getSupportFragmentManager(), mTabLayout.getTabCount(), obj, BuyerActivity.this);
 
                                     viewPager.setAdapter(mDynamicFragmentAdapter);
 
@@ -120,9 +166,11 @@ public class BuyerActivity extends AppCompatActivity implements TabLayout.OnTabS
                                 } else {
                                     Toast.makeText(BuyerActivity.this, response, Toast.LENGTH_SHORT).show();
                                 }
+                                customDialogLoadingProgressBar.dismiss();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            customDialogLoadingProgressBar.dismiss();
                         }
                     }
                 },
@@ -130,6 +178,7 @@ public class BuyerActivity extends AppCompatActivity implements TabLayout.OnTabS
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(BuyerActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                        customDialogLoadingProgressBar.dismiss();
                     }
                 }) {
             @Override
@@ -141,7 +190,9 @@ public class BuyerActivity extends AppCompatActivity implements TabLayout.OnTabS
             }
         };
 
-        VolleySingleton.getInstance(BuyerActivity.this).addToRequestQueue(stringRequest);
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
     }
 
 

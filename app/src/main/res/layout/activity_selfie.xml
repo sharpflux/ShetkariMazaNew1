@@ -88,7 +88,7 @@
                 android:text="@string/profile_take_image_button_text"
                 android:drawableLeft="@drawable/ic_photo_camera_black_24dp"
                 android:drawablePadding="0.0dip"
-                android:layout_below="@id/pane_banner_profile_placeholder"
+
                 android:layout_gravity="center"
                 style="@style/ProceedButton.Solid.NoDrawable" />
 

@@ -4,10 +4,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.fragment.FirstFragment;
@@ -28,12 +29,14 @@ public class DetailFormActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail_form);
 
 
-        FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.dynamic_fragment_frame_layout, new FirstFragment());
+            FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.add(R.id.dynamic_fragment_frame_layout, new FirstFragment());
 
-        fragmentTransaction.commit();
-        fragmentTransaction.addToBackStack(null);
-        setTitle(R.string.includemoredetails);
+            fragmentTransaction.commit();
+            fragmentTransaction.addToBackStack(null);
+            setTitle(R.string.includemoredetails);
+
+
 
 
     }

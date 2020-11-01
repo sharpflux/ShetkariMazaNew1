@@ -4,17 +4,21 @@ import android.app.ProgressDialog;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.textfield.TextInputLayout;
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
 import com.sharpflux.shetkarimaza.customviews.CustomRecyclerViewDialog;
 import com.sharpflux.shetkarimaza.model.Product;
 import com.sharpflux.shetkarimaza.model.User;
@@ -29,19 +33,19 @@ import java.util.Locale;
 
 public class SecondFragment extends DialogFragment {
     TextView hideStateId, hideDistrictId,hideTalukaId;
-    TextInputEditText address, city, edtdistrict,edttaluka, edtstate, companyname, license, companyregnno, gstno,name_botanical;
+    EditText address, city, edtdistrict,edttaluka, edtstate, companyname, license, companyregnno, gstno,name_botanical;
     ArrayList<Product> list;
-    Button btn_next;
+    LinearLayout btn_next;
     Bundle bundle;
     String name = "", registrationTypeId = "", registrationCategoryId = "", gender = "", mobile = "", alternateMobile = "", email = "";
     DataFetcher fetcher;
     private CustomRecyclerViewDialog customDialog;
     Product sellOptions;
-
+    private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
     Locale myLocale;
     dbLanguage mydatabase;
     String currentLanguage,language;
-
+    TextInputLayout TICompany;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,7 +56,7 @@ public class SecondFragment extends DialogFragment {
 
         list = new ArrayList<Product>();
 
-        btn_next = (Button) (view.findViewById(R.id.secondbtnnext));
+        btn_next =   (view.findViewById(R.id.secondbtnnext));
 
         address = view.findViewById(R.id.edtaddress);
 
@@ -67,6 +71,7 @@ public class SecondFragment extends DialogFragment {
         companyregnno = view.findViewById(R.id.edtcompanyregno);
         gstno = view.findViewById(R.id.edtgstno);
 
+        TICompany = (TextInputLayout)view.findViewById(R.id.TICompany);
 
 
         hideStateId = view.findViewById(R.id.hideStateId);
@@ -96,6 +101,17 @@ public class SecondFragment extends DialogFragment {
             mobile = bundle.getString("Mobile");
             alternateMobile = bundle.getString("AlternateMobile");
             email = bundle.getString("Email");
+
+            if(registrationTypeId.contains("32")){
+               // companyname.setHint("Nursery Name");
+                TICompany.setHint("Nursery Name");
+                companyregnno.setText("0");
+                gstno.setText("0");
+                license.setText("0");
+                license.setVisibility(View.GONE);
+                gstno.setVisibility(View.GONE);
+                companyregnno.setVisibility(View.GONE);
+            }
         }
 
 
@@ -253,17 +269,17 @@ public class SecondFragment extends DialogFragment {
             publishProgress("Sleeping..."); // Calls onProgressUpdate()
             try {
                 if (params[0].toString() == "state")
-                    fetcher.loadList("StatesName", edtstate, URLs.URL_STATE + "?StatesID=15&Language=en", "StatesID", hideStateId, "", "","State","",null,null);
+                    fetcher.loadList("StatesName", edtstate, URLs.URL_STATE + "?StatesID=15&Language=en", "StatesID", hideStateId, "", "","State","",null,null,customDialogLoadingProgressBar);
                    // fetcher.loadList("StatesName", edtstate, URLs.URL_STATE, "StatesID", hideStateId, "", "");
 
                 else if (params[0].toString() == "district")
-                    fetcher.loadList("DistrictName", edtdistrict, URLs.URL_DISTRICT + hideStateId.getText()+"," + "&Language=en", "DistrictId", hideDistrictId, "", "","District","",null,null);
+                    fetcher.loadList("DistrictName", edtdistrict, URLs.URL_DISTRICT + hideStateId.getText()+"," + "&Language=en", "DistrictId", hideDistrictId, "", "","District","",null,null,customDialogLoadingProgressBar);
 
                 else if (params[0].toString() == "taluka")
-                    fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText()+"," + "&Language=en", "TalukasId", hideTalukaId, "", "","Taluka","",null,null);
+                    fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText()+"," + "&Language=en", "TalukasId", hideTalukaId, "", "","Taluka","",null,null,customDialogLoadingProgressBar);
 
 
-                Thread.sleep(500);
+                Thread.sleep(100);
 
                 resp = "Slept for " + params[0] + " seconds";
             } catch (Exception e) {
@@ -277,16 +293,15 @@ public class SecondFragment extends DialogFragment {
         @Override
         protected void onPostExecute(String result) {
             // execution of result of Long time consuming operation
-            progressDialog.dismiss();
+           // progressDialog.dismiss();
             // finalResult.setText(result);
         }
 
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(getContext(),
-                    "Loading...",
-                    "");
+            customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(getContext());
+            customDialogLoadingProgressBar.show();
         }
 
 

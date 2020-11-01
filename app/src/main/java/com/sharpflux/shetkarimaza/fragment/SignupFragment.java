@@ -6,8 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +14,9 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -26,6 +28,7 @@ import com.hbb20.CountryCodePicker;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.TabLayoutLogRegActivity;
 import com.sharpflux.shetkarimaza.activities.UserVerificationActivity;
+import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
 import com.sharpflux.shetkarimaza.utils.CheckDeviceIsOnline;
 import com.sharpflux.shetkarimaza.utils.CommonUtils;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
@@ -46,7 +49,7 @@ public class SignupFragment extends Fragment {
     CountryCodePicker ccp;
     String number;
     AlertDialog.Builder builder;
-
+    private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
     public SignupFragment() {
 
     }
@@ -72,7 +75,7 @@ public class SignupFragment extends Fragment {
        // ccp.registerCarrierNumberEditText(editTextMobile);
         builder = new AlertDialog.Builder(getContext());
         signup = view.findViewById(R.id.rSignup);
-
+        customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(getContext());
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -251,6 +254,7 @@ public class SignupFragment extends Fragment {
 
 
                             } else {
+
                                 builder.setMessage("Invalid User")
                                         .setCancelable(false)
 
@@ -266,6 +270,7 @@ public class SignupFragment extends Fragment {
                                 alert.setTitle("User already exists with same Mobile No");
                                 alert.show();
                             }
+                            customDialogLoadingProgressBar.dismiss();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -275,6 +280,7 @@ public class SignupFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+
                         builder.setMessage(error.getMessage())
                                 .setCancelable(false)
 
@@ -289,6 +295,9 @@ public class SignupFragment extends Fragment {
                         AlertDialog alert = builder.create();
                         alert.setTitle("Error");
                         alert.show();
+
+
+                        customDialogLoadingProgressBar.dismiss();
                         // Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
@@ -330,16 +339,15 @@ public class SignupFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.dismiss();
+
 
         }
 
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(getContext(),
-                    "Loading...",
-                    "Wait for result..");
+            customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(getContext());
+            customDialogLoadingProgressBar.show();
         }
 
 

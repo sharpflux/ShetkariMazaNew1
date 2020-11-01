@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<androidx.cardview.widget.CardView
     android:id="@+id/row_cartlist_cvContainer"
     android:focusable="true"
     android:clickable="true"
@@ -56,4 +56,4 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="@color/uiv3_divider_color" />
-</android.support.v7.widget.CardView>
+</androidx.cardview.widget.CardView>

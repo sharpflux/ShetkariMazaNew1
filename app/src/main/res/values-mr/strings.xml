@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">शेटकरी माझा</string>
+    <string name="app_name">किसान माझा</string>
     <string name="title_activity_home">होम ऍक्टिव्हिटी</string>
     <string name="navigation_drawer_open">ओपन नेव्हिगेशन ड्रॉवर</string>
     <string name="navigation_drawer_close">नेव्हिगेशन ड्रॉवर बंद करा</string>
@@ -7,7 +7,8 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">नॅव्हिगेशन हेडर</string>
     <string name="action_settings">सेटिंग्ज</string>
-
+    <string name="Ware_House_Name">वेअर हाऊस</string>
+    <string name="addWareHouse">Add वेअर हाऊस</string>
     <string name="menu_home">सेटिंग्ज</string>
     <string name="menu_address">पत्ता</string>
     <string name="menu_shopping">माझे कार्ट</string>
@@ -16,8 +17,8 @@
     <string name="menu_logout">बाहेर पडणे</string>
     <string name="menu_notification">अधिसूचना</string>
     <string name="menu_aboutus">आमच्याबद्दल</string>
-
-
+    <string name="vertical_ellipses">&#8942;</string>
+    <string name="add_more">आणखी जोडा</string>
     <string name="tab1">कॉल</string>
     <string name="tab2">गप्पा</string>
     <string name="tab3">संपर्क</string>
@@ -28,7 +29,8 @@
     <string name="action_whatsapp_web">व्हाट्सएप वेब</string>
     <string name="action_starred_messages">तारांकित संदेश</string>
     <string name="action_status">स्थिती</string>
-
+    <string name="Capacity">क्षमता</string>
+    <string name="VehicalType">वाहन का प्रकार</string>
     <string name="action_clear_call_log">कॉल लॉग साफ करा</string>
     <string name="action_calls">कॉल</string>
     <string name="action_refresh">रीफ्रेश करा</string>
@@ -36,10 +38,11 @@
     <string name="action_without_icon">चिन्हाशिवाय</string>
     <string name="action_with_icon">न चिन्ह </string>
     <string name="action_custom">सानुकूल टॅब</string>
-
+    <string name="VehicalNo">गाडी नंबर</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">हॅलो रिक्त खंड</string>
-
+    <string name="RatePerKm">
+प्रति किलोमीटर दर </string>
 
     <string name="buyer">खरेदीदार</string>
     <string name="seller">विक्रेता</string>

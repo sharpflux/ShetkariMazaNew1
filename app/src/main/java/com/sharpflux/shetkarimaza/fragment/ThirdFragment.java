@@ -12,24 +12,26 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
+
 import android.text.TextUtils;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
 
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.ProcessorActivity;
 import com.sharpflux.shetkarimaza.activities.ProductInfoForSaleActivity;
 import com.sharpflux.shetkarimaza.activities.SelfieActivity;
+import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -41,7 +43,7 @@ import static com.sharpflux.shetkarimaza.activities.SelfieActivity.RequestPermis
 
 public class ThirdFragment extends Fragment {
 
-    TextInputEditText accountname, bankname, branchcode, accno, ifsc;
+    EditText accountname, bankname, branchcode, accno, ifsc;
 
     // ImageView check,adhar;
 
@@ -60,10 +62,10 @@ public class ThirdFragment extends Fragment {
 
     public String ChequeImageBlob,AdharImageBlob,ImageType;
 
-    Button submitButton, btn_chequeimage, btn_adharimage;
-
+    Button btn_chequeimage, btn_adharimage;
+    LinearLayout submitButton;
     Bundle bundle;
-
+    private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
     private String [] permissions = {"android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_FINE_LOCATION",
             "android.permission.READ_PHONE_STATE", "android.permission.SYSTEM_ALERT_WINDOW","android.permission.CAMERA"};
 
@@ -77,6 +79,7 @@ public class ThirdFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_third, container, false);
 
         bundle = getArguments();
+        customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(getContext());
 
         if (bundle != null) {
             name = bundle.getString("Name");

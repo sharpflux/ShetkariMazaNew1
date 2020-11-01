@@ -30,8 +30,8 @@
                 <ImageView
                     android:id="@+id/imglogo"
                     android:layout_width="wrap_content"
-                    android:layout_height="130dp"
-                    android:src="@drawable/logo" />
+                    android:layout_height="250dp"
+                    android:src="@drawable/kisanmaza" />
 
                 <LinearLayout
                     android:orientation="vertical"

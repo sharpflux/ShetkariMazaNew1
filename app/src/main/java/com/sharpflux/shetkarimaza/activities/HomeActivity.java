@@ -5,15 +5,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +13,17 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.navigation.NavigationView;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.fragment.CategoryFragment;
 import com.sharpflux.shetkarimaza.model.User;
@@ -57,7 +60,7 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        llHeader = findViewById(R.id.llHeader);
+        llHeader = findViewById(R. id.llHeader);
 
 
        // searchView = findViewById(R.id.searchViewHome);
@@ -68,6 +71,7 @@ public class HomeActivity extends AppCompatActivity
         mydatabase = new dbLanguage(getApplicationContext());
 
         if (!CheckDeviceIsOnline.isNetworkConnected(this)) {
+
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setCancelable(false);
             builder.setTitle("Check Internet Connection!");

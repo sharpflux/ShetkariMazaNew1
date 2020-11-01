@@ -4,20 +4,25 @@ import android.app.ProgressDialog;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
 import com.sharpflux.shetkarimaza.customviews.CustomRecyclerViewDialog;
 import com.sharpflux.shetkarimaza.model.MyProcessor;
 import com.sharpflux.shetkarimaza.model.Product;
@@ -33,13 +38,13 @@ import java.util.Locale;
 
 public class FirstFragment extends Fragment {
 
-    TextInputEditText Rtype_edit, Rcategory_edit, editfullname, mobileNo, AlternateMobile, Email,name_botanical;
+    EditText Rtype_edit, Rcategory_edit, editfullname, mobileNo, AlternateMobile, Email,name_botanical;
 
     ArrayList<Product> list;
     private ArrayList<MyProcessor> processorList;
     Locale myLocale;
     private CustomRecyclerViewDialog customDialog;
-
+    private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
     DataFetcher fetcher;
 
     TextView hidRegTypeId, hidRegCagteId;
@@ -50,13 +55,19 @@ public class FirstFragment extends Fragment {
     RadioGroup rg;
     RadioButton rb1,rb2;
     View view;
-    Button btn_next;
+    LinearLayout btn_next;
     String gender = "";
     private OnStepOneListener mListener;
     private String UserId, username, usermobileno, useremail;
 
     dbLanguage mydatabase;
     String currentLanguage,language;
+
+    public static final String ALTERNATE_MOBILE_KEY = "AlternateMobile";
+
+    private String userEmail = "";
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,7 +84,7 @@ public class FirstFragment extends Fragment {
         rb2=view.findViewById(R.id.radio2);
 
 
-        btn_next = (Button) (view.findViewById(R.id.firstbtnnext));
+        btn_next = (LinearLayout) (view.findViewById(R.id.footer));
         editfullname = view.findViewById(R.id.editfullname);
         mobileNo = view.findViewById(R.id.mobileNo);
         name_botanical = view.findViewById(R.id.name_botanical);
@@ -81,6 +92,8 @@ public class FirstFragment extends Fragment {
         AlternateMobile = view.findViewById(R.id.AlternateMobile);
         Email = view.findViewById(R.id.Email);
         list = new ArrayList<Product>();
+
+        AlternateMobile.setSaveEnabled(false);
 
         mydatabase = new dbLanguage(getContext());
 
@@ -99,6 +112,8 @@ public class FirstFragment extends Fragment {
         }
 
 
+
+
         editfullname.setText(username);
         mobileNo.setText(usermobileno);
         // Email.setText(useremail);
@@ -114,7 +129,7 @@ public class FirstFragment extends Fragment {
                 String rb= Rcategory_edit.getText().toString();
                 String alterNo= AlternateMobile.getText().toString();
 
-
+                String email= Email.getText().toString();
 
 
 
@@ -147,6 +162,11 @@ public class FirstFragment extends Fragment {
                     return;
                 }
 
+                if (TextUtils.isEmpty(email)) {
+                    email="0";
+                }
+
+
                 String name = editfullname.getText().toString();
                 Bundle bundle = new Bundle();
 
@@ -156,7 +176,7 @@ public class FirstFragment extends Fragment {
                 bundle.putString("Gender", gender);
                 bundle.putString("Mobile", mobileNo.getText().toString());
                 bundle.putString("AlternateMobile", AlternateMobile.getText().toString());
-                bundle.putString("Email", Email.getText().toString());
+                bundle.putString("Email", email);
                 FragmentTransaction transection = getFragmentManager().beginTransaction();
                 SecondFragment mfragment = new SecondFragment();
                 mfragment.setArguments(bundle); //data being send to SecondFragment
@@ -227,7 +247,27 @@ public class FirstFragment extends Fragment {
 
         return view;
     }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
 
+        if(outState!=null) {
+            // Save user email instance variable value in bundle.
+            outState.putString(this.ALTERNATE_MOBILE_KEY, AlternateMobile.getText().toString());
+
+        }
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+        if(savedInstanceState!=null) {
+            // Retrieve the user email value from bundle.
+            userEmail = savedInstanceState.getString(this.ALTERNATE_MOBILE_KEY);
+            AlternateMobile.setText(userEmail);
+        }
+    }
 
     private class AsyncTaskRunner extends AsyncTask<String, String, String> {
 
@@ -241,13 +281,13 @@ public class FirstFragment extends Fragment {
 
                 if (params[0].toString() == "type")
                     fetcher.loadList("RegistrationType", Rtype_edit, URLs.URL_RType+"1&PageSize=15&Language="+currentLanguage,
-                            "RegistrationTypeId", hidRegTypeId, "", "","Registration Type","",null,null);
+                            "RegistrationTypeId", hidRegTypeId, "", "","Registration Type","",null,null,customDialogLoadingProgressBar);
                 else if (params[0].toString() == "cate")
                     fetcher.loadList("RegistrationCategoryName",
                             Rcategory_edit, URLs.URL_RCategary, "RegistrationCategoryId", hidRegCagteId,
-                            "", "","Registration Category Name","",null,null);
+                            "", "","Registration Category Name","",null,null,customDialogLoadingProgressBar);
 
-                Thread.sleep(500);
+                Thread.sleep(10);
 
                 resp = "Slept for " + params[0] + " seconds";
 
@@ -261,15 +301,14 @@ public class FirstFragment extends Fragment {
         @Override
         protected void onPostExecute(String result) {
             // execution of result of Long time consuming operation
-            progressDialog.dismiss();
+                //progressDialog.dismiss();
             // finalResult.setText(result);
         }
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(getContext(),
-                    "Loading...",
-                    "");
+            customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(getContext());
+            customDialogLoadingProgressBar.show();
         }
 
         @Override

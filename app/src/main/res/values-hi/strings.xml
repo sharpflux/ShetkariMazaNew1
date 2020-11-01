@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">मेरा किसान</string>
+    <string name="app_name">किसान माझा </string>
     <string name="title_activity_home">होम एक्टिविटी</string>
     <string name="navigation_drawer_open">नेविगेशन दराज खोलें</string>
     <string name="navigation_drawer_close">नेविगेशन ड्रावर बंद करें</string>
@@ -16,8 +16,8 @@
     <string name="menu_logout">लोग आउट</string>
     <string name="menu_notification">अधिसूचना</string>
     <string name="menu_aboutus">हमारे बारे में</string>
-
-
+    <string name="add_more">अधिक जोड़ें</string>
+    <string name="vertical_ellipses">&#8942;</string>
     <string name="tab1">कॉल</string>
     <string name="tab2">बातचीत</string>
     <string name="tab3">संपर्क</string>
@@ -39,11 +39,14 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">हैलो खाली टुकड़ा</string>
-
-
+    <string name="Ware_House_Name">वेअर हाऊस</string>
+    <string name="Capacity">क्षमता</string>
     <string name="buyer">क्रेता</string>
     <string name="seller">विक्रेता</string>
-
+    <string name="VehicalType">वाहन का प्रकार</string>
+    <string name="VehicalNo">गाडी नंबर</string>
+    <string name="RatePerKm">
+प्रति किलोमीटर दर </string>
     //login signup
     <string name="firstname">पहला नाम*</string>
     <string name="middlename">मध्य नाम</string>

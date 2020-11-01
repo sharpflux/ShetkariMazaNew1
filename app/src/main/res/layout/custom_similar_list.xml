@@ -1,5 +1,278 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginBottom="18dp"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:id="@+id/row_cartlist_ivProImg"
+            android:layout_width="150dp"
+            android:layout_gravity="center"
+            android:layout_height="150dp"
+            android:src="@drawable/aple" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16.9dp"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/row_cartlist_tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sfpro_display_bold"
+                android:text="Santushti Smoothies and Shakes"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/row_cartlist_tvVarity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfpro_display_medium"
+                    android:letterSpacing="0.0525"
+                    android:text="Fatehgunj"
+                    android:textColor="@color/lightGrey"
+                    android:layout_marginRight="10dp"
+                    android:textSize="12sp" />
+
+
+                <TextView
+                    android:id="@+id/row_cartlist_tvQuality"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:textSize="12sp"
+                    android:text="Unit"
+                    android:paddingTop="@dimen/_2sdp"
+                    android:paddingBottom="@dimen/_2sdp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5.3dp"
+                        android:fontFamily="@font/sfpro_display_medium"
+                        android:letterSpacing="0.0525"
+                        android:text="QTY"
+                        android:textColor="@color/gray"
+                        android:textSize="10.7sp" />
+
+
+                    <TextView
+                        android:id="@+id/tvAvailableQty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sfpro_display_medium"
+                        android:text="₹ 280"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:layout_marginLeft="5dp"
+                    android:fontFamily="@font/sfpro_display_medium"
+                    android:text="X"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5.3dp"
+                        android:fontFamily="@font/sfpro_display_medium"
+                        android:letterSpacing="0.0525"
+                        android:text="PRICE"
+                        android:textColor="@color/gray"
+                        android:textSize="10.7sp" />
+
+
+                    <TextView
+                        android:id="@+id/tvExpectedPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sfpro_display_medium"
+                        android:text="₹ 280"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:layout_marginLeft="5dp"
+                    android:fontFamily="@font/sfpro_display_medium"
+                    android:text="="
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5.3dp"
+                        android:fontFamily="@font/sfpro_display_medium"
+                        android:letterSpacing="0.0525"
+                        android:text="TOTAL"
+                        android:textColor="@color/black"
+                        android:textSize="10.7sp" />
+
+
+                    <TextView
+                        android:id="@+id/row_cartlist_tvPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sfpro_display_medium"
+                        android:text="₹ 280"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tvPriceDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/sfpro_display_medium"
+                android:letterSpacing="0.0525"
+                android:text="Price Details Per"
+                android:textColor="@color/gray"
+                android:textSize="10sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:background="@color/viewline"
+                android:layout_marginTop="5.5dp"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5.8dp"
+                android:fontFamily="@font/sfpro_display_medium"
+                android:letterSpacing="0.0525"
+                android:text="FARMER DETAILS"
+                android:textColor="@color/gray"
+                android:textSize="10.7sp" />
+
+
+            <TextView
+                android:id="@+id/row_cartlist_FarmerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sfpro_display_medium"
+                android:text="2 X French Fries"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/tvFarmerAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/sfpro_display_medium"
+                android:letterSpacing="0.0525"
+                android:text="Address"
+                android:textColor="@color/gray"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5.3dp"
+                android:fontFamily="@font/sfpro_display_medium"
+                android:letterSpacing="0.0525"
+                android:text="CALL"
+                android:textColor="@color/gray"
+                android:textSize="10.7sp" />
+
+
+
+
+            <TextView
+                android:id="@+id/row_cartlist_MobNo"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="1234567890"
+                android:textColor="#0423EC"
+                style="@style/ganaral_greystyle" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:fontFamily="@font/sfpro_display_medium"
+                android:text="10 May 2019 at 12:00 PM"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/delivered_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/rectangle_silver_cure"
+                android:fontFamily="@font/sfpro_display_medium"
+                android:letterSpacing="0.0325"
+                android:paddingLeft="14dp"
+                android:paddingTop="5dp"
+                android:paddingRight="14dp"
+                android:paddingBottom="5dp"
+                android:text="DELIVERED"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:background="@color/black"
+        android:layout_marginTop="10.8dp"/>
+</LinearLayout>
+<!--
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/row_cartlist_cvContainer"
@@ -86,4 +359,4 @@
                 style="@style/ganaral_greystyle" />
         </LinearLayout>
     </LinearLayout>
-</android.support.v7.widget.CardView>
+</androidx.cardview.widget.CardView>-->

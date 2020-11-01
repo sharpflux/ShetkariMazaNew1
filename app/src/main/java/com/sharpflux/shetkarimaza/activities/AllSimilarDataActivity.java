@@ -10,15 +10,14 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -34,6 +33,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.SimilarListAdapter;
+import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
 import com.sharpflux.shetkarimaza.filters.BottomSheetDialogSorting;
 import com.sharpflux.shetkarimaza.filters.BuyerFilterActivity;
 import com.sharpflux.shetkarimaza.filters.Filter1Activity;
@@ -94,7 +94,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
     dbLanguage mydatabase;
     String currentLanguage,language;
-
+    private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -424,21 +424,25 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
                                     } else {
                                         Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+
                                     }
 
                                     myAdapter = new SimilarListAdapter(AllSimilarDataActivity.this, productlist);
                                     recyclerView.setAdapter(myAdapter);
-
+                                    customDialogLoadingProgressBar.dismiss();
                                 }
+                                customDialogLoadingProgressBar.dismiss();
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
+                                customDialogLoadingProgressBar.dismiss();
                             }
                         }
                     },
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            customDialogLoadingProgressBar.dismiss();
                             // Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }) {
@@ -479,14 +483,13 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result)
         {
-          progressDialog.dismiss();
+
         }
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(AllSimilarDataActivity.this,
-                    "Loading...",
-                    "");
+            customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(AllSimilarDataActivity.this);
+            customDialogLoadingProgressBar.show();
         }
 
         @Override

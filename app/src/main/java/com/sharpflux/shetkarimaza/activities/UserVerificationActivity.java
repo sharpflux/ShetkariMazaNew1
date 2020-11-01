@@ -5,8 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.CountDownTimer;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,6 +13,9 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -138,6 +140,21 @@ public class UserVerificationActivity extends AppCompatActivity {
                                    Intent intent = new Intent(getApplicationContext(),DetailFormActivity.class);
                                    startActivity(intent);
                                 } else {
+
+                                    builder.setMessage(obj.getString("message"))
+                                            .setCancelable(false)
+
+                                            .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    //  Action for 'NO' Button
+                                                    dialog.cancel();
+
+                                                }
+                                            });
+
+                                    AlertDialog alert = builder.create();
+                                    alert.setTitle("Error");
+                                    alert.show();
                                     Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
@@ -339,7 +356,29 @@ public class UserVerificationActivity extends AppCompatActivity {
         }
 
     }
-
+    @Override
+    public void onBackPressed() {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setMessage("Do you want to leave this page");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //if user pressed "yes", then he is allowed to exit from application
+                startActivity(new Intent(UserVerificationActivity.this, TabLayoutLogRegActivity.class));
+                finish();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //if user select "No", just cancel this dialog and continue with app
+                dialog.cancel();
+            }
+        });
+        android.app.AlertDialog alert = builder.create();
+        alert.show();
+    }
     public class MyCountDownTimer2 extends CountDownTimer {
         public int counter=59;
         public MyCountDownTimer2(long millisInFuture, long countDownInterval) {
@@ -418,10 +457,4 @@ public class UserVerificationActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        startActivity(new Intent(UserVerificationActivity.this, TabLayoutLogRegActivity.class));
-        finish();
-    }
 }

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_rounded_corners_gray_background"
+    >
+    <include
+        android:id="@+id/include_toolbar"
+        layout="@layout/top_rounded_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp" />
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/footer"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="50dp"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical">
+
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/sfpro_display_medium">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/edtstate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:fontFamily="@font/sfpro_display_medium"
+                        android:hint="@string/VehicalType"
+                        android:inputType="none"
+                        android:textSize="15dp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/TICompany"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/sfpro_display_medium">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/edtcompanyname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sfpro_display_medium"
+                        android:hint="@string/VehicalNo"
+                        android:maxLength="50"
+                        android:textSize="15dp" />
+                </android.support.design.widget.TextInputLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/sfpro_display_medium">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/edtlicense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sfpro_display_medium"
+                        android:inputType="number"
+                        android:hint="@string/RatePerKm"
+                        android:maxLength="4"
+                        android:textSize="15dp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:visibility="gone"
+                    android:fontFamily="@font/sfpro_display_medium">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/name_botanical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:fontFamily="@font/sfpro_display_medium"
+                        android:hint="@string/botanical_name"
+                        android:inputType="none"
+
+                        android:textColorHint="@color/colorGray"
+                        android:textSize="15dp" />
+
+
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/hideStateId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="hidden value"
+                android:textSize="20dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/hideDistrictId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="hidden value"
+                android:textSize="20dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/hideTalukaId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="hidden value"
+                android:textSize="20dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+    <LinearLayout
+        android:id="@+id/shadow_down"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:orientation="horizontal"
+        android:background="@drawable/shadow_down"
+        android:layout_below="@id/include_toolbar"
+        />
+
+
+    <TextView
+        android:id="@+id/textView_addFarm"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/btn_plain"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:text="@string/add"
+        android:textColor="@color/white"
+        android:duplicateParentState="true"
+        android:layout_alignParentBottom="true"
+        />
+
+
+
+
+</RelativeLayout>

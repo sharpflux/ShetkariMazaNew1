@@ -2,7 +2,9 @@ package com.sharpflux.shetkarimaza.uploadimage;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
-import android.support.annotation.NonNull;
+
+
+import androidx.annotation.NonNull;
 
 import java.util.Objects;
 

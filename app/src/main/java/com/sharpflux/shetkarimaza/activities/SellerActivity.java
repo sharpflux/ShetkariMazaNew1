@@ -5,13 +5,17 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -20,6 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.MySellerAdapter;
+import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
 import com.sharpflux.shetkarimaza.model.SellOptions;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
@@ -47,13 +52,15 @@ public class SellerActivity extends AppCompatActivity {
     MySellerAdapter myAdapter;
     dbLanguage mydatabase;
     String currentLanguage,language;
+    ImageView img_banner_profile_placeholder;
+    private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seller);
         myLocale = getResources().getConfiguration().locale;
-
+        customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(SellerActivity.this);
         if (!CheckDeviceIsOnline.isNetworkConnected(this)/*||!CheckDeviceIsOnline.isWifiConnected(this)*/)
 
         { AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -138,6 +145,7 @@ public class SellerActivity extends AppCompatActivity {
 
                                 mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                                     @Override
+
                                     public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                                         super.onScrollStateChanged(recyclerView, newState);
                                     }
@@ -178,6 +186,8 @@ public class SellerActivity extends AppCompatActivity {
                                                 isLoading = true;
                                             }
                                         }
+
+                                        customDialogLoadingProgressBar.dismiss();
                                     }
                                 });
 
@@ -185,6 +195,7 @@ public class SellerActivity extends AppCompatActivity {
 
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            customDialogLoadingProgressBar.dismiss();
                         }
                     }
                 },
@@ -192,6 +203,7 @@ public class SellerActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(SellerActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                        customDialogLoadingProgressBar.dismiss();
                     }
                 }) {
             @Override
@@ -238,15 +250,14 @@ public class SellerActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             // execution of result of Long time consuming operation
-            progressDialog.dismiss();
+
             // finalResult.setText(result);
         }
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(SellerActivity.this,
-                    "Loading...",
-                    "");
+            customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(SellerActivity.this);
+            customDialogLoadingProgressBar.show();
         }
 
         @Override
