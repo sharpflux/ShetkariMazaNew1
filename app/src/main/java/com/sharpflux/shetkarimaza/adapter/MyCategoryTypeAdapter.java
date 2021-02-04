@@ -49,7 +49,7 @@ public class MyCategoryTypeAdapter extends RecyclerView.Adapter<MyCategoryTypeHo
 
 
         if (viewType == VIEW_TYPE_ITEM) {
-            View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_category, parent, false);
+            View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_merchant, parent, false);
             return new MyCategoryTypeHolder(mView);
         } else {
             View nview = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading, parent, false);
@@ -106,8 +106,11 @@ class MyCategoryTypeHolder extends RecyclerView.ViewHolder implements View.OnCli
     MyCategoryTypeHolder(View itemView) {
         super(itemView);
 
-        mImage = itemView.findViewById(R.id.ivImageCategory);
-        mTitle = itemView.findViewById(R.id.tvTitleCategory);
+        //mImage = itemView.findViewById(R.id.ivImageCategory);
+       // mTitle = itemView.findViewById(R.id.tvTitleCategory);
+
+        mImage = itemView.findViewById(R.id.ivImage);
+        mTitle = itemView.findViewById(R.id.tvTitle);
         itemView.setOnClickListener(this);
     }
 

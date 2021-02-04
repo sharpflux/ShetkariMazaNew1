@@ -13,6 +13,7 @@
     <string name="menu_address">पत्ता</string>
     <string name="menu_shopping">माझे कार्ट</string>
     <string name="menu_list">माझे ऑर्डर</string>
+    <string name="header_category">श्रेणी </string>
     <string name="menu_share">सामायिक करा</string>
     <string name="menu_logout">बाहेर पडणे</string>
     <string name="menu_notification">अधिसूचना</string>

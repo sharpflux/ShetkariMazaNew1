@@ -16,7 +16,7 @@
     <string name="menu_logout">Logout</string>
     <string name="menu_notification">Notification</string>
     <string name="menu_aboutus">About Us</string>
-
+    <string name="header_category">CATEGORIES </string>
 
     <string name="tab1">CALLS</string>
     <string name="tab2">CHATS</string>

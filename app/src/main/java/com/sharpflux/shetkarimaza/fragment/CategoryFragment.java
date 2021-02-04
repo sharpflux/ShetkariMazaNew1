@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -25,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.adapter.HomeSliderAdapter;
 import com.sharpflux.shetkarimaza.adapter.MyCategoryTypeAdapter;
 import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
 import com.sharpflux.shetkarimaza.model.MyCategoryType;
@@ -44,6 +46,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import me.relex.circleindicator.CircleIndicator;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -62,9 +66,11 @@ public class CategoryFragment extends Fragment {
     private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
     Boolean isScrolling = false;
     int currentItems, totalItems, scrollOutItems;
-
+    private ViewPager viewPager;
+    Handler handler;
    // ShimmerFrameLayout parentShimmerLayout;
-
+   Runnable runnable_viewPager;
+    int currentPage = 0;
     public CategoryFragment() {
         // Required empty public constructor
     }
@@ -76,7 +82,7 @@ public class CategoryFragment extends Fragment {
 
         View view =inflater.inflate(R.layout.fragment_category, container, false);
         mRecyclerView = view.findViewById(R.id.recyclerview_categorytype);
-        mGridLayoutManager = new GridLayoutManager(getContext(), 2);
+        mGridLayoutManager = new GridLayoutManager(getContext(), 3);
         mRecyclerView.setLayoutManager(mGridLayoutManager);
 
         mydatabase = new dbLanguage(getContext());
@@ -90,7 +96,27 @@ public class CategoryFragment extends Fragment {
                 "shetkariMaza", Context.MODE_PRIVATE);
         String language = sharedPref.getString("KEY_LANGUAGE", null);*/
 
+        viewPager = view.findViewById(R.id.viewpager);
+        CircleIndicator indicator = view.findViewById(R.id.indicator);
+        HomeSliderAdapter viewPagerAdapter = new HomeSliderAdapter(getContext());
+        viewPager.setPageTransformer(false, new FadeOutTransformation());
+        viewPager.setAdapter(viewPagerAdapter);
+      //  scrollView.scrollTo(0, viewPager.getTop());
 
+        handler = new Handler();
+        runnable_viewPager = new Runnable() {
+            public void run() {
+                if (currentPage == 3) {
+                    currentPage = 0;
+                }
+                else
+                {
+                    currentPage++;
+                }
+                viewPager.setCurrentItem(currentPage, true);
+                handler.postDelayed(this,3*1000);
+            }
+        };
 
 
         User user = SharedPrefManager.getInstance(getContext()).getUser();
@@ -165,7 +191,17 @@ public class CategoryFragment extends Fragment {
     }
 
 
+    public class FadeOutTransformation implements ViewPager.PageTransformer{
+        @Override
+        public void transformPage(View page, float position) {
 
+            page.setTranslationX(-position*page.getWidth());
+
+            page.setAlpha(1-Math.abs(position));
+
+
+        }
+    }
 
     private void setDynamicFragmentToTabLayout(Integer PageSize) {
 

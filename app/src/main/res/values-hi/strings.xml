@@ -8,6 +8,8 @@
     <string name="nav_header_desc">नेविगेशन हेडर</string>
     <string name="action_settings">सेटिंग्स</string>
 
+    <string name="header_category">श्रेणियाँ </string>
+
     <string name="menu_home">होम</string>
     <string name="menu_address">पता</string>
     <string name="menu_shopping">मेरी गाड़ी</string>
