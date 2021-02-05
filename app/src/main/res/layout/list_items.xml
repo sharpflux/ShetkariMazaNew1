@@ -15,7 +15,6 @@
     android:layout_marginBottom="8dp"
     android:gravity="center"
     >
-
     <TextView
         android:id="@+id/textViewName"
         android:layout_width="match_parent"
