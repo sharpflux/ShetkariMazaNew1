@@ -76,7 +76,7 @@ public class LoginFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
-        viewPager = ((TabLayoutLogRegActivity)getActivity()).findViewById(R.id.pager);
+        viewPager = ((TabLayoutLogRegActivity)getActivity()).findViewById(R.id.viewPager);
         tabLayout = ((TabLayoutLogRegActivity)getActivity()).findViewById(R.id.tabLayout);
         /*tabLayout.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
             @Override

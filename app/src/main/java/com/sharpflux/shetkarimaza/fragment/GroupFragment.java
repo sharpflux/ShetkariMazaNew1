@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,7 +103,8 @@ public class GroupFragment extends Fragment implements RecyclerViewClickListener
             JSONArray obj = null;
             try {
                 obj = new JSONArray(extras.getString("jsonObj").toString());
-
+                Log.d("DYNAMIC FRAGMENT","\n\n\n--------------------------------------\n"
+                        +extras.getString("jsonObj").toString()+"\\n--------------------------------------\n");
                 for (int i = 0; i < obj.length(); i++) {
                     JSONObject userJson = null;
                     try {

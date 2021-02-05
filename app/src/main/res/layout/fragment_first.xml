@@ -41,21 +41,22 @@
                 android:text="hidden value"
                 android:textSize="20dp"
                 android:visibility="gone" />
+
+
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/sfpro_display_medium"
+                android:layout_marginTop="15dp"
                 >
 
                 <EditText
                     android:id="@+id/edtRegitype"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:hint="@string/registration_category"
                     android:inputType="none"
-                    android:textSize="15dp" />
+                    android:textSize="15sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,9 +64,9 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="15dp"
                 android:visibility="gone"
-                android:fontFamily="@font/sfpro_display_medium"
+
                 >
 
                 <EditText
@@ -78,7 +79,7 @@
                     android:fontFamily="@font/sfpro_display_medium"
                     android:hint="@string/registration_category"
                     android:inputType="none"
-                    android:textSize="15dp"
+                    android:textSize="15sp"
                     android:visibility="gone"  />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -88,8 +89,8 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/sfpro_display_medium"
+                android:layout_marginTop="15dp"
+
                 >
 
                 <EditText
@@ -102,7 +103,7 @@
                     android:fontFamily="@font/sfpro_display_medium"
                     android:hint="@string/name"
                     android:inputType="none"
-                    android:textSize="15dp" />
+                    android:textSize="15sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -112,23 +113,25 @@
                 android:id="@+id/LinearLayout1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="vertical"
-                android:padding="2dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
                 tools:context=".MainActivity">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/sfpro_display_medium"
+                    android:layout_marginStart="5dp"
                     android:hint="@string/gender"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textSize="15dp" />
+
+                    android:textSize="15sp" />
 
                 <RadioGroup
                     android:id="@+id/radioGroup1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="30dp"
                     android:orientation="horizontal">
 
                     <RadioButton
@@ -136,14 +139,14 @@
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/sfpro_display_medium"
+
                         android:hint="Male" />
 
                     <RadioButton
                         android:id="@+id/radio2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/sfpro_display_medium"
+                        android:layout_marginStart="30dp"
                         android:hint="Female" />
 
 
@@ -155,13 +158,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_gravity="center"
+                android:visibility="gone"
                 android:background="@color/colorGray" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/sfpro_display_medium"
+                android:layout_marginTop="15dp"
+
                 >
 
                 <EditText
@@ -172,7 +176,7 @@
 
                     android:hint="@string/mobile_no"
                     android:inputType="none"
-                    android:textSize="15dp" />
+                    android:textSize="15sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -180,8 +184,8 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/sfpro_display_medium"
+                android:layout_marginTop="15dp"
+
                 >
 
                 <EditText
@@ -192,7 +196,7 @@
                     android:hint="@string/AlternateMob"
                     android:inputType="number"
                     android:maxLength="10"
-                    android:textSize="15dp"/>
+                    android:textSize="15sp"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -201,8 +205,8 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/sfpro_display_medium"
+                android:layout_marginTop="15dp"
+
                 >
 
                 <EditText
@@ -212,7 +216,7 @@
                     android:fontFamily="@font/sfpro_display_medium"
                     android:hint="@string/email_id"
                     android:inputType="textEmailAddress"
-                    android:textSize="15dp"/>
+                    android:textSize="15sp"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -220,9 +224,9 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="15dp"
                 android:visibility="gone"
-                android:fontFamily="@font/sfpro_display_medium"
+
                 >
 
                 <EditText
@@ -237,7 +241,7 @@
                     android:inputType="none"
 
                     android:textColorHint="@color/colorGray"
-                    android:textSize="15dp"/>
+                    android:textSize="15sp"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -257,23 +261,20 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:padding="18dp"
+        android:gravity="center"
         android:background="@drawable/ripple_orange"
         android:orientation="horizontal"
         android:id="@+id/footer">
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
+
                 android:layout_gravity="center"
-                android:fontFamily="@font/sfpro_display_bold"
                 android:gravity="center"
                 android:text="@string/next"
                 android:textColor="@color/white"
@@ -282,7 +283,7 @@
 
 
 
-        </FrameLayout>
+
 
 
     </LinearLayout>

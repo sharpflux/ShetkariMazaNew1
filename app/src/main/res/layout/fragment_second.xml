@@ -44,17 +44,17 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/sfpro_display_medium"
+                android:layout_marginTop="15dp"
+
                 >
 
                 <EditText
                     android:id="@+id/edtaddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/sfpro_display_medium"
+
                     android:hint="@string/address"
-                    android:textSize="15dp" />
+                    android:textSize="15sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -62,8 +62,8 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/sfpro_display_medium"
+                android:layout_marginTop="15dp"
+
                 >
 
                 <EditText
@@ -73,18 +73,18 @@
                     android:cursorVisible="false"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:fontFamily="@font/sfpro_display_medium"
+
                     android:hint="@string/state"
                     android:inputType="none"
-                    android:textSize="15dp" />
+                    android:textSize="15sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/sfpro_display_medium"
+                android:layout_marginTop="15dp"
+
                 >
 
                 <EditText
@@ -94,10 +94,10 @@
                     android:cursorVisible="false"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:fontFamily="@font/sfpro_display_medium"
+
                     android:hint="@string/dist"
                     android:inputType="none"
-                    android:textSize="15dp"  />
+                    android:textSize="15sp"  />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -105,8 +105,8 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/sfpro_display_medium"
+                android:layout_marginTop="15dp"
+
                 >
 
                 <EditText
@@ -116,10 +116,10 @@
                     android:cursorVisible="false"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:fontFamily="@font/sfpro_display_medium"
+
                     android:hint="@string/Name_of_Taluka"
                     android:inputType="none"
-                    android:textSize="15dp"/>
+                    android:textSize="15sp"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -128,8 +128,8 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/sfpro_display_medium"
+                android:layout_marginTop="15dp"
+
                 >
 
                 <EditText
@@ -137,7 +137,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/Cityorvillage"
-                    android:textSize="15dp"/>
+                    android:textSize="15sp"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -146,67 +146,66 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/sfpro_display_medium"
+                android:layout_marginTop="15dp"
+
                 >
 
                 <EditText
                     android:id="@+id/edtcompanyname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/sfpro_display_medium"
+
                     android:hint="@string/company_name"
-                    android:textSize="15dp"/>
+                    android:textSize="15sp"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/sfpro_display_medium"
+                android:layout_marginTop="15dp"
+
                 >
 
                 <EditText
                     android:id="@+id/edtlicense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/sfpro_display_medium"
+
                     android:hint="@string/APMC_licance"
-                    android:textSize="15dp"/>
+                    android:textSize="15sp"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/sfpro_display_medium"
+                android:layout_marginTop="15dp"
+
                 >
 
                 <EditText
                     android:id="@+id/edtcompanyregno"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/sfpro_display_medium"
+
                     android:hint="@string/Company_Regin_no"
-                    android:textSize="15dp"/>
+                    android:textSize="15sp"/>
 
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/sfpro_display_medium"
+                android:layout_marginTop="15dp"
+
                 >
 
                 <EditText
                     android:id="@+id/edtgstno"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/sfpro_display_medium"
                     android:hint="@string/GST_no"
-                    android:textSize="15dp" />
+                    android:textSize="15sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -245,32 +244,29 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:padding="18dp"
+        android:gravity="center"
         android:background="@drawable/ripple_orange"
         android:orientation="horizontal"
         android:id="@+id/secondbtnnext">
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center"
-                android:fontFamily="@font/sfpro_display_bold"
-                android:gravity="center"
-                android:text="@string/next"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/next"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
 
 
 
-        </FrameLayout>
+
+
 
 
     </LinearLayout>

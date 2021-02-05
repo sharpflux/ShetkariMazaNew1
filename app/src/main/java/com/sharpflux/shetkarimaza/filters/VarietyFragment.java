@@ -54,7 +54,7 @@ public class VarietyFragment extends Fragment {
     private RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     ArrayList<SubCategoryFilter> productlist;
-    Button btn_next, btn_back, btnFilterData;
+    TextView btn_next, btn_back, btnFilterData;
     String itemTypeId = "", categoryId = "",ItemName="";
     Bundle extras;
     StringBuilder varity_builder_id;

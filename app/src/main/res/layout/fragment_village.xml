@@ -1,28 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     android:orientation="vertical"
     android:background="@drawable/backgroundlogo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:layout_marginTop="10dp"
-        android:id="@+id/tvTitleOne"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Village"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="#4CAF50"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        />
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary"
+
+        android:id="@+id/linearLayout"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:id="@+id/tvTitleOne"
+
+            android:text="Village"
+
+            android:gravity="center_vertical|start"
+            android:textAllCaps="true"
+            android:paddingStart="20dp"
+            android:fontFamily="@font/arima_madurai_medium"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+
+            />
+        <TextView
+            android:textSize="15sp"
+
+            android:textColor="@android:color/white"
+            android:fontFamily="@font/arima_madurai_medium"
+
+            android:id="@+id/btnFilterData"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="0dp"
+            android:layout_alignParentLeft="true"
+            android:text="@string/select_data"
+
+            />
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
+            android:rotation="180"
+            android:tint="@color/white"
+            android:layout_gravity="center"
+            android:layout_marginEnd="20dp"
+            />
+
+
+    </LinearLayout>
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:fontFamily="@font/sfpro_display_medium">
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/sfpro_display_medium"
+        android:layout_alignBottom="@+id/linearLayout">
 
         <EditText
             android:id="@+id/edtvillage"
@@ -36,66 +85,117 @@
 
             android:textSize="15dp" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/relativeLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="bottom"
-        android:layout_marginBottom="10dp"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_marginBottom="0dp"
         android:orientation="horizontal"
-        android:weightSum="3">
+        android:layout_alignParentBottom="true"
+        >
 
 
-        <Button
-            android:textSize="20dp"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:height="40dp"
-            android:textColor="@android:color/white"
-            android:fontFamily="@font/sfpro_display_bold"
-            android:background="@drawable/btn_backnext"
+        <TextView
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/green_border"
             android:id="@+id/btn_backVillage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_marginLeft="0dp"
             android:text="@string/back"
-            android:layout_weight="1"
-
+            android:fontFamily="@font/arima_madurai_medium"
             />
-        <Button
-            android:textSize="20dp"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:height="40dp"
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="18sp"
             android:textColor="@android:color/white"
-            android:fontFamily="@font/sfpro_display_bold"
-            android:background="@drawable/btn_backnext"
-            android:id="@+id/btnFilterData"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_weight="1"
-            android:text="@string/select_data"
-
-            />
-
-
-        <Button
-            android:fontFamily="@font/sfpro_display_bold"
+            android:background="@drawable/gradient_upside_down"
+            android:gravity="center"
+            android:layout_marginLeft="0dp"
             android:id="@+id/btn_nextVillage"
-            android:background="@drawable/btn_backnext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:textSize="20dp"
-            android:layout_weight="1"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:height="40dp"
+            android:fontFamily="@font/arima_madurai_medium"
             android:text="@string/next"
-            android:textColor="@android:color/white" />
+            />
 
 
     </LinearLayout>
 
-</LinearLayout>
+
+
+
+
+
+
+    <!-- <LinearLayout
+         android:id="@+id/relativeLayout1"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:gravity="bottom"
+         android:layout_marginBottom="10dp"
+         android:orientation="horizontal"
+         android:weightSum="3">
+
+
+         <Button
+             android:textSize="20dp"
+             android:textAllCaps="true"
+             android:textStyle="bold"
+             android:height="40dp"
+             android:textColor="@android:color/white"
+             android:fontFamily="@font/sfpro_display_bold"
+             android:background="@drawable/btn_backnext"
+             android:id="@+id/btn_backVillage"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignParentLeft="true"
+             android:text="@string/back"
+             android:layout_weight="1"
+
+             />
+         <Button
+             android:textSize="20dp"
+             android:textAllCaps="true"
+             android:textStyle="bold"
+             android:height="40dp"
+             android:textColor="@android:color/white"
+             android:fontFamily="@font/sfpro_display_bold"
+             android:background="@drawable/btn_backnext"
+             android:id="@+id/btnFilterData"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignParentLeft="true"
+             android:layout_weight="1"
+             android:text="@string/select_data"
+
+             />
+
+
+         <Button
+             android:fontFamily="@font/sfpro_display_bold"
+             android:id="@+id/btn_nextVillage"
+             android:background="@drawable/btn_backnext"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignParentRight="true"
+             android:textSize="20dp"
+             android:layout_weight="1"
+             android:textAllCaps="true"
+             android:textStyle="bold"
+             android:height="40dp"
+             android:text="@string/next"
+             android:textColor="@android:color/white" />
+
+
+     </LinearLayout>-->
+
+</RelativeLayout>

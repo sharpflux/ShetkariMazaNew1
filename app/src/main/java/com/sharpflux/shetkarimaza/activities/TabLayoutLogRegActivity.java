@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.LinearLayout;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,25 +16,68 @@ import com.sharpflux.shetkarimaza.adapter.PagerTabAdapter;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 
 public class
-TabLayoutLogRegActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
+TabLayoutLogRegActivity extends AppCompatActivity  {
 
     //This is our tablayout
     private TabLayout tabLayout;
 
     //This is our viewPager
-    private ViewPager viewPager;
+    private ViewPager viewPager_details;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_layout_log_reg);
 
+        viewPager_details = findViewById(R.id.viewPager);
+        tabLayout = findViewById(R.id.tabLayout);
+
+        viewPager_details.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        final PagerTabAdapter pagerTabAdapter = new PagerTabAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
+        viewPager_details.setAdapter(pagerTabAdapter);
+
+
+
+        viewPager_details.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+                viewPager_details.setCurrentItem(tab.getPosition());
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+
+
+
+
+    }
+
+
+    void tabLayout()
+    {
+
+/*
 
         //Initializing the tablayout
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
-           finish();
+            finish();
             startActivity(new Intent(this, ChooseActivity.class));
         }
 
@@ -43,8 +87,20 @@ TabLayoutLogRegActivity extends AppCompatActivity implements TabLayout.OnTabSele
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
+
+
+*/
+
+
+
+
+
+
+/*
+
+
         //Initializing viewPager
-        viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
 
         //Creating our pager adapter
         PagerTabAdapter adapter = new PagerTabAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
@@ -55,9 +111,11 @@ TabLayoutLogRegActivity extends AppCompatActivity implements TabLayout.OnTabSele
         //Adding onTabSelectedListener to swipe views
         tabLayout.addOnTabSelectedListener(this);
 
+*/
 
     }
 
+/*
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         viewPager.setCurrentItem(tab.getPosition());
@@ -72,6 +130,7 @@ TabLayoutLogRegActivity extends AppCompatActivity implements TabLayout.OnTabSele
     public void onTabReselected(TabLayout.Tab tab) {
 
     }
+*/
 
     @Override
     public void onBackPressed() {

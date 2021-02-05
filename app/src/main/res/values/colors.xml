@@ -24,7 +24,7 @@
     <color name="blackShade">#272727</color>
     <color name="lightBlack">#363636</color>
 
-    <color name="colorPrimary">#ff5fb04f</color>
+    <color name="colorPrimary">#3F8331</color> <!--#ff5fb04f-->
     <color name="colorPrimaryDark">#ff5fb04f</color>
     <color name="colorAccent">#ff5fb04f</color>
 
@@ -134,5 +134,6 @@
 
     <color name="colorDisableHover">#7C7C7C</color>
     <color name="colorDisable">#424242</color>
+    <color name="background_gray">#CDFAFAFA</color>
 
 </resources>

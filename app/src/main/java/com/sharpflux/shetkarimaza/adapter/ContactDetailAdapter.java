@@ -15,6 +15,7 @@ import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.ProductDetailsForBuyerActivity;
 import com.sharpflux.shetkarimaza.activities.ProductInfoForSaleActivity;
 import com.sharpflux.shetkarimaza.model.ContactDetail;
+import com.sharpflux.shetkarimaza.volley.URLs;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -42,14 +43,14 @@ public class ContactDetailAdapter extends RecyclerView.Adapter<ContactDetaiViewH
 
     @Override
     public void onBindViewHolder(final ContactDetaiViewHolder holder, final int position) {
-       Picasso.get().load(mlist.get(position).getImage()).resize(300, 300).into(holder.mImage);
+       Picasso.get().load(URLs.Main_URL+mlist.get(position).getImage()).resize(300, 300).into(holder.mImage);
         holder.mfullname.setText(mlist.get(position).getFullName());
         holder.mAddress.setText(mlist.get(position).getAddress());
         holder.mMobNo.setText(mlist.get(position).getMobileNo());
         holder.mState.setText(mlist.get(position).getState()+",");
         holder.mDistrict.setText(mlist.get(position).getDistrict()+",");
         holder.mTaluka.setText(mlist.get(position).getTaluka());
-        holder.ImageUrl=mlist.get(position).getImage();
+        holder.ImageUrl=URLs.Main_URL+mlist.get(position).getImage();
        /* holder.mMobNo.setOnClickListener(new View.OnClickListener() {
 
             @Override

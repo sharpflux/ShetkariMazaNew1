@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+
+    >
+    <item android:drawable="@drawable/bg_slidemenu" />
+
+    <item android:start="200dp" >
+        <bitmap  android:gravity="center" android:alpha="0.1" android:src="@drawable/bg_slidemenu"/>
+    </item>
+
+    <item android:drawable="@drawable/transparent_green_background"
+        />
+
+
+
+
+
+
+
+
+</layer-list>

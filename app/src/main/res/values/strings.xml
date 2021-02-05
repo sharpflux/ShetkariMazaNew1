@@ -45,32 +45,32 @@
     <string name="seller">Seller</string>
 
     //login signup
-    <string name="firstname">First Name*</string>
+    <string name="firstname">First Name *</string>
     <string name="middlename">Middle Name</string>
 
     <string name="username">Username</string>
-    <string name="password">Password*</string>
-    <string name="cpassword">Confirm Password*</string>
+    <string name="password">Password *</string>
+    <string name="cpassword">Confirm Password *</string>
     <string name="login">Log In</string>
     <string name="signup">Sign Up</string>
-    <string name="forgotpassword">Forgot password?</string>
+    <string name="forgotpassword">Forgot password ?</string>
     <string name="loginwith">Or Login With</string>
     <string name="newhere">New Here?</string>
     <string name="signuphere">New User Register</string>
-    <string name="lastname">Last Name*</string>
+    <string name="lastname">Last Name *</string>
     <string name="mobnum">Mobile Number</string>
     <string name="alreadyhaveacc">Already have account?</string>
     <string name="loginphere">Old User LogIn</string>
     <string name="add_more">Add More</string>
     <string name="vertical_ellipses">&#8942;</string>
     //Seller Form
-    <string name="seller_name">Name/Botanical Name*</string>
+    <string name="seller_name">Name/Botanical Name *</string>
     <string name="seller_variety">Variety</string>
-    <string name="seller_age_days">Age(Days)*</string>
-    <string name="seller_available_month">Available(Months)*</string>
-    <string name="seller_available_quality">Available Quality*</string>
-    <string name="seller_available_quantity">Available Quantity*</string>
-    <string name="seller_expected_price">Expected Price per Unit*</string>
+    <string name="seller_age_days">Age(Days) *</string>
+    <string name="seller_available_month">Available(Months) *</string>
+    <string name="seller_available_quality">Available Quality *</string>
+    <string name="seller_available_quantity">Available Quantity *</string>
+    <string name="seller_expected_price">Expected Price per Unit *</string>
     <string name="seller_upload_price">Upload Images</string>
     <string name="seller_upload_videos">Upload Videos</string>
     <string name="seller_submit">Submit</string>
@@ -92,34 +92,34 @@
 
 
     //////////////////////////////////////////
-    <string name="registration_type">Registration Type*</string>
-    <string name="registration_category">Registration Category*</string>
-    <string name="name">Enter your full name*</string>
-    <string name="mobile_no">Mobile number*</string>
+    <string name="registration_type">Registration Type *</string>
+    <string name="registration_category">Registration Category *</string>
+    <string name="name">Enter your full name *</string>
+    <string name="mobile_no">Mobile No. *</string>
     <string name="email_id">Email id</string>
-    <string name="gender">Gender*</string>
-    <string name="address">Address*</string>
+    <string name="gender">Gender *</string>
+    <string name="address">Address *</string>
     <string name="Cityorvillage">City / Village*</string>
     <string name="Name_of_Taluka">Name of Taluka*</string>
-    <string name="dist">Dist*</string>
-    <string name="state">State*</string>
-    <string name="company_name">Company name / Firm name*</string>
+    <string name="dist">District *</string>
+    <string name="state">State *</string>
+    <string name="company_name">Company name / Firm name *</string>
     <string name="Ware_House_Name">Ware House Name</string>
     <string name="VehicalNo">Vehical No</string>
     <string name="Capacity">Capacity</string>
     <string name="VehicalType">Vehical Type</string>
     <string name="Landlin_no">Landline No.</string>
-    <string name="APMC_licance">APMC license No*</string>
-    <string name="Company_Regin_no">Company Register number*</string>
-    <string name="GST_no">GST No.*</string>
+    <string name="APMC_licance">APMC license No *</string>
+    <string name="Company_Regin_no">Company Register number *</string>
+    <string name="GST_no">GST No. *</string>
     <string name="next">Next</string>
-    <string name="account_holder_name">Bank Account name as per passbook*</string>
-    <string name="bank_name">Name of Bank(Nationallised bank only)*</string>
-    <string name="branch_code">Branch code*</string>
-    <string name="account_no">Account no*</string>
-    <string name="IFSC_code">IFSC code*</string>
-    <string name="adhar_card">Upload Copy  of Adhar card / Pancard*</string>
-    <string name="canclled_check">Upload Copy  of cancelled cheque*</string>
+    <string name="account_holder_name">Bank Account name as per passbook *</string>
+    <string name="bank_name">Name of Bank(Nationallised bank only) *</string>
+    <string name="branch_code">Branch code *</string>
+    <string name="account_no">Account no *</string>
+    <string name="IFSC_code">IFSC code *</string>
+    <string name="adhar_card">Upload Copy  of Adhar card / Pancard *</string>
+    <string name="canclled_check">Upload Copy  of cancelled cheque *</string>
     <string name="Submuit">Submit</string>
 
 
@@ -148,9 +148,9 @@
     <string name="internal_storage">Internal storage</string>
     <string name="chooser_title">Choose Files</string>
 
-    <string name="productimages">Upload product images here!*</string>
+    <string name="productimages">Upload product images here! *</string>
 
-    <string name="completeregiseration">Complete Your Regsteration here!*</string>
+    <string name="completeregiseration">Complete Your Regsteration here! *</string>
 
     <string name="language">Change Language</string>
 
@@ -178,10 +178,10 @@
     <string name="selfi_string_5">Take a selfie wearing a t-shirt/shirt.</string>
     <string name="selfi_string_6">Hello blank fragment</string>
 
-    <string name="farmaddress">Enter Farms address*</string>
-    <string name="farmssurveyno">Survey No.*</string>
+    <string name="farmaddress">Enter Farms address *</string>
+    <string name="farmssurveyno">Survey No. *</string>
 
-    <string name="botonicalname">Enter Botanical Name*</string>
+    <string name="botonicalname">Enter Botanical Name *</string>
 
     <string name="collapsed">collapsed: %s</string>
     <string name="expanded">expanded: %s</string>
@@ -210,8 +210,8 @@
     <string name="txtNo">No</string>
 
     <string name="list_added_item">ProductList</string>
-    <string name="enter_your_village_Name">Enter your village Name*</string>
-    <string name="enter_your_area_in_hector">Enter your area in hector*</string>
+    <string name="enter_your_village_Name">Enter your village Name *</string>
+    <string name="enter_your_area_in_hector">Enter your area in hector *</string>
     <string name="upload_multiple_files">Upload Multiple Files</string>
     <string name="choose_images">Choose Images</string>
     <string name="view_list">View List</string>
@@ -271,5 +271,8 @@
 
 
     <string name="total_price">Total Price:</string>
+    <string name="forgotten_login_details">Forgotten your login details?</string>
+    <string name="get_help_with_signing_in">Get help with signing in</string>
+    <string name="verify_mobile_no">Verify Mobile No.</string>
 
 </resources>

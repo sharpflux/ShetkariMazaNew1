@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -17,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity;
 import com.sharpflux.shetkarimaza.sqlite.dbBuyerFilter;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +34,7 @@ public class PriceFragment extends Fragment {
     private RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     List<SubCategoryFilter> productlist;
-    Button btn_next,btn_back;
+    TextView btn_next,btn_back;
     String   StatesID="",DistrictId="",TalukaId="",VarityId="",QualityId="",itemTypeId="",priceids="",ItemName;
     Bundle extras;
     dbBuyerFilter myDatabase;

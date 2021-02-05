@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -13,7 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.sharpflux.shetkarimaza.R;
 
 public class VillageFragment extends Fragment {
-    Button btn_next, btn_back, btnFilterData;
+    TextView btn_next, btn_back, btnFilterData;
     Bundle extras;
     String StatesID = "", DistrictId = "", TalukaId = "", VarityId = "", QualityId = "", itemTypeId = "", priceids = "",ItemName;
 

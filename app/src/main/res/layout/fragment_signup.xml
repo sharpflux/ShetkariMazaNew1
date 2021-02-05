@@ -16,51 +16,106 @@
         android:layout_height="match_parent">
 
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="0dp"
+
+            >
+
             <LinearLayout
-                android:gravity="center"
-                android:layout_gravity="center"
+
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <ImageView
+                    android:id="@+id/imglogo"
                     android:layout_width="wrap_content"
                     android:layout_height="130dp"
-                    android:src="@drawable/kisanmaza" />
-                <ScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="0dp"
-                 >
+                    android:src="@drawable/kisanmaza"
+                    android:layout_marginTop="50dp"/>
+
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="0dp"
+                    android:layout_marginTop="30dp"
                     android:layout_marginStart="25dp"
+                    android:layout_marginBottom="50dp"
                     android:layout_marginEnd="25dp">
+
+
                     <RelativeLayout
                         android:id="@+id/activity_login_etUsernameS"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="45dp"
                         android:layout_marginStart="5dp"
-                        android:layout_marginTop="0dp"
-                        android:layout_marginEnd="5dp"
-                        android:padding="8dp">
-                        <EditText
-                            android:id="@+id/eusername"
-                            android:fontFamily="@font/sfpro_display_medium"
-                            android:padding="8dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="5dp">
+                        <LinearLayout
                             android:background="@drawable/edit"
-                            android:layout_height="wrap_content"
                             android:layout_width="match_parent"
-                            android:hint="@string/firstname"
-                            android:inputType="text"
-                            android:textColor="@color/color_black"
-                            android:textColorHint="@color/color_gray_light" />
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+                            <EditText
+                                android:id="@+id/eusername"
+                                android:hint="@string/firstname"
+                                android:inputType="text"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginEnd="15dp"
+                                android:textColor="@color/color_black"
+                                android:textColorHint="@color/grey_4a"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:textSize="14sp"
+                                android:background="@null"
+                                android:singleLine="true"
+                                />
+                        </LinearLayout>
                     </RelativeLayout>
 
+
+
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="5dp">
+                        <LinearLayout
+                            android:background="@drawable/edit"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+                            <EditText
+                                android:id="@+id/middlename"
+                                android:hint="@string/middlename"
+                                android:inputType="text"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginEnd="15dp"
+                                android:textColor="@color/color_black"
+                                android:textColorHint="@color/grey_4a"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:textSize="14sp"
+                                android:background="@null"
+                                android:singleLine="true"
+                                />
+                        </LinearLayout>
+                    </RelativeLayout>
+
+
+
+
+
+
+<!--
                     <RelativeLayout
 
                         android:layout_width="match_parent"
@@ -70,28 +125,67 @@
                         android:layout_marginEnd="5dp"
                         android:padding="8dp">
                         <EditText
-                            android:id="@+id/middlename"
+
                             android:fontFamily="@font/sfpro_display_medium"
                             android:padding="8dp"
                             android:background="@drawable/edit"
                             android:layout_height="wrap_content"
                             android:layout_width="match_parent"
-                            android:hint="@string/middlename"
+
 
                             android:inputType="text"
                             android:textColor="@color/color_black"
                             android:textColorHint="@color/color_gray_light" />
-                    </RelativeLayout>
+                    </RelativeLayout>-->
+
+
+
+
+
+
                     <RelativeLayout
                         android:id="@+id/activity_login_etEmailS"
                         android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="5dp">
+                        <LinearLayout
+                            android:background="@drawable/edit"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+                            <EditText
+                                android:id="@+id/lastname"
+                                android:hint="@string/lastname"
+                                android:inputType="text"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginEnd="15dp"
+                                android:textColor="@color/color_black"
+                                android:textColorHint="@color/grey_4a"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:textSize="14sp"
+                                android:background="@null"
+                                android:singleLine="true"
+                                />
+                        </LinearLayout>
+                    </RelativeLayout>
+
+
+
+
+                    <!--<RelativeLayout
+
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="0dp"
                         android:layout_marginEnd="5dp"
                         android:padding="8dp">
                         <EditText
-                            android:id="@+id/lastname"
+
                             android:fontFamily="@font/sfpro_display_medium"
                             android:padding="8dp"
                             android:background="@drawable/edit"
@@ -101,9 +195,53 @@
                             android:inputType="text"
                             android:textColor="@color/color_black"
                             android:textColorHint="@color/color_gray_light" />
-                    </RelativeLayout>
+                    </RelativeLayout>-->
+
+
+
 
                     <RelativeLayout
+                        android:id="@+id/activity_login_etusername"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="5dp"
+                        >
+                        <LinearLayout
+                            android:background="@drawable/edit"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <com.hbb20.CountryCodePicker
+                                android:id="@+id/ccp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:ccp_defaultNameCode="IN"
+                                android:layout_marginStart="10dp"
+                                app:ccp_textSize="14sp"/>
+
+                            <EditText
+                                android:textColor="@color/color_black"
+                                android:textColorHint="@color/grey_4a"
+                                android:id="@+id/emobnum"
+                                android:layout_marginEnd="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentTop="true"
+                                android:hint="@string/mobile_no"
+                                android:textSize="14sp"
+                                android:inputType="number"
+                                android:maxLength="10"
+                                android:background="@null"
+                                android:singleLine="true" />
+                        </LinearLayout>
+                    </RelativeLayout>
+
+
+<!--                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_alignParentStart="true"
@@ -141,10 +279,53 @@
 
                                 android:inputType="number" />
                         </LinearLayout>
-                    </RelativeLayout>
+                    </RelativeLayout>-->
+
+
+
+
+
 
                     <RelativeLayout
                         android:id="@+id/activity_login_etPasswordS"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="5dp"
+                        >
+
+                        <LinearLayout
+                            android:background="@drawable/edit"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical">
+
+
+                            <EditText
+                                android:textColor="@color/color_black"
+                                android:textColorHint="@color/grey_4a"
+                                android:id="@+id/epassword"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginEnd="10dp"
+
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:hint="@string/password"
+                                android:inputType="textPassword"
+                                android:textSize="14sp"
+                                android:background="@null"
+                                android:singleLine="true" />
+
+                        </LinearLayout>
+                    </RelativeLayout>
+
+
+
+
+
+<!--
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
@@ -153,7 +334,7 @@
                         android:padding="8dp">
 
                         <EditText
-                            android:id="@+id/epassword"
+
                             android:fontFamily="@font/sfpro_display_medium"
                             android:padding="8dp"
                             android:background="@drawable/edit"
@@ -164,10 +345,68 @@
                             android:inputType="textPassword"
                             android:textColor="@color/color_black"
                             android:textColorHint="@color/color_gray_light" />
-                    </RelativeLayout>
+                    </RelativeLayout>-->
+
+
+
+
+
+
+
+
 
                     <RelativeLayout
                         android:id="@+id/activity_login_etCPasswordS"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="5dp"
+                        >
+
+                        <LinearLayout
+                            android:background="@drawable/edit"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical">
+
+
+                            <EditText
+                                android:textColor="@color/color_black"
+                                android:textColorHint="@color/grey_4a"
+                                android:id="@+id/ecpassword"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginEnd="10dp"
+
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:hint="@string/cpassword"
+                                android:inputType="textPassword"
+                                android:textSize="14sp"
+                                android:background="@null"
+                                android:singleLine="true" />
+
+                        </LinearLayout>
+                    </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--                    <RelativeLayout
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
@@ -176,19 +415,58 @@
                         android:padding="8dp">
 
                         <EditText
-                            android:id="@+id/ecpassword"
+
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentTop="true"
                             android:layout_marginBottom="8dp"
                             android:background="@drawable/edit"
                             android:fontFamily="@font/sfpro_display_medium"
-                            android:hint="@string/cpassword"
+
                             android:inputType="textPassword"
                             android:padding="8dp"
                             android:textColor="@color/color_black"
                             android:textColorHint="@color/color_gray_light" />
+                    </RelativeLayout>-->
+
+
+
+
+
+
+
+                    <RelativeLayout
+                        android:id="@+id/rSignup"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/btn_backnext"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center_vertical"
+                            android:text="@string/signup"
+                            android:textColor="@color/white"
+                            android:textSize="15sp" />
+
                     </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+<!--
 
                     <RelativeLayout
                         android:id="@+id/rSignup"
@@ -208,14 +486,15 @@
                             android:gravity="center_vertical"
                             android:text="@string/signup"
                             android:textColor="@color/white"
-                            android:textSize="20dp" />
+                            android:textSize="20sp" />
 
                     </RelativeLayout>
+-->
 
                 </LinearLayout>
-                </ScrollView>
-            </LinearLayout>
 
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 
 

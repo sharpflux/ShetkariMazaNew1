@@ -52,7 +52,7 @@ public class VarietyAdapter extends RecyclerView.Adapter<VarietytViewHolder> imp
     public void onBindViewHolder(VarietytViewHolder holder, final int position) {
         holder.mlist = exampleList;
         holder.position = position;
-        holder.mTextView.setText(exampleList.get(position).getName());
+        holder.mTextView.setText(exampleList.get(position).getName().trim());
         holder.ProductId = exampleList.get(position).getId();
         holder.FilterBy = exampleList.get(position).getFilterBy();
         ProductId = exampleList.get(position).getId();

@@ -44,6 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/scrollView"
+        android:layout_marginBottom="0dp"
         >
 
     <LinearLayout
@@ -83,22 +84,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="15.7dp"
-            android:background="@color/white"
-            android:paddingBottom="21.3dp"
+            android:layout_marginTop="20dp"
+
             android:orientation="horizontal"
-            android:paddingTop="10dp"
+            android:paddingTop="20dp"
             android:tag="sticky"
-            android:paddingRight="16.7dp">
+            android:paddingRight="16.7dp"
+            >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:fontFamily="@font/sfpro_display_semibold"
-                android:letterSpacing="0.0525"
                 android:text="@string/header_category"
-                android:textSize="13.3sp" />
+                android:textColor="@color/grey_4a"
+                android:textSize="14sp"
+                android:fontFamily="@font/arima_madurai_medium"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -120,11 +122,11 @@
 
         </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
-            android:background="@color/white"
             android:id="@+id/recyclerview_categorytype"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
+
+
             />
 
 

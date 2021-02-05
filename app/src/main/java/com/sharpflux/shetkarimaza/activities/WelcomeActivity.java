@@ -97,7 +97,7 @@ public class WelcomeActivity extends AppCompatActivity {
     public void CallData(){
 
         final float startSize = 00; // Size in pixels
-        final float endSize = 20;
+        final float endSize = 25;
         final int animationDuration = 2000; // Animation duration in ms
 
         ValueAnimator animator = ValueAnimator.ofFloat(startSize, endSize);
@@ -108,7 +108,7 @@ public class WelcomeActivity extends AppCompatActivity {
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 float animatedValue = (float) valueAnimator.getAnimatedValue();
                 tvTitleOne.setTextSize(animatedValue);
-                tvDesOne.setTextSize(animatedValue);
+                tvDesOne.setTextSize((float) animatedValue/(float)1.5);
 
             }
         });
@@ -164,7 +164,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 }
 
                 final float startSize = 00; // Size in pixels
-                final float endSize = 20;
+                final float endSize = 25;
                 final int animationDuration = 500; // Animation duration in ms
 
                 ValueAnimator animator = ValueAnimator.ofFloat(startSize, endSize);
@@ -175,7 +175,7 @@ public class WelcomeActivity extends AppCompatActivity {
                     public void onAnimationUpdate(ValueAnimator valueAnimator) {
                         float animatedValue = (float) valueAnimator.getAnimatedValue();
                         tvTitleOne.setTextSize(animatedValue);
-                        tvDesOne.setTextSize(animatedValue);
+                        tvDesOne.setTextSize((float) animatedValue/(float)1.5);
 
                     }
                 });

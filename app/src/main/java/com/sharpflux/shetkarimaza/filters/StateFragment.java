@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
@@ -50,7 +51,7 @@ public class StateFragment extends Fragment {
     private RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     ArrayList<SubCategoryFilter> productlist;
-    Button btn_next, btn_back, btnFilterData;
+    TextView btn_next, btn_back, btnFilterData;
     Locale myLocale;
     String VarityId = "", QualityId = "", DistrictId = "", itemTypeId = "", StatesID = "", ItemName;
     StringBuilder state_builder_id;

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
@@ -47,7 +48,7 @@ public class TalukaFragment extends Fragment {
     private RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     ArrayList<SubCategoryFilter> productlist;
-    Button btn_next,btn_back,btnFilterData;
+    TextView btn_next,btn_back,btnFilterData;
     String  DistrictId="", TalukaId="",VarityId="",QualityId="",itemTypeId="",StatesID="",ItemName;
     Bundle extras;
     StringBuilder taluka_builder_id = new StringBuilder();

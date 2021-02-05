@@ -196,9 +196,7 @@ public class CategoryFragment extends Fragment {
         public void transformPage(View page, float position) {
 
             page.setTranslationX(-position*page.getWidth());
-
             page.setAlpha(1-Math.abs(position));
-
 
         }
     }
@@ -216,13 +214,16 @@ public class CategoryFragment extends Fragment {
 
 
 
-
                             for (int i = 0; i < obj.length(); i++) {
                                 JSONObject userJson = obj.getJSONObject(i);
 
                                 if (!userJson.getBoolean("error")) {
+
+                                   // String imageUrl = userJson.getString("ImageUrl")
+                                    //       .substring(oldAPI.length(), userJson.getString("ImageUrl").length());
+
                                     myCategoryType = new MyCategoryType
-                                            (       userJson.getString("ImageUrl"),
+                                            (      userJson.getString("ImageUrl"),
                                                     userJson.getString("RegistrationType"),
                                                     userJson.getString("RegistrationTypeId"));
 

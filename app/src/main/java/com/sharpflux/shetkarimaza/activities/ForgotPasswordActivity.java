@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,7 +31,7 @@ import java.util.Map;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 
-    private Button btnResetPassword;
+    private RelativeLayout btnResetPassword;
     private EditText etMobileNo;
     AlertDialog.Builder  builder;
 
@@ -39,7 +40,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
 
-        btnResetPassword=findViewById(R.id.btnResetPassword);
+        btnResetPassword = findViewById(R.id.btnResetPassword);
         etMobileNo=findViewById(R.id.etMobileNo);
         builder = new AlertDialog.Builder(this);
         btnResetPassword.setOnClickListener(new View.OnClickListener() {

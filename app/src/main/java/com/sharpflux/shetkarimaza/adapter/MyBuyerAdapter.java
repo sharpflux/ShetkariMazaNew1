@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sharpflux.shetkarimaza.R;
@@ -21,6 +22,7 @@ import com.sharpflux.shetkarimaza.filters.SubCategoryFilter;
 import com.sharpflux.shetkarimaza.model.Product;
 import com.sharpflux.shetkarimaza.model.SellOptions;
 import com.sharpflux.shetkarimaza.sqlite.dbBuyerFilter;
+import com.sharpflux.shetkarimaza.volley.URLs;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -80,13 +82,30 @@ public class MyBuyerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             try {
                 if (mList.get(position).getImage() != null) {
-                    Picasso.get().load(mList.get(position).getImage()).resize(300, 300).into(((FlowerViewHolder) holder).mImage);
+                    Picasso.get().load(URLs.Main_URL+mList.get(position).getImage()).resize(300, 300).into(((FlowerViewHolder) holder).mImage);
                     ((FlowerViewHolder) holder).mTitle.setText(mList.get(position).getProductlist());
                     ((FlowerViewHolder) holder).ItemTypeId = mList.get(position).getProductId();
                     ((FlowerViewHolder) holder).categoryId = mList.get(position).getCategoryId();
                     ((FlowerViewHolder) holder).ItemName=mList.get(position).getProductlist();
                     ((FlowerViewHolder) holder).IsVarietyAvailable=mList.get(position).isVarietyAvailable();
                     ((FlowerViewHolder) holder).myFilter=this.myFilter;
+
+
+
+                    if (position==mList.size()-1 || position==mList.size()-2)
+                    {
+                        ViewGroup.MarginLayoutParams cardViewMargins = (ViewGroup.MarginLayoutParams)((FlowerViewHolder) holder).cardView.getLayoutParams();
+                        int start = ((ViewGroup.MarginLayoutParams) ((FlowerViewHolder) holder).cardView.getLayoutParams()).getMarginStart();
+                        int end = ((ViewGroup.MarginLayoutParams) ((FlowerViewHolder) holder).cardView.getLayoutParams()).getMarginEnd();
+                        int top = ((ViewGroup.MarginLayoutParams) ((FlowerViewHolder) holder).cardView.getLayoutParams()).topMargin;
+                        cardViewMargins.setMargins(start,top,end,22);
+                        ((FlowerViewHolder) holder).cardView.requestLayout();
+                    }
+
+
+
+
+
                 }
             } catch (Exception d) {
 
@@ -209,10 +228,12 @@ class FlowerViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
     List<SubCategoryFilter> mlist;
     Boolean IsVarietyAvailable;
     dbBuyerFilter myFilter;
+    CardView cardView;
 
     FlowerViewHolder(View itemView) {
         super(itemView);
 
+        cardView = itemView.findViewById(R.id.cardView);
         mImage = itemView.findViewById(R.id.ivImage);
         mTitle = itemView.findViewById(R.id.tvTitle);
         itemView.setOnClickListener(this);

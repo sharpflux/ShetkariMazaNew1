@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
@@ -50,7 +51,7 @@ public class QualityFragment extends Fragment {
     private RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     ArrayList<SubCategoryFilter> productlist;
-    Button btn_next, btn_back, btnFilterData;
+    TextView btn_next, btn_back, btnFilterData;
     String VarityId = "", itemTypeId = "", ItemTypeId, ItemName, categoryId = "";
     Bundle extras;
     Locale myLocale;

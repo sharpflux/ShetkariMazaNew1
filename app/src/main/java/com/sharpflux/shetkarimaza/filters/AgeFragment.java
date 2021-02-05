@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -51,7 +52,7 @@ public class AgeFragment extends Fragment {
     private RecyclerView rcv_age;
     LinearLayoutManager layoutManager;
     ArrayList<SubCategoryFilter> productlist;
-    Button btn_next,btn_back,btnFilterData;
+    TextView btn_next,btn_back,btnFilterData;
     Locale myLocale;
     dbLanguage mydatabase;
     String currentLanguage,language;

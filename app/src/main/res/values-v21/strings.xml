@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="forgotten_login_details">Forgotten your login details?</string>
+    <string name="get_help_with_signing_in">Get help with signing in</string>
+    <string name="verify_mobile_no">Verify Mobile No.</string>
+</resources>

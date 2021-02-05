@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!--android:background="@drawable/backgroundlogo"-->
 
 
    <!-- <LinearLayout
@@ -45,7 +46,61 @@
 
 
     </LinearLayout>-->
-    <TextView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:id="@+id/tvTitleOne"
+
+            android:text="Variety"
+
+            android:gravity="center_vertical|start"
+            android:textAllCaps="true"
+            android:paddingStart="20dp"
+            android:fontFamily="@font/arima_madurai_medium"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+
+            />
+        <TextView
+            android:textSize="15sp"
+
+            android:textColor="@android:color/white"
+            android:fontFamily="@font/arima_madurai_medium"
+
+            android:id="@+id/btnFilterData"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="0dp"
+            android:layout_alignParentLeft="true"
+            android:text="@string/select_data"
+
+            />
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
+            android:rotation="180"
+            android:tint="@color/white"
+            android:layout_gravity="center"
+            android:layout_marginEnd="20dp"
+            />
+
+
+    </LinearLayout>
+
+
+<!--    <TextView
         android:layout_marginTop="10dp"
         android:id="@+id/tvTitleOne"
         android:layout_width="match_parent"
@@ -56,7 +111,7 @@
         android:textColor="#4CAF50"
         android:textSize="20dp"
         android:textStyle="bold"
-        />
+        />-->
 
 
     <androidx.appcompat.widget.SearchView
@@ -75,9 +130,10 @@
         android:id="@+id/rcv_vriety"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginTop="0dp"
         android:layout_weight="1.0"
-        android:visibility="visible" />
+        android:visibility="visible"
+        android:background="@drawable/backgroundlogo"/>
 
 
 
@@ -89,8 +145,99 @@
         android:layout_height="0.5dip"
         android:background="@color/uiv3_divider_color" />
 
-
     <LinearLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_marginBottom="0dp"
+        android:orientation="horizontal"
+
+        >
+
+
+        <TextView
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/green_border"
+            android:id="@+id/btnbackVariety"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_marginLeft="0dp"
+            android:text="@string/back"
+            android:fontFamily="@font/arima_madurai_medium"
+            />
+
+
+<!--        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textSize="20dp"
+
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:fontFamily="@font/arima_madurai_medium"
+            android:background="@drawable/green_border"
+            android:id="@+id/btnbackVariety"
+
+            android:layout_alignParentLeft="true"
+            android:text="@string/back"
+            android:layout_weight="1"
+
+            />-->
+<!--
+        <TextView
+            android:textSize="20dp"
+
+            android:height="40dp"
+            android:textColor="@android:color/white"
+            android:fontFamily="@font/arima_madurai_medium"
+            android:background="@drawable/gradient_upside_down"
+            android:id="@+id/btnFilterData"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
+            android:text="@string/select_data"
+
+            />
+-->
+
+
+<!--        <TextView
+            android:fontFamily="@font/arima_madurai_medium"
+            android:id="@+id/btnnextVariety"
+            android:background="@drawable/gradient_upside_down"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:textSize="20dp"
+            android:layout_weight="1"
+            android:gravity="center"
+
+            android:height="40dp"
+            android:text="@string/next"
+            android:textColor="@android:color/white" />-->
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/gradient_upside_down"
+            android:gravity="center"
+            android:layout_marginLeft="0dp"
+            android:id="@+id/btnnextVariety"
+            android:fontFamily="@font/arima_madurai_medium"
+            android:text="@string/next"
+            />
+
+
+    </LinearLayout>
+<!--    <LinearLayout
         android:id="@+id/relativeLayout1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -148,6 +295,6 @@
             android:textColor="@android:color/white" />
 
 
-    </LinearLayout>
+    </LinearLayout>-->
 
 </LinearLayout>

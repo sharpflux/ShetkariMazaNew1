@@ -5,26 +5,33 @@
     android:clickable="true"
     android:layout_width="match_parent"
     android:layout_height="120dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="0.0dip"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="2dp"
+    android:layout_marginTop="10dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/custom_merchnt_border"
+    >
     <LinearLayout
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:id="@+id/lr_group"
         android:orientation="horizontal"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/ivsellerplantLogo"
             android:src="@drawable/graps"
             android:layout_gravity="center_horizontal"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="5dp"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginStart="25dp"
             android:layout_marginEnd="5dp"
             />
 
@@ -32,28 +39,47 @@
             android:layout_gravity="center_vertical"
             android:orientation="vertical"
             android:background="@color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="20dp">
 
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="Click here to see more"
-                android:fontFamily="@font/sfpro_display_bold"
-                style="@style/ganaral_primarystylesale" />
+                android:textSize="16sp"
+                android:textColor="@color/blackLight"
+                android:singleLine="true"
+                android:ellipsize="end"
+                 />
 
             <TextView
-                android:layout_marginTop="10dp"
                 android:id="@+id/ivsellerplanttype"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:text="Grapes"
-                android:fontFamily="@font/sfpro_display_bold"
-                style="@style/ganaral_primarystylesale"/>
-
+                android:textSize="13sp"
+                android:textColor="@color/grey_4a"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:fontFamily="@font/arima_madurai_medium"
+                />
+            <!--style="@style/ganaral_primarystylesale"-->
         </LinearLayout>
 
     </LinearLayout>
-
     <View
         android:id="@+id/viewSeparator"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/uiv3_divider_color" />
+        android:layout_height="1dp"
+        android:background="@color/grey_4a"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:visibility="gone"
+        />
+</LinearLayout>
+
+
 </androidx.cardview.widget.CardView>

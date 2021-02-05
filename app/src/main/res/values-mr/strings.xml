@@ -269,11 +269,9 @@
     <string name="botanical_name">Botanical Name</string>
 
     <string name="total_price">Total Price:</string>
-
-
-
-
-
+    <string name="forgotten_login_details">Forgotten your login details?</string>
+    <string name="get_help_with_signing_in">Get help with signing in</string>
+    <string name="verify_mobile_no">Verify Mobile No.</string>
 
 
 </resources>

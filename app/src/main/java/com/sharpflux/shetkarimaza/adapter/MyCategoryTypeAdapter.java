@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.BuyerActivity;
 import com.sharpflux.shetkarimaza.activities.ContactDetailActivity;
@@ -20,6 +21,7 @@ import com.sharpflux.shetkarimaza.activities.HomeActivity;
 import com.sharpflux.shetkarimaza.activities.SellerActivity;
 import com.sharpflux.shetkarimaza.filters.SubCategoryFilter;
 import com.sharpflux.shetkarimaza.model.MyCategoryType;
+import com.sharpflux.shetkarimaza.volley.URLs;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -66,7 +68,13 @@ public class MyCategoryTypeAdapter extends RecyclerView.Adapter<MyCategoryTypeHo
 
         if (holder instanceof MyCategoryTypeHolder)
             try {
-                Picasso.get().load(mList.get(position).getImage()).into(((MyCategoryTypeHolder) holder).mImage);
+                //Picasso.get().load(mList.get(position).getImage()).into(((MyCategoryTypeHolder) holder).mImage);
+
+                Glide.with(mContext)
+                        .load(URLs.Main_URL+mList.get(position).getImage()).placeholder(R.drawable.kisanmaza)
+                        .into(holder.mImage);
+
+
                 ((MyCategoryTypeHolder) holder).mTitle.setText(mList.get(position).getCategoryTypeName());
                 ((MyCategoryTypeHolder) holder).categoryId = mList.get(position).getCategoryTypeId();
             } catch (Exception d) {

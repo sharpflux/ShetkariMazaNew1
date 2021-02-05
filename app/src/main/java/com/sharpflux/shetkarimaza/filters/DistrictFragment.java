@@ -49,7 +49,7 @@ public class DistrictFragment extends Fragment {
     private RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     ArrayList<SubCategoryFilter> productlist;
-    Button btn_next,btn_back,btnFilterData;
+    TextView btn_next,btn_back,btnFilterData;
     String stateId= "";
     TextView hideDistrictId;
     StringBuilder district_builder_id;

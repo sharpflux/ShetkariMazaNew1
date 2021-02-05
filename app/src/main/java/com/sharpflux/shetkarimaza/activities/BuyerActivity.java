@@ -155,10 +155,12 @@ public class BuyerActivity extends AppCompatActivity implements TabLayout.OnTabS
                                 JSONObject userJson = obj.getJSONObject(i);
 
                                 if (!userJson.getBoolean("error")) {
-
                                     mTabLayout.addTab(mTabLayout.newTab().setText(userJson.getString("CategoryName_EN")));
 
-                                    DynamicFragmentAdapter mDynamicFragmentAdapter = new DynamicFragmentAdapter(getSupportFragmentManager(), mTabLayout.getTabCount(), obj, BuyerActivity.this);
+
+                                    DynamicFragmentAdapter mDynamicFragmentAdapter =
+                                            new DynamicFragmentAdapter(getSupportFragmentManager(),
+                                                    mTabLayout.getTabCount(), obj, BuyerActivity.this);
 
                                     viewPager.setAdapter(mDynamicFragmentAdapter);
 

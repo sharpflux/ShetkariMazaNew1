@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     android:orientation="vertical"
-    android:background="@drawable/backgroundlogo"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
+   <!-- android:background="@drawable/backgroundlogo"-->
+<!--
 
     <TextView
         android:layout_marginTop="10dp"
@@ -19,57 +20,70 @@
         android:textSize="20dp"
         android:textStyle="bold"
         />
+-->
 
 
+    <TextView
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:id="@+id/tvTitleOne"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="Price"
+        android:background="@color/colorPrimary"
+        android:gravity="center_vertical|start"
+        android:textAllCaps="true"
+        android:paddingStart="20dp"
+        android:fontFamily="@font/arima_madurai_medium"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+
+        />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_price"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="0dp"
         android:layout_weight="1.0"
-        android:visibility="visible" />
+        android:visibility="visible"
+        android:background="@drawable/background"/>
 
 
-    <RelativeLayout
-        android:layout_marginTop="20dp"
+    <LinearLayout
+
         android:id="@+id/relativeLayout1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp">
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        >
 
-        <Button
-            android:textSize="20dp"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:height="40dp"
-            android:textColor="@android:color/white"
-            android:fontFamily="@font/sfpro_display_bold"
-            android:background="@drawable/btn_backnext"
+        <TextView
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/green_border"
             android:id="@+id/btnbackPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="20dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_marginLeft="0dp"
             android:text="@string/back"
 
             />
 
-        <Button
-            android:fontFamily="@font/sfpro_display_bold"
+        <TextView
             android:id="@+id/btnnextPrice"
-            android:background="@drawable/btn_backnext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:textSize="20dp"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:height="40dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/gradient_upside_down"
+            android:gravity="center"
             android:text="@string/next"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
 
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -199,6 +200,9 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
                     public void onResponse(String response) {
 
                         try {
+
+                           /* Log.d("DYNAMIC FRAGMENT","\n\n\n--------------------------------------\n"
+                            +response+"\\n--------------------------------------\n");*/
                             JSONArray obj = new JSONArray(response);
                             progressBar.setVisibility(View.VISIBLE);
 

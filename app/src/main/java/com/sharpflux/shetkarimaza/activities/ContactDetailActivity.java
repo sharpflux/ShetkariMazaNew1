@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -396,9 +397,10 @@ public class ContactDetailActivity extends AppCompatActivity {
                         public void onResponse(String response) {
 
                             try {
+                                Log.d("RESPONSE","\n\n\n-------------------------------\n"+response+"\n\n\n-------------------------------\n");
                                 obj = new JSONArray(response);
                                 isFirstLoad = true;
-
+                                String oldAPI = "http://apimaza.supergo.in";
                                 for (int i = 0; i < obj.length(); i++) {
                                     JSONObject userJson = obj.getJSONObject(i);
 
@@ -407,11 +409,16 @@ public class ContactDetailActivity extends AppCompatActivity {
                                     }
 */
 
+
                                     if (!userJson.getBoolean("error")) {
+                                        String imageUrl = userJson.getString("ImageUrl")
+                                                .substring(oldAPI.length(), userJson.getString("ImageUrl").length());
+
+
                                         ContactDetail detail;
                                         detail = new ContactDetail
                                                 (
-                                                        userJson.getString("ImageUrl"),
+                                                        imageUrl,
                                                         userJson.getString("FullName"),
                                                         userJson.getString("Address"),
                                                         userJson.getString("MobileNo"),

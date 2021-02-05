@@ -15,6 +15,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
@@ -81,7 +82,7 @@ public class MyGroupAdapter extends RecyclerView.Adapter<GroupViewHolder1> {
     public void onBindViewHolder(GroupViewHolder1 holder, final int i) {
 
 
-        Picasso.get().load(sellOptions.get(i).getImage()).resize(300, 300).into(holder.Image);
+        Picasso.get().load(URLs.Main_URL+sellOptions.get(i).getImage()).resize(300, 300).into(holder.Image);
         holder.Title.setText(sellOptions.get(i).getName());
         holder.ItemTypeId = sellOptions.get(i).getItemTypeId();
         holder.PreviousCategoryId = PreviousCategoryId;
@@ -94,6 +95,14 @@ public class MyGroupAdapter extends RecyclerView.Adapter<GroupViewHolder1> {
                 frag.GOPrevious( sellOptions.get(position).getItemTypeId(),"True",PreviousCategoryId,sellOptions.get(i).getName());
             }
         });
+
+        if (i==sellOptions.size()-1)
+        {
+            ViewGroup.MarginLayoutParams cardViewMargins = (ViewGroup.MarginLayoutParams)holder.cardView.getLayoutParams();
+            cardViewMargins.setMargins(0,25,0,25);
+            holder.cardView.requestLayout();
+        }
+
 
 
 
@@ -132,6 +141,7 @@ class GroupViewHolder1 extends RecyclerView.ViewHolder implements View.OnClickLi
     LinearLayout lr_group;
     String ItemTypeId, PreviousCategoryId, jsonObj;
     Context mContext;
+    CardView cardView;
 
 
 
@@ -140,6 +150,7 @@ class GroupViewHolder1 extends RecyclerView.ViewHolder implements View.OnClickLi
         Image = itemView.findViewById(R.id.ivsellerplantLogo);
         Title = itemView.findViewById(R.id.ivsellerplanttype);
         lr_group = itemView.findViewById(R.id.lr_group);
+        cardView = itemView.findViewById(R.id.row_cartlist_cvContainer);
 
         itemView.setOnClickListener(this);
 
