@@ -24,12 +24,16 @@
             android:minHeight="?attr/actionBarSize"
             android:fontFamily="@font/sfpro_display_bold"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:tabSelectedTextColor="@color/white"
+            app:tabIndicatorHeight="5dp"
+            app:tabIndicator="@color/white"
             />
         <!-- View pager to swipe views -->
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/background_gray">
         </androidx.viewpager.widget.ViewPager>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
