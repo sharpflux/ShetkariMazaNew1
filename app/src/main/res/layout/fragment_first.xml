@@ -48,6 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                style="@style/formTextInputLayout"
                 >
 
                 <EditText
@@ -56,6 +57,9 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/registration_category"
                     android:inputType="none"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:textColor="@color/text_black"
                     android:textSize="15sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -66,6 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:visibility="gone"
+                style="@style/formTextInputLayout"
 
                 >
 
@@ -74,9 +79,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:cursorVisible="false"
+                    android:textColor="@color/text_black"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:fontFamily="@font/sfpro_display_medium"
+
                     android:hint="@string/registration_category"
                     android:inputType="none"
                     android:textSize="15sp"
@@ -90,6 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                style="@style/formTextInputLayout"
 
                 >
 
@@ -99,8 +106,8 @@
                     android:layout_height="wrap_content"
                     android:cursorVisible="false"
                     android:focusable="false"
+                    android:textColor="@color/text_black"
                     android:focusableInTouchMode="false"
-                    android:fontFamily="@font/sfpro_display_medium"
                     android:hint="@string/name"
                     android:inputType="none"
                     android:textSize="15sp" />
@@ -122,8 +129,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:hint="@string/gender"
-
+                    android:text="@string/gender"
+                    android:textColor="@color/text_black"
                     android:textSize="15sp" />
 
                 <RadioGroup
@@ -139,7 +146,7 @@
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
+                        android:textColorHint="@color/text_black"
                         android:hint="Male" />
 
                     <RadioButton
@@ -147,6 +154,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
+                        android:textColorHint="@color/text_black"
                         android:hint="Female" />
 
 
@@ -165,6 +173,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                style="@style/formTextInputLayout"
 
                 >
 
@@ -172,10 +181,10 @@
                     android:id="@+id/mobileNo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
-
+                    android:maxLength="10"
+                    android:textColor="@color/text_black"
                     android:hint="@string/mobile_no"
-                    android:inputType="none"
+                    android:inputType="number"
                     android:textSize="15sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -185,6 +194,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                style="@style/formTextInputLayout"
 
                 >
 
@@ -192,7 +202,7 @@
                     android:id="@+id/AlternateMobile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
+                    android:textColor="@color/text_black"
                     android:hint="@string/AlternateMob"
                     android:inputType="number"
                     android:maxLength="10"
@@ -206,6 +216,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                style="@style/formTextInputLayout"
 
                 >
 
@@ -213,8 +224,8 @@
                     android:id="@+id/Email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/sfpro_display_medium"
                     android:hint="@string/email_id"
+                    android:textColor="@color/text_black"
                     android:inputType="textEmailAddress"
                     android:textSize="15sp"/>
 
@@ -226,6 +237,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:visibility="gone"
+                style="@style/formTextInputLayout"
 
                 >
 
@@ -236,11 +248,8 @@
                     android:cursorVisible="false"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:fontFamily="@font/sfpro_display_medium"
                     android:hint="@string/botanical_name"
                     android:inputType="none"
-
-                    android:textColorHint="@color/colorGray"
                     android:textSize="15sp"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -264,7 +273,7 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:gravity="center"
-        android:background="@drawable/ripple_orange"
+        android:background="@drawable/gradient_upside_down"
         android:orientation="horizontal"
         android:id="@+id/footer">
 
@@ -273,7 +282,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:fontFamily="@font/arima_madurai_medium"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/next"

@@ -67,7 +67,7 @@ public class SellerActivity extends AppCompatActivity {
             builder.setCancelable(false);
             builder.setTitle("Check Internet Connection!");
             builder.setIcon(android.R.drawable.ic_dialog_alert);
-            builder.setMessage("Internet not availlable check your Intrnet Connctivity And Try Again!");
+            builder.setMessage("Internet not availlable check your Internet Connectivity And Try Again!");
             builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -136,12 +136,15 @@ public class SellerActivity extends AppCompatActivity {
 
                                     SellOptions sellOptions=
                                             new SellOptions
-                                                    (imageUrl,
+                                                    (
+                                                            userJson.getString("ImageUrl"),
                                                             userJson.getString("CategoryName_EN"),
-                                                            userJson.getString("CategoryId"));
+                                                            userJson.getString("CategoryId")
+                                                    );
 
                                     sellOptionsList.add(sellOptions);
-                                } else {
+                                }
+                                else {
                                     Toast.makeText(SellerActivity.this, response, Toast.LENGTH_SHORT).show();
                                 }
 

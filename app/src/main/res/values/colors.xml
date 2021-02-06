@@ -20,13 +20,19 @@
     //forgot
     <color name="shadow">#d9d9d9</color>
     <color name="blackLight">#363636</color>
+    <color name="text_black">#403f3f</color>
     <color name="lightGrey">#888888</color>
     <color name="blackShade">#272727</color>
     <color name="lightBlack">#363636</color>
 
-    <color name="colorPrimary">#3F8331</color> <!--#ff5fb04f-->
+<!--    <color name="colorPrimary">#3F8331</color> -->
+<!--    <color name="colorPrimary">#9cc63d</color>-->
+    <color name="colorPrimary">#7EAA18</color>  <!--FF9AC634-->
+    <!--#ff5fb04f-->
     <color name="colorPrimaryDark">#ff5fb04f</color>
-    <color name="colorAccent">#ff5fb04f</color>
+    <color name="colorAccent">#CD7EAA18</color>
+    <color name="startColor">#56AA42</color>
+    <color name="endColor">#56AA42</color>
 
     <color name="colorTextPrimary">#FFFFFF</color>
     <color name="colorTextDisable">#66FFFFFF</color>
@@ -36,7 +42,7 @@
     <color name="colorBlack">#ff000000</color>
     <color name="colorGray">#ffbdbdbd</color>
 
-    <color name="colorPrimaryTransparent">#ff5fb04f</color>
+    <color name="colorPrimaryTransparent">#CD7EAA18</color>
     <color name="color_black">#ff000000</color>
     <color name="color_gray_light">#99c9c9c9</color>
     <color name="design_bottom_navigation_shadow_color">#14000000</color>

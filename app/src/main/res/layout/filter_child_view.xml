@@ -6,11 +6,19 @@
               android:orientation="vertical"
               >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/prompt_separator"
+        android:orientation="horizontal"
+        >
     <androidx.appcompat.widget.AppCompatCheckedTextView
         android:id="@+id/tv_movies"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_marginBottom="10dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
@@ -23,8 +31,8 @@
         android:paddingLeft="@dimen/padding_mini"
         android:paddingRight="@dimen/padding_mini"
         android:textColor="@color/grey_4a"
-        android:textSize="@dimen/primary_text_size" />
+        android:textSize="14sp" />
 
-
+    </LinearLayout>
 
 </LinearLayout>

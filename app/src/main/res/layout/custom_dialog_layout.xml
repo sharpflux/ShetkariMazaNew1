@@ -3,12 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@drawable/dialog_rounded_corners_gray_background"
     >
 
     <TextView
         android:id="@+id/tv_tittle"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="50dp"
         android:text="Title"
         android:background="@color/colorPrimary"
         android:textColor="@color/white"
@@ -31,7 +32,8 @@
     <ScrollView
         android:id="@+id/scroll_dialog"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
         android:layout_below="@+id/searchView_customDialog"
         android:fillViewport="true">
 
@@ -56,20 +58,21 @@
     <RelativeLayout
         android:id="@+id/footer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_alignParentBottom="true"
-        android:gravity="center">
+        android:gravity="center"
+        android:background="@drawable/gradient_bottom_rounded_corner">
 
         <Button
             android:id="@+id/yes"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/gradient_upside_down"
             android:fontFamily="@font/arima_madurai_medium"
             android:text="@string/cancel"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            android:textStyle="bold"
+
 
             />
 
