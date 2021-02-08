@@ -19,8 +19,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:paddingLeft="9dp"
             android:paddingTop="10dp"
             android:paddingBottom="13dp"
@@ -381,48 +381,53 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone">
+                >
 
                 <TextView
-                    android:fontFamily="@font/sfpro_display_medium"
+
                     android:textSize="15sp"
+                    android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="Organic/ Non organic*"
-                    android:textColorHint="@color/grey_4a"
+                    android:textColorHint="@color/text_black"
                     />
 
                 <RadioGroup
                     android:id="@+id/radioGroup1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:fontFamily="@font/sfpro_display_medium"
+
                         android:id="@+id/radio1"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:hint="Organic"
                         android:textSize="15sp"
-                        android:textColorHint="@color/grey_4a"/>
+                        android:textColorHint="@color/text_black"/>
 
                     <RadioButton
-                        android:fontFamily="@font/sfpro_display_medium"
+
                         android:id="@+id/radio2"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:hint="Non organic"
                         android:textSize="15sp"
-                        android:textColorHint="@color/grey_4a"/>
+                        android:textColorHint="@color/text_black"/>
 
 
                 </RadioGroup>
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
+                    android:layout_height="0.8dp"
                     android:layout_gravity="center"
-                    android:background="@color/colorGray" />
+                    android:visibility="gone"
+                    android:background="@color/text_black" />
 
             </LinearLayout>
 

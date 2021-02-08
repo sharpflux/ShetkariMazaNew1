@@ -285,5 +285,6 @@
     <string name="i_want_to_sell">I want to sell</string>
     <string name="of">of</string>
     <string name="from">from</string>
+    <string name="taluka">Taluka *</string>
 
 </resources>

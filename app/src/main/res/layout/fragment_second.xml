@@ -41,6 +41,196 @@
                 android:text="hidden value"
                 android:textSize="20dp"
                 android:visibility="gone" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                style="@style/formTextInputLayout"
+                >
+
+                <EditText
+                    android:id="@+id/edtaddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/address"
+                    android:inputType="textMultiLine"
+                    android:lineSpacingMultiplier="1.2"
+                    android:textColor="@color/text_black"
+                    android:maxLines="5"
+                    android:textSize="15sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                style="@style/formTextInputLayout"
+                >
+
+                <EditText
+                    android:id="@+id/edtstate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/state"
+                    android:inputType="none"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:textColor="@color/text_black"
+                    android:textSize="15sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                style="@style/formTextInputLayout"
+                >
+
+                <EditText
+                    android:id="@+id/edtdistrict"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/dist"
+                    android:inputType="none"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:textColor="@color/text_black"
+                    android:textSize="15sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                style="@style/formTextInputLayout"
+                >
+
+                <EditText
+                    android:id="@+id/edttaluka"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/taluka"
+                    android:inputType="none"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:textColor="@color/text_black"
+                    android:textSize="15sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                style="@style/formTextInputLayout"
+                >
+
+                <EditText
+                    android:id="@+id/edtcity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/Cityorvillage"
+                    android:inputType="textMultiLine"
+                    android:lineSpacingMultiplier="1.2"
+                    android:maxLines="5"
+                    android:textColor="@color/text_black"
+                    android:textSize="15sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/TICompany"
+                android:layout_marginTop="15dp"
+                style="@style/formTextInputLayout"
+                >
+
+                <EditText
+                    android:id="@+id/edtcompanyname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/company_name"
+                    android:inputType="textMultiLine"
+                    android:textColor="@color/text_black"
+                    android:textSize="15sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                style="@style/formTextInputLayout"
+                >
+
+                <EditText
+                    android:id="@+id/edtlicense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/APMC_licance"
+                    android:inputType="none"
+
+                    android:textColor="@color/text_black"
+                    android:textSize="15sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                style="@style/formTextInputLayout"
+                >
+
+                <EditText
+                    android:id="@+id/edtcompanyregno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/Company_Regin_no"
+                    android:inputType="none"
+
+                    android:textColor="@color/text_black"
+                    android:textSize="15sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                style="@style/formTextInputLayout"
+                >
+
+                <EditText
+                    android:id="@+id/edtgstno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/GST_no"
+                    android:inputType="none"
+
+                    android:textColor="@color/text_black"
+                    android:textSize="15sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+<!--
+
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -100,7 +290,9 @@
                     android:textSize="15sp"  />
 
             </com.google.android.material.textfield.TextInputLayout>
+-->
 
+<!--
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -117,7 +309,7 @@
                     android:focusable="false"
                     android:focusableInTouchMode="false"
 
-                    android:hint="@string/Name_of_Taluka"
+                    android:hint="@string/taluka"
                     android:inputType="none"
                     android:textSize="15sp"/>
 
@@ -141,12 +333,14 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+-->
 
 
-            <com.google.android.material.textfield.TextInputLayout
+<!--            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:id="@+id/TICompany"
 
                 >
 
@@ -175,9 +369,9 @@
                     android:hint="@string/APMC_licance"
                     android:textSize="15sp"/>
 
-            </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>-->
 
-            <com.google.android.material.textfield.TextInputLayout
+  <!--          <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -207,7 +401,7 @@
                     android:hint="@string/GST_no"
                     android:textSize="15sp" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>-->
 
             <TextView
                 android:id="@+id/hideStateId"
@@ -240,7 +434,37 @@
 
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:background="@drawable/gradient_upside_down"
+        android:orientation="horizontal"
+        android:id="@+id/secondbtnnext">
 
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/arima_madurai_medium"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/next"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+
+
+
+
+
+
+    </LinearLayout>
+
+
+<!--
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -270,6 +494,7 @@
 
 
     </LinearLayout>
+-->
 
 
 
