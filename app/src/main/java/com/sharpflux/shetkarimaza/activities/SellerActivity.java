@@ -123,15 +123,13 @@ public class SellerActivity extends AppCompatActivity {
                     public void onResponse(String response) {
 
                         try {
-                            String oldAPI = "http://apimaza.supergo.in";
+
                             JSONArray obj = new JSONArray(response);
                             for (int i = 0; i < obj.length(); i++)
                             {
                                 JSONObject userJson = obj.getJSONObject(i);
                                 if (!userJson.getBoolean("error")) {
 
-                                    String imageUrl = userJson.getString("ImageUrl")
-                                            .substring(oldAPI.length(), userJson.getString("ImageUrl").length());
 
 
                                     SellOptions sellOptions=

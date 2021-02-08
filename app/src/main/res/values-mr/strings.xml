@@ -272,6 +272,17 @@
     <string name="forgotten_login_details">Forgotten your login details?</string>
     <string name="get_help_with_signing_in">Get help with signing in</string>
     <string name="verify_mobile_no">Verify Mobile No.</string>
+    <string name="view_more">View more</string>
+    <string name="available_quantity">Available Quantity</string>
+    <string name="variety">Variety    </string>
+    <string name="quantity_available_in">Quantity available in </string>
+    <string name="quality">Quality</string>
+    <string name="qty">Qty.</string>
+    <string name="rate">Rate</string>
+    <string name="total">Total</string>
+    <string name="i_want_to_sell">I want to sell</string>
+    <string name="of">of</string>
+    <string name="from">from</string>
 
 
 </resources>

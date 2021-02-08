@@ -13,9 +13,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.sharpflux.shetkarimaza.activities.ProductInfoForSaleActivity;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.model.SellOptions;
+import com.sharpflux.shetkarimaza.volley.URLs;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -50,7 +52,10 @@ public class MySellerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof SellerViewHolder)
             try {
-                Picasso.get().load(sellOptions.get(position).getImage()).into(((SellerViewHolder) holder).mImage);
+                Glide.with(mmContext)
+                        .load(URLs.Main_URL+sellOptions.get(position).getImage()).placeholder(R.drawable.kisanmaza)
+                        .into(((SellerViewHolder) holder).mImage);
+                //Picasso.get().load(sellOptions.get(position).getImage()).into(((SellerViewHolder) holder).mImage);
                 ((SellerViewHolder) holder).mTitle.setText(sellOptions.get(position).getProductlist());
                 ((SellerViewHolder) holder).ProductId = sellOptions.get(position).getProductId();
             } catch (Exception d) {
