@@ -2,6 +2,7 @@ package com.sharpflux.shetkarimaza.fragment;
 
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -26,6 +28,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.activities.PaymentActivity;
+import com.sharpflux.shetkarimaza.activities.SubscriptionPlanActivity;
 import com.sharpflux.shetkarimaza.adapter.HomeSliderAdapter;
 import com.sharpflux.shetkarimaza.adapter.MyCategoryTypeAdapter;
 import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
@@ -63,6 +67,7 @@ public class CategoryFragment extends Fragment {
     String currentLanguage;
     boolean isLoading = false;
     ProgressBar progressBar;
+    private TextView textView_category;
     private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
     Boolean isScrolling = false;
     int currentItems, totalItems, scrollOutItems;
@@ -82,6 +87,7 @@ public class CategoryFragment extends Fragment {
 
         View view =inflater.inflate(R.layout.fragment_category, container, false);
         mRecyclerView = view.findViewById(R.id.recyclerview_categorytype);
+        textView_category = view.findViewById(R.id.textView_category);
         mGridLayoutManager = new GridLayoutManager(getContext(), 3);
         mRecyclerView.setLayoutManager(mGridLayoutManager);
 
@@ -130,7 +136,13 @@ public class CategoryFragment extends Fragment {
 
         }
 
-
+        textView_category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), SubscriptionPlanActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
 
        /* mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override

@@ -2,24 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sharpflux.shetkarimaza">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-
-
-    <uses-feature android:name="android.hardware.camera2" />
-
-    <uses-permission
-        android:name="org.apache.http.legacy"
-        android:required="false" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -31,34 +13,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.SubGroupActivity"></activity>
+        <activity android:name=".activities.SubscriptionPlanActivity"></activity>
+        <activity android:name=".activities.SubGroupActivity" />
         <activity android:name=".filters.Filter1Activity" />
         <activity android:name=".filters.BuyerFilterActivity" />
         <activity android:name=".activities.AddListActivityTest" />
-       
         <activity
-
             android:name=".activities.ContactDetailActivity"
             android:noHistory="true"
             android:parentActivityName=".activities.HomeActivity"
             android:theme="@style/SellerDarkAppTheme" />
-
-       
         <activity
             android:name=".activities.BuyerActivity"
-
             android:label="@string/buyer"
             android:parentActivityName=".activities.HomeActivity"
             android:theme="@style/SellerDarkAppTheme" />
-       
         <activity
-            android:configChanges="orientation|screenSize|screenLayout"
             android:name=".activities.SellerActivity"
-            android:noHistory="true"
+            android:configChanges="orientation|screenSize|screenLayout"
             android:label="@string/seller"
+            android:noHistory="true"
             android:parentActivityName=".activities.HomeActivity"
             android:theme="@style/SellerDarkAppTheme" />
-
         <activity
             android:name=".activities.TranspoterActivity"
             android:label="Transpoter"
@@ -101,13 +77,11 @@
         <activity
             android:name=".activities.ProductDetailsForBuyerActivity"
             android:label="Detail Information"
-
             android:parentActivityName=".activities.AllSimilarDataActivity"
             android:theme="@style/SellerDarkAppTheme" />
         <activity
             android:name=".activities.DetailFormActivity"
             android:label="@string/includemoredetails"
-
             android:parentActivityName=".activities.ChooseActivity"
             android:theme="@style/SellerDarkAppTheme" />
         <activity
@@ -120,12 +94,9 @@
             android:label="@string/productdetail"
             android:parentActivityName=".activities.SellerActivity"
             android:theme="@style/SellerDarkAppTheme" />
-
         <activity android:name=".activities.ChooseActivity" />
         <activity android:name=".activities.WelcomeActivity" />
-        <activity
-            android:name=".activities.HomeActivity" />
-
+        <activity android:name=".activities.HomeActivity" />
         <activity android:name=".activities.ForgotPasswordActivity" />
         <activity
             android:name=".activities.SelectLanguageActivity"
@@ -140,6 +111,13 @@
             </intent-filter>
         </activity>
 
+        <meta-data
+            android:name="com.razorpay.ApiKey"
+            android:value="rzp_test_vsghhmsETnM91Z" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
         <provider
             android:name=".uploadimage.LocalStorageProvider"
             android:authorities="{applicationId}.documents"
@@ -151,6 +129,7 @@
                 <action android:name="android.content.action.DOCUMENTS_PROVIDER" />
             </intent-filter>
         </provider>
+
         <provider
             android:name=".provider.GenericFileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -160,20 +139,26 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
-
-        <meta-data
-            android:name="com.razorpay.ApiKey"
-            android:value="rzp_test_vsghhmsETnM91Z" />
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
-
-
     </application>
+    <uses-feature android:name="android.hardware.camera2" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <uses-permission
+        android:name="org.apache.http.legacy"
+        android:required="false" />
 
 </manifest>

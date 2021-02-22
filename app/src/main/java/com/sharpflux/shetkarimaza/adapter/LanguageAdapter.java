@@ -20,7 +20,7 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.Single
 
     private Context context;
     private ArrayList<MyLanguage> employees;
-    private int checkedPosition = -1;
+    public int checkedPosition = -1;
 
     public LanguageAdapter(Context context, ArrayList<MyLanguage> employees) {
         this.context = context;

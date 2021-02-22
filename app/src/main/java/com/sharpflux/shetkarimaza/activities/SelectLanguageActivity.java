@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,7 +37,7 @@ public class SelectLanguageActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ArrayList<MyLanguage> employees = new ArrayList<>();
     private LanguageAdapter adapter;
-    private AppCompatButton btnGetSelected;
+    private TextView btnGetSelected;
     Button spinner;
     Locale myLocale;
     String currentLanguage = "en", currentLang;
@@ -61,15 +62,16 @@ public class SelectLanguageActivity extends AppCompatActivity {
         });*/
         mydatabase = new dbLanguage(getApplicationContext());
 
-        this.btnGetSelected = (AppCompatButton) findViewById(R.id.btnGetSelected);
+        this.btnGetSelected = findViewById(R.id.btnGetSelected);
         this.recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
         Cursor res = mydatabase.getAllData();
-        if(res.getCount()>0){
+        /*if(res.getCount()>0){
             Intent intent = new Intent(SelectLanguageActivity.this, HomeActivity.class);
             startActivity(intent);
-        }
-
+        }*/
+        /*mydatabase.LanguageInsert("en");
+        setLocale("en");*/
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
@@ -77,6 +79,9 @@ public class SelectLanguageActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         createList();
+
+        adapter.checkedPosition=0;
+
 
         btnGetSelected.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +109,9 @@ public class SelectLanguageActivity extends AppCompatActivity {
                         setLocale("mr");
                         recreate();
                     }
-                    } else {
+
+
+                } else {
                          showToast("No Selection");
                     }
 
@@ -177,14 +184,15 @@ public class SelectLanguageActivity extends AppCompatActivity {
 
             res.updateConfiguration(conf, dm);
 
-           /* SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
-            finish();*/
-            Intent refresh = new Intent(this, HomeActivity.class);
+            Intent refresh = new Intent(SelectLanguageActivity.this, HomeActivity.class);
             refresh.putExtra(currentLang, localeName);
             startActivity(refresh);
 
 
-           finish();
+            finish();
+           /* SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
+            finish();*/
+
         } else {
             Toast.makeText(SelectLanguageActivity.this, "Language already selected!", Toast.LENGTH_SHORT).show();
         }

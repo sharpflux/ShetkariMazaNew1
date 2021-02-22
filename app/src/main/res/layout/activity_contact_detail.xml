@@ -1,85 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:id="@+id/fragment_order_list_llContainer"
-    android:background="@drawable/backgroundlogo"
+    android:background="@color/transparent"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        app:cardElevation="0.5dp"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:paddingBottom="10dp"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:gravity="center"
-            >
 
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/recyclerView_addFarm"
-                android:background="@color/white"
-                />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/linearlayout_addMoreFarm"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:clickable="true"
-                >
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/add_more"
-                    android:textColor="@color/textcolor"
-                    android:textSize="15sp"
-
-                    />
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:id="@+id/imageView_addFarm"
-                    android:layout_marginStart="10dp"
-                    android:src="@drawable/add11"
-                    android:tint="@color/colorPrimary"
-
-                    />
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
 
 <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/contact_Detail_rvProductList"
     android:scrollbars="vertical"
     android:stackFromBottom="true"
+    android:layout_alignParentTop="true"
     android:visibility="visible"
     android:layout_width="match_parent"
-    android:layout_height="0.0dip"
-    android:layout_marginTop="5dp"
-    android:layout_weight="1.0" />
+    android:layout_height="match_parent"
+    android:layout_marginBottom="50dp"
+    android:layout_weight="1" />
     <ProgressBar
         android:id="@+id/progressBar_filter"
         android:layout_width="wrap_content"
@@ -88,18 +28,21 @@
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:visibility="gone"
+        android:layout_centerInParent="true"
         />
 
 
     <TextView
-       android:layout_marginBottom="50dp"
         android:gravity="center"
         android:id="@+id/txt_emptyView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/no_data"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:fontFamily="@font/arima_madurai_medium"
         android:textColor="@color/error_color_material"
-        android:textSize="20dp"/>
+        android:textSize="20sp"/>
 
 
     <LinearLayout
@@ -172,6 +115,69 @@
         </LinearLayout>
 
     </LinearLayout>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:cardElevation="0.5dp"
+        android:visibility="gone"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="10dp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
 
 
-</LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/recyclerView_addFarm"
+                android:background="@color/white"
+                />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/linearlayout_addMoreFarm"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:clickable="true"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/add_more"
+                    android:textColor="@color/textcolor"
+                    android:textSize="15sp"
+
+                    />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/imageView_addFarm"
+                    android:layout_marginStart="10dp"
+                    android:src="@drawable/add11"
+                    android:tint="@color/colorPrimary"
+
+                    />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>
+

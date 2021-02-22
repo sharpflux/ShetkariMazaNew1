@@ -1,52 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00b1e1"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background">
+    <!--android:background="#00b1e1"-->
 
+<!--
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+
         android:orientation="vertical"
+        android:layout_centerInParent="true"
         android:gravity="center"
+
         >
+-->
+<include android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    layout="@layout/main_toolbar"
+    />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="10dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_centerInParent="true"
+
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                >
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="wrap_content"
             >
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_alignParentBottom="true"
-                android:background="#E2E2E2"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/colorPrimary"
                 android:gravity="center"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
                 >
 
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/circleImageView_razopPay"
+                    android:layout_marginStart="10dp"
+                    android:layout_centerHorizontal="true"
+                    app:civ_circle_background_color="@color/white"
+                    android:src="@drawable/kisanmaza"
+                    />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="35dp"
-                    android:paddingBottom="0dp"
-                    android:textSize="12sp"
-                    android:text="Order #RZP42"
-                    />
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:text="ShetkariMaza Delivery Payment"
+                    android:fontFamily="@font/arima_madurai_medium"
+                    android:textSize="18sp"
+                    android:singleLine="true"
+                    android:maxLines="1"
+                    android:textStyle="bold"
+                    android:ellipsize="end"/>
+
 
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_centerHorizontal="true"
-                android:background="#FFFFFF"
-                android:src="@drawable/rzp"
-                />
 
         </RelativeLayout>
 
@@ -54,26 +89,33 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:orientation="vertical"
-            android:paddingTop="15dp"
-            android:background="#f2f2f2"
+
             android:gravity="center"
             >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/text_black"
+                android:textSize="14sp"
+                android:text="Order #RZP42"
+                />
+<!--            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:paddingTop="0dp"
-                android:paddingBottom="5dp"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/text_black"
                 android:text="ShetkariMaza Delivery Payment"
-                android:textSize="20sp" />
+                android:textSize="20sp" />-->
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_gravity="center_horizontal"
-                android:paddingTop="0dp"
-                android:paddingBottom="0dp"
+                android:textColor="@color/text_black"
                 android:textSize="12sp"
                 android:text="INR 1.00"
                 />
@@ -82,9 +124,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:paddingTop="5dp"
-                android:paddingBottom="0dp"
-                android:textSize="12sp"
+                android:textColor="@color/text_black"
+                android:layout_marginTop="10dp"
+                android:textSize="13sp"
                 android:textStyle="italic"
                 android:text="This is a real transaction"
                 />
@@ -98,7 +140,7 @@
                 android:layout_gravity="center_horizontal"
                 android:paddingRight="20dp"
                 android:paddingLeft="20dp"
-                android:background="@drawable/btnn"
+                android:background="@drawable/gradient_upside_down"
                 android:textSize="14sp"
                 android:textColor="#fcfcfc"
                 android:text="Pay to complete order"
@@ -108,6 +150,7 @@
 
         </LinearLayout>
 
+<!--
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -118,11 +161,16 @@
             android:paddingRight="20dp"
             android:background="@drawable/secured_by_bg"
             android:textSize="12sp"
-            android:textColor="#a1ddee"
+            android:textColor="#673AB7"
             android:textStyle="italic"
             android:text="Secure Payments by Razorpay"
             />
+-->
 
-    </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+   <!-- </LinearLayout>-->
 
 </RelativeLayout>

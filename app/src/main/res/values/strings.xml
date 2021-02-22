@@ -286,5 +286,9 @@
     <string name="of">of</string>
     <string name="from">from</string>
     <string name="taluka">Taluka *</string>
+    <string name="half_yearly_plan">Half Yearly Plan</string>
+    <string name="quaterly_plan">Quaterly Plan</string>
+    <string name="yearly_plan">Yearly Plan</string>
+    <string name="monthly_plan">Monthly Plan</string>
 
 </resources>

@@ -82,7 +82,12 @@ public class SharedPrefManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
-        mCtx.startActivity(new Intent(mCtx, TabLayoutLogRegActivity.class));
+
+        Intent intent = new Intent(mCtx, TabLayoutLogRegActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mCtx.startActivity(intent);
     }
 
     public boolean isFirstTime() {

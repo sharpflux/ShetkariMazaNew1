@@ -45,7 +45,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
 
 
-        SharedPreferences myPref = this.getSharedPreferences("prefName", Context.MODE_PRIVATE);
+/*        SharedPreferences myPref = this.getSharedPreferences("prefName", Context.MODE_PRIVATE);
         boolean firstLaunch = myPref.getBoolean("firstLaunch", true);
 
         if(!firstLaunch){
@@ -53,7 +53,7 @@ public class WelcomeActivity extends AppCompatActivity {
             startActivity(i);
             finish();
         }
-        myPref.edit().putBoolean("firstLaunch", false).commit();
+        myPref.edit().putBoolean("firstLaunch", false).commit();*/
         CallData();
 
 

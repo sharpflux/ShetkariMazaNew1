@@ -10,18 +10,18 @@
         android:layout_alignParentBottom="true"
         android:gravity="bottom">
 
-        <androidx.appcompat.widget.AppCompatButton
+        <TextView
             android:id="@+id/btnGetSelected"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:height="60dp"
-            android:background="@drawable/btn_plain"
-            android:fontFamily="@font/sfpro_display_bold"
+            android:gravity="center"
+            android:height="45dp"
+            android:background="@drawable/gradient_upside_down"
+            android:fontFamily="@font/arima_madurai_medium"
             android:text="@string/next"
-            android:textAllCaps="true"
             android:textColor="@android:color/white"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
     </RelativeLayout>

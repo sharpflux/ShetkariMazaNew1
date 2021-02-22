@@ -139,6 +139,7 @@ public class ContactDetailActivity extends AppCompatActivity {
         }
 
 
+
         recyclerView_addFarm = findViewById(R.id.recyclerView_addFarm);
         addPersonAdapter_farm = new AddPersonAdapter(ContactDetailActivity.this, addPersonModelArrayList_farm,
                 "Farm");
@@ -146,6 +147,7 @@ public class ContactDetailActivity extends AppCompatActivity {
         recyclerView_addFarm.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager_farm = new LinearLayoutManager(ContactDetailActivity.this);
         recyclerView_addFarm.setLayoutManager(linearLayoutManager_farm);
+
 
 
         bundle = getIntent().getExtras();

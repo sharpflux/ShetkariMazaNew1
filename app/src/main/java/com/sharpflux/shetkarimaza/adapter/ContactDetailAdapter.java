@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.ProductDetailsForBuyerActivity;
 import com.sharpflux.shetkarimaza.activities.ProductInfoForSaleActivity;
@@ -43,9 +44,15 @@ public class ContactDetailAdapter extends RecyclerView.Adapter<ContactDetaiViewH
 
     @Override
     public void onBindViewHolder(final ContactDetaiViewHolder holder, final int position) {
-       Picasso.get().load(URLs.Main_URL+mlist.get(position).getImage()).resize(300, 300).into(holder.mImage);
+     //  Picasso.get().load(URLs.Main_URL+mlist.get(position).getImage()).resize(300, 300).into(holder.mImage);
+        Glide.with(mContext).load(URLs.Main_URL+mlist.get(position).getImage())
+                .placeholder(R.drawable.kisanmaza).into(holder.mImage);
+
         holder.mfullname.setText(mlist.get(position).getFullName());
-        holder.mAddress.setText(mlist.get(position).getAddress());
+        holder.mAddress.setText(mlist.get(position).getAddress()+", "
+                + mlist.get(position).getTaluka() + ", "
+                + mlist.get(position).getDistrict() + ", "
+                + mlist.get(position).getState() + "");
         holder.mMobNo.setText(mlist.get(position).getMobileNo());
         holder.mState.setText(mlist.get(position).getState()+",");
         holder.mDistrict.setText(mlist.get(position).getDistrict()+",");
