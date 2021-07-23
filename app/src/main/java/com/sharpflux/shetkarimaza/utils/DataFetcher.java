@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.DataAdapter;
 import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
@@ -54,8 +55,8 @@ public class DataFetcher {
 
     }
 
-    public void loadList(final String ColumnName, final EditText editText, final  String URL,final String id,final TextView hiddenText,
-                         final String ParameterName, final String ParameterValue,final String Title,final  String BotinicalName,final EditText name_botanical,final EditText edtproductVariety, final CustomDialogLoadingProgressBar customDialogLoadingProgressBar) {
+    public void loadList(final String ColumnName, final EditText editText, final  String URL, final String id, final TextView hiddenText,
+                         final String ParameterName, final String ParameterValue, final String Title, final  String BotinicalName, final EditText name_botanical, final TextInputLayout edtproductVariety, final CustomDialogLoadingProgressBar customDialogLoadingProgressBar) {
         list.clear();
 
 

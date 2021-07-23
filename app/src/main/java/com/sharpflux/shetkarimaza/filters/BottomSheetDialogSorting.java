@@ -16,6 +16,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity;
 import com.sharpflux.shetkarimaza.activities.ContactDetailActivity;
 
 public class BottomSheetDialogSorting extends BottomSheetDialogFragment implements View.OnClickListener {
@@ -34,10 +35,17 @@ public class BottomSheetDialogSorting extends BottomSheetDialogFragment implemen
             public void onClick(View v) {
                 bundle = getArguments();
                 if (bundle != null) {
-                    Intent i = new Intent(getContext(), ContactDetailActivity.class);
+                    Intent i = new Intent(getContext(), AllSimilarDataActivity.class);
                     i.putExtra("Search", bundle.getString("Search"));
                     i.putExtra("Id", bundle.getString("Id"));
                     i.putExtra("SortBy", "ASC");
+                    i.putExtra("ItemTypeId",bundle.getString("ItemTypeId"));
+                    i.putExtra("TalukaId",bundle.getString("TalukaId"));
+                    i.putExtra("VarietyId",bundle.getString("VarietyId"));
+                    i.putExtra("QualityId",bundle.getString("QualityId"));
+                    i.putExtra("StatesID",bundle.getString("StatesID"));
+                    i.putExtra("DistrictId",bundle.getString("DistrictId"));
+                    //i.putExtra("priceids",bundle.getString("priceids"));
                     startActivity(i);
                 }
             }
@@ -48,10 +56,17 @@ public class BottomSheetDialogSorting extends BottomSheetDialogFragment implemen
             public void onClick(View v) {
                 bundle = getArguments();
                 if (bundle != null) {
-                    Intent i = new Intent(getContext(), ContactDetailActivity.class);
+                    Intent i = new Intent(getContext(), AllSimilarDataActivity.class);
                     i.putExtra("Search", bundle.getString("Search"));
                     i.putExtra("Id", bundle.getString("Id"));
                     i.putExtra("SortBy", "DESC");
+                    i.putExtra("ItemTypeId",bundle.getString("ItemTypeId"));
+                    i.putExtra("TalukaId",bundle.getString("TalukaId"));
+                    i.putExtra("VarietyId",bundle.getString("VarietyId"));
+                    i.putExtra("QualityId",bundle.getString("QualityId"));
+                    i.putExtra("StatesID",bundle.getString("StatesID"));
+                    i.putExtra("DistrictId",bundle.getString("DistrictId"));
+                    //i.putExtra("priceids",bundle.getString("priceids"));
                     startActivity(i);
                 }
             }

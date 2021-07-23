@@ -74,13 +74,6 @@ public class BuyerFilterFragment extends Fragment {
         priceids = getArguments().getString("priceids");
 
 
-
-
-
-
-
-
-
         mydatabase = new dbBuyerFilter(getContext());
         AsyncTaskRunner runner = new AsyncTaskRunner();
         String sleepTime = filter;

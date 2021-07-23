@@ -837,7 +837,7 @@
                     android:id="@+id/edtstate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/seller_variety"
+                    android:hint="@string/state"
                     android:inputType="none"
                     android:clickable="false"
                     android:focusable="false"

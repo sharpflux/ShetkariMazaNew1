@@ -115,7 +115,9 @@ public class UserVerificationActivity extends AppCompatActivity {
             return;
         }
 
-        if (Otp.equals(enteredOtp)||resendOtp.equals(enteredOtp)) {
+        // ADDED NOT EQUALS TO OTP CHANGE WHEN OTP IS START
+
+        if (!Otp.equals(enteredOtp)||!resendOtp.equals(enteredOtp)) {
 
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_REGISTER,

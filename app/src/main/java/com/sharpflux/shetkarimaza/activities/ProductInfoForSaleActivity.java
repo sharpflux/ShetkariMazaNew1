@@ -293,6 +293,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         tv_rate = findViewById(R.id.tv_rate);
         lt_txtAge = findViewById(R.id.lt_txtAge);
         lr_quality = findViewById(R.id.lr_quality);
+
         //  imageView = findViewById(R.id.imageView);
 
 
@@ -365,8 +366,10 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         //  SubCategory Name
         if (ProductId.equals("15") || ProductId.equals("43")) {
             lr_subCategory.setVisibility(View.VISIBLE);
+            lr_quality.setVisibility(View.GONE);
+            LinearLayout1.setVisibility(View.GONE);
             hidItemTypeId.setText(hideSubCatId.getText());
-
+            lr_areaInHector.setVisibility(View.GONE);
         }
 
         //Botanical Name
@@ -1177,7 +1180,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
 
                 if (params[0].toString() == "ItemName")
-                    fetcher.loadList("ItemName", edtproductType, URLs.URL_NAME + "1&PageSize=500&CategoryId=" + ProductId + "&Language=" + currentLanguage, "ItemTypeId", hidItemTypeId, "CategoryId", ProductId, TittleName, "BotanicalName", name_botanical, edtproductVariety, customDialogLoadingProgressBar);
+                    fetcher.loadList("ItemName", edtproductType, URLs.URL_NAME + "1&PageSize=500&CategoryId=" + ProductId + "&Language=" + currentLanguage, "ItemTypeId", hidItemTypeId, "CategoryId", ProductId, TittleName, "BotanicalName", name_botanical, lr_variety, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "Variety")
                     fetcher.loadList("VarietyName", edtproductVariety, URLs.URL_VARIATY + hidItemTypeId.getText() + "&Language=" + currentLanguage, "VarietyId", hidVarietyId, "", "", "Variety", "", null, null, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "Quality")
@@ -1574,7 +1577,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                        Toast.makeText(ProductInfoForSaleActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override

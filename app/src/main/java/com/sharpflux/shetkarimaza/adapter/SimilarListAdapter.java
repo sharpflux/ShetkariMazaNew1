@@ -61,7 +61,7 @@ public class SimilarListAdapter extends RecyclerView.Adapter<SimilarListViewHold
 
         //holder.tvAvailableQty.setText(mlist.get(position).getQuantity().toString());
         //holder.tvExpectedPrice.setText( String.valueOf(Double.valueOf(mlist.get(position).getPrice())/ Double.valueOf(mlist.get(position).getQuantity())  ));
-        holder.tvPriceDetails.setText(mlist.get(position).getUnit().toString());
+        holder.tvPriceDetails.setText(String.valueOf(Double.valueOf(mlist.get(position).getPrice())/ Double.valueOf(mlist.get(position).getQuantity())) +" per "+   mlist.get(position).getUnit().toString());
 //"Quantity avaialable in "
         holder.mMobNo.setOnClickListener(new View.OnClickListener() {
 

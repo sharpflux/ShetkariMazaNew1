@@ -63,7 +63,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
                Intent i = new Intent(WelcomeActivity.this, SelectLanguageActivity.class);//Activity to be  launched For the First time
                 startActivity(i);
-                finish();
+              //  finish();
 
 
                /*SharedPreferences settings = getSharedPreferences("prefs", 0);

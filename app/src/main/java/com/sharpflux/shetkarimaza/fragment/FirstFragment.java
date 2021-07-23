@@ -105,6 +105,10 @@ public class FirstFragment extends Fragment {
 
        Cursor cursor = mydatabase.LanguageGet(language);
 
+     if(cursor.getCount()==0) {
+
+     }
+
 
         while (cursor.moveToNext()) {
             currentLanguage = cursor.getString(0);
@@ -169,7 +173,6 @@ public class FirstFragment extends Fragment {
 
                 String name = editfullname.getText().toString();
                 Bundle bundle = new Bundle();
-
                 bundle.putString("RegistrationTypeId", hidRegTypeId.getText().toString());
                 bundle.putString("RegistrationCategoryId", hidRegCagteId.getText().toString());
                 bundle.putString("Name", name);

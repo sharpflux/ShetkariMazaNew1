@@ -188,10 +188,6 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
                 intent.putExtra("priceids", priceids);
                 startActivity(intent);
                 finish();
-
-
-
-
             }
         });
     }

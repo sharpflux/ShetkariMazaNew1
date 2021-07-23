@@ -138,8 +138,6 @@ public class ContactDetailActivity extends AppCompatActivity {
 
         }
 
-
-
         recyclerView_addFarm = findViewById(R.id.recyclerView_addFarm);
         addPersonAdapter_farm = new AddPersonAdapter(ContactDetailActivity.this, addPersonModelArrayList_farm,
                 "Farm");
@@ -148,10 +146,10 @@ public class ContactDetailActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager_farm = new LinearLayoutManager(ContactDetailActivity.this);
         recyclerView_addFarm.setLayoutManager(linearLayoutManager_farm);
 
-
+        ItemTypeId="0";
 
         bundle = getIntent().getExtras();
-        bundle.getString("ProductId");
+      //  bundle.getString("ProductId");
         if (bundle != null) {
             ItemTypeId = bundle.getString("ProductId");
             TalukaId = bundle.getString("TalukaId");

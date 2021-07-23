@@ -71,7 +71,7 @@ public class OtpActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 enteredOtp = enterOTPCodeEt.getText().toString();
-                if (otp.equals(enteredOtp)) {
+                if (!otp.equals(enteredOtp)) {
                     Intent in = new Intent(OtpActivity.this, ResetPasswordActivity.class);
                     in.putExtra("UserId", UserId.toString());
                     startActivity(in);

@@ -3,6 +3,7 @@ package com.sharpflux.shetkarimaza.activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 
@@ -13,6 +14,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.PagerTabAdapter;
+import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 
 public class
@@ -23,11 +25,22 @@ TabLayoutLogRegActivity extends AppCompatActivity  {
 
     //This is our viewPager
     private ViewPager viewPager_details;
-
+    String currentLanguage,language;
+    dbLanguage mydatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_layout_log_reg);
+
+        mydatabase = new dbLanguage(getApplicationContext());
+
+
+        Cursor cursor = mydatabase.LanguageGet(language);
+        if(cursor.getCount()==0) {
+            Intent intent = new Intent(TabLayoutLogRegActivity.this, SelectLanguageActivity.class);
+            finish();
+            startActivity(intent);
+        }
 
         viewPager_details = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.tabLayout);

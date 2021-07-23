@@ -4,6 +4,7 @@ package com.sharpflux.shetkarimaza.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import android.view.animation.AnimationUtils;
@@ -12,12 +13,15 @@ import android.widget.RelativeLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 
 public class SplashActivity extends AppCompatActivity {
 
 
     RelativeLayout spalsh;
+    dbLanguage mydatabase;
+    String currentLanguage,language;
 
 //
     @Override
@@ -28,6 +32,10 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         spalsh = findViewById(R.id.splash);
+        mydatabase = new dbLanguage(getApplicationContext());
+
+
+
 
         spalsh.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.slide_in_left));
 
@@ -43,20 +51,25 @@ public class SplashActivity extends AppCompatActivity {
                     boolean firstLaunch = myPref.getBoolean("firstLaunch", true);
 
                     if(!firstLaunch){
-                        /*Intent i = new Intent(getApplicationContext(),HomeActivity.class);
-                        startActivity(i);
-                        finish();
-*/
+
                         if (SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
                             finish();
                             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                        } else {
-                            Intent intent = new Intent(SplashActivity.this, SelectLanguageActivity.class);
-                            intent.putExtra("ActivityState", "started");
-                            finish();
-                            startActivity(intent);
                         }
+                        else {
 
+                            Cursor cursor = mydatabase.LanguageGet(language);
+                            if(cursor.getCount()==0) {
+                                Intent intent = new Intent(SplashActivity.this, SelectLanguageActivity.class);
+                                intent.putExtra("ActivityState", "started");
+                                finish();
+                                startActivity(intent);
+                            }
+                            else {
+                                finish();
+                                startActivity(new Intent(getApplicationContext(), TabLayoutLogRegActivity.class));
+                            }
+                        }
 
 
                     }
@@ -64,8 +77,6 @@ public class SplashActivity extends AppCompatActivity {
                         myPref.edit().putBoolean("firstLaunch", false).commit();
                         Intent intent = new Intent(SplashActivity.this,WelcomeActivity.class);
                         startActivity(intent);
-
-
 
                     }
 

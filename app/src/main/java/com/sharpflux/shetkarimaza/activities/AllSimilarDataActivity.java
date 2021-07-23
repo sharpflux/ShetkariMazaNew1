@@ -231,7 +231,6 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                 intent.putExtra("StatesID",StatesID);
                 intent.putExtra("DistrictId",DistrictId);
                 intent.putExtra("priceids",priceids);
-
                 startActivity(intent);
             }
         });
@@ -283,6 +282,8 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                     Cursor STATECursor = myDatabase.FilterGetByFilterName("STATE");
                     Cursor DISTRICTCursor = myDatabase.FilterGetByFilterName("DISTRICT");
                     Cursor TALUKACursor = myDatabase.FilterGetByFilterName("TALUKA");
+
+                    priceids=bundle.getString("SortBy");
 
                     while (VARIETYCursor.moveToNext()) {
                         if(VarityId==null)
@@ -365,7 +366,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
             if(ItemTypeId==null)
             {
-                Toast.makeText(getApplicationContext(), "ITEM TYPE IS NULL", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AllSimilarDataActivity.this, "ITEM TYPE IS NULL", Toast.LENGTH_SHORT).show();
                 return;
             }
 
