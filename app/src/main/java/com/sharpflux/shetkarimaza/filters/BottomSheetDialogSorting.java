@@ -67,6 +67,7 @@ public class BottomSheetDialogSorting extends BottomSheetDialogFragment implemen
                     i.putExtra("StatesID",bundle.getString("StatesID"));
                     i.putExtra("DistrictId",bundle.getString("DistrictId"));
                     //i.putExtra("priceids",bundle.getString("priceids"));
+                    //
                     startActivity(i);
                 }
             }
