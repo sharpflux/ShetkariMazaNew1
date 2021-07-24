@@ -40,11 +40,29 @@
                 android:textSize="20dp"
                 android:visibility="gone" />
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/TICompany"
+                android:layout_marginTop="15dp"
+                style="@style/formTextInputLayout"
+                >
 
+                <EditText
+                    android:id="@+id/edtcompanyname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/company_name"
+                    android:inputType="textMultiLine"
+                    android:textColor="@color/text_black"
+                    android:textSize="15sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:id="@+id/textLayoutAddress"
                 style="@style/formTextInputLayout"
                 >
 
@@ -148,24 +166,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/TICompany"
-                android:layout_marginTop="15dp"
-                style="@style/formTextInputLayout"
-                >
 
-                <EditText
-                    android:id="@+id/edtcompanyname"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/company_name"
-                    android:inputType="textMultiLine"
-                    android:textColor="@color/text_black"
-                    android:textSize="15sp" />
-
-            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"

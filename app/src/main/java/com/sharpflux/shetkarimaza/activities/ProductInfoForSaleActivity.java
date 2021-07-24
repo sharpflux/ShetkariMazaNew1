@@ -386,7 +386,9 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
 
         }
-
+        if (ProductId.equals("1") || ProductId.equals("2")) {
+            lt_txtAge.setVisibility(View.GONE);
+        }
 
         // organic
         if (ProductId.equals("2") || ProductId.equals("9") || ProductId.equals("3") || ProductId.equals("7") || ProductId.equals("14") || ProductId.equals("17") || ProductId.equals("42")) {

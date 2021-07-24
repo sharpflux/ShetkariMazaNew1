@@ -45,7 +45,7 @@ public class SecondFragment extends DialogFragment {
     Locale myLocale;
     dbLanguage mydatabase;
     String currentLanguage,language;
-    TextInputLayout TICompany;
+    TextInputLayout TICompany,textLayoutAddress;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -59,6 +59,10 @@ public class SecondFragment extends DialogFragment {
         btn_next =   (view.findViewById(R.id.secondbtnnext));
 
         address = view.findViewById(R.id.edtaddress);
+        textLayoutAddress=view.findViewById(R.id.textLayoutAddress);
+
+
+
 
         edtstate = view.findViewById(R.id.edtstate);
         edtdistrict = view.findViewById(R.id.edtdistrict);
@@ -105,6 +109,7 @@ public class SecondFragment extends DialogFragment {
             if(registrationTypeId.contains("32")){
                // companyname.setHint("Nursery Name");
                 TICompany.setHint("Nursery Name");
+                textLayoutAddress.setHint("Nursery Address");
                 companyregnno.setText("0");
                 gstno.setText("0");
                 license.setText("0");
@@ -112,6 +117,8 @@ public class SecondFragment extends DialogFragment {
                 gstno.setVisibility(View.GONE);
                 companyregnno.setVisibility(View.GONE);
             }
+
+
         }
 
 

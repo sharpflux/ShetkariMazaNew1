@@ -161,9 +161,11 @@ public class FirstFragment extends Fragment {
 
 
                 if (TextUtils.isEmpty(alterNo)) {
-                    AlternateMobile.setError("Please enter your Alternate Mobile No.");
-                    AlternateMobile.requestFocus();
-                    return;
+                   // AlternateMobile.setError("Please enter your Alternate Mobile No.");
+                   // AlternateMobile.requestFocus();
+                    //return;
+
+                    alterNo="0";
                 }
 
                 if (TextUtils.isEmpty(email)) {
@@ -178,7 +180,7 @@ public class FirstFragment extends Fragment {
                 bundle.putString("Name", name);
                 bundle.putString("Gender", gender);
                 bundle.putString("Mobile", mobileNo.getText().toString());
-                bundle.putString("AlternateMobile", AlternateMobile.getText().toString());
+                bundle.putString("AlternateMobile", alterNo);
                 bundle.putString("Email", email);
                 FragmentTransaction transection = getFragmentManager().beginTransaction();
                 SecondFragment mfragment = new SecondFragment();
