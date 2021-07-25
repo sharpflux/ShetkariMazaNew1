@@ -181,8 +181,6 @@ public class CategoryFragment extends Fragment {
                 isLoading = true;
                 int currentSize = myCategoryTypeAdapter.getItemCount();
 
-
-
                 CategoryFragment.AsyncTaskRunner runner = new CategoryFragment.AsyncTaskRunner();
                 String sleepTime = String.valueOf(page+1);
                 runner.execute(sleepTime);

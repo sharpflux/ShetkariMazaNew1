@@ -11,6 +11,9 @@
     <string name="addWareHouse">Add वेअर हाऊस</string>
     <string name="menu_home">सेटिंग्ज</string>
     <string name="menu_address">पत्ता</string>
+    <string name="Organic">सेंद्रिय</string>
+    <string name="Inorganic">गैर जैविक</string>
+    <string name="OrganicInorganic">सेंद्रिय/गैर जैविक *</string>
     <string name="menu_shopping">माझे कार्ट</string>
     <string name="menu_list">माझे ऑर्डर</string>
     <string name="header_category">श्रेणी </string>
@@ -44,10 +47,13 @@
     <string name="hello_blank_fragment">हॅलो रिक्त खंड</string>
     <string name="RatePerKm">
 प्रति किलोमीटर दर </string>
+    <string name="RatePerKilometer">दर प्रति किलोमीटर</string>
+
 
     <string name="buyer">खरेदीदार</string>
     <string name="seller">विक्रेता</string>
-
+    <string name="Vehicletype">वाहन प्रकार</string>
+    <string name="VehicleNo">वाहन क्रमांक</string>
     //login signup
     <string name="firstname">पहिले नाव*</string>
     <string name="middlename">मधले नाव</string>

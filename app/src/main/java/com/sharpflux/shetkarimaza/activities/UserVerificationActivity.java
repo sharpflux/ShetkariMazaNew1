@@ -39,15 +39,16 @@ import java.util.Map;
 
 
 public class UserVerificationActivity extends AppCompatActivity {
-    TextView tv_verify, tv_resendOtp,tv_timer;
+    TextView tv_verify, tv_resendOtp, tv_timer;
     EditText edtenterOTP;
     String enteredOtp = "";
-    String FullName = "", Middlename = "", Lastname = "", MobileNo = "", Password = "", Cpassword = "", Otp = "",resendOtp="";
+    String FullName = "", Middlename = "", Lastname = "", MobileNo = "", Password = "", Cpassword = "", Otp = "", resendOtp = "";
     Bundle bundle;
     AlertDialog.Builder builder;
     ProgressBar progressBar;
     MyCountDownTimer1 myCountDownTimer1;
     MyCountDownTimer2 myCountDownTimer2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +58,7 @@ public class UserVerificationActivity extends AppCompatActivity {
         tv_timer = findViewById(R.id.tv_timer);
         tv_resendOtp = findViewById(R.id.tv_resendOtp);
         edtenterOTP = findViewById(R.id.edtenterOTP);
-        progressBar=(ProgressBar)findViewById(R.id.progressBar);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         builder = new AlertDialog.Builder(this);
 
@@ -76,7 +77,6 @@ public class UserVerificationActivity extends AppCompatActivity {
                 RegenerateOTP(MobileNo);
 
 
-
             }
         });
 
@@ -91,7 +91,6 @@ public class UserVerificationActivity extends AppCompatActivity {
                 //myCountDownTimer1.onFinish();
             }
         });
-
 
 
     }
@@ -117,7 +116,7 @@ public class UserVerificationActivity extends AppCompatActivity {
 
         // ADDED NOT EQUALS TO OTP CHANGE WHEN OTP IS START
 
-        if (!Otp.equals(enteredOtp)||!resendOtp.equals(enteredOtp)) {
+        if (!Otp.equals(enteredOtp) || !resendOtp.equals(enteredOtp)) {
 
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_REGISTER,
@@ -135,12 +134,17 @@ public class UserVerificationActivity extends AppCompatActivity {
                                             obj.getInt("UserId"),
                                             obj.getString("FullName"),
                                             obj.getString("EmailId"),
-                                            obj.getString("MobileNo"), "", "",""
+                                            obj.getString("MobileNo"),
+                                            "",
+                                            "",
+                                            "",
+                                            "",
+                                            false
                                     );
                                     SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
                                     finish();
-                                   Intent intent = new Intent(getApplicationContext(),DetailFormActivity.class);
-                                   startActivity(intent);
+                                    Intent intent = new Intent(getApplicationContext(), DetailFormActivity.class);
+                                    startActivity(intent);
                                 } else {
 
                                     builder.setMessage(obj.getString("message"))
@@ -149,15 +153,15 @@ public class UserVerificationActivity extends AppCompatActivity {
                                             .setNegativeButton("OK", new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dialog, int id) {
                                                     //  Action for 'NO' Button
-                                                    dialog.cancel();
-
+                                                    Intent intent = new Intent(getApplicationContext(), TabLayoutLogRegActivity.class);
+                                                    startActivity(intent);
+                                                    finish();
                                                 }
                                             });
 
                                     AlertDialog alert = builder.create();
                                     alert.setTitle("Error");
                                     alert.show();
-                                    Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -206,7 +210,7 @@ public class UserVerificationActivity extends AppCompatActivity {
                     params.put("UserId", "");
                     params.put("RegistrationTypeId", "0");
                     params.put("RegistrationCategoryId", "0");
-                    params.put("FullName", FullName+" "+Lastname);
+                    params.put("FullName", FullName + " " + Lastname);
                     params.put("MobileNo", MobileNo);
 
                     params.put("AlternateMobile", "0");
@@ -241,8 +245,7 @@ public class UserVerificationActivity extends AppCompatActivity {
             };
 
             VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
-        } else
-        {
+        } else {
             final AlertDialog.Builder builder = new AlertDialog.Builder(UserVerificationActivity.this);
             builder.setCancelable(false);
             builder.setMessage("Enter Valid OTP");
@@ -259,9 +262,9 @@ public class UserVerificationActivity extends AppCompatActivity {
     }
 
 
-   private void RegenerateOTP(final String ToMobile) {
+    private void RegenerateOTP(final String ToMobile) {
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,URLs.URL_OTP2+ToMobile,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_OTP2 + ToMobile,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -270,14 +273,13 @@ public class UserVerificationActivity extends AppCompatActivity {
                             JSONObject obj = new JSONObject(response);
                             //if no error in response
                             if (!obj.getBoolean("error")) {
-                                resendOtp=obj.getString("OTP");
+                                resendOtp = obj.getString("OTP");
 
                                 myCountDownTimer2 = new MyCountDownTimer2(59000, 1000);
                                 myCountDownTimer2.start();
 
                                 myCountDownTimer2.onFinish();
-                            }
-                            else{
+                            } else {
                                 builder.setMessage(obj.getString("message"))
                                         .setCancelable(false)
 
@@ -347,17 +349,18 @@ public class UserVerificationActivity extends AppCompatActivity {
             long sec = (millisUntilFinished / 1000) % 60;
 
             tv_timer.setText(f.format(min) + ":" + f.format(sec));
-           // f.format(hour)
+            // f.format(hour)
 
         }
 
         @Override
         public void onFinish() {
-           tv_timer.setText("");
-           tv_resendOtp.setVisibility(View.VISIBLE);
+            tv_timer.setText("");
+            tv_resendOtp.setVisibility(View.VISIBLE);
         }
 
     }
+
     @Override
     public void onBackPressed() {
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
@@ -381,8 +384,10 @@ public class UserVerificationActivity extends AppCompatActivity {
         android.app.AlertDialog alert = builder.create();
         alert.show();
     }
+
     public class MyCountDownTimer2 extends CountDownTimer {
-        public int counter=59;
+        public int counter = 59;
+
         public MyCountDownTimer2(long millisInFuture, long countDownInterval) {
             super(millisInFuture, countDownInterval);
         }

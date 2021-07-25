@@ -2,12 +2,15 @@ package com.sharpflux.shetkarimaza.fragment;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -23,21 +26,43 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.ProcessorActivity;
 import com.sharpflux.shetkarimaza.activities.ProductInfoForSaleActivity;
 import com.sharpflux.shetkarimaza.activities.SelfieActivity;
 import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
+import com.sharpflux.shetkarimaza.customviews.CustomRecyclerViewDialog;
+import com.sharpflux.shetkarimaza.model.Product;
+import com.sharpflux.shetkarimaza.model.User;
+import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
+import com.sharpflux.shetkarimaza.utils.DataFetcher;
+import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
+import com.sharpflux.shetkarimaza.volley.URLs;
+import com.sharpflux.shetkarimaza.volley.VolleySingleton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.sharpflux.shetkarimaza.activities.SelfieActivity.RequestPermissionCode;
 
@@ -49,8 +74,8 @@ public class ThirdFragment extends Fragment {
 
     ImageView currentImageView = null;
     Bitmap imageBitmap;
-
-    TextView tvAdhar, tvCheque;
+    String currentLanguage,language;
+    TextView tvAdhar, tvCheque,hidBankId;
 
     private static final String IMAGE_DIRECTORY = "/demonuts";
 
@@ -72,7 +97,12 @@ public class ThirdFragment extends Fragment {
     String address = "", city = "", district = "", state = "", companyname = "",
             license = "", companyregnno = "", gstno = "", name = "", registrationTypeId = "",
             registrationCategoryId = "", gender = "", mobile = "", alternateMobile = "", email = "",stateId="",districtId="",TalukaId="";
-
+    User user;
+    DataFetcher fetcher;
+    Product sellOptions;
+    private CustomRecyclerViewDialog customDialog;
+    ArrayList<Product> list;
+    dbLanguage mydatabase;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -80,6 +110,20 @@ public class ThirdFragment extends Fragment {
 
         bundle = getArguments();
         customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(getContext());
+        user = SharedPrefManager.getInstance(getContext()).getUser();
+        list = new ArrayList<Product>();
+        mydatabase = new dbLanguage(getContext());
+        Cursor cursor = mydatabase.LanguageGet(language);
+
+
+        while (cursor.moveToNext()) {
+            currentLanguage = cursor.getString(0);
+
+        }
+
+
+
+        hidBankId=view.findViewById(R.id.hidBankId);
 
         if (bundle != null) {
             name = bundle.getString("Name");
@@ -126,6 +170,8 @@ public class ThirdFragment extends Fragment {
 
         tvCheque = view.findViewById(R.id.hideImageTvCheque);
         tvAdhar = view.findViewById(R.id.hideImageTvAdhar);
+
+        fetcher = new DataFetcher(sellOptions, customDialog, list, getContext(),null);
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,9 +232,7 @@ public class ThirdFragment extends Fragment {
                 if (registrationTypeId.equals("1")) {
 
 
-
                     Intent intent = new Intent(getContext(), ProcessorActivity.class);
-
                     intent.putExtra("Name", name);
                     intent.putExtra("RegistrationTypeId", registrationTypeId);
                     intent.putExtra("RegistrationCategoryId", registrationCategoryId);
@@ -261,6 +305,16 @@ public class ThirdFragment extends Fragment {
             }
         });
 
+
+        bankname.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ThirdFragment.AsyncTaskRunner runner = new ThirdFragment.AsyncTaskRunner();
+                String sleepTime = "Bank";
+                runner.execute(sleepTime);
+            }
+
+        });
 
         btn_adharimage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -398,6 +452,108 @@ public class ThirdFragment extends Fragment {
         }
     }
 
+    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
+
+        private String resp;
+        ProgressDialog progressDialog;
+
+        @Override
+        protected String doInBackground(String... params) {
+            publishProgress("Sleeping..."); // Calls onProgressUpdate()
+            try {
+                if (params[0].toString() == "Bank")
+                    fetcher.loadList("BankName", bankname, URLs.URL_GETBANKS + "?Language=en", "BankId", hidBankId, "", "","State","",null,null,customDialogLoadingProgressBar);
+                else if (params[0].toString() == "userdetails")
+                {
+                    GetUserDetails();
+                }
+
+                Thread.sleep(100);
+
+                resp = "Slept for " + params[0] + " seconds";
+            } catch (Exception e) {
+                e.printStackTrace();
+                resp = e.getMessage();
+            }
+            return resp;
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            // execution of result of Long time consuming operation
+            // progressDialog.dismiss();
+            // finalResult.setText(result);
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+            customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(getContext());
+            customDialogLoadingProgressBar.show();
+        }
+
+
+        @Override
+        protected void onProgressUpdate(String... text) {
+            // finalResult.setText(text[0]);
+
+        }
+
+    }
+
+
+    private void GetUserDetails() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_REGISTRATIONGETUSERDETAILS + "&UserId="+user.getId() +"&Language=" + currentLanguage,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONArray obj = new JSONArray(response);
+
+
+                            for (int i = 0; i < obj.length(); i++) {
+                                JSONObject userJson = obj.getJSONObject(i);
+
+                                if (!userJson.getBoolean("error")) {
+
+                                   // companyname.setText(userJson.getString("CompanyFirmName"));
+
+
+
+
+                                } else {
+                                    Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+                            customDialogLoadingProgressBar.dismiss();
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            customDialogLoadingProgressBar.dismiss();
+                        }
+                    }
+                },
+
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        customDialogLoadingProgressBar.dismiss();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                return params;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+    }
 
 }
 

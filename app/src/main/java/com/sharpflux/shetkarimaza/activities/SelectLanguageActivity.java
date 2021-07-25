@@ -52,26 +52,13 @@ public class SelectLanguageActivity extends AppCompatActivity {
 
         currentLanguage = getIntent().getStringExtra(currentLang);
 
-        /*spinner = findViewById(R.id.spinner);
 
-        spinner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showChangeLang();
-            }
-        });*/
         mydatabase = new dbLanguage(getApplicationContext());
 
         this.btnGetSelected = findViewById(R.id.btnGetSelected);
         this.recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
-        Cursor res = mydatabase.getAllData();
-        /*if(res.getCount()>0){
-            Intent intent = new Intent(SelectLanguageActivity.this, HomeActivity.class);
-            startActivity(intent);
-        }*/
-        /*mydatabase.LanguageInsert("en");
-        setLocale("en");*/
+
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
@@ -181,7 +168,6 @@ public class SelectLanguageActivity extends AppCompatActivity {
             DisplayMetrics dm = res.getDisplayMetrics();
             Configuration conf = res.getConfiguration();
             conf.locale = myLocale;
-
             res.updateConfiguration(conf, dm);
 
             Intent refresh = new Intent(SelectLanguageActivity.this, HomeActivity.class);

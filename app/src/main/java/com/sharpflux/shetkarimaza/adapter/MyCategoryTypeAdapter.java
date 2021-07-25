@@ -131,7 +131,7 @@ class MyCategoryTypeHolder extends RecyclerView.ViewHolder implements View.OnCli
             Intent intent = new Intent(context, SellerActivity.class);
             intent.putExtra("ProductId", categoryId);
             context.startActivity(intent);
-        } else if (categoryId .equals("3") ) {
+        } else if (categoryId.equals("3") ) {
             Intent intent = new Intent(context, BuyerActivity.class);
             intent.putExtra("ProductId", categoryId);
             context.startActivity(intent);

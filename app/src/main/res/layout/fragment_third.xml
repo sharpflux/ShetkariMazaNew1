@@ -53,13 +53,20 @@
                     android:id="@+id/edtaccholder"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
+                    android:textSize="15dp"
                     android:hint="@string/account_holder_name"
                       />
 
             </com.google.android.material.textfield.TextInputLayout>
 
 
+            <TextView
+                android:id="@+id/hidBankId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="hidden value"
+                android:textSize="20dp"
+                android:visibility="gone" />
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -96,7 +103,10 @@
                     android:id="@+id/edtbankname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
+                    android:textSize="15dp"
+                    android:inputType="none"
+                    android:clickable="false"
+                    android:focusable="false"
                     android:hint="@string/bank_name"
                     />
 

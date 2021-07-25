@@ -255,29 +255,23 @@ public class LoginFragment extends Fragment {
                         try {
 
                             JSONArray obj = new JSONArray(response);
-/*                            if(obj.length()==0){
-                                builder.setMessage("Please Sign Up First !!!")
-                                        .setCancelable(false)
+                            if (obj.length() == 0) {
 
-                                        .setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-                                                //  Action for 'NO' Button
-                                                // dialog.cancel();
-                                                *//*FragmentTransaction transection = getFragmentManager().beginTransaction();
-                                                SignupFragment mfragment = new SignupFragment();
-                                                transection.replace(R.id.pager, mfragment);
-                                                transection.commit();*//*
-
-                                                //viewPager.setCurrentItem(1);
-
-                                            }
-                                        });
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                builder.setCancelable(false);
+                                builder.setMessage("Invalid Username or Password");
+                                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
 
                                 AlertDialog alert = builder.create();
-                                alert.setTitle("New User");
                                 alert.show();
+                                customDialogLoadingProgressBar.dismiss();
                                 return;
-                            }*/
+                            }
 
                             for (int i = 0; i < obj.length(); i++) {
                                 //getting the user from the response
@@ -290,50 +284,34 @@ public class LoginFragment extends Fragment {
                                             userJson.getString("FullName"),
                                             userJson.getString("EmailId"),
                                             userJson.getString("MobileNo"), "", "",""
-
+                                            ,String.valueOf(    userJson.getInt("RegistrationTypeId")),
+                                            false
                                     );
 
-                                } /*else if (obj.length() == 0) {
-                                    builder.setMessage("Invalid User Name or Password?")
-                                            .setCancelable(false)
+                                    SharedPrefManager.getInstance(getContext()).userLogin(user);
 
-                                            .setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int id) {
-                                                    //  Action for 'NO' Button
-                                                    dialog.cancel();
+                                    startActivity(new Intent(getContext(), HomeActivity.class));
 
-                                                }
-                                            });
-
-                                    builder.create();
-                                    builder.setTitle("Invalid User");
-                                    builder.show();
-                                    progressDialog.dismiss();
-
-                                }*/
+                                }
                                 else {
-                                    builder.setMessage("Invalid User Name or Password?")
-                                            .setCancelable(false)
-
-                                            .setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int id) {
-                                                    //  Action for 'NO' Button
-                                                    dialog.cancel();
-                                                }
-                                            });
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                    builder.setCancelable(false);
+                                    builder.setMessage("Invalid Username or Password");
+                                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            //if user pressed "yes", then he is allowed to exit from application
+                                            dialog.cancel();
+                                        }
+                                    });
 
                                     AlertDialog alert = builder.create();
-                                    alert.setTitle("Invalid User");
                                     alert.show();
                                   progressDialog.dismiss();
 
                                 }
 
-                                //storing the user in shared preferences
-                                SharedPrefManager.getInstance(getContext()).userLogin(user);
-                                //starting the profile activity
-                               // getActivity().finish();
-                                startActivity(new Intent(getContext(), HomeActivity.class));
+
                             }
                             customDialogLoadingProgressBar.dismiss();
 

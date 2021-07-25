@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -75,6 +76,8 @@ public class SelfieActivity extends AppCompatActivity {
     public String ImageUrl;
     public String selfi;
 
+    public SharedPreferences prefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,7 +100,7 @@ public class SelfieActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-               /* saveOrderDetails();*/
+                /* saveOrderDetails();*/
                 SelfieActivity.AsyncTaskRunner runner = new SelfieActivity.AsyncTaskRunner();
                 String sleepTime = "2";
                 runner.execute(sleepTime);
@@ -112,8 +115,6 @@ public class SelfieActivity extends AppCompatActivity {
                 hideImageTvSelfie.setText("selfie");
             }
         });
-
-
 
 
     }
@@ -309,9 +310,9 @@ public class SelfieActivity extends AppCompatActivity {
                             JSONObject obj = new JSONObject(response);
 
                             if (!obj.getBoolean("error")) {
-
-
-                                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                                SharedPrefManager.getInstance(getApplicationContext()).IsRegistrationComplete(true);
+                                finish();
+                                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
 
 
                             } else {
@@ -338,7 +339,7 @@ public class SelfieActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        builder.setMessage(error.getMessage() )
+                        builder.setMessage(error.getMessage())
                                 .setCancelable(false)
 
                                 .setNegativeButton("OK", new DialogInterface.OnClickListener() {
@@ -401,7 +402,7 @@ public class SelfieActivity extends AppCompatActivity {
                 params.put("StateId", "1");
                 params.put("CityId", "1");
 
-                params.put("TahasilId","1");
+                params.put("TahasilId", "1");
                 params.put("CompanyFirmName", companyname);
                 params.put("LandLineNo", "1");
                 params.put("APMCLicence", license);
@@ -427,7 +428,6 @@ public class SelfieActivity extends AppCompatActivity {
                 params.put("UploadCancelledCheckUrl", check);
                 params.put("UploadAdharCardPancardUrl", adhar);
                 params.put("ImageUrl", selfi);
-
 
 
                 return params;

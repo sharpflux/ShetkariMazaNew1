@@ -12,10 +12,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.google.android.material.textfield.TextInputLayout;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
@@ -26,9 +33,16 @@ import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.utils.DataFetcher;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 import com.sharpflux.shetkarimaza.volley.URLs;
+import com.sharpflux.shetkarimaza.volley.VolleySingleton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 
 public class SecondFragment extends DialogFragment {
@@ -46,6 +60,7 @@ public class SecondFragment extends DialogFragment {
     dbLanguage mydatabase;
     String currentLanguage,language;
     TextInputLayout TICompany,textLayoutAddress;
+    User user;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -61,6 +76,7 @@ public class SecondFragment extends DialogFragment {
         address = view.findViewById(R.id.edtaddress);
         textLayoutAddress=view.findViewById(R.id.textLayoutAddress);
 
+        user = SharedPrefManager.getInstance(getContext()).getUser();
 
 
 
@@ -261,6 +277,10 @@ public class SecondFragment extends DialogFragment {
 
         });
 
+        SecondFragment.AsyncTaskRunner runner = new SecondFragment.AsyncTaskRunner();
+        String sleepTime = "userdetails";
+        runner.execute(sleepTime);
+
         return view;
 
     }
@@ -284,7 +304,10 @@ public class SecondFragment extends DialogFragment {
 
                 else if (params[0].toString() == "taluka")
                     fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText()+"," + "&Language=en", "TalukasId", hideTalukaId, "", "","Taluka","",null,null,customDialogLoadingProgressBar);
-
+                else if (params[0].toString() == "userdetails")
+                {
+                    GetUserDetails();
+                }
 
                 Thread.sleep(100);
 
@@ -319,7 +342,70 @@ public class SecondFragment extends DialogFragment {
         }
 
     }
+    private void GetUserDetails() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_REGISTRATIONGETUSERDETAILS + "&UserId="+user.getId() +"&Language=" + currentLanguage,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
 
+                        try {
+                            JSONArray obj = new JSONArray(response);
+
+
+                            for (int i = 0; i < obj.length(); i++) {
+                                JSONObject userJson = obj.getJSONObject(i);
+
+                                if (!userJson.getBoolean("error")) {
+
+                                    companyname.setText(userJson.getString("CompanyFirmName"));
+                                    address.setText(userJson.getString("Address"));
+                                    edtstate.setText(userJson.getString("StatesName"));
+                                    edtdistrict.setText(userJson.getString("DistrictName"));
+                                    edttaluka.setText(userJson.getString("TalukaName"));
+                                    city.setText(userJson.getString("TalukaName"));
+                                    license.setText(userJson.getString("APMCLicence"));
+                                    companyregnno.setText(userJson.getString("CompanyRegNo"));
+                                    gstno.setText(userJson.getString("GSTNo"));
+
+
+                                    hideTalukaId.setText(userJson.getInt("GSTNo"));
+                                    hideDistrictId.setText(userJson.getInt("DistrictId"));
+                                    hideStateId.setText(userJson.getInt("TahasilId"));
+                                    hideTalukaId.setText(userJson.getInt("GSTNo"));
+
+
+
+                                } else {
+                                    Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+                            customDialogLoadingProgressBar.dismiss();
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            customDialogLoadingProgressBar.dismiss();
+                        }
+                    }
+                },
+
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        customDialogLoadingProgressBar.dismiss();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                return params;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+    }
 
 
 }

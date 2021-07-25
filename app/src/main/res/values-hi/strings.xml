@@ -7,9 +7,10 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">नेविगेशन हेडर</string>
     <string name="action_settings">सेटिंग्स</string>
-
+    <string name="OrganicInorganic">सेंद्रिय/गैर जैविक *</string>
     <string name="header_category">श्रेणियाँ </string>
-
+    <string name="Organic">जैविक</string>
+    <string name="Inorganic">गैर जैविक</string>
     <string name="menu_home">होम</string>
     <string name="menu_address">पता</string>
     <string name="menu_shopping">मेरी गाड़ी</string>
@@ -31,6 +32,13 @@
     <string name="action_starred_messages">तारांकित संदेश</string>
     <string name="action_status">स्थिति</string>
 
+    <string name="Vehicletype">
+वाहन का प्रकार</string>
+
+    <string name="VehicleNo">
+वाहन संख्या</string>
+
+    <string name="RatePerKilometer">दर प्रति किलोमीटर</string>
     <string name="action_clear_call_log">कॉल लॉग साफ़ करें</string>
     <string name="action_calls">कॉल</string>
     <string name="action_refresh">ताज़ा करना</string>

@@ -17,6 +17,7 @@ public class URLs {
     public static final String URL_SAVEPRODUCTDETAILS = Main_URL+"api/RequestAPI/request";
     public static  final String URL_REQESTS=Main_URL+"api/request/RequestsGET";
     public static final String URL_STATE=Main_URL+"api/States/GETSTATE";
+    public static final String URL_GETBANKS=Main_URL+"api/Registration/GetBanks";
     public static  final String URL_DISTRICT=Main_URL+"Api/DistrictMultiple/Get_DistrictMultiple?StatesID=";
     public static final String URL_OTP=Main_URL+"User_Authentication/OTPGenerate";
     public static final String URL_TALUKA=Main_URL+"Api/GetMultipleTalukasApi/GetMultipleTalukas?DistrictsID=";
@@ -32,7 +33,7 @@ public class URLs {
     public static String URL_SUBcATEGORY=Main_URL+"api/ItemMasterApi/Get_SubCatItems?ItemTypeId=";
     public static String URL_AGE=Main_URL+"api/AgeGroupAPI/GetAgeGroupAPI?";
 
-
+    public static String URL_REGISTRATIONGETUSERDETAILS=Main_URL+"api/Registration/RegistrationGetUserDetails?";
 
 
 

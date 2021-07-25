@@ -21,9 +21,18 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.activities.HomeActivity;
+import com.sharpflux.shetkarimaza.adapter.MyCategoryTypeAdapter;
 import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
 import com.sharpflux.shetkarimaza.customviews.CustomRecyclerViewDialog;
+import com.sharpflux.shetkarimaza.model.MyCategoryType;
 import com.sharpflux.shetkarimaza.model.MyProcessor;
 import com.sharpflux.shetkarimaza.model.Product;
 import com.sharpflux.shetkarimaza.model.User;
@@ -31,14 +40,21 @@ import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.utils.DataFetcher;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 import com.sharpflux.shetkarimaza.volley.URLs;
+import com.sharpflux.shetkarimaza.volley.VolleySingleton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 
 public class FirstFragment extends Fragment {
 
-    EditText Rtype_edit, Rcategory_edit, editfullname, mobileNo, AlternateMobile, Email,name_botanical;
+    EditText Rtype_edit, Rcategory_edit, editfullname, mobileNo, AlternateMobile, Email, name_botanical;
 
     ArrayList<Product> list;
     private ArrayList<MyProcessor> processorList;
@@ -53,7 +69,7 @@ public class FirstFragment extends Fragment {
     Product sellOptions;
 
     RadioGroup rg;
-    RadioButton rb1,rb2;
+    RadioButton rb1, rb2;
     View view;
     LinearLayout btn_next;
     String gender = "";
@@ -61,13 +77,12 @@ public class FirstFragment extends Fragment {
     private String UserId, username, usermobileno, useremail;
 
     dbLanguage mydatabase;
-    String currentLanguage,language;
+    String currentLanguage, language;
 
     public static final String ALTERNATE_MOBILE_KEY = "AlternateMobile";
 
     private String userEmail = "";
-
-
+    User user;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,8 +95,8 @@ public class FirstFragment extends Fragment {
         hidRegCagteId = view.findViewById(R.id.hidRegCagteId);
 
         rg = view.findViewById(R.id.radioGroup1);
-        rb1=view.findViewById(R.id.radio1);
-        rb2=view.findViewById(R.id.radio2);
+        rb1 = view.findViewById(R.id.radio1);
+        rb2 = view.findViewById(R.id.radio2);
 
 
         btn_next = (LinearLayout) (view.findViewById(R.id.footer));
@@ -97,25 +112,24 @@ public class FirstFragment extends Fragment {
 
         mydatabase = new dbLanguage(getContext());
 
-        User user = SharedPrefManager.getInstance(getContext()).getUser();
+        user = SharedPrefManager.getInstance(getContext()).getUser();
         myLocale = getResources().getConfiguration().locale;
         username = user.getUsername();
         usermobileno = user.getMobile();
         useremail = user.getEmail();
 
-       Cursor cursor = mydatabase.LanguageGet(language);
+        Cursor cursor = mydatabase.LanguageGet(language);
 
-     if(cursor.getCount()==0) {
+        if (cursor.getCount() == 0) {
 
-     }
+        }
+
 
 
         while (cursor.moveToNext()) {
             currentLanguage = cursor.getString(0);
 
         }
-
-
 
 
         editfullname.setText(username);
@@ -129,12 +143,11 @@ public class FirstFragment extends Fragment {
             public void onClick(View v) {
 
                 String regType = Rtype_edit.getText().toString();
-               // String regCategory = Rcategory_edit.getText().toString();
-                String rb= Rcategory_edit.getText().toString();
-                String alterNo= AlternateMobile.getText().toString();
+                // String regCategory = Rcategory_edit.getText().toString();
+                String rb = Rcategory_edit.getText().toString();
+                String alterNo = AlternateMobile.getText().toString();
 
-                String email= Email.getText().toString();
-
+                String email = Email.getText().toString();
 
 
                 if (TextUtils.isEmpty(regType)) {
@@ -150,8 +163,7 @@ public class FirstFragment extends Fragment {
                 }*/
 
                 //int id = rg.getCheckedRadioButtonId();
-                if(!rb1.isChecked()||!rb2.isChecked())
-                {//Grp is your radio group object
+                if (!rb1.isChecked() || !rb2.isChecked()) {//Grp is your radio group object
                     rb1.setError("please select Gender");
                     rb1.requestFocus();
                     rb2.setError("please select Gender");
@@ -161,15 +173,15 @@ public class FirstFragment extends Fragment {
 
 
                 if (TextUtils.isEmpty(alterNo)) {
-                   // AlternateMobile.setError("Please enter your Alternate Mobile No.");
-                   // AlternateMobile.requestFocus();
+                    // AlternateMobile.setError("Please enter your Alternate Mobile No.");
+                    // AlternateMobile.requestFocus();
                     //return;
 
-                    alterNo="0";
+                    alterNo = "0";
                 }
 
                 if (TextUtils.isEmpty(email)) {
-                    email="0";
+                    email = "0";
                 }
 
 
@@ -192,8 +204,7 @@ public class FirstFragment extends Fragment {
         });
 
 
-
-        fetcher = new DataFetcher(sellOptions, customDialog, list, getContext(),name_botanical);
+        fetcher = new DataFetcher(sellOptions, customDialog, list, getContext(), name_botanical);
 
         Rtype_edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -202,7 +213,6 @@ public class FirstFragment extends Fragment {
                 FirstFragment.AsyncTaskRunner runner = new FirstFragment.AsyncTaskRunner();
                 String sleepTime = "type";
                 runner.execute(sleepTime);
-
 
 
             }
@@ -231,11 +241,9 @@ public class FirstFragment extends Fragment {
                     gender = rb1.getHint().toString();
 
                     Toast.makeText(getContext(),
-                           gender,
+                            gender,
                             Toast.LENGTH_LONG).show();
-                }
-                else if (rb2 != null)
-                {
+                } else if (rb2 != null) {
                     gender = rb2.getHint().toString();
 
                     Toast.makeText(getContext(),
@@ -246,17 +254,18 @@ public class FirstFragment extends Fragment {
             }
         });
 
-
-
-
+        FirstFragment.AsyncTaskRunner runner = new FirstFragment.AsyncTaskRunner();
+        String sleepTime = "userdetails";
+        runner.execute(sleepTime);
 
         return view;
     }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        if(outState!=null) {
+        if (outState != null) {
             // Save user email instance variable value in bundle.
             outState.putString(this.ALTERNATE_MOBILE_KEY, AlternateMobile.getText().toString());
 
@@ -267,7 +276,7 @@ public class FirstFragment extends Fragment {
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
 
-        if(savedInstanceState!=null) {
+        if (savedInstanceState != null) {
             // Retrieve the user email value from bundle.
             userEmail = savedInstanceState.getString(this.ALTERNATE_MOBILE_KEY);
             AlternateMobile.setText(userEmail);
@@ -285,13 +294,16 @@ public class FirstFragment extends Fragment {
             try {
 
                 if (params[0].toString() == "type")
-                    fetcher.loadList("RegistrationType", Rtype_edit, URLs.URL_RType+"1&PageSize=15&Language="+currentLanguage,
-                            "RegistrationTypeId", hidRegTypeId, "", "","Registration Type","",null,null,customDialogLoadingProgressBar);
+                    fetcher.loadList("RegistrationType", Rtype_edit, URLs.URL_RType + "1&PageSize=15&Language=" + currentLanguage,
+                            "RegistrationTypeId", hidRegTypeId, "", "", "Registration Type", "", null, null, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "cate")
                     fetcher.loadList("RegistrationCategoryName",
                             Rcategory_edit, URLs.URL_RCategary, "RegistrationCategoryId", hidRegCagteId,
-                            "", "","Registration Category Name","",null,null,customDialogLoadingProgressBar);
-
+                            "", "", "Registration Category Name", "", null, null, customDialogLoadingProgressBar);
+                else if (params[0].toString() == "userdetails")
+                {
+                    GetUserDetails();
+                }
                 Thread.sleep(10);
 
                 resp = "Slept for " + params[0] + " seconds";
@@ -306,7 +318,7 @@ public class FirstFragment extends Fragment {
         @Override
         protected void onPostExecute(String result) {
             // execution of result of Long time consuming operation
-                //progressDialog.dismiss();
+            //progressDialog.dismiss();
             // finalResult.setText(result);
         }
 
@@ -327,6 +339,67 @@ public class FirstFragment extends Fragment {
     public interface OnStepOneListener {
 
         void onNextPressed(Fragment fragment);
+    }
+
+
+    private void GetUserDetails() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_REGISTRATIONGETUSERDETAILS + "&UserId="+user.getId() +"&Language=" + currentLanguage,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONArray obj = new JSONArray(response);
+
+
+                            for (int i = 0; i < obj.length(); i++) {
+                                JSONObject userJson = obj.getJSONObject(i);
+
+                                if (!userJson.getBoolean("error")) {
+
+                                    hidRegTypeId.setText(userJson.getString("RegistrationTypeId"));
+                                    Rtype_edit.setText(userJson.getString("RegistrationType"));
+                                    if(userJson.getString("Gender").equals("Male"))
+                                        rb1.setChecked(true);
+                                    else
+                                        rb2.setChecked(true);
+
+
+                                   mobileNo.setText(userJson.getString("MobileNo"));
+                                   AlternateMobile.setText(userJson.getString("AlternateMobile"));
+                                   if(!userJson.getString("EmailId").equals("0"))
+                                    Email.setText(userJson.getString("EmailId"));
+
+                                } else {
+                                    Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+                            customDialogLoadingProgressBar.dismiss();
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            customDialogLoadingProgressBar.dismiss();
+                        }
+                    }
+                },
+
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        customDialogLoadingProgressBar.dismiss();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                return params;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
 
 

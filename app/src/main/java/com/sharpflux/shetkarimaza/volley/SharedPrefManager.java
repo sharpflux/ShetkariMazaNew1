@@ -16,6 +16,8 @@ public class SharedPrefManager {
     private static final String KEY_MOBILE = "MobileNo";
     private static final String KEY_MIDDLENAME= "middlename";
     private static final String KEY_LASTNAME = "lastname";
+    private static final String KEY_REGISTRATIONTYPEID = "RegistrationTypeId";
+    private static final String KEY_REGISTRATIONCOMPLETE= "IsRegistrationComplete";
     //private static final String KEY_GENDER = "keygender";
     private static final String KEY_ID = "CustomerId";
     private static final String KEY_LANGUAGE = "currentLang";
@@ -40,7 +42,6 @@ public class SharedPrefManager {
     public void userLogin(User user) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-
         editor.putInt(KEY_ID, user.getId());
         editor.putString(KEY_USERNAME, user.getUsername());
         editor.putString(KEY_EMAIL, user.getEmail());
@@ -48,8 +49,16 @@ public class SharedPrefManager {
         editor.putString(KEY_MIDDLENAME, user.getMiddlename());
         editor.putString(KEY_LASTNAME, user.getLastname());
         editor.putString(KEY_LANGUAGE, user.getLanguage());
-        //editor.putString(KEY_ISCOMPLETE, user.getIsCompleteRegistration());
-        //editor.putString(KEY_GENDER, user.getGender());
+        editor.putString(KEY_REGISTRATIONTYPEID, user.getRegistrationTypeId());
+        editor.putBoolean(KEY_REGISTRATIONCOMPLETE, user.getRegistrationComplete());
+        editor.apply();
+    }
+
+
+    public void IsRegistrationComplete(Boolean IsComplete) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(KEY_REGISTRATIONCOMPLETE,IsComplete);
         editor.apply();
     }
 
@@ -72,7 +81,9 @@ public class SharedPrefManager {
                 sharedPreferences.getString(KEY_MOBILE, null),
                 sharedPreferences.getString(KEY_MIDDLENAME, null),
                 sharedPreferences.getString(KEY_LASTNAME, null),
-                sharedPreferences.getString(KEY_LANGUAGE, null)
+                sharedPreferences.getString(KEY_LANGUAGE, null),
+                sharedPreferences.getString(KEY_REGISTRATIONTYPEID, null),
+                sharedPreferences.getBoolean(KEY_REGISTRATIONCOMPLETE, false)
         );
     }
 

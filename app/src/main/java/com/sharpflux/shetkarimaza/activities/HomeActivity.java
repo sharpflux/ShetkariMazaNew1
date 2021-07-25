@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import android.util.DisplayMetrics;
@@ -69,6 +70,12 @@ public class HomeActivity extends AppCompatActivity
         myLocale = getResources().getConfiguration().locale;
 
         mydatabase = new dbLanguage(getApplicationContext());
+        Cursor cursor = mydatabase.LanguageGet(language);
+
+        while (cursor.moveToNext()) {
+            currentLanguage = cursor.getString(0);
+            changeLang(cursor.getString(0));
+        }
 
         if (!CheckDeviceIsOnline.isNetworkConnected(this)) {
 
@@ -100,9 +107,13 @@ public class HomeActivity extends AppCompatActivity
         header = navigationView.getHeaderView(0);
 
 
-       if (!SharedPrefManager.getInstance(this).isLoggedIn()) {
+
+
+
+        if (!SharedPrefManager.getInstance(this).isLoggedIn()) {
             finish();
             startActivity(new Intent(this, TabLayoutLogRegActivity.class));
+            return;
         }
 
 
@@ -117,6 +128,13 @@ public class HomeActivity extends AppCompatActivity
         navBarName.setText("Hey " + user.getUsername() + "!");
         navMobileNumber.setText("+91" + user.getMobile());
 
+
+        if(!user.getRegistrationComplete()){
+            Intent intent = new Intent(getApplicationContext(), DetailFormActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
         bundleProcessor=new Bundle();
         bundleIntent=getIntent();
 
@@ -127,14 +145,6 @@ public class HomeActivity extends AppCompatActivity
             registrationTypeId = bundleProcessor.getString("RegistrationTypeId");
 
         }
-
-        /*llHeader.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });*/
-
 
         if (!CheckDeviceIsOnline.isNetworkConnected(this)/*||!CheckDeviceIsOnline.isWifiConnected(this)*/)
 
@@ -172,7 +182,16 @@ public class HomeActivity extends AppCompatActivity
 
     }
 
-
+    public void changeLang(String lang) {
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        if (!"".equals(lang) && !config.locale.getLanguage().equals(lang)) {
+            myLocale = new Locale(lang);
+            Locale.setDefault(myLocale);
+            Configuration conf = new Configuration(config);
+            conf.locale = myLocale;
+            getBaseContext().getResources().updateConfiguration(conf, getBaseContext().getResources().getDisplayMetrics());
+        }
+    }
 
     @Override
     public void onBackPressed() {

@@ -29,14 +29,11 @@ public class DetailFormActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail_form);
 
 
-            FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.dynamic_fragment_frame_layout, new FirstFragment());
-
-            fragmentTransaction.commit();
-            fragmentTransaction.addToBackStack(null);
-            setTitle(R.string.includemoredetails);
-
-
+        FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.dynamic_fragment_frame_layout, new FirstFragment());
+        fragmentTransaction.commit();
+        fragmentTransaction.addToBackStack(null);
+        setTitle(R.string.includemoredetails);
 
 
     }
@@ -53,7 +50,7 @@ public class DetailFormActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 //if user pressed "yes", then he is allowed to exit from application
                 //finish();
-                Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(intent);
             }
         });

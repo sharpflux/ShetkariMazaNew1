@@ -238,7 +238,6 @@ public class SignupFragment extends Fragment {
                             if (!obj.getBoolean("error")) {
 
                                 Intent intent = new Intent(getContext(), UserVerificationActivity.class);
-
                                 intent.putExtra("OTP", obj.getString("OTP"));
                                 intent.putExtra("FullName", username);
                                 intent.putExtra("Middlename", "");
@@ -246,10 +245,6 @@ public class SignupFragment extends Fragment {
                                 intent.putExtra("MobileNo", mob);
                                 intent.putExtra("Password", password);
                                 intent.putExtra("Cpassword", cpassword);
-
-                              /*  SharedPrefManager.getInstance(getContext()).userLogin(user);
-                                finish();*/
-
                                 startActivity(intent);
 
 

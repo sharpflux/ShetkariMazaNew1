@@ -121,12 +121,14 @@
     <string name="adhar_card">Upload Copy  of Adhar card / Pancard *</string>
     <string name="canclled_check">Upload Copy  of cancelled cheque *</string>
     <string name="Submuit">Submit</string>
-
-
+    <string name="Organic">Organic</string>
+    <string name="Inorganic">Inorganic</string>
+    <string name="Vehicletype">Vehicle Type</string>
+    <string name="VehicleNo">Vehicle No</string>
+    <string name="RatePerKilometer">Rete Per Km</string>
+    <string name="OrganicInorganic">Organic/Inorganic *</string>
     <string name="whatareyouoffering">What are you Offering ?</string>
-
     <string name="includemoredetails">Include some details!</string>
-
     <string name="recyclermoredetails">See more details</string>
     /////fruits
     <string name="grapes">Grapes</string>

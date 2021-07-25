@@ -388,7 +388,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Organic/ Non organic*"
+                    android:hint="@string/OrganicInorganic"
                     android:textColorHint="@color/text_black"
                     />
 
@@ -405,7 +405,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:hint="Organic"
+                        android:hint="@string/Organic"
                         android:textSize="15sp"
                         android:textColorHint="@color/text_black"/>
 
@@ -415,7 +415,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:hint="Non organic"
+                        android:hint="@string/Inorganic"
                         android:textSize="15sp"
                         android:textColorHint="@color/text_black"/>
 
@@ -1192,7 +1192,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/arima_madurai_medium"
                 android:gravity="center"
-                android:text="Submit"
+                android:text="@string/Submuit"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 

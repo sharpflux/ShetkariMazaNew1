@@ -439,6 +439,38 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         });
 
 
+        edtAQuantity.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                try {
+                    quant = new Double(edtAQuantity.getText().toString());
+                } catch (NumberFormatException e) {
+                    quant = 0; // your default value
+                }
+
+                try {
+                    priceperunit = new Double(edtExpectedPrice.getText().toString());
+                } catch (NumberFormatException e) {
+                    priceperunit = 0; // your default value
+                }
+
+                total = quant * priceperunit;
+                edtTotalamt.setText(Double.toString(total));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
         edtExpectedPrice.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
