@@ -43,7 +43,7 @@
                 >
 
                 <EditText
-                    android:id="@+id/name_edit"
+                    android:id="@+id/edtVehicleType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/VehicalType"
@@ -68,6 +68,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/VehicalNo"
                     android:inputType="text"
+                    android:maxLength="25"
                     android:textColor="@color/text_black"
                     android:textSize="15sp" />
 
@@ -106,7 +107,7 @@
                 >
 
                 <EditText
-                    android:id="@+id/edtquant"
+                    android:id="@+id/edtRateperKm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/RatePerKilometer"

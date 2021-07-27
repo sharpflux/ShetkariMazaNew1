@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 
+import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
@@ -254,12 +255,12 @@ public class SelfieActivity extends AppCompatActivity {
 
         String adhartv = hideImageTvSelfie.getText().toString();
 
-        /*if (TextUtils.isEmpty(adhartv)) {
-            btn_take_selfie.setError("Please upload your photo");
+        if (TextUtils.isEmpty(adhartv)) {
+            btn_take_selfie.setError("Please upload your Selfie");
             btn_take_selfie.requestFocus();
             return;
         }
-*/
+
         iin = getIntent();
         bundle = iin.getExtras();
 

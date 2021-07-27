@@ -13,7 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.TransporterVehicleAddActivity"></activity>
+        <activity
+            android:name=".activities.TransporterVehicleAddActivity"
+            android:label="@string/addVehicle"
+            android:parentActivityName=".activities.HomeActivity"
+            android:theme="@style/SellerDarkAppTheme"
+            ></activity>
         <activity android:name=".activities.SubscriptionPlanActivity" />
         <activity android:name=".activities.SubGroupActivity" />
         <activity android:name=".filters.Filter1Activity" />

@@ -35,8 +35,8 @@ public class URLs {
 
     public static String URL_REGISTRATIONGETUSERDETAILS=Main_URL+"api/Registration/RegistrationGetUserDetails?";
 
-
-
+    public static String URL_GETVEHICLE=Main_URL+"api/Registration/GetVehicle?";
+    public static String URL_POSTVEHICLE=Main_URL+"api/TransporterAPI/TransportMasterInsertUpdateAndroid";
 
 
 

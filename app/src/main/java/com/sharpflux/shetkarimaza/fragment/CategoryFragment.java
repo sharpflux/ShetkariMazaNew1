@@ -76,6 +76,7 @@ public class CategoryFragment extends Fragment {
    // ShimmerFrameLayout parentShimmerLayout;
    Runnable runnable_viewPager;
     int currentPage = 0;
+    User user;
     public CategoryFragment() {
         // Required empty public constructor
     }
@@ -125,7 +126,7 @@ public class CategoryFragment extends Fragment {
         };
 
 
-        User user = SharedPrefManager.getInstance(getContext()).getUser();
+         user = SharedPrefManager.getInstance(getContext()).getUser();
         myLocale = getResources().getConfiguration().locale;
         language = user.getLanguage();
         progressBar = view.findViewById(R.id.progressBar);
@@ -214,7 +215,7 @@ public class CategoryFragment extends Fragment {
     private void setDynamicFragmentToTabLayout(Integer PageSize) {
 
        StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_RType+PageSize+"&PageSize=15&Language="+currentLanguage,
+                URLs.URL_RType+PageSize+"&PageSize=15&Language="+currentLanguage+"&UserId="+user.getId(),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -232,12 +233,12 @@ public class CategoryFragment extends Fragment {
                                    // String imageUrl = userJson.getString("ImageUrl")
                                     //       .substring(oldAPI.length(), userJson.getString("ImageUrl").length());
 
-                                    myCategoryType = new MyCategoryType
+                                        myCategoryType = new MyCategoryType
                                             (      userJson.getString("ImageUrl"),
                                                     userJson.getString("RegistrationType"),
-                                                    userJson.getString("RegistrationTypeId"));
-
-
+                                                    userJson.getString("RegistrationTypeId"),
+                                                    userJson.getString("UserRegistrationTypeId")
+                                            );
                                     categoryList.add(myCategoryType);
                                 } else {
                                     Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();

@@ -1,6 +1,8 @@
 package com.sharpflux.shetkarimaza.fragment;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,7 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.AuthFailureError;
@@ -25,6 +29,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.android.material.textfield.TextInputLayout;
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.activities.DetailFormActivity;
+import com.sharpflux.shetkarimaza.activities.HomeActivity;
 import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
 import com.sharpflux.shetkarimaza.customviews.CustomRecyclerViewDialog;
 import com.sharpflux.shetkarimaza.model.Product;
@@ -41,6 +47,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -78,7 +85,7 @@ public class SecondFragment extends DialogFragment {
 
         user = SharedPrefManager.getInstance(getContext()).getUser();
 
-
+        ((DetailFormActivity) getActivity()).setActionBarTitle(getString(R.string.otherDetails));
 
         edtstate = view.findViewById(R.id.edtstate);
         edtdistrict = view.findViewById(R.id.edtdistrict);
@@ -342,6 +349,36 @@ public class SecondFragment extends DialogFragment {
         }
 
     }
+
+    public void onBackPressed() {
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.AlertDialogTheme);
+        builder.setCancelable(false);
+        builder.setMessage("Do you want to leave this page ?");
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //if user pressed "yes", then he is allowed to exit from application
+                //finish();
+                Intent intent = new Intent(getContext(), HomeActivity.class);
+                startActivity(intent);
+
+
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+
+
+    }
     private void GetUserDetails() {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_REGISTRATIONGETUSERDETAILS + "&UserId="+user.getId() +"&Language=" + currentLanguage,
                 new Response.Listener<String>() {
@@ -357,16 +394,35 @@ public class SecondFragment extends DialogFragment {
 
                                 if (!userJson.getBoolean("error")) {
 
-                                    companyname.setText(userJson.getString("CompanyFirmName"));
-                                    address.setText(userJson.getString("Address"));
-                                    edtstate.setText(userJson.getString("StatesName"));
-                                    edtdistrict.setText(userJson.getString("DistrictName"));
-                                    edttaluka.setText(userJson.getString("TalukaName"));
-                                    city.setText(userJson.getString("TalukaName"));
-                                    license.setText(userJson.getString("APMCLicence"));
-                                    companyregnno.setText(userJson.getString("CompanyRegNo"));
-                                    gstno.setText(userJson.getString("GSTNo"));
+                                    if(!userJson.getString("CompanyFirmName").equals("0"))
+                                        companyname.setText(userJson.getString("CompanyFirmName"));
 
+
+                                    if(!userJson.getString("Address").equals("0"))
+                                        address.setText(userJson.getString("Address"));
+
+                                    if(!userJson.getString("StatesName").equals("0"))
+                                        edtstate.setText(userJson.getString("StatesName"));
+
+
+                                    if(!userJson.getString("DistrictName").equals("0"))
+                                        edtdistrict.setText(userJson.getString("DistrictName"));
+
+                                    if(!userJson.getString("TalukaName").equals("0"))
+                                        edttaluka.setText(userJson.getString("TalukaName"));
+
+                                    if(!userJson.getString("TalukaName").equals("0"))
+                                        city.setText(userJson.getString("TalukaName"));
+
+                                    if(!userJson.getString("APMCLicence").equals("0"))
+                                        license.setText(userJson.getString("APMCLicence"));
+
+
+                                    if(!userJson.getString("CompanyRegNo").equals("0"))
+                                        companyregnno.setText(userJson.getString("CompanyRegNo"));
+
+                                    if(!userJson.getString("GSTNo").equals("0"))
+                                        gstno.setText(userJson.getString("GSTNo"));
 
                                     hideTalukaId.setText(userJson.getInt("GSTNo"));
                                     hideDistrictId.setText(userJson.getInt("DistrictId"));

@@ -94,11 +94,6 @@ public class DataFetcher {
 
                                     list.add(prod);
 
-
-
-
-
-
                                 } else {
                                     Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
                                 }

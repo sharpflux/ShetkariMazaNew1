@@ -217,12 +217,12 @@ public class UserVerificationActivity extends AppCompatActivity {
                     params.put("Address", "0");
                     params.put("EmailId", "");
                     params.put("Gender", "0");
-                    params.put("StateId", "1");
+                    params.put("StateId", "0");
 
-                    params.put("CityId", "1");
-                    params.put("TahasilId", "1");
+                    params.put("CityId", "0");
+                    params.put("TahasilId", "0");
                     params.put("CompanyFirmName", "0");
-                    params.put("LandLineNo", "1");
+                    params.put("LandLineNo", "0");
                     params.put("APMCLicence", "0");
 
                     params.put("CompanyRegNo", "0");

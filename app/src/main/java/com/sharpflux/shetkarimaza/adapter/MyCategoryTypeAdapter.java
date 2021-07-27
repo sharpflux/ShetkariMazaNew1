@@ -19,6 +19,7 @@ import com.sharpflux.shetkarimaza.activities.BuyerActivity;
 import com.sharpflux.shetkarimaza.activities.ContactDetailActivity;
 import com.sharpflux.shetkarimaza.activities.HomeActivity;
 import com.sharpflux.shetkarimaza.activities.SellerActivity;
+import com.sharpflux.shetkarimaza.activities.TransporterVehicleAddActivity;
 import com.sharpflux.shetkarimaza.filters.SubCategoryFilter;
 import com.sharpflux.shetkarimaza.model.MyCategoryType;
 import com.sharpflux.shetkarimaza.volley.URLs;
@@ -75,8 +76,22 @@ public class MyCategoryTypeAdapter extends RecyclerView.Adapter<MyCategoryTypeHo
                         .into(holder.mImage);
 
 
-                ((MyCategoryTypeHolder) holder).mTitle.setText(mList.get(position).getCategoryTypeName());
+
                 ((MyCategoryTypeHolder) holder).categoryId = mList.get(position).getCategoryTypeId();
+                ((MyCategoryTypeHolder) holder).UserRegistrationTypeId = mList.get(position).getUserRegistrationTypeId();
+                ((MyCategoryTypeHolder) holder).mTitle.setText(mList.get(position).getCategoryTypeName());
+
+                if(mList.get(position).getCategoryTypeId().equals("2")){
+                    if( mList.get(position).getUserRegistrationTypeId().equals("27")){
+                        ((MyCategoryTypeHolder) holder).mTitle.setText(R.string.addVehicle);
+                        Glide.with(mContext)
+                                .load(R.drawable.ic_add).placeholder(R.drawable.kisanmaza)
+                                .into(holder.mImage);
+                    }
+
+                }
+
+
             } catch (Exception d) {
 
             }
@@ -108,7 +123,7 @@ class MyCategoryTypeHolder extends RecyclerView.ViewHolder implements View.OnCli
 
     ImageView mImage;
     TextView mTitle;
-    String categoryId = "";
+    String categoryId = "",UserRegistrationTypeId="";
     List<SubCategoryFilter> mlist;
 
     MyCategoryTypeHolder(View itemView) {
@@ -128,13 +143,24 @@ class MyCategoryTypeHolder extends RecyclerView.ViewHolder implements View.OnCli
 
 
         if (categoryId .equals("2")) {
-            Intent intent = new Intent(context, SellerActivity.class);
-            intent.putExtra("ProductId", categoryId);
-            context.startActivity(intent);
+
+            if(UserRegistrationTypeId.equals("27")){
+                Intent intent = new Intent(context, TransporterVehicleAddActivity.class);
+                intent.putExtra("ProductId", categoryId);
+                context.startActivity(intent);
+            }
+            else {
+                Intent intent = new Intent(context, SellerActivity.class);
+                intent.putExtra("ProductId", categoryId);
+                context.startActivity(intent);
+            }
+
+
         } else if (categoryId.equals("3") ) {
-            Intent intent = new Intent(context, BuyerActivity.class);
-            intent.putExtra("ProductId", categoryId);
-            context.startActivity(intent);
+                Intent intent = new Intent(context, BuyerActivity.class);
+                intent.putExtra("ProductId", categoryId);
+                context.startActivity(intent);
+
         } else
         {
             Intent intent = new Intent(context, ContactDetailActivity.class);

@@ -31,13 +31,19 @@
     <string name="action_whatsapp_web">व्हाट्सएप वेब</string>
     <string name="action_starred_messages">तारांकित संदेश</string>
     <string name="action_status">स्थिति</string>
-
+    <string name="primaryInfo">प्राथमिक जानकारी</string>
     <string name="Vehicletype">
 वाहन का प्रकार</string>
 
     <string name="VehicleNo">
 वाहन संख्या</string>
 
+    <string name="otherDetails">
+अन्य सूचना</string>
+
+
+    <string name="BankDetails">बैंक जानकारी</string>
+    <string name="addVehicle">वाहन जोड़ें</string>
     <string name="RatePerKilometer">दर प्रति किलोमीटर</string>
     <string name="action_clear_call_log">कॉल लॉग साफ़ करें</string>
     <string name="action_calls">कॉल</string>

@@ -359,14 +359,20 @@ public class FirstFragment extends Fragment {
 
                                     hidRegTypeId.setText(userJson.getString("RegistrationTypeId"));
                                     Rtype_edit.setText(userJson.getString("RegistrationType"));
-                                    if(userJson.getString("Gender").equals("Male"))
-                                        rb1.setChecked(true);
-                                    else
-                                        rb2.setChecked(true);
+
+                                    if(!userJson.getString("Gender").equals("0")) {
+                                        if (userJson.getString("Gender").equals("Male"))
+                                            rb1.setChecked(true);
+                                        else
+                                            rb2.setChecked(true);
+                                    }
 
 
                                    mobileNo.setText(userJson.getString("MobileNo"));
-                                   AlternateMobile.setText(userJson.getString("AlternateMobile"));
+
+                                    if(!userJson.getString("AlternateMobile").equals("0"))
+                                        AlternateMobile.setText(userJson.getString("AlternateMobile"));
+
                                    if(!userJson.getString("EmailId").equals("0"))
                                     Email.setText(userJson.getString("EmailId"));
 

@@ -38,6 +38,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.activities.DetailFormActivity;
 import com.sharpflux.shetkarimaza.activities.ProcessorActivity;
 import com.sharpflux.shetkarimaza.activities.ProductInfoForSaleActivity;
 import com.sharpflux.shetkarimaza.activities.SelfieActivity;
@@ -115,6 +116,7 @@ public class ThirdFragment extends Fragment {
         mydatabase = new dbLanguage(getContext());
         Cursor cursor = mydatabase.LanguageGet(language);
 
+        ((DetailFormActivity) getActivity()).setActionBarTitle(getString(R.string.BankDetails));
 
         while (cursor.moveToNext()) {
             currentLanguage = cursor.getString(0);
@@ -216,7 +218,7 @@ public class ThirdFragment extends Fragment {
                 }
 
 
-               /* if (TextUtils.isEmpty(chequetv)) {
+              /*  if (TextUtils.isEmpty(chequetv)) {
                     btn_chequeimage.setError("Please upload copy of cheque");
                     btn_chequeimage.requestFocus();
                     return;
@@ -249,7 +251,7 @@ public class ThirdFragment extends Fragment {
                     intent.putExtra("companyregnno", companyregnno);
                     intent.putExtra("gstno", gstno);
                     intent.putExtra("accountname", accountname.getText().toString());
-                    intent.putExtra("bankname", bankname.getText().toString());
+                    intent.putExtra("bankname", hidBankId.getText().toString());
                     intent.putExtra("branchcode", branchcode.getText().toString());
                     intent.putExtra("accno", accno.getText().toString());
                     intent.putExtra("ifsc", ifsc.getText().toString());
@@ -281,7 +283,7 @@ public class ThirdFragment extends Fragment {
                 intent.putExtra("companyregnno", companyregnno);
                 intent.putExtra("gstno", gstno);
                 intent.putExtra("accountname", accountname.getText().toString());
-                intent.putExtra("bankname", bankname.getText().toString());
+                intent.putExtra("bankname", hidBankId.getText().toString());
                 intent.putExtra("branchcode", branchcode.getText().toString());
                 intent.putExtra("accno", accno.getText().toString());
                 intent.putExtra("ifsc", ifsc.getText().toString());
@@ -326,6 +328,11 @@ public class ThirdFragment extends Fragment {
 
             }
         });
+
+
+        ThirdFragment.AsyncTaskRunner runner = new ThirdFragment.AsyncTaskRunner();
+        String sleepTime = "userdetails";
+        runner.execute(sleepTime);
         return view;
     }
 
@@ -462,7 +469,10 @@ public class ThirdFragment extends Fragment {
             publishProgress("Sleeping..."); // Calls onProgressUpdate()
             try {
                 if (params[0].toString() == "Bank")
-                    fetcher.loadList("BankName", bankname, URLs.URL_GETBANKS + "?Language=en", "BankId", hidBankId, "", "","State","",null,null,customDialogLoadingProgressBar);
+
+                    fetcher.loadList("BankName", bankname, URLs.URL_GETBANKS + "?Language=" + currentLanguage,
+                            "BankId", hidBankId, "", "", "Bank", "", null, null, customDialogLoadingProgressBar);
+
                 else if (params[0].toString() == "userdetails")
                 {
                     GetUserDetails();
@@ -518,10 +528,26 @@ public class ThirdFragment extends Fragment {
 
                                 if (!userJson.getBoolean("error")) {
 
-                                   // companyname.setText(userJson.getString("CompanyFirmName"));
+                                    if(!userJson.getString("AccountHolderName").equals("0"))
+                                        accountname.setText(userJson.getString("AccountHolderName"));
 
 
+                                    if(!userJson.getString("BankName").equals("0"))
+                                        bankname.setText(userJson.getString("BankName"));
 
+                                    if(!userJson.getString("BranchCode").equals("0"))
+                                        branchcode.setText(userJson.getString("BranchCode"));
+
+                                    if(!userJson.getString("AccountNo").equals("0"))
+                                        accno.setText(userJson.getString("AccountNo"));
+
+                                    if(!userJson.getString("IFSCCode").equals("0"))
+                                        ifsc.setText(userJson.getString("IFSCCode"));
+
+                                    if(!userJson.getString("BankName").equals("0"))
+                                        bankname.setText(userJson.getString("BankName"));
+
+                                    hidBankId.setText(userJson.getString("BankId"));
 
                                 } else {
                                     Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();

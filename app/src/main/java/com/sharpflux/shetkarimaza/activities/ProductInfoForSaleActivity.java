@@ -1568,7 +1568,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                     public void onResponse(String response) {
 
 
-
+                        customDialogLoadingProgressBar.dismiss();
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(ProductInfoForSaleActivity.this);
                         builder.setCancelable(false);
@@ -1596,7 +1596,6 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
                                 edtUnit.setText("");
                                 edtAQuantity.setText("");
-                                edtAQuality.setText("");
                                 edtExpectedPrice.setText("");
                                 edtUnit.setText("");
                                 edtTotalamt.setText("");
@@ -1656,6 +1655,8 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
             // mProgressDialog.dismiss();
 
             // finalResult.setText(result);
+            customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(ProductInfoForSaleActivity.this);
+            customDialogLoadingProgressBar.show();
         }
 
         @Override

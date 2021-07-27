@@ -77,7 +77,7 @@
     <string name="selfie">Include your picture here!</string>
     <string name="productdetail">Include your product details!</string>
 
-
+    <string name="addVehicle">Add Vehicle</string>
     //forget
     <string name="forget_password">Forgot Password</string>
     <string name="forget_email">Email</string>
@@ -129,6 +129,9 @@
     <string name="OrganicInorganic">Organic/Inorganic *</string>
     <string name="whatareyouoffering">What are you Offering ?</string>
     <string name="includemoredetails">Include some details!</string>
+    <string name="primaryInfo">Primary Information </string>
+    <string name="otherDetails">Other Information </string>
+    <string name="BankDetails">Bank Information </string>
     <string name="recyclermoredetails">See more details</string>
     /////fruits
     <string name="grapes">Grapes</string>

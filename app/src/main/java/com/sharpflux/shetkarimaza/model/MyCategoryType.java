@@ -5,7 +5,7 @@ public class MyCategoryType {
 
     private String image;
     private String categoryTypeName;
-    private String categoryTypeId;
+    private String categoryTypeId,UserRegistrationTypeId;
 
 
     public MyCategoryType() {
@@ -13,10 +13,19 @@ public class MyCategoryType {
     }
 
 
-    public MyCategoryType(String image, String categoryTypeName, String categoryTypeId) {
+    public MyCategoryType(String image, String categoryTypeName, String categoryTypeId,String userRegistrationTypeId) {
         this.image = image;
         this.categoryTypeName = categoryTypeName;
         this.categoryTypeId = categoryTypeId;
+        this.UserRegistrationTypeId=userRegistrationTypeId;
+    }
+
+    public String getUserRegistrationTypeId() {
+        return UserRegistrationTypeId;
+    }
+
+    public void setUserRegistrationTypeId(String userRegistrationTypeId) {
+        UserRegistrationTypeId = userRegistrationTypeId;
     }
 
     public String getImage() {
