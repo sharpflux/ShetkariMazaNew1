@@ -66,6 +66,12 @@ public class dbFilter extends SQLiteOpenHelper {
         return   db.delete(TABLE_NAME, null, null);
 
     }
+
+    public void delete() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("delete from "+ TABLE_NAME);
+        db.close();
+    }
     public String GETExist(String itemId){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT ITEMID FROM " + TABLE_NAME + " WHERE ITEMID = ?";

@@ -108,10 +108,6 @@ public class ContactDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_detail);
 
-        /*Toolbar toolbar = findViewById(R.id.toolbarCustom);
-        setSupportActionBar(toolbar);
-*/
-
         recyclerView = findViewById(R.id.contact_Detail_rvProductList);
 
         contactlist = new ArrayList<>();
@@ -120,9 +116,7 @@ public class ContactDetailActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         List<ContactDetail> mList = new ArrayList<>();
 
-
         addPersonModelArrayList_farm = new ArrayList<>();
-
 
         recyclerView.setAdapter(myAdapter);
 
@@ -134,8 +128,6 @@ public class ContactDetailActivity extends AppCompatActivity {
         if(mList.size()==0)
         {
             lr_filterbtn.setVisibility(View.GONE);
-
-
         }
 
         recyclerView_addFarm = findViewById(R.id.recyclerView_addFarm);
@@ -390,29 +382,22 @@ public class ContactDetailActivity extends AppCompatActivity {
             }
 
 
-            StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                    URLs.URL_CONTACTDET + "&RegistrationTypeId=" + ItemTypeId + "&StateId=" + StatesID + "&DistrictId=" + DistrictId + "&TalukaId=" + TalukaId + "&Language=en",
+            StringRequest stringRequest = new StringRequest(Request.Method.GET,URLs.URL_CONTACTDET + "&RegistrationTypeId=" + ItemTypeId + "&StateId=" + StatesID + "&DistrictId=" + DistrictId + "&TalukaId=" + TalukaId + "&Language=en",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
 
                             try {
-                                Log.d("RESPONSE","\n\n\n-------------------------------\n"+response+"\n\n\n-------------------------------\n");
                                 obj = new JSONArray(response);
                                 isFirstLoad = true;
                                 String oldAPI = "http://apimaza.supergo.in";
                                 for (int i = 0; i < obj.length(); i++) {
                                     JSONObject userJson = obj.getJSONObject(i);
 
-                                   /* if(userJson.length()==0){
-                                       txt_err.setVisibility(View.VISIBLE);
-                                    }
-*/
-
-
                                     if (!userJson.getBoolean("error")) {
                                         String imageUrl = userJson.getString("ImageUrl")
-                                                .substring(oldAPI.length(), userJson.getString("ImageUrl").length());
+                                                .substring(oldAPI.length(),
+                                                        userJson.getString("ImageUrl").length());
 
 
                                         ContactDetail detail;
@@ -446,11 +431,6 @@ public class ContactDetailActivity extends AppCompatActivity {
                                     }
                                         txt_emptyView.setVisibility(View.GONE);
                                         lr_filterbtn.setVisibility(View.VISIBLE);
-
-
-
-
-
 
                                 }
 

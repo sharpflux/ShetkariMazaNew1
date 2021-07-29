@@ -64,11 +64,12 @@ public class BuyerActivity extends AppCompatActivity implements TabLayout.OnTabS
 
         }
 
+
         initViews();
         myDatabase = new dbFilter(getApplicationContext());
         myDatabaseCategoryItemTypeId = new dbBuyerFilter(getApplicationContext());
         myDatabase.DeleteRecordAll();
-        myDatabaseCategoryItemTypeId.DeleteRecordAll();
+        myDatabaseCategoryItemTypeId.delete();
     }
 
     private void initViews() {

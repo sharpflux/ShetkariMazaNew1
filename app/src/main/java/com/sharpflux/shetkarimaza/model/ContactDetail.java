@@ -6,9 +6,10 @@ public class ContactDetail {
     private String fullName;
     private String address;
     private  String mobileNo;
-   private  String state;
+    private  String state;
     private  String district;
-    private  String taluka;
+    private  String taluka,VehicalType,VehicalNo,Rates,TypeView;
+
 
     public ContactDetail(String image, String fullName, String address, String mobileNo) {
         this.image = image;
@@ -25,6 +26,52 @@ public class ContactDetail {
         this.state = state;
         this.district = district;
         this.taluka = taluka;
+    }
+
+    public ContactDetail(String image, String fullName, String address, String mobileNo, String state, String district, String taluka,String vehicalType,String vehicalNo,String rates,String typeView) {
+        this.image = image;
+        this.fullName = fullName;
+        this.address = address;
+        this.mobileNo = mobileNo;
+        this.state = state;
+        this.district = district;
+        this.taluka = taluka;
+        this.VehicalType=vehicalType;
+        this.VehicalNo=vehicalNo;
+        this.Rates=rates;
+        this.TypeView=typeView;
+    }
+
+    public String getTypeView() {
+        return TypeView;
+    }
+
+    public void setTypeView(String typeView) {
+        TypeView = typeView;
+    }
+
+    public String getVehicalType() {
+        return VehicalType;
+    }
+
+    public void setVehicalType(String vehicalType) {
+        VehicalType = vehicalType;
+    }
+
+    public String getVehicalNo() {
+        return VehicalNo;
+    }
+
+    public void setVehicalNo(String vehicalNo) {
+        VehicalNo = vehicalNo;
+    }
+
+    public String getRates() {
+        return Rates;
+    }
+
+    public void setRates(String rates) {
+        Rates = rates;
     }
 
     public String getState() {

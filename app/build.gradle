@@ -69,4 +69,9 @@ dependencies {
     implementation files('libs/jxl.jar')
 
     implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
+
+    // code generator for view
+    implementation "com.jakewharton:butterknife:10.1.0"
+    annotationProcessor "com.jakewharton:butterknife-compiler:10.1.0"
+
 }

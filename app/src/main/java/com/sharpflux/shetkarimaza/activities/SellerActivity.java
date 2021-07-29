@@ -146,7 +146,7 @@ public class SellerActivity extends AppCompatActivity {
                                     Toast.makeText(SellerActivity.this, response, Toast.LENGTH_SHORT).show();
                                 }
 
-                               myAdapter = new MySellerAdapter(SellerActivity.this, sellOptionsList);
+                                 myAdapter = new MySellerAdapter(SellerActivity.this, sellOptionsList);
                                 mRecyclerView.setAdapter(myAdapter);
 
                                 mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {

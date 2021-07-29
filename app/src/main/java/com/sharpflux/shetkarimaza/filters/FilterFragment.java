@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
@@ -45,10 +44,10 @@ public class FilterFragment extends Fragment {
 
     View view;
     private RecyclerView recyclerView;
-    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+    LinearLayoutManager layoutManager;
     ArrayList<SubCategoryFilter1> productlist;
-    Button btn_next,btn_back,btnFilterData;
-    String DistrictId="", TalukaId="",VarityId="",QualityId="",itemTypeId="",StatesID="";
+    Button btn_next, btn_back, btnFilterData;
+    String DistrictId = "", TalukaId = "", VarityId = "", QualityId = "", itemTypeId = "", StatesID = "";
     Bundle extras;
     StringBuilder taluka_builder_id = new StringBuilder();
     SearchView searchView;
@@ -61,8 +60,11 @@ public class FilterFragment extends Fragment {
         view = inflater.inflate(R.layout.filter_fragment, container, false);
         recyclerView = view.findViewById(R.id.rcv_vriety);
         productlist = new ArrayList<>();
+        layoutManager = new LinearLayoutManager(getContext());
+
+
         recyclerView.setLayoutManager(layoutManager);
-       searchView =view.findViewById(R.id.searchView);
+        searchView = view.findViewById(R.id.searchView);
 
         String filter = getArguments().getString("Filter");
 
@@ -73,57 +75,58 @@ public class FilterFragment extends Fragment {
         return view;
 
     }
+
     private void SetDynamicDATA(final String FilterBy) {
 
-       String Url="",IdColumn="",NameColumn="",itemId="";
+        String Url = "", IdColumn = "", NameColumn = "", itemId = "";
 
-       final String ActualUrl,Id,Name,Filter;
+        final String ActualUrl, Id, Name, Filter;
 
 
-        switch (FilterBy){
+        switch (FilterBy) {
 
             case "STATE":
 
-                Url= URLs.URL_STATE+"?Language=en";
-                IdColumn="StatesID";
-                NameColumn="StatesName";
+                Url = URLs.URL_STATE + "?Language=en";
+                IdColumn = "StatesID";
+                NameColumn = "StatesName";
                 break;
 
 
             case "DISTRICT":
 
-                String Stateids="";
+                String Stateids = "";
                 Cursor StateCursor = mydatabase.FilterGetByFilterName("STATE");
                 while (StateCursor.moveToNext()) {
-                    Stateids=Stateids+StateCursor.getString(0)+",";
+                    Stateids = Stateids + StateCursor.getString(0) + ",";
                 }
 
-                Url= URLs.URL_DISTRICT+Stateids+"&Language=en";
-                IdColumn="DistrictId";
-                NameColumn="DistrictName";
+                Url = URLs.URL_DISTRICT + Stateids + "&Language=en";
+                IdColumn = "DistrictId";
+                NameColumn = "DistrictName";
                 break;
 
 
             case "TALUKA":
 
-                String Districtids="";
+                String Districtids = "";
                 Cursor Talukacursor = mydatabase.FilterGetByFilterName("DISTRICT");
                 while (Talukacursor.moveToNext()) {
-                    Districtids=Districtids+Talukacursor.getString(0)+",";
+                    Districtids = Districtids + Talukacursor.getString(0) + ",";
                 }
 
 
-                Url= URLs.URL_TALUKA+Districtids+"&Language=en";
-                IdColumn="TalukasId";
-                NameColumn="TalukaName";
+                Url = URLs.URL_TALUKA + Districtids + "&Language=en";
+                IdColumn = "TalukasId";
+                NameColumn = "TalukaName";
                 break;
 
 
         }
-        ActualUrl=Url;
-        Id=IdColumn;
-        Name=NameColumn;
-        Filter=FilterBy;
+        ActualUrl = Url;
+        Id = IdColumn;
+        Name = NameColumn;
+        Filter = FilterBy;
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 ActualUrl,
                 new Response.Listener<String>() {
@@ -137,23 +140,24 @@ public class FilterFragment extends Fragment {
                                 JSONObject userJson = obj.getJSONObject(i);
 
                                 SubCategoryFilter1 sellOptions =
-                                            new SubCategoryFilter1
-                                                    (
-                                                            userJson.getString(Id),
-                                                            userJson.getString(Name),
-                                                            false,FilterBy);
+                                        new SubCategoryFilter1
+                                                (
+                                                        userJson.getString(Id),
+                                                        userJson.getString(Name),
+                                                        false, FilterBy);
 
-                                    productlist.add(sellOptions);
+                                productlist.add(sellOptions);
 
 
                                 myAdapter = new Filter1Adapter(getContext(), productlist);
                                 recyclerView.setAdapter(myAdapter);
 
-                              searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                                     @Override
                                     public boolean onQueryTextSubmit(String query) {
                                         return false;
                                     }
+
                                     @Override
                                     public boolean onQueryTextChange(String newText) {
                                         myAdapter.getFilter().filter(newText);
@@ -197,7 +201,7 @@ public class FilterFragment extends Fragment {
             try {
 
 
-                 SetDynamicDATA( params[0]);
+                SetDynamicDATA(params[0]);
                 Thread.sleep(500);
 
                 resp = "Slept for " + params[0] + " seconds";

@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +37,7 @@ import com.sharpflux.shetkarimaza.model.SellOptions;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.sqlite.dbBuyerFilter;
 import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
-import com.sharpflux.shetkarimaza.utils.EndlessRecyclerViewScrollListener;
+import com.sharpflux.shetkarimaza.utils.EndlessRecyclerViewScrollListenerOld;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
@@ -171,7 +170,7 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
         runner.execute("1");
 
 
-        mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(mGridLayoutManager) {
+        mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListenerOld(mGridLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
                 isLoading = true;

@@ -86,7 +86,11 @@ public class dbBuyerFilter extends SQLiteOpenHelper {
         Cursor res = db.rawQuery("select * from "+TABLE_NAME,null);
         return res;
     }
-
+    public void delete() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("delete from "+ TABLE_NAME);
+        db.close();
+    }
     public Integer DeleteRecord (String FilterBy, String CorrespondanceId) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_NAME, "FILTERBY = ? AND CORESPONDENCEID = ?",new String[] {FilterBy,CorrespondanceId});

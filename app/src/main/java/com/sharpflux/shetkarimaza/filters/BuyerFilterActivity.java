@@ -165,7 +165,7 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myDatabase.DeleteRecordAll();
+                myDatabase.delete();
                 if (bundle != null) {
                     ItemTypeId = bundle.getString("ItemTypeId");
                     TalukaId = bundle.getString("TalukaId");

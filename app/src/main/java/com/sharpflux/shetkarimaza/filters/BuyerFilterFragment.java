@@ -43,7 +43,7 @@ public class BuyerFilterFragment extends Fragment {
 
     View view;
     private RecyclerView recyclerView;
-    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+    LinearLayoutManager layoutManager;
     ArrayList<BuyerFilter> productlist;
     Button btn_next,btn_back,btnFilterData;
     String DistrictId="", TalukaId="",VarityId="",QualityId="",itemTypeId="",StatesID="",VarietyId="",priceids="";
@@ -61,6 +61,8 @@ public class BuyerFilterFragment extends Fragment {
         view = inflater.inflate(R.layout.buyer_filter_fragment, container, false);
         recyclerView = view.findViewById(R.id.rcv_vriety);
         productlist = new ArrayList<>();
+
+        layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
        searchView =view.findViewById(R.id.searchView);
 

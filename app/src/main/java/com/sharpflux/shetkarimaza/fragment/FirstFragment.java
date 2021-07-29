@@ -294,7 +294,7 @@ public class FirstFragment extends Fragment {
             try {
 
                 if (params[0].toString() == "type")
-                    fetcher.loadList("RegistrationType", Rtype_edit, URLs.URL_RType + "1&PageSize=15&Language=" + currentLanguage,
+                    fetcher.loadList("RegistrationType", Rtype_edit, URLs.URL_RType + "1&PageSize=15&Language=" + currentLanguage+"&UserId=0",
                             "RegistrationTypeId", hidRegTypeId, "", "", "Registration Type", "", null, null, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "cate")
                     fetcher.loadList("RegistrationCategoryName",

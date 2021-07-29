@@ -11,7 +11,6 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +27,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
-import com.sharpflux.shetkarimaza.activities.PaymentActivity;
 import com.sharpflux.shetkarimaza.activities.SubscriptionPlanActivity;
 import com.sharpflux.shetkarimaza.adapter.HomeSliderAdapter;
 import com.sharpflux.shetkarimaza.adapter.MyCategoryTypeAdapter;
@@ -36,7 +34,7 @@ import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
 import com.sharpflux.shetkarimaza.model.MyCategoryType;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
-import com.sharpflux.shetkarimaza.utils.EndlessRecyclerViewScrollListener;
+import com.sharpflux.shetkarimaza.utils.EndlessRecyclerViewScrollListenerOld;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
@@ -176,7 +174,7 @@ public class CategoryFragment extends Fragment {
         runner.execute("1");
 
 
-        mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(mGridLayoutManager) {
+        mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListenerOld(mGridLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
                 isLoading = true;

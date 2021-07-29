@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.ContactDetailActivity;
+import com.sharpflux.shetkarimaza.activities.TransporterViewActivity;
 import com.sharpflux.shetkarimaza.sqlite.dbFilter;
 
 import java.util.ArrayList;
@@ -101,33 +102,21 @@ public class Filter1Activity extends AppCompatActivity implements View.OnClickLi
         btnFilterData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ContactDetailActivity.class);
+                Intent intent = new Intent(Filter1Activity.this, TransporterViewActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("Search", "Filter");
-                //    intent.putExtra("SortBy", "ASC");
                 startActivity(intent);
-                finish();
-
             }
         });
-      /*  back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ContactDetailActivity.class);
-               *//* intent.putExtra("Search","Filter");
-                intent.putExtra("SortBy", "ASC");*//*
-                startActivity(intent);
-                finish();
-            }
-        });*/
+
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 myDatabase.DeleteRecordAll();
-                Intent intent = new Intent(getApplicationContext(), ContactDetailActivity.class);
+                Intent intent = new Intent(Filter1Activity.this, TransporterViewActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("Search", "Filter");
-                intent.putExtra("SortBy", "ASC");
                 startActivity(intent);
-                finish();
             }
         });
     }

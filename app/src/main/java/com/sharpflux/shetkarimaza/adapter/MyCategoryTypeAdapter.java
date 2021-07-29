@@ -20,6 +20,7 @@ import com.sharpflux.shetkarimaza.activities.ContactDetailActivity;
 import com.sharpflux.shetkarimaza.activities.HomeActivity;
 import com.sharpflux.shetkarimaza.activities.SellerActivity;
 import com.sharpflux.shetkarimaza.activities.TransporterVehicleAddActivity;
+import com.sharpflux.shetkarimaza.activities.TransporterViewActivity;
 import com.sharpflux.shetkarimaza.filters.SubCategoryFilter;
 import com.sharpflux.shetkarimaza.model.MyCategoryType;
 import com.sharpflux.shetkarimaza.volley.URLs;
@@ -161,7 +162,14 @@ class MyCategoryTypeHolder extends RecyclerView.ViewHolder implements View.OnCli
                 intent.putExtra("ProductId", categoryId);
                 context.startActivity(intent);
 
-        } else
+        }
+        else if (categoryId.equals("27") ) {
+            Intent intent = new Intent(context, TransporterViewActivity.class);
+            intent.putExtra("ProductId", categoryId);
+            context.startActivity(intent);
+
+        }
+        else
         {
             Intent intent = new Intent(context, ContactDetailActivity.class);
             intent.putExtra("ProductId", categoryId);

@@ -6,14 +6,7 @@ public class AddPersonModel {
 
     public AddPersonModel() {
     }
-/*
 
-    public AddPersonModel(String id, String name, String mobileNo) {
-        this.id = id;
-        this.name = name;
-        this.mobileNo = mobileNo;
-    }
-*/
 
     public AddPersonModel(String id, String details_id, String name, String address) {
         this.id = id;
@@ -45,14 +38,6 @@ public class AddPersonModel {
     public void setName(String name) {
         this.name = name;
     }
-
-/*    public String getMobileNo() {
-        return mobileNo;
-    }
-
-    public void setMobileNo(String mobileNo) {
-        this.mobileNo = mobileNo;
-    }*/
 
     public String getAddress() {
         return address;
