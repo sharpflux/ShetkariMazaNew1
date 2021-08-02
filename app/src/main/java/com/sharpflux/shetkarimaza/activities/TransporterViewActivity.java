@@ -109,7 +109,7 @@ public class TransporterViewActivity extends AppCompatActivity implements SwipeR
     private List<PostItem> mPostItems;
     LinearLayoutManager layoutManager;
     private int currentPage = 1;
-    private int PageSize=30;
+    private int PageSize=15;
     private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
     RecyclerViewAdapter recyclerViewAdapter;
     ArrayList<String> rowsArrayList = new ArrayList<>();

@@ -329,7 +329,7 @@ public class SelfieActivity extends AppCompatActivity {
                                         });
 
                                 AlertDialog alert = builder.create();
-                                alert.setTitle("Invalid User");
+                                alert.setTitle(obj.getString("message"));
                                 alert.show();
                             }
                         } catch (JSONException e) {
@@ -340,6 +340,9 @@ public class SelfieActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+
+
+
                         builder.setMessage(error.getMessage())
                                 .setCancelable(false)
 
@@ -352,7 +355,8 @@ public class SelfieActivity extends AppCompatActivity {
                                 });
 
                         AlertDialog alert = builder.create();
-                        alert.setTitle("Invalid User");
+                        alert.setTitle("Error");
+
                         alert.show();
                     }
                 }) {
@@ -480,8 +484,14 @@ public class SelfieActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(SelfieActivity.this);
-            customDialogLoadingProgressBar.show();
+
+
+
+            if (!isFinishing() && customDialogLoadingProgressBar != null) {
+                customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(SelfieActivity.this);
+                customDialogLoadingProgressBar.show();
+            }
+
         }
 
         @Override
