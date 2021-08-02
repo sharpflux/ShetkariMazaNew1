@@ -53,8 +53,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 import static com.android.volley.Request.Method.GET;
 import static com.sharpflux.shetkarimaza.utils.PaginationListener.PAGE_START;
@@ -101,9 +99,7 @@ public class TransporterViewActivity extends AppCompatActivity implements SwipeR
 
     private static final String TAG = "MainActivity";
 
-    @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
-    @BindView(R.id.swipeRefresh)
+
     SwipeRefreshLayout swipeRefresh;
     private PostRecyclerAdapter adapter;
     private boolean isLastPage = false;

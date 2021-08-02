@@ -17,8 +17,6 @@ import com.sharpflux.shetkarimaza.viewholder.BaseViewHolder;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class PostRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
   private static final int VIEW_TYPE_LOADING = 0;

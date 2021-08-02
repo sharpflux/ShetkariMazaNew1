@@ -207,7 +207,7 @@ public class QualityFragment extends Fragment {
         AssignVariables();
         BundleAssign();
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_QUALITY + "?Language=" + currentLanguage,
+                URLs.URL_QUALITY + "?Language=" + currentLanguage+"&CategoryId=" + categoryId,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

@@ -142,7 +142,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     private ArrayList<Uri> arrayList;
     private ArrayList<String> ImagesList;
     StringBuilder builder;
-    TextInputLayout lt_txtAge, lr_subCategory, lr_quality, lr_botanicalName, lr_variety, lr_areaInHector;
+    TextInputLayout lt_txtAge, lr_subCategory, lr_quality, lr_botanicalName, lr_variety, lr_areaInHector,textInputAvailableMonth;
     Integer REQUEST_CAMERA = 1, SELECT_FILE = 0;
 
     private UserInfoDBManager userInfoDBManager = null;
@@ -267,6 +267,8 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         edtsurveyNo = findViewById(R.id.edtsurveyNo);
         scrollableContents = findViewById(R.id.scrollableContents);
 
+        textInputAvailableMonth=findViewById(R.id.textInputAvailableMonth);
+
 
         edtDays = findViewById(R.id.edtDays);
         edtavailablityInMonths = findViewById(R.id.edt_available_in_months);
@@ -386,8 +388,34 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
 
         }
-        if (ProductId.equals("1") || ProductId.equals("2")) {
+        //AGE
+        if (ProductId.equals("1") || ProductId.equals("2")|| ProductId.equals("3")|| ProductId.equals("4")|| ProductId.equals("6")|| ProductId.equals("17")) {
             lt_txtAge.setVisibility(View.GONE);
+        }
+
+
+
+        // organic no display
+        if (ProductId.equals("10") ) {
+            LinearLayout1.setVisibility(View.GONE);
+            textInputAvailableMonth.setVisibility(View.GONE);
+            lr_areaInHector.setVisibility(View.GONE);
+        }
+
+        if (ProductId.equals("35") ) {
+            LinearLayout1.setVisibility(View.GONE);
+
+        }
+
+        // area no display
+        if (ProductId.equals("14") ) {
+            lr_areaInHector.setVisibility(View.GONE);
+
+        }
+
+        if (ProductId.equals("42") ) {
+            lt_txtAge.setVisibility(View.GONE);
+            lr_areaInHector.setVisibility(View.GONE);
         }
 
         // organic
@@ -753,6 +781,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
             Picasso.get().load(extras.getString("ImageUrl")).into(img_banner_profile_placeholder);
             ImageUrlupload = extras.getString("ImageUrl");
 
+            if(ImageUrlupload!=null)
             ImageUrl = convertUrlToBase64(ImageUrlupload);
 
 
@@ -848,7 +877,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
                 //quality
                 if (ProductId.equals("6") || ProductId.equals("4") || ProductId.equals("8") || ProductId.equals("15") || ProductId.equals("3") || ProductId.equals("10") || ProductId.equals("35") || ProductId.equals("43 ")) {
-                    edtAQuality.setVisibility(View.GONE);
+                   // edtAQuality.setVisibility(View.GONE);
                 }
 //
 
@@ -892,12 +921,14 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                     return;
                 }
 
-
-                if (TextUtils.isEmpty(availablityInMonths)) {
-                    edtavailablityInMonths.setError("Please enter your available month");
-                    edtavailablityInMonths.requestFocus();
-                    return;
+                if(!ProductId.equals("10")){
+                    if (TextUtils.isEmpty(availablityInMonths)) {
+                        edtavailablityInMonths.setError("Please enter your available month");
+                        edtavailablityInMonths.requestFocus();
+                        return;
+                    }
                 }
+
 
                 if (TextUtils.isEmpty(address)) {
                     edtaddres.setError("Please enter your address");
@@ -962,6 +993,11 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
                     if (edtcertifiedno.getText().toString().equals("")) {
                         certificateno = "0";
+
+                    }
+
+                    if (edtareahector.getText().toString().equals("")) {
+                        areaheactor = "0";
 
                     }
 
@@ -1218,7 +1254,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 else if (params[0].toString() == "Variety")
                     fetcher.loadList("VarietyName", edtproductVariety, URLs.URL_VARIATY + hidItemTypeId.getText() + "&Language=" + currentLanguage, "VarietyId", hidVarietyId, "", "", "Variety", "", null, null, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "Quality")
-                    fetcher.loadList("QualityType", edtAQuality, URLs.URL_QUALITY + "?Language=" + currentLanguage, "QualityId", hidQualityId, "", "", "Available Quality", "", null, null, customDialogLoadingProgressBar);
+                    fetcher.loadList("QualityType", edtAQuality, URLs.URL_QUALITY + "?Language=" + currentLanguage+"&CategoryId=" + ProductId, "QualityId", hidQualityId, "", "", "Available Quality", "", null, null, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "Unit")
                     fetcher.loadList("MeasurementType", edtUnit, URLs.URL_UNIT + "?CategoryId=" + ProductId + "&Language=" + currentLanguage, "MeasurementId", hidMeasurementId, "", "", "Unit", "", null, null, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "state")
@@ -1609,8 +1645,8 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.d("Error------------",error.getMessage());
+                        Toast.makeText(ProductInfoForSaleActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
