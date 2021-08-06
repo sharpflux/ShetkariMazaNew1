@@ -83,6 +83,8 @@ public class FirstFragment extends Fragment {
 
     private String userEmail = "";
     User user;
+    Bundle bundle;
+    public String IsNewUser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -93,7 +95,7 @@ public class FirstFragment extends Fragment {
         Rcategory_edit = view.findViewById(R.id.edtRegicategory);
         hidRegTypeId = view.findViewById(R.id.hidRegTypeId);
         hidRegCagteId = view.findViewById(R.id.hidRegCagteId);
-
+        IsNewUser="0";
         rg = view.findViewById(R.id.radioGroup1);
         rb1 = view.findViewById(R.id.radio1);
         rb2 = view.findViewById(R.id.radio2);
@@ -125,6 +127,14 @@ public class FirstFragment extends Fragment {
         }
 
 
+        bundle = getArguments();
+
+        if (bundle != null) {
+
+
+            IsNewUser = bundle.getString("IsNewUser");
+
+        }
 
         while (cursor.moveToNext()) {
             currentLanguage = cursor.getString(0);
@@ -194,10 +204,14 @@ public class FirstFragment extends Fragment {
                 bundle.putString("Mobile", mobileNo.getText().toString());
                 bundle.putString("AlternateMobile", alterNo);
                 bundle.putString("Email", email);
-                FragmentTransaction transection = getFragmentManager().beginTransaction();
+                bundle.putString("IsNewUser", IsNewUser);
+
+                FragmentTransaction transection = getActivity().getSupportFragmentManager().beginTransaction();
                 SecondFragment mfragment = new SecondFragment();
+                transection.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 mfragment.setArguments(bundle); //data being send to SecondFragment
                 transection.replace(R.id.dynamic_fragment_frame_layout, mfragment);
+                transection.addToBackStack("SecondFragment");
                 transection.commit();
 
             }
@@ -254,9 +268,15 @@ public class FirstFragment extends Fragment {
             }
         });
 
-        FirstFragment.AsyncTaskRunner runner = new FirstFragment.AsyncTaskRunner();
-        String sleepTime = "userdetails";
-        runner.execute(sleepTime);
+
+        if (IsNewUser.equals("true")) {
+
+        } else if (IsNewUser.equals("false")) {
+            FirstFragment.AsyncTaskRunner runner = new FirstFragment.AsyncTaskRunner();
+            String sleepTime = "userdetails";
+            runner.execute(sleepTime);
+        }
+
 
         return view;
     }
@@ -294,14 +314,13 @@ public class FirstFragment extends Fragment {
             try {
 
                 if (params[0].toString() == "type")
-                    fetcher.loadList("RegistrationType", Rtype_edit, URLs.URL_RType + "1&PageSize=15&Language=" + currentLanguage+"&UserId=0",
+                    fetcher.loadList("RegistrationType", Rtype_edit, URLs.URL_RType + "1&PageSize=15&Language=" + currentLanguage + "&UserId=0",
                             "RegistrationTypeId", hidRegTypeId, "", "", "Registration Type", "", null, null, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "cate")
                     fetcher.loadList("RegistrationCategoryName",
                             Rcategory_edit, URLs.URL_RCategary, "RegistrationCategoryId", hidRegCagteId,
                             "", "", "Registration Category Name", "", null, null, customDialogLoadingProgressBar);
-                else if (params[0].toString() == "userdetails")
-                {
+                else if (params[0].toString() == "userdetails") {
                     GetUserDetails();
                 }
                 Thread.sleep(10);
@@ -343,7 +362,7 @@ public class FirstFragment extends Fragment {
 
 
     private void GetUserDetails() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_REGISTRATIONGETUSERDETAILS + "&UserId="+user.getId() +"&Language=" + currentLanguage,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_REGISTRATIONGETUSERDETAILS + "&UserId=" + user.getId() + "&Language=" + currentLanguage,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -360,7 +379,7 @@ public class FirstFragment extends Fragment {
                                     hidRegTypeId.setText(userJson.getString("RegistrationTypeId"));
                                     Rtype_edit.setText(userJson.getString("RegistrationType"));
 
-                                    if(!userJson.getString("Gender").equals("0")) {
+                                    if (!userJson.getString("Gender").equals("0")) {
                                         if (userJson.getString("Gender").equals("Male"))
                                             rb1.setChecked(true);
                                         else
@@ -368,13 +387,13 @@ public class FirstFragment extends Fragment {
                                     }
 
 
-                                   mobileNo.setText(userJson.getString("MobileNo"));
+                                    mobileNo.setText(userJson.getString("MobileNo"));
 
-                                    if(!userJson.getString("AlternateMobile").equals("0"))
+                                    if (!userJson.getString("AlternateMobile").equals("0"))
                                         AlternateMobile.setText(userJson.getString("AlternateMobile"));
 
-                                   if(!userJson.getString("EmailId").equals("0"))
-                                    Email.setText(userJson.getString("EmailId"));
+                                    if (!userJson.getString("EmailId").equals("0"))
+                                        Email.setText(userJson.getString("EmailId"));
 
                                 } else {
                                     Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();

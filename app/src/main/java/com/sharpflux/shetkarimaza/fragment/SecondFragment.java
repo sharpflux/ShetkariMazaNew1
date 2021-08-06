@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.AuthFailureError;
@@ -47,7 +45,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -68,6 +65,10 @@ public class SecondFragment extends DialogFragment {
     String currentLanguage,language;
     TextInputLayout TICompany,textLayoutAddress;
     User user;
+
+    public String IsNewUser;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -99,7 +100,7 @@ public class SecondFragment extends DialogFragment {
         gstno = view.findViewById(R.id.edtgstno);
 
         TICompany = (TextInputLayout)view.findViewById(R.id.TICompany);
-
+        IsNewUser="0";
 
         hideStateId = view.findViewById(R.id.hideStateId);
         hideDistrictId = view.findViewById(R.id.hideDistrictId);
@@ -128,6 +129,9 @@ public class SecondFragment extends DialogFragment {
             mobile = bundle.getString("Mobile");
             alternateMobile = bundle.getString("AlternateMobile");
             email = bundle.getString("Email");
+
+
+            IsNewUser = bundle.getString("IsNewUser");
 
             if(registrationTypeId.contains("32")){
                // companyname.setHint("Nursery Name");
@@ -240,13 +244,14 @@ public class SecondFragment extends DialogFragment {
                 bundle.putString("license", license.getText().toString());
                 bundle.putString("companyregnno", companyregnno.getText().toString());
                 bundle.putString("gstno", gstno.getText().toString());
+                bundle.putString("IsNewUser", IsNewUser);
 
-
-                FragmentTransaction transection = getFragmentManager().beginTransaction();
+                FragmentTransaction transection =getActivity().getSupportFragmentManager().beginTransaction();
+                transection.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 ThirdFragment mfragment = new ThirdFragment();
                 mfragment.setArguments(bundle); //data being send to SecondFragment
                 transection.replace(R.id.dynamic_fragment_frame_layout, mfragment);
-                transection.addToBackStack(null);
+                transection.addToBackStack("ThirdFragment");
                 transection.commit();
 
 
@@ -284,9 +289,15 @@ public class SecondFragment extends DialogFragment {
 
         });
 
-        SecondFragment.AsyncTaskRunner runner = new SecondFragment.AsyncTaskRunner();
-        String sleepTime = "userdetails";
-        runner.execute(sleepTime);
+        if (IsNewUser.equals("true")) {
+
+        } else if (IsNewUser.equals("false")) {
+            SecondFragment.AsyncTaskRunner runner = new SecondFragment.AsyncTaskRunner();
+            String sleepTime = "userdetails";
+            runner.execute(sleepTime);
+        }
+
+
 
         return view;
 
@@ -421,13 +432,15 @@ public class SecondFragment extends DialogFragment {
                                     if(!userJson.getString("CompanyRegNo").equals("0"))
                                         companyregnno.setText(userJson.getString("CompanyRegNo"));
 
-                                    if(!userJson.getString("GSTNo").equals("0"))
+                                    if(!userJson.getString("GSTNo").equals("0") && !userJson.getString("GSTNo").equals("null") )
                                         gstno.setText(userJson.getString("GSTNo"));
 
-                                    hideTalukaId.setText(userJson.getInt("GSTNo"));
-                                    hideDistrictId.setText(userJson.getInt("DistrictId"));
-                                    hideStateId.setText(userJson.getInt("TahasilId"));
-                                    hideTalukaId.setText(userJson.getInt("GSTNo"));
+
+
+
+                                    hideDistrictId.setText(String.valueOf(userJson.getInt("DistrictId")));
+                                    hideStateId.setText(String.valueOf(userJson.getInt("TahasilId")));
+                                    hideTalukaId.setText(String.valueOf(userJson.getInt("CityId")));
 
 
 

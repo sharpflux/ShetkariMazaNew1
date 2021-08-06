@@ -144,6 +144,7 @@ public class UserVerificationActivity extends AppCompatActivity {
                                     SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
                                     finish();
                                     Intent intent = new Intent(getApplicationContext(), DetailFormActivity.class);
+                                    intent.putExtra("IsNewUser", "true");
                                     startActivity(intent);
                                 } else {
 

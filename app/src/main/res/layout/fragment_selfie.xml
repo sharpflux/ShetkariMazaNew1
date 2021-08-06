@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="55dp"
+        android:layout_marginTop="10dp"
+        android:scrollbars="none">
+
+
+            <LinearLayout
+                android:id="@+id/pane_form_root_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <FrameLayout
+
+                    android:id="@+id/pane_banner_profile_placeholder"
+                    android:background="@drawable/bg_dotted_border_accent"
+                    android:padding="1.0dip"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_marginBottom="@dimen/default_margin"
+                    android:layout_below="@id/pane_selfie_disclaimer"
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="fill_parent"
+                        android:layout_height="300dp"
+                        android:scaleType="centerCrop"
+                        android:adjustViewBounds="true"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/imageView" />
+
+
+                    <TextView
+                        android:id="@+id/hideImageTvSelfie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:visibility="gone" />
+
+                </FrameLayout>
+
+                <Button
+                    android:id="@+id/btn_take_selfie"
+                    android:paddingLeft="@dimen/small_margin"
+                    android:paddingRight="@dimen/small_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40.0dip"
+                    android:layout_marginBottom="@dimen/default_margin"
+                    android:minWidth="150.0dip"
+                    android:text="@string/profile_take_image_button_text"
+                    android:drawableLeft="@drawable/ic_photo_camera_black_24dp"
+                    android:drawablePadding="0.0dip"
+
+                    android:layout_gravity="center"
+                    style="@style/ProceedButton.Solid.NoDrawable" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:id="@+id/pane_form_root"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/FormContainer">
+                    <LinearLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:tools="http://schemas.android.com/tools"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        tools:context=".SelfiFragment"
+                        android:orientation="vertical">
+
+                        <!-- TODO: Update blank fragment layout -->
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/txt_instruction_tittle"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="Important instructions for selfie:"
+                                android:fontFamily="@font/sfpro_display_bold"
+                                android:textSize="20dp"
+                                android:padding="5dp"
+                                />
+
+                            <TextView
+                                android:id="@+id/txt_string_1"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="Selfie should be bright with your face clearly visible."
+                                android:fontFamily="@font/sfpro_display_medium"
+                                android:padding="5dp"
+                                android:drawableLeft="@drawable/ic_check_circle_black_24dp"
+                                />
+
+                            <TextView
+                                android:id="@+id/txt_string_2"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="Bad/dark light selfie will not be accepted."
+                                android:fontFamily="@font/sfpro_display_medium"
+                                android:padding="5dp"
+                                android:drawableLeft="@drawable/ic_check_circle_black_24dp"
+
+                                />
+
+                            <TextView
+                                android:id="@+id/txt_string_3"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="Sit or stand and then take a selfie."
+                                android:fontFamily="@font/sfpro_display_medium"
+                                android:padding="5dp"
+                                android:drawableLeft="@drawable/ic_check_circle_black_24dp"
+
+                                />
+
+                            <TextView
+                                android:id="@+id/txt_string_4"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="Do not take a selfie while lying down on the bed."
+                                android:fontFamily="@font/sfpro_display_medium"
+                                android:padding="5dp"
+                                android:drawableLeft="@drawable/ic_check_circle_black_24dp"/>
+
+                            <TextView
+                                android:id="@+id/txt_string_5"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="Take a selfie wearing a t-shirt/shirt."
+                                android:fontFamily="@font/sfpro_display_medium"
+                                android:padding="5dp"
+                                android:drawableLeft="@drawable/ic_check_circle_black_24dp"
+                                />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:background="@drawable/gradient_upside_down"
+        android:orientation="horizontal"
+        android:id="@+id/footer">
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/arima_madurai_medium"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/Submuit"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+
+
+
+
+
+</RelativeLayout>

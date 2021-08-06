@@ -29,7 +29,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -48,6 +50,7 @@ import com.sharpflux.shetkarimaza.model.Product;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.utils.DataFetcher;
+import com.sharpflux.shetkarimaza.utils.PictureFacer;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
@@ -62,6 +65,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -75,8 +79,8 @@ public class ThirdFragment extends Fragment {
 
     ImageView currentImageView = null;
     Bitmap imageBitmap;
-    String currentLanguage,language;
-    TextView tvAdhar, tvCheque,hidBankId;
+    String currentLanguage, language;
+    TextView tvAdhar, tvCheque, hidBankId;
 
     private static final String IMAGE_DIRECTORY = "/demonuts";
 
@@ -86,29 +90,35 @@ public class ThirdFragment extends Fragment {
 
     ImageView adhar_image, cheque_image;
 
-    public String ChequeImageBlob,AdharImageBlob,ImageType;
+    public String ChequeImageBlob, AdharImageBlob, ImageType;
 
     Button btn_chequeimage, btn_adharimage;
     LinearLayout submitButton;
     Bundle bundle;
     private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
-    private String [] permissions = {"android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_FINE_LOCATION",
-            "android.permission.READ_PHONE_STATE", "android.permission.SYSTEM_ALERT_WINDOW","android.permission.CAMERA"};
+    private String[] permissions = {"android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_FINE_LOCATION",
+            "android.permission.READ_PHONE_STATE", "android.permission.SYSTEM_ALERT_WINDOW", "android.permission.CAMERA"};
 
     String address = "", city = "", district = "", state = "", companyname = "",
             license = "", companyregnno = "", gstno = "", name = "", registrationTypeId = "",
-            registrationCategoryId = "", gender = "", mobile = "", alternateMobile = "", email = "",stateId="",districtId="",TalukaId="";
+            registrationCategoryId = "", gender = "", mobile = "", alternateMobile = "", email = "", stateId = "", districtId = "", TalukaId = "";
     User user;
     DataFetcher fetcher;
     Product sellOptions;
     private CustomRecyclerViewDialog customDialog;
     ArrayList<Product> list;
     dbLanguage mydatabase;
+    int requestCode = 200;
+
+
+    public String IsNewUser;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_third, container, false);
-
+        IsNewUser="0";
         bundle = getArguments();
         customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(getContext());
         user = SharedPrefManager.getInstance(getContext()).getUser();
@@ -124,8 +134,7 @@ public class ThirdFragment extends Fragment {
         }
 
 
-
-        hidBankId=view.findViewById(R.id.hidBankId);
+        hidBankId = view.findViewById(R.id.hidBankId);
 
         if (bundle != null) {
             name = bundle.getString("Name");
@@ -143,12 +152,15 @@ public class ThirdFragment extends Fragment {
             license = bundle.getString("license");
             companyregnno = bundle.getString("companyregnno");
             gstno = bundle.getString("gstno");
-            stateId=bundle.getString("stateId");
-            districtId=bundle.getString("districtId");
-            TalukaId=bundle.getString("TalukaId");
+            stateId = bundle.getString("stateId");
+            districtId = bundle.getString("districtId");
+            TalukaId = bundle.getString("TalukaId");
+
+            IsNewUser = bundle.getString("IsNewUser");
+
         }
 
-        int requestCode = 200;
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(permissions, requestCode);
         }
@@ -173,7 +185,7 @@ public class ThirdFragment extends Fragment {
         tvCheque = view.findViewById(R.id.hideImageTvCheque);
         tvAdhar = view.findViewById(R.id.hideImageTvAdhar);
 
-        fetcher = new DataFetcher(sellOptions, customDialog, list, getContext(),null);
+        fetcher = new DataFetcher(sellOptions, customDialog, list, getContext(), null);
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -265,32 +277,67 @@ public class ThirdFragment extends Fragment {
 
 
 
-                Intent intent = new Intent(getContext(), SelfieActivity.class);
 
-                intent.putExtra("Name", name);
-                intent.putExtra("RegistrationTypeId", registrationTypeId);
-                intent.putExtra("RegistrationCategoryId", registrationCategoryId);
-                intent.putExtra("Gender", gender);
-                intent.putExtra("Mobile", mobile);
-                intent.putExtra("AlternateMobile", alternateMobile);
-                intent.putExtra("Email", email);
-                intent.putExtra("address", address);
-                intent.putExtra("city", city);
-                intent.putExtra("district", district);
-                intent.putExtra("state", state);
-                intent.putExtra("companyname", companyname);
-                intent.putExtra("license", license);
-                intent.putExtra("companyregnno", companyregnno);
-                intent.putExtra("gstno", gstno);
-                intent.putExtra("accountname", accountname.getText().toString());
-                intent.putExtra("bankname", hidBankId.getText().toString());
-                intent.putExtra("branchcode", branchcode.getText().toString());
-                intent.putExtra("accno", accno.getText().toString());
-                intent.putExtra("ifsc", ifsc.getText().toString());
-                intent.putExtra("check", ChequeImageBlob);
-                intent.putExtra("adhar", AdharImageBlob);
+                  /*  Intent intent = new Intent(getContext(), SelfieActivity.class);
 
-                startActivity(intent);
+                    intent.putExtra("Name", name);
+                    intent.putExtra("RegistrationTypeId", registrationTypeId);
+                    intent.putExtra("RegistrationCategoryId", registrationCategoryId);
+                    intent.putExtra("Gender", gender);
+                    intent.putExtra("Mobile", mobile);
+                    intent.putExtra("AlternateMobile", alternateMobile);
+                    intent.putExtra("Email", email);
+                    intent.putExtra("address", address);
+                    intent.putExtra("city", city);
+                    intent.putExtra("district", district);
+                    intent.putExtra("state", state);
+                    intent.putExtra("companyname", companyname);
+                    intent.putExtra("license", license);
+                    intent.putExtra("companyregnno", companyregnno);
+                    intent.putExtra("gstno", gstno);
+                    intent.putExtra("accountname", accountname.getText().toString());
+                    intent.putExtra("bankname", hidBankId.getText().toString());
+                    intent.putExtra("branchcode", branchcode.getText().toString());
+                    intent.putExtra("accno", accno.getText().toString());
+                    intent.putExtra("ifsc", ifsc.getText().toString());
+                    intent.putExtra("check", ChequeImageBlob);
+                    intent.putExtra("adhar", AdharImageBlob);
+                    startActivity(intent);*/
+
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("Name", name);
+                    bundle.putString("RegistrationTypeId", registrationTypeId);
+                    bundle.putString("RegistrationCategoryId", registrationCategoryId);
+                    bundle.putString("Gender", gender);
+                    bundle.putString("Mobile", mobile);
+                    bundle.putString("AlternateMobile", alternateMobile);
+                    bundle.putString("Email", email);
+                    bundle.putString("address", address);
+                    bundle.putString("city", city);
+                    bundle.putString("district", district);
+                    bundle.putString("state", state);
+                    bundle.putString("companyname", companyname);
+                    bundle.putString("license", license);
+                    bundle.putString("companyregnno", companyregnno);
+                    bundle.putString("gstno", gstno);
+                    bundle.putString("accountname", accountname.getText().toString());
+                    bundle.putString("bankname", hidBankId.getText().toString());
+                    bundle.putString("branchcode", branchcode.getText().toString());
+                    bundle.putString("accno", accno.getText().toString());
+                    bundle.putString("ifsc", ifsc.getText().toString());
+                    bundle.putString("check", ChequeImageBlob);
+                    bundle.putString("adhar", AdharImageBlob);
+                    bundle.putString("IsNewUser", IsNewUser);
+
+                    FragmentTransaction transection =getActivity().getSupportFragmentManager().beginTransaction();
+                    transection.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                    SelfieFragment mfragment = new SelfieFragment();
+                    mfragment.setArguments(bundle);
+                    transection.replace(R.id.dynamic_fragment_frame_layout, mfragment);
+                    transection.addToBackStack("SelfieFragment");
+                    transection.commit();
+
                 }
             }
         });
@@ -300,7 +347,7 @@ public class ThirdFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //currentImageView=(ImageView) view;
-                ImageType="Cheque";
+                ImageType = "Cheque";
                 showPictureDialog();
                 tvCheque.setText("cheque");
 
@@ -322,7 +369,7 @@ public class ThirdFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //currentImageView=(ImageView) view;
-                ImageType="Aadhar";
+                ImageType = "Aadhar";
                 showPictureDialog();
                 tvAdhar.setText("adhar");
 
@@ -330,9 +377,15 @@ public class ThirdFragment extends Fragment {
         });
 
 
-        ThirdFragment.AsyncTaskRunner runner = new ThirdFragment.AsyncTaskRunner();
-        String sleepTime = "userdetails";
-        runner.execute(sleepTime);
+
+        if (IsNewUser.equals("true")) {
+
+        } else if (IsNewUser.equals("false")) {
+            ThirdFragment.AsyncTaskRunner runner = new ThirdFragment.AsyncTaskRunner();
+            String sleepTime = "userdetails";
+            runner.execute(sleepTime);
+        }
+
         return view;
     }
 
@@ -345,6 +398,11 @@ public class ThirdFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int i) {
                 if (items[i].equals("Camera")) {
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&  ContextCompat.checkSelfPermission( getContext(), android.Manifest.permission.CAMERA ) != PackageManager.PERMISSION_GRANTED) {
+                        requestPermissions(permissions, requestCode);
+                        return;
+                    }
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(intent, REQUEST_CAMERA);
                 } else if (items[i].equals("Gallary")) {
@@ -392,19 +450,18 @@ public class ThirdFragment extends Fragment {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             newBitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
 
-            if(ImageType=="Cheque"){
+            if (ImageType == "Cheque") {
                 ChequeImageBlob = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
             }
-            if(ImageType=="Aadhar"){
+            if (ImageType == "Aadhar") {
                 AdharImageBlob = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
             }
 
-            if(ImageType=="Cheque"){
+            if (ImageType == "Cheque") {
 
                 cheque_image.setImageBitmap(bm);
             }
-            if(ImageType=="Aadhar"){
-
+            if (ImageType == "Aadhar") {
                 adhar_image.setImageBitmap(bm);
             }
 
@@ -412,11 +469,11 @@ public class ThirdFragment extends Fragment {
     }
 
 
-
     private void onCaptureImageResult(Intent data) {
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 
+        ArrayList<PictureFacer> images = new ArrayList<>();
 
         Bitmap newBitmap = Bitmap.createBitmap(thumbnail.getWidth(), thumbnail.getHeight(), thumbnail.getConfig());
         Canvas canvas = new Canvas(newBitmap);
@@ -425,15 +482,14 @@ public class ThirdFragment extends Fragment {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         newBitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
 
-        if(ImageType=="Cheque"){
+        if (ImageType == "Cheque") {
             ChequeImageBlob = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
         }
-        if(ImageType=="Aadhar"){
+        if (ImageType == "Aadhar") {
             AdharImageBlob = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
         }
 
-        File destination = new File(Environment.getExternalStorageDirectory(),
-                System.currentTimeMillis() + ".jpg");
+        File destination = new File(Environment.getExternalStorageDirectory(), System.currentTimeMillis() + ".jpg");
 
         FileOutputStream fo;
 
@@ -449,14 +505,28 @@ public class ThirdFragment extends Fragment {
         }
 
 
-        if(ImageType=="Cheque"){
-        imageBitmap = (Bitmap) data.getExtras().get("data");
-        cheque_image.setImageBitmap(imageBitmap);
+        if (ImageType == "Cheque") {
+            imageBitmap = (Bitmap) data.getExtras().get("data");
+
+
+
+
+            cheque_image.setImageBitmap(imageBitmap);
         }
-        if(ImageType=="Aadhar"){
+        if (ImageType == "Aadhar") {
             imageBitmap = (Bitmap) data.getExtras().get("data");
             adhar_image.setImageBitmap(imageBitmap);
         }
+
+        PictureFacer pic = new PictureFacer();
+        pic.setPicturName(MediaStore.Images.Media.DISPLAY_NAME);
+        pic.setPicturePath(MediaStore.Images.Media.DATA);
+        pic.setPictureSize(MediaStore.Images.Media.SIZE);
+        File fileObject = new File(MediaStore.Video.Media.DATA);
+        Long fileModified = fileObject.lastModified();
+        pic.setDateTime(new Date(fileModified));
+        pic.setType(ImageType);
+        images.add(pic);
     }
 
     private class AsyncTaskRunner extends AsyncTask<String, String, String> {
@@ -473,8 +543,7 @@ public class ThirdFragment extends Fragment {
                     fetcher.loadList("BankName", bankname, URLs.URL_GETBANKS + "?Language=" + currentLanguage,
                             "BankId", hidBankId, "", "", "Bank", "", null, null, customDialogLoadingProgressBar);
 
-                else if (params[0].toString() == "userdetails")
-                {
+                else if (params[0].toString() == "userdetails") {
                     GetUserDetails();
                 }
 
@@ -514,7 +583,7 @@ public class ThirdFragment extends Fragment {
 
 
     private void GetUserDetails() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_REGISTRATIONGETUSERDETAILS + "&UserId="+user.getId() +"&Language=" + currentLanguage,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_REGISTRATIONGETUSERDETAILS + "&UserId=" + user.getId() + "&Language=" + currentLanguage,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -528,23 +597,23 @@ public class ThirdFragment extends Fragment {
 
                                 if (!userJson.getBoolean("error")) {
 
-                                    if(!userJson.getString("AccountHolderName").equals("0"))
+                                    if (!userJson.getString("AccountHolderName").equals("0"))
                                         accountname.setText(userJson.getString("AccountHolderName"));
 
 
-                                    if(!userJson.getString("BankName").equals("0"))
+                                    if (!userJson.getString("BankName").equals("0"))
                                         bankname.setText(userJson.getString("BankName"));
 
-                                    if(!userJson.getString("BranchCode").equals("0"))
+                                    if (!userJson.getString("BranchCode").equals("0"))
                                         branchcode.setText(userJson.getString("BranchCode"));
 
-                                    if(!userJson.getString("AccountNo").equals("0"))
+                                    if (!userJson.getString("AccountNo").equals("0"))
                                         accno.setText(userJson.getString("AccountNo"));
 
-                                    if(!userJson.getString("IFSCCode").equals("0"))
+                                    if (!userJson.getString("IFSCCode").equals("0"))
                                         ifsc.setText(userJson.getString("IFSCCode"));
 
-                                    if(!userJson.getString("BankName").equals("0"))
+                                    if (!userJson.getString("BankName").equals("0"))
                                         bankname.setText(userJson.getString("BankName"));
 
                                     hidBankId.setText(userJson.getString("BankId"));

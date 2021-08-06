@@ -31,6 +31,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.hbb20.CountryCodePicker;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.ChooseActivity;
+import com.sharpflux.shetkarimaza.activities.DetailFormActivity;
 import com.sharpflux.shetkarimaza.activities.ForgotPasswordActivity;
 import com.sharpflux.shetkarimaza.activities.HomeActivity;
 import com.sharpflux.shetkarimaza.activities.TabLayoutLogRegActivity;
@@ -104,8 +105,11 @@ public class LoginFragment extends Fragment {
                         android.R.anim.slide_in_left);
 
         if (SharedPrefManager.getInstance(getContext()).isLoggedIn()) {
-            getActivity().finish();
-            startActivity(new Intent(getContext(), ChooseActivity.class));
+          //  getActivity().finish();
+          //  Intent intent = new Intent(getContext(), DetailFormActivity.class);
+          //  intent.putExtra("IsNewUser", "true");
+          //  startActivity(intent);
+
         }
         customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(getContext());
         builder = new AlertDialog.Builder(getContext());
@@ -285,11 +289,10 @@ public class LoginFragment extends Fragment {
                                             userJson.getString("EmailId"),
                                             userJson.getString("MobileNo"), "", "",""
                                             ,String.valueOf(    userJson.getInt("RegistrationTypeId")),
-                                            false
+                                            true
                                     );
 
                                     SharedPrefManager.getInstance(getContext()).userLogin(user);
-
                                     startActivity(new Intent(getContext(), HomeActivity.class));
 
                                 }
