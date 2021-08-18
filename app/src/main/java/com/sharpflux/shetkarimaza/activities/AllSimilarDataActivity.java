@@ -137,73 +137,10 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         BundleAssign();
         setTitle(ItemName);
 
-       /* AllSimilarDataActivity.AsyncTaskRunner runner = new AllSimilarDataActivity.AsyncTaskRunner();
-        String sleepTime = String.valueOf(currentPage);
-        runner.execute(sleepTime);
-*/
+
         AllSimilarDataActivity.AsyncTaskRunner runner = new AllSimilarDataActivity.AsyncTaskRunner();
         String sleepTime = "1";
         runner.execute(sleepTime);
-
-
-
-
-       /* recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-
-                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
-                    // isLoading = true;
-                    progressBar_filter.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                currentItems = layoutManager.getChildCount();
-                totalItems = layoutManager.getItemCount();
-
-               *//* scrollOutItems = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
-
-                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-
-                if (!isLoading) {
-                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == productlist.size() - 1) {
-                        //bottom of list!
-                        currentPage++;
-                        AllSimilarDataActivity.AsyncTaskRunner runner = new AllSimilarDataActivity.AsyncTaskRunner();
-                        String sleepTime = String.valueOf(currentPage);
-                        runner.execute(sleepTime);
-                        isLoading = true;
-                        myAdapter.notifyDataSetChanged();
-                        isLoading = false;
-                        progressBar_filter.setVisibility(View.GONE);
-
-                    }
-
-                }*//*
-
-
-
-            *//*    if (isLoading && (currentItems + scrollOutItems == totalItems)) {
-                    currentPage++;
-                    AllSimilarDataActivity.AsyncTaskRunner runner = new AllSimilarDataActivity.AsyncTaskRunner();
-                    String sleepTime =String.valueOf( currentPage);
-                    runner.execute(sleepTime);
-
-                    recyclerView.scrollToPosition(myAdapter.getItemCount()-1);
-                }*//*
-
-            }
-
-        });*/
-
-
 
 
 
@@ -243,6 +180,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         bundle = getIntent().getExtras();
         if (bundle != null) {
             ItemTypeId = bundle.getString("ItemTypeId");
+            ItemName = bundle.getString("ItemName");
             ItemName = bundle.getString("ItemName");
             //TalukaId = bundle.getString("TalukaId");
            //VarityId = bundle.getString("VarietyId");
