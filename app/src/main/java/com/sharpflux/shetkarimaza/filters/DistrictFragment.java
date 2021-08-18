@@ -55,7 +55,7 @@ public class DistrictFragment extends Fragment {
     StringBuilder district_builder_id;
     String districtIds;
     Bundle extras;
-    String VarityId="",QualityId="",itemTypeId="",StatesID="",ItemName;
+    String VarityId="",QualityId="",itemTypeId="",StatesID="",ItemName="",categoryId="";
     SearchView searchView;
     VarietyAdapter myAdapter;
     Locale myLocale;
@@ -110,6 +110,7 @@ public class DistrictFragment extends Fragment {
             QualityId = extras.getString("QualityId");
             itemTypeId=extras.getString("ItemTypeId");
             ItemName=extras.getString("ItemName");
+            categoryId = extras.getString("categoryId");
         }
 
         Cursor STATECursor = myDatabaseFilter.FilterGetByFilterName("STATE");
@@ -136,10 +137,11 @@ public class DistrictFragment extends Fragment {
                     extras.putString("ItemTypeId", itemTypeId);
                     extras.putString("StatesID", StatesID);
                     extras.putString("ItemName", ItemName);
-
+                    extras.putString("categoryId", categoryId);
+                    extras.putString("Search", "Filter");
                 }
 
-                FragmentTransaction transection = getFragmentManager().beginTransaction();
+                FragmentTransaction transection = getActivity().getSupportFragmentManager().beginTransaction();
                 StateFragment mfragment = new StateFragment();
                 mfragment.setArguments(extras);
                 transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
@@ -171,21 +173,21 @@ public class DistrictFragment extends Fragment {
                     extras.putString("ItemTypeId", itemTypeId);
                     extras.putString("StatesID", StatesID);
                     extras.putString("ItemName", ItemName);
-
-
+                    extras.putString("categoryId", categoryId);
+                    extras.putString("Search", "Filter");
                 }
 
 
 
                 if (district_builder_id.toString().equals("")) {
-                    FragmentTransaction transection = getFragmentManager().beginTransaction();
+                    FragmentTransaction transection =getActivity().getSupportFragmentManager().beginTransaction();
                     PriceFragment mfragment = new PriceFragment();
                     mfragment.setArguments(extras);
                     transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
                     transection.commit();
 
                 } else {
-                    FragmentTransaction transection = getFragmentManager().beginTransaction();
+                    FragmentTransaction transection = getActivity().getSupportFragmentManager().beginTransaction();
                     TalukaFragment mfragment = new TalukaFragment();
                     mfragment.setArguments(extras);
                     transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);

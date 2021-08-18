@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -50,11 +51,13 @@ import androidx.core.content.ContextCompat;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.DataAdapter;
 import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
@@ -66,12 +69,16 @@ import com.sharpflux.shetkarimaza.sqlite.UserInfoDBManager;
 import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.uploadimage.FileUtils;
 import com.sharpflux.shetkarimaza.utils.DataFetcher;
+import com.sharpflux.shetkarimaza.utils.PictureFacer;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 import com.sharpflux.shetkarimaza.volley.URLs;
+import com.sharpflux.shetkarimaza.volley.VolleyMultipartRequest;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -138,7 +145,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     // private ProgressBar mProgressBar;
     private Button btnChoose;
     int c = 0;
-
+    private Bitmap bitmap;
     private ArrayList<Uri> arrayList;
     private ArrayList<String> ImagesList;
     StringBuilder builder;
@@ -1027,7 +1034,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                         builder.append("<talukaId>" + hideTalukaId.getText().toString() + "</talukaId>");
                         builder.append("<villagenam>" + villagenam + "</villagenam>");
                         builder.append("<areaheactor>" + areaheactor + "</areaheactor>");
-                        builder.append("<imagename>" + ImageUrl + "</imagename>");
+                        builder.append("<imagename>" +  "0"+ "</imagename>"); //ImageUrl
                         builder.append("<organic>" + org + "</organic>");
                         builder.append("<certificateno>" + certificateno + "</certificateno>");
                         builder.append("<SurveyNo>" + surveyNo + "</SurveyNo>");
@@ -1378,12 +1385,13 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     }
 
     private void onSelectFromGalleryResult(Intent data) {
-        Bitmap bitmap = null;
+        Bitmap bitmaplocal = null;
         if (data != null) {
             try {
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+                bitmaplocal = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
+                bitmaplocal.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+                bitmap=bitmaplocal;
                 ImageUrl = getStringImage(bitmap);
 
             } catch (IOException e) {
@@ -1407,6 +1415,8 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 
         thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+
+        bitmap=thumbnail;
         ImageUrl = Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);
         File destination = new File(Environment.getExternalStorageDirectory(),
                 System.currentTimeMillis() + ".jpg");
@@ -1464,7 +1474,105 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     }
 
 
-    public void submitToDb() {
+
+    private void submitToDb() {
+
+
+        VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, URLs.URL_SAVEPRODUCTDETAILS, new Response.Listener<NetworkResponse>() {
+            @Override
+            public void onResponse(NetworkResponse response) {
+                try {
+                    customDialogLoadingProgressBar.dismiss();
+                    JSONObject obj = new JSONObject(new String(response.data));
+
+                    if(obj.getBoolean("error")){
+                        Toast.makeText(ProductInfoForSaleActivity.this, obj.getString("message"), Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ProductInfoForSaleActivity.this);
+                        builder.setCancelable(false);
+                        builder.setMessage(getResources().getString(R.string.data_submitted));
+                        builder.setPositiveButton(getResources().getString(R.string.Yes), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                edtUnit.setText("");
+                                edtAQuantity.setText("");
+                                edtAQuality.setText("");
+                                edtExpectedPrice.setText("");
+                                edtUnit.setText("");
+                                edtTotalamt.setText("");
+                            }
+                        });
+                        builder.setNegativeButton(getResources().getString(R.string.No), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent startUserAccountListIntent = new Intent(ProductInfoForSaleActivity.this, HomeActivity.class);
+                                startUserAccountListIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(startUserAccountListIntent);
+                            }
+                        });
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        customDialogLoadingProgressBar.dismiss();
+                        Toast.makeText(ProductInfoForSaleActivity.this,"Network Error !" +error.networkResponse.statusCode, Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+
+            /*
+             * If you want to add more parameters with the image
+             * you can do it here
+             * here we have only one parameter with the image
+             * which is tags
+             * */
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("xmlData", builder.toString());
+                return params;
+            }
+
+            /*
+             * Here we are passing image by renaming it with a unique name
+             * */
+            @Override
+            protected Map<String, DataPart> getByteData() {
+                Map<String, DataPart> params = new HashMap<>();
+
+                    try {
+                      //  bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),Uri.fromFile(new File(item.getPicturePath())) );
+                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bos);
+                        params.put("image_file", new DataPart("image"+"i"+".jpg", getFileDataFromDrawable(bitmap) ));
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                return params;
+            }
+        };
+        volleyMultipartRequest.setRetryPolicy(new DefaultRetryPolicy(0,DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleySingleton.getInstance(this).addToRequestQueue(volleyMultipartRequest);
+
+    }
+    public byte[] getFileDataFromDrawable(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
+    }
+
+    public void submitToDbOld() {
 
         builder.append("<Parent>");
         builder.append("<Assign>");
@@ -1674,8 +1782,8 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
             try {
 
-            submitNewEntry();
-
+          //  submitNewEntry();
+                submitToDb();
 
             } catch (Exception e) {
                 e.printStackTrace();

@@ -256,6 +256,7 @@ public class HomeActivity extends AppCompatActivity
 
         else if(id ==R.id.nav_prof){
             Intent i = new Intent(HomeActivity.this, DetailFormActivity.class);
+            i.putExtra("IsNewUser","false");
             startActivity(i);
 
         }

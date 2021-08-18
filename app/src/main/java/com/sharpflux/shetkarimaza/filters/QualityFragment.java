@@ -60,7 +60,7 @@ public class QualityFragment extends Fragment {
     VarietyAdapter myAdapter;
 
     StringBuilder quality_builder_id;
-
+    Boolean IsVarietyAvailable;
     dbLanguage mydatabase;
     String currentLanguage, language;
     private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
@@ -117,14 +117,31 @@ public class QualityFragment extends Fragment {
                     extras.putString("VarietyId", VarityId);
                     extras.putString("ItemTypeId", itemTypeId);
                     extras.putString("ItemName", ItemName);
-
+                    extras.putString("categoryId", categoryId);
+                    extras.putBoolean("IsVarietyAvailable", IsVarietyAvailable);
+                    extras.putString("Search", "Filter");
                 }
 
-                FragmentTransaction transection = getFragmentManager().beginTransaction();
-                VarietyFragment mfragment = new VarietyFragment();
-                mfragment.setArguments(extras);
-                transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
-                transection.commit();
+                if (IsVarietyAvailable) {
+                    VarietyFragment vfm = new VarietyFragment();
+                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    Bundle b = new Bundle();
+                    if (b != null) {
+                        b.putString("ItemTypeId", itemTypeId);
+                        b.putString("ProductId", categoryId);
+                        b.putString("ItemName", ItemName);
+                        b.putBoolean("IsVarietyAvailable", IsVarietyAvailable);
+                        b.putString("Search", "Filter");
+                    }
+                    vfm.setArguments(b);
+                    fragmentTransaction.add(R.id.dynamic_fragment_frame_layout_variety, vfm);
+                    fragmentTransaction.commit();
+                }
+                else {
+
+                    getActivity().finish();
+                }
+
 
             }
         });
@@ -146,11 +163,13 @@ public class QualityFragment extends Fragment {
                     extras.putString("QualityId", quality_builder_id.toString());
                     extras.putString("ItemTypeId", itemTypeId);
                     extras.putString("ItemName", ItemName);
-
+                    extras.putString("categoryId", categoryId);
+                    extras.putBoolean("IsVarietyAvailable", IsVarietyAvailable);
+                    extras.putString("Search", "Filter");
                 }
 
 
-                    FragmentTransaction transection = getFragmentManager().beginTransaction();
+                    FragmentTransaction transection =  getActivity().getSupportFragmentManager().beginTransaction();
                     StateFragment mfragment = new StateFragment();
                     mfragment.setArguments(extras);
                     transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
@@ -171,11 +190,14 @@ public class QualityFragment extends Fragment {
                 intent.putExtra("VarietyId", VarityId);
                 intent.putExtra("QualityId", quality_builder_id.toString());
                 intent.putExtra("ItemName", ItemName);
+                intent.putExtra("categoryId", categoryId);
+                intent.putExtra("Search", "Filter");
                 startActivity(intent);
 
             }
         });
-
+        AssignVariables();
+        BundleAssign();
 
         AsyncTaskRunner runner = new AsyncTaskRunner();
         String sleepTime = "500";
@@ -188,24 +210,22 @@ public class QualityFragment extends Fragment {
         extras = getArguments();
 
         if (extras != null) {
-
+            categoryId = extras.getString("categoryId");
             VarityId = extras.getString("VarietyId");
             itemTypeId = extras.getString("ItemTypeId");
-            categoryId = extras.getString("categoryId");
+            IsVarietyAvailable = extras.getBoolean("IsVarietyAvailable");
+          //  categoryId = extras.getString("categoryId");
         }
 
     }
 
     private void AssignVariables() {
         ItemTypeId = "";
-
         VarityId = "";
-
     }
 
     private void SetDynamicDATA() {
-        AssignVariables();
-        BundleAssign();
+
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 URLs.URL_QUALITY + "?Language=" + currentLanguage+"&CategoryId=" + categoryId,
                 new Response.Listener<String>() {

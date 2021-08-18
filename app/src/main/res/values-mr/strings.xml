@@ -72,6 +72,13 @@
     <string name="mobnum">मोबाइल नंबर</string>
     <string name="alreadyhaveacc">आधीच खाते आहे?</string>
     <string name="loginphere">येथे साइन इन करा!</string>
+    <string name="data_submitted">डेटा यशस्वीरित्या सबमिट केला, आपण अधिक गुणवत्ता जोडू इच्छिता?</string>
+
+    <string name="Yes">
+होय</string>
+    <string name="No">
+
+नाही</string>
 
     //Seller Form
     <string name="seller_name">नाव*</string>

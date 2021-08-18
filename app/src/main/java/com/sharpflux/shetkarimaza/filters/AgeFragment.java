@@ -58,7 +58,7 @@ public class AgeFragment extends Fragment {
     String currentLanguage,language;
     SearchView searchViewAge;
     VarietyAdapter myAdapter;
-    String VarityId="",itemTypeId="",ItemTypeId,ItemName,QualityId;
+    String VarityId="",itemTypeId="",ItemTypeId,ItemName,QualityId,categoryId="";
     Bundle extras;
     private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
     StringBuilder age_builder_id;
@@ -119,10 +119,10 @@ public class AgeFragment extends Fragment {
                     extras.putString("ItemTypeId", itemTypeId);
                     extras.putString("VarietyId", VarityId);
                     extras.putString("ItemName", ItemName);
-
+                    extras.putString("categoryId", categoryId);
                 }
 
-                FragmentTransaction transection = getFragmentManager().beginTransaction();
+                FragmentTransaction transection = getActivity().getSupportFragmentManager().beginTransaction();
                 QualityFragment mfragment = new QualityFragment();
                 mfragment.setArguments(extras);
                 transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
@@ -145,11 +145,11 @@ public class AgeFragment extends Fragment {
                 if (extras != null) {
                     extras.putString("VarietyId", VarityId);
                     extras.putString("ItemTypeId", itemTypeId);
-                    // Log.e("IDS",districtIds);
+                    extras.putString("categoryId", categoryId);
                 }
 
 
-                FragmentTransaction transection = getFragmentManager().beginTransaction();
+                FragmentTransaction transection = getActivity().getSupportFragmentManager().beginTransaction();
                 StateFragment mfragment = new StateFragment();
                 mfragment.setArguments(extras);
                 transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
@@ -165,6 +165,7 @@ public class AgeFragment extends Fragment {
                 intent.putExtra("ItemTypeId", itemTypeId);
                 intent.putExtra("VarietyId", VarityId);
                 intent.putExtra("ItemName", ItemName);
+                intent.putExtra("categoryId", categoryId);
 
                 startActivity(intent);
             }
@@ -293,7 +294,7 @@ public class AgeFragment extends Fragment {
         extras = getArguments();
 
         if (extras != null) {
-
+            categoryId = extras.getString("categoryId");
             VarityId = extras.getString("VarietyId");
             itemTypeId = extras.getString("ItemTypeId");
             QualityId = extras.getString("QualityId");
@@ -306,7 +307,7 @@ public class AgeFragment extends Fragment {
         ItemTypeId = "";
         VarityId = "";
         QualityId = "";
-
+        categoryId = "";
 
     }
 

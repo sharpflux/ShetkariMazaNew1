@@ -32,6 +32,14 @@
     <string name="action_starred_messages">तारांकित संदेश</string>
     <string name="action_status">स्थिति</string>
     <string name="primaryInfo">प्राथमिक जानकारी</string>
+
+    <string name="data_submitted">डेटा सफलतापूर्वक सबमिट किया गया,  क्या आप अधिक गुणवत्ता जोड़ना चाहते हैं?</string>
+
+    <string name="Yes">
+हाँ</string>
+    <string name="No">
+नहीं</string>
+
     <string name="Vehicletype">
 वाहन का प्रकार</string>
 

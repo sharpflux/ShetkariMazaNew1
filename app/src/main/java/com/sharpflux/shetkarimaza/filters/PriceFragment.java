@@ -35,7 +35,7 @@ public class PriceFragment extends Fragment {
     LinearLayoutManager layoutManager;
     List<SubCategoryFilter> productlist;
     TextView btn_next,btn_back;
-    String   StatesID="",DistrictId="",TalukaId="",VarityId="",QualityId="",itemTypeId="",priceids="",ItemName;
+    String   StatesID="",DistrictId="",TalukaId="",VarityId="",QualityId="",itemTypeId="",priceids="",ItemName="",categoryId="";
     Bundle extras;
     dbBuyerFilter myDatabase;
     @Override
@@ -67,7 +67,7 @@ public class PriceFragment extends Fragment {
             StatesID=extras.getString("StatesID");
             TalukaId = extras.getString("TalukaId");
             ItemName = extras.getString("ItemName");
-
+            categoryId = extras.getString("categoryId");
         }
 
 
@@ -94,30 +94,32 @@ public class PriceFragment extends Fragment {
                     extras.putString("DistrictId", DistrictId);
                     extras.putString("TalukaId", TalukaId);
                     extras.putString("ItemName", ItemName);
+                    extras.putString("categoryId", categoryId);
+                    extras.putString("Search", "Filter");
                 }
 
 
                 if(TALUKACursor.getCount()==0&&DISTRICTCursor.getCount()==0) {
-                    FragmentTransaction transection = getFragmentManager().beginTransaction();
+                    FragmentTransaction transection =getActivity().getSupportFragmentManager().beginTransaction();
                     StateFragment mfragment = new StateFragment();
                     mfragment.setArguments(extras);
                     transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
                     transection.commit();
                 }
                 else if(TALUKACursor.getCount()==0){
-                    FragmentTransaction transection = getFragmentManager().beginTransaction();
+                    FragmentTransaction transection =getActivity().getSupportFragmentManager().beginTransaction();
                     DistrictFragment mfragment = new DistrictFragment();
                     mfragment.setArguments(extras);
                     transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
                     transection.commit();
                 }
-                else {
-                    FragmentTransaction transection = getFragmentManager().beginTransaction();
+                /*else {
+                    FragmentTransaction transection =getActivity().getSupportFragmentManager().beginTransaction();
                     VillageFragment mfragment = new VillageFragment();
                     mfragment.setArguments(extras);
                     transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
                     transection.commit();
-                }
+                }*/
 
             }
         });
@@ -135,9 +137,7 @@ public class PriceFragment extends Fragment {
                     }
                 }
 
-
                 Intent intent = new Intent(getContext(), AllSimilarDataActivity.class);
-
                 intent.putExtra("VarietyId",VarityId);
                 intent.putExtra("QualityId",QualityId);
                 intent.putExtra("ItemTypeId",itemTypeId);
@@ -146,19 +146,15 @@ public class PriceFragment extends Fragment {
                 intent.putExtra("TalukaId",TalukaId);
                 intent.putExtra("priceids",priceids);
                 intent.putExtra("ItemName",ItemName);
+                intent.putExtra("Search", "Filter");
                 startActivity(intent);
             }
         });
 
-
-
         productlist.add(new SubCategoryFilter("ASC","Price low to high"));
         productlist.add(new SubCategoryFilter("DESC","Price high to low"));
-
-       VarietyAdapter myAdapter = new VarietyAdapter(getContext(), productlist);
+        VarietyAdapter myAdapter = new VarietyAdapter(getContext(), productlist);
         recyclerView.setAdapter(myAdapter);
-
-
         return view;
     }
 

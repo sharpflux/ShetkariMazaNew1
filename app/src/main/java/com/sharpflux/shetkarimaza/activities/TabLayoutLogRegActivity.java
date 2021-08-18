@@ -9,13 +9,29 @@ import android.widget.LinearLayout;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.google.android.material.tabs.TabLayout;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.PagerTabAdapter;
 import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
+import com.sharpflux.shetkarimaza.utils.AppSignatureHelper;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
+import com.sharpflux.shetkarimaza.volley.URLs;
+import com.sharpflux.shetkarimaza.volley.VolleySingleton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class
 TabLayoutLogRegActivity extends AppCompatActivity  {
@@ -51,7 +67,8 @@ TabLayoutLogRegActivity extends AppCompatActivity  {
         final PagerTabAdapter pagerTabAdapter = new PagerTabAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
         viewPager_details.setAdapter(pagerTabAdapter);
 
-
+        AppSignatureHelper appSignatureHelper = new AppSignatureHelper(this);
+        appSignatureHelper.getAppSignatures();
 
         viewPager_details.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
@@ -81,6 +98,14 @@ TabLayoutLogRegActivity extends AppCompatActivity  {
     }
 
 
+
+    @Override
+    public void onActivityResult (int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
+    }
     void tabLayout()
     {
 

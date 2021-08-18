@@ -109,8 +109,6 @@ public class ThirdFragment extends Fragment {
     ArrayList<Product> list;
     dbLanguage mydatabase;
     int requestCode = 200;
-
-
     public String IsNewUser;
 
 
@@ -243,7 +241,7 @@ public class ThirdFragment extends Fragment {
                 }*/
 
 
-                if (registrationTypeId.equals("1")) {
+      /*          if (registrationTypeId.equals("1")) {
 
 
                     Intent intent = new Intent(getContext(), ProcessorActivity.class);
@@ -273,7 +271,7 @@ public class ThirdFragment extends Fragment {
 
                     startActivity(intent);
 
-                } else {
+                } else {*/
 
 
 
@@ -314,9 +312,9 @@ public class ThirdFragment extends Fragment {
                     bundle.putString("AlternateMobile", alternateMobile);
                     bundle.putString("Email", email);
                     bundle.putString("address", address);
-                    bundle.putString("city", city);
-                    bundle.putString("district", district);
-                    bundle.putString("state", state);
+                    bundle.putString("city", TalukaId);
+                    bundle.putString("district", districtId);
+                    bundle.putString("state", stateId);
                     bundle.putString("companyname", companyname);
                     bundle.putString("license", license);
                     bundle.putString("companyregnno", companyregnno);
@@ -330,6 +328,8 @@ public class ThirdFragment extends Fragment {
                     bundle.putString("adhar", AdharImageBlob);
                     bundle.putString("IsNewUser", IsNewUser);
 
+
+
                     FragmentTransaction transection =getActivity().getSupportFragmentManager().beginTransaction();
                     transection.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                     SelfieFragment mfragment = new SelfieFragment();
@@ -338,7 +338,7 @@ public class ThirdFragment extends Fragment {
                     transection.addToBackStack("SelfieFragment");
                     transection.commit();
 
-                }
+                //}
             }
         });
 

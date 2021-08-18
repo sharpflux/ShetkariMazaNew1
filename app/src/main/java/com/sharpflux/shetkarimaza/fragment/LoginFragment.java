@@ -289,7 +289,7 @@ public class LoginFragment extends Fragment {
                                             userJson.getString("EmailId"),
                                             userJson.getString("MobileNo"), "", "",""
                                             ,String.valueOf(    userJson.getInt("RegistrationTypeId")),
-                                            true
+                                            userJson.getBoolean("IsProfileComplete")
                                     );
 
                                     SharedPrefManager.getInstance(getContext()).userLogin(user);
@@ -310,7 +310,6 @@ public class LoginFragment extends Fragment {
 
                                     AlertDialog alert = builder.create();
                                     alert.show();
-                                  progressDialog.dismiss();
 
                                 }
 

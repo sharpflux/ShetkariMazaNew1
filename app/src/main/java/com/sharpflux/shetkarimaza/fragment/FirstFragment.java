@@ -54,7 +54,7 @@ import java.util.Map;
 
 public class FirstFragment extends Fragment {
 
-    EditText Rtype_edit, Rcategory_edit, editfullname, mobileNo, AlternateMobile, Email, name_botanical;
+    EditText Rtype_edit, Rcategory_edit, editfullname, mobileNo, AlternateMobile, Email, name_botanical,hidRegTypeId;
 
     ArrayList<Product> list;
     private ArrayList<MyProcessor> processorList;
@@ -63,7 +63,7 @@ public class FirstFragment extends Fragment {
     private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
     DataFetcher fetcher;
 
-    TextView hidRegTypeId, hidRegCagteId;
+    TextView  hidRegCagteId;
 
     MyProcessor myProcessor;
     Product sellOptions;
@@ -80,6 +80,7 @@ public class FirstFragment extends Fragment {
     String currentLanguage, language;
 
     public static final String ALTERNATE_MOBILE_KEY = "AlternateMobile";
+    public static final String REGISTATIONTYPEID_KEY = "RegistrationTypeId";
 
     private String userEmail = "";
     User user;
@@ -125,6 +126,14 @@ public class FirstFragment extends Fragment {
         if (cursor.getCount() == 0) {
 
         }
+
+
+        if (savedInstanceState != null) {
+            hidRegTypeId.setText( savedInstanceState.getString(REGISTATIONTYPEID_KEY));
+            // Do something with value if needed
+        }
+
+
 
 
         bundle = getArguments();
@@ -286,9 +295,8 @@ public class FirstFragment extends Fragment {
         super.onSaveInstanceState(outState);
 
         if (outState != null) {
-            // Save user email instance variable value in bundle.
             outState.putString(this.ALTERNATE_MOBILE_KEY, AlternateMobile.getText().toString());
-
+            outState.putString(this.REGISTATIONTYPEID_KEY, hidRegTypeId.getText().toString());
         }
     }
 
@@ -300,6 +308,7 @@ public class FirstFragment extends Fragment {
             // Retrieve the user email value from bundle.
             userEmail = savedInstanceState.getString(this.ALTERNATE_MOBILE_KEY);
             AlternateMobile.setText(userEmail);
+            hidRegTypeId.setText(savedInstanceState.getString(REGISTATIONTYPEID_KEY) );
         }
     }
 

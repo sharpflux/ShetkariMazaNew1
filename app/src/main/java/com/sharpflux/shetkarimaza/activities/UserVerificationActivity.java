@@ -62,6 +62,13 @@ public class UserVerificationActivity extends AppCompatActivity {
 
         builder = new AlertDialog.Builder(this);
 
+
+        bundle = getIntent().getExtras();
+   if(bundle!=null){
+       MobileNo = bundle.getString("MobileNo");
+   }
+
+
         myCountDownTimer1 = new MyCountDownTimer1(59000, 1000);
         myCountDownTimer1.start();
 

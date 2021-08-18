@@ -69,6 +69,7 @@ public class BuyerActivity extends AppCompatActivity implements TabLayout.OnTabS
         myDatabase = new dbFilter(getApplicationContext());
         myDatabaseCategoryItemTypeId = new dbBuyerFilter(getApplicationContext());
         myDatabase.DeleteRecordAll();
+        myDatabase.delete();
         myDatabaseCategoryItemTypeId.delete();
     }
 
@@ -159,9 +160,8 @@ public class BuyerActivity extends AppCompatActivity implements TabLayout.OnTabS
                                     mTabLayout.addTab(mTabLayout.newTab().setText(userJson.getString("CategoryName_EN")));
 
 
-                                    DynamicFragmentAdapter mDynamicFragmentAdapter =
-                                            new DynamicFragmentAdapter(getSupportFragmentManager(),
-                                                    mTabLayout.getTabCount(), obj, BuyerActivity.this);
+                                    DynamicFragmentAdapter mDynamicFragmentAdapter = new DynamicFragmentAdapter(getSupportFragmentManager(),
+                                            mTabLayout.getTabCount(), obj, BuyerActivity.this);
 
                                     viewPager.setAdapter(mDynamicFragmentAdapter);
 

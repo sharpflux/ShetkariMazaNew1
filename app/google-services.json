@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "283804390996",
+    "project_id": "kisanmaza-572fc",
+    "storage_bucket": "kisanmaza-572fc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:283804390996:android:8dd800284871174fc23fc1",
+        "android_client_info": {
+          "package_name": "com.sharpflux.shetkarimaza"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "283804390996-1he5bugtj1fjg89is839amstch4j215k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_BEc_5l1Bf2Ix8wvkLhUITWYCfG8z7qU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "283804390996-1he5bugtj1fjg89is839amstch4j215k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

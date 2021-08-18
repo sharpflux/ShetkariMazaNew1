@@ -26,21 +26,33 @@
             android:paddingBottom="13dp"
             android:orientation="vertical">
 
-            <TextView
+        <!--    <TextView
                 android:id="@+id/hidRegTypeId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="hidden value"
                 android:textSize="20dp"
-                android:visibility="gone" />
+                android:visibility="visible" />-->
 
-            <TextView
+                <TextView
                 android:id="@+id/hidRegCagteId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="hidden value"
                 android:textSize="20dp"
                 android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/hidRegTypeId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/registration_category"
+                    android:inputType="none"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:visibility="gone"
+                    android:textColor="@color/text_black"
+                    android:textSize="15sp" />
 
 
 

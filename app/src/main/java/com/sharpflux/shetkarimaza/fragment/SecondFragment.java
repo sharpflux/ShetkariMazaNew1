@@ -50,7 +50,7 @@ import java.util.Map;
 
 
 public class SecondFragment extends DialogFragment {
-    TextView hideStateId, hideDistrictId,hideTalukaId;
+    EditText hideStateId, hideDistrictId,hideTalukaId;
     EditText address, city, edtdistrict,edttaluka, edtstate, companyname, license, companyregnno, gstno,name_botanical;
     ArrayList<Product> list;
     LinearLayout btn_next;
@@ -248,10 +248,11 @@ public class SecondFragment extends DialogFragment {
 
                 FragmentTransaction transection =getActivity().getSupportFragmentManager().beginTransaction();
                 transection.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-                ThirdFragment mfragment = new ThirdFragment();
+               // ThirdFragment mfragment = new ThirdFragment();
+                SelfieFragment mfragment = new SelfieFragment();
                 mfragment.setArguments(bundle); //data being send to SecondFragment
                 transection.replace(R.id.dynamic_fragment_frame_layout, mfragment);
-                transection.addToBackStack("ThirdFragment");
+                transection.addToBackStack("SelfieFragment");
                 transection.commit();
 
 

@@ -53,7 +53,7 @@ public class StateFragment extends Fragment {
     ArrayList<SubCategoryFilter> productlist;
     TextView btn_next, btn_back, btnFilterData;
     Locale myLocale;
-    String VarityId = "", QualityId = "", DistrictId = "", itemTypeId = "", StatesID = "", ItemName;
+    String VarityId = "", QualityId = "", DistrictId = "", itemTypeId = "", StatesID = "",categoryId = "", ItemName="";
     StringBuilder state_builder_id;
     String StateIds = "";
     Bundle extras;
@@ -109,15 +109,14 @@ public class StateFragment extends Fragment {
             //QualityId = extras.getString("QualityId");
             itemTypeId = extras.getString("ItemTypeId");
             ItemName = extras.getString("ItemName");
-
+            categoryId = extras.getString("categoryId");
         }
 
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BundleAssign();
-                FragmentTransaction transection = getFragmentManager().beginTransaction();
+                FragmentTransaction transection = getActivity().getSupportFragmentManager().beginTransaction();
                 QualityFragment mfragment = new QualityFragment();
                 mfragment.setArguments(extras);
                 transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
@@ -143,6 +142,8 @@ public class StateFragment extends Fragment {
                     extras.putString("StatesID", state_builder_id.toString());
                     extras.putString("ItemTypeId", itemTypeId);
                     extras.putString("ItemName", ItemName);
+                    extras.putString("categoryId", categoryId);
+                    extras.putString("Search", "Filter");
                 }
 
 
@@ -154,14 +155,14 @@ public class StateFragment extends Fragment {
 
 
                 if (STATECursor.getCount()==0) {
-                    FragmentTransaction transection = getFragmentManager().beginTransaction();
+                    FragmentTransaction transection = getActivity().getSupportFragmentManager().beginTransaction();
                     PriceFragment mfragment = new PriceFragment();
                     mfragment.setArguments(extras);
                     transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
                     transection.commit();
 
                 } else {
-                    FragmentTransaction transection = getFragmentManager().beginTransaction();
+                    FragmentTransaction transection = getActivity().getSupportFragmentManager().beginTransaction();
                     DistrictFragment mfragment = new DistrictFragment();
                     mfragment.setArguments(extras);
                     transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
@@ -204,6 +205,8 @@ public class StateFragment extends Fragment {
             extras.putString("QualityId", QualityId);
             extras.putString("StatesID", state_builder_id.toString());
             extras.putString("ItemTypeId", itemTypeId);
+            extras.putString("categoryId", categoryId);
+
         }
 
     }

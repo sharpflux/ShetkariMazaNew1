@@ -13,13 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".activities.MobileVerification"></activity>
         <activity
+            android:name=".activities.TransporterViewActivity"
             android:label="@string/transporter"
             android:parentActivityName=".activities.HomeActivity"
-            android:theme="@style/SellerDarkAppTheme"
-            android:name=".activities.TransporterViewActivity">
-
-        </activity>
+            android:theme="@style/SellerDarkAppTheme"></activity>
         <activity
             android:name=".activities.TransporterVehicleAddActivity"
             android:label="@string/addVehicle"
@@ -167,6 +166,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <uses-permission
         android:name="org.apache.http.legacy"

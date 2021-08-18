@@ -191,17 +191,13 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
 
     public void setDynamicFragmentToTabLayout(Integer PageSize) {
 
-     //   Handler handler = new Handler();
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                    URLs.URL_NAME +PageSize+"&PageSize=500&CategoryId=" + CategoryId + "&Language=" + currentLanguage,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,URLs.URL_NAME +PageSize+"&PageSize=500&CategoryId=" + CategoryId + "&Language=" + currentLanguage,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
 
                         try {
 
-                           /* Log.d("DYNAMIC FRAGMENT","\n\n\n--------------------------------------\n"
-                            +response+"\\n--------------------------------------\n");*/
                             JSONArray obj = new JSONArray(response);
                             progressBar.setVisibility(View.VISIBLE);
 
@@ -214,12 +210,7 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
                                 {
                                     if(userJson.getBoolean("IsGroup"))
                                     {
-
-
-                                        //String SubCategoryName=userJson.getString("ItemName");
-                                        //txtSubCategoryName.setText(userJson.getString("ItemName"));
                                         searchView.setVisibility(View.INVISIBLE);
-
                                         showGroupFragment(obj,CategoryId);
                                         break;
                                     }
@@ -357,12 +348,7 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
                             myAdapter.notifyDataSetChanged();
                             isLoading = false;
                             progressBar.setVisibility(View.GONE);
-
                             customDialogLoadingProgressBar.dismiss();
-
-
-
-
 
                         } catch (JSONException e) {
                             e.printStackTrace();

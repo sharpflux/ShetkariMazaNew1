@@ -39,7 +39,7 @@ public class URLs {
     public static String URL_POSTVEHICLE=Main_URL+"api/TransporterAPI/TransportMasterInsertUpdateAndroid";
     public static String URL_GETTRANSPORTERS=Main_URL+"api/Registration/TransporterGet?";
 
-
+    public static final String URL_GENERATEOTP=Main_URL+"api/Utilities/GetOtpAndAddUpdateUser";
 
 
   /*  public static final String URL_LOGIN = "http://apimaza.supergo.in/api/Users/Login";

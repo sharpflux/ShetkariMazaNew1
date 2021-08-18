@@ -49,7 +49,7 @@ public class TalukaFragment extends Fragment {
     LinearLayoutManager layoutManager;
     ArrayList<SubCategoryFilter> productlist;
     TextView btn_next,btn_back,btnFilterData;
-    String  DistrictId="", TalukaId="",VarityId="",QualityId="",itemTypeId="",StatesID="",ItemName;
+    String  DistrictId="", TalukaId="",VarityId="",QualityId="",itemTypeId="",StatesID="",ItemName="",categoryId="";
     Bundle extras;
     StringBuilder taluka_builder_id = new StringBuilder();
     SearchView searchView;
@@ -106,6 +106,8 @@ public class TalukaFragment extends Fragment {
             QualityId = extras.getString("QualityId");
             StatesID = extras.getString("StatesID");
             ItemName = extras.getString("ItemName");
+            categoryId = extras.getString("categoryId");
+
         }
 
 
@@ -120,9 +122,11 @@ public class TalukaFragment extends Fragment {
                     extras.putString("StatesID",StatesID);
                     extras.putString("DistrictId",DistrictId);
                     extras.putString("ItemName",ItemName);
+                    extras.putString("categoryId", categoryId);
+                    extras.putString("Search", "Filter");
                 }
 
-                FragmentTransaction transection = getFragmentManager().beginTransaction();
+                FragmentTransaction transection =  getActivity().getSupportFragmentManager().beginTransaction();
                 DistrictFragment  mfragment = new DistrictFragment ();
                 mfragment.setArguments(extras);
                 transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
@@ -155,12 +159,22 @@ public class TalukaFragment extends Fragment {
                     extras.putString("StatesID",StatesID);
                     extras.putString("DistrictId",DistrictId);
                     extras.putString("ItemName",ItemName);
+                    extras.putString("categoryId", categoryId);
+                    extras.putString("Search", "Filter");
                 }
-                FragmentTransaction transection = getFragmentManager().beginTransaction();
-                VillageFragment mfragment = new VillageFragment();
+
+                FragmentTransaction transection =getActivity().getSupportFragmentManager().beginTransaction();
+                PriceFragment mfragment = new PriceFragment();
                 mfragment.setArguments(extras);
                 transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
                 transection.commit();
+
+
+                /*FragmentTransaction transection =  getActivity().getSupportFragmentManager().beginTransaction();
+                VillageFragment mfragment = new VillageFragment();
+                mfragment.setArguments(extras);
+                transection.replace(R.id.dynamic_fragment_frame_layout_variety, mfragment);
+                transection.commit();*/
 
             }
         });
@@ -177,6 +191,7 @@ public class TalukaFragment extends Fragment {
                 intent.putExtra("TalukaId",taluka_builder_id.toString());
                 intent.putExtra("StatesID", StatesID);
                 intent.putExtra("ItemName", ItemName);
+                intent.putExtra("Search", "Filter");
                 startActivity(intent);
 
             }

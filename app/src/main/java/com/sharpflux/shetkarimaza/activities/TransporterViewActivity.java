@@ -10,6 +10,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,6 +39,7 @@ import com.sharpflux.shetkarimaza.filters.Filter1Activity;
 import com.sharpflux.shetkarimaza.model.AddPersonModel;
 import com.sharpflux.shetkarimaza.model.ContactDetail;
 import com.sharpflux.shetkarimaza.model.PostItem;
+import com.sharpflux.shetkarimaza.sqlite.dbFilter;
 import com.sharpflux.shetkarimaza.utils.EndlessRecyclerViewScrollListener;
 import com.sharpflux.shetkarimaza.utils.PaginationListener;
 import com.sharpflux.shetkarimaza.volley.URLs;
@@ -64,38 +66,7 @@ public class TransporterViewActivity extends AppCompatActivity implements SwipeR
     Bundle bundle;
     String TalukaId = "", VarityId = "", QualityId = "", ItemTypeId = "", StatesID = "", DistrictId = "",SortBy="0";
     boolean isLoading = false;
-  /*   int currentItems;
-    int totalItems;
-    int scrollOutItems;
-    ContactDetailAdapter myAdapter;
-    private int currentPage = PAGE_START;
-    private boolean isFirstLoad = false;
-    private int totalPage = 10;
-    int itemCount = 0;
-    ProgressBar progressBar_filter;
-    Locale myLocale;
-    JSONArray obj;
-    AlertDialog.Builder builder;
-    TextView txt_emptyView;
-    LinearLayout lr_filterbtn;
 
-    private RecyclerView
-            recyclerView_addFarm;
-    public static final int PAGE_START = 1;
-    private static final int PAGE_SIZE = 10;
-    private AddPersonAdapter addPersonAdapter_farm;
-    private ArrayList<AddPersonModel> addPersonModelArrayList_farm;
-    ImageView imageView_addFarm;
-
-    int count = 0;
-    private int previousTotal = 0;
-    private boolean loading = true;
-    private int visibleThreshold = 5;
-    int firstVisibleItem, visibleItemCount, totalItemCount;
-    private NestedScrollView nestedSV;
-    private ProgressBar loadingPB;
-    private EndlessRecyclerViewScrollListener scrollListener;
-    RecyclerView rvItems;*/
 
     private static final String TAG = "MainActivity";
 
@@ -114,7 +85,7 @@ public class TransporterViewActivity extends AppCompatActivity implements SwipeR
     RecyclerViewAdapter recyclerViewAdapter;
     ArrayList<String> rowsArrayList = new ArrayList<>();
     TextView txt_emptyView;
-
+    dbFilter myDatabase;
     public  List<ContactDetail> mItemList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +95,10 @@ public class TransporterViewActivity extends AppCompatActivity implements SwipeR
         recyclerView = findViewById(R.id.recyclerView);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+
+        myDatabase = new dbFilter(TransporterViewActivity.this);
+
+        bundle = getIntent().getExtras();
 
         mItemList=new ArrayList<>();
 
@@ -211,6 +186,39 @@ public class TransporterViewActivity extends AppCompatActivity implements SwipeR
                     final int currentSize = scrollPosition;
                     final int nextLimit = currentSize + 10;
                 }
+
+
+                if(bundle.getString("Search")!=null) {
+                    if (bundle.getString("Search").contains("Filter")) {
+                        Cursor STATECursor = myDatabase.FilterGetByFilterName("STATE");
+                        Cursor DISTRICTCursor = myDatabase.FilterGetByFilterName("DISTRICT");
+                        Cursor TALUKACursor = myDatabase.FilterGetByFilterName("TALUKA");
+
+                        while (STATECursor.moveToNext()) {
+                            StatesID = StatesID + STATECursor.getString(0) + ",";
+                        }
+
+                        if(STATECursor.getCount()==0){
+                            myDatabase.DeleteDependantRecord("DISTRICT");
+                            myDatabase.DeleteDependantRecord("TALUKA");
+                        }
+                        while (DISTRICTCursor.moveToNext()) {
+                            if(DistrictId==null)
+                            {
+                                DistrictId="";
+                            }
+                            DistrictId = DistrictId + DISTRICTCursor.getString(0) + ",";
+                        }
+                        while (TALUKACursor.moveToNext()) {
+                            if(TalukaId==null)
+                            {
+                                TalukaId="";
+                            }
+                            TalukaId = TalukaId + TALUKACursor.getString(0) + ",";
+                        }
+                    }
+                }
+
 
 
                 if (TalukaId != null) {

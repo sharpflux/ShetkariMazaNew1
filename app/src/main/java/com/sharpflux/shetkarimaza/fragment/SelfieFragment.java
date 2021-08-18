@@ -89,7 +89,7 @@ public class SelfieFragment extends Fragment {
     private String address = "", city = "", district = "", state = "", companyname = "",
             license = "", companyregnno = "", gstno = "", names = "", registrationTypeId = "",
             registrationCategoryId = "", gender = "", mobile = "", alternateMobile = "", email = "",
-            accountname = "", bankname = "", branchcode = "", accno = "", ifsc = "", check = "", adhar = "", selfie = "";
+            accountname = "", bankname = "", branchcode = "", accno = "", ifsc = "", check = "", adhar = "", selfie = "",stateId = "", districtId = "", TalukaId = "";
 
     private Intent iin;
     private Bundle bundle;
@@ -142,6 +142,8 @@ public class SelfieFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_selfie, container, false);
         ((DetailFormActivity) getActivity()).setActionBarTitle(getString(R.string.selfie));
 
+
+        bundle = getArguments();
         footer = view.findViewById(R.id.footer);
         hideImageTvSelfie = view.findViewById(R.id.hideImageTvSelfie);
         btn_take_selfie = (Button) view.findViewById(R.id.btn_take_selfie);
@@ -176,7 +178,7 @@ public class SelfieFragment extends Fragment {
         });
 
 
-        bundle = getArguments();
+
 
         if (bundle != null) {
             IsNewUser = bundle.getString("IsNewUser");
@@ -233,17 +235,36 @@ public class SelfieFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            Bitmap newBitmap = Bitmap.createBitmap(bm.getWidth(), bm.getHeight(), bm.getConfig());
-            Canvas canvas = new Canvas(newBitmap);
-            canvas.drawColor(Color.WHITE);
-            canvas.drawBitmap(bm, 0, 0, null);
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            newBitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
+            try {
+                Bitmap newBitmap = Bitmap.createBitmap(bm.getWidth(), bm.getHeight(), bm.getConfig());
+                Canvas canvas = new Canvas(newBitmap);
+                canvas.drawColor(Color.WHITE);
+                canvas.drawBitmap(bm, 0, 0, null);
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                newBitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
 
-            selfi = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
+                selfi = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
+                img_banner_profile_placeholder.setImageBitmap(bm);
+
+            } catch (Exception e) {
+
+                builder.setMessage(e.getMessage())
+                        .setCancelable(false)
+
+                        .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                             dialog.dismiss();
+                            }
+                        });
+
+                AlertDialog alert = builder.create();
+                alert.setTitle("Image Error");
+                alert.show();
+                e.printStackTrace();
+            }
 
         }
-        img_banner_profile_placeholder.setImageBitmap(bm);
+
     }
 
     private void onCaptureImageResult(Intent data) {
@@ -329,8 +350,9 @@ public class SelfieFragment extends Fragment {
             return;
         }
 
-        iin =getActivity(). getIntent();
-        bundle = iin.getExtras();
+
+        bundle = getArguments();
+
 
         if (bundle != null) {
             final String image;
@@ -356,18 +378,23 @@ public class SelfieFragment extends Fragment {
             companyregnno = bundle.getString("companyregnno");
 
             gstno = bundle.getString("gstno");
-            accountname = bundle.getString("accountname");
-
-            bankname = bundle.getString("bankname");
-            branchcode = bundle.getString("branchcode");
-
-            accno = bundle.getString("accno");
-            ifsc = bundle.getString("ifsc");
-
-            check = bundle.getString("check");
-            adhar = bundle.getString("adhar");
+            accountname ="0"; //bundle.getString("accountname");
 
 
+            stateId = bundle.getString("stateId");
+            districtId = bundle.getString("districtId");
+            TalukaId = bundle.getString("TalukaId");
+
+
+
+            bankname = "0";//bundle.getString("bankname");
+            branchcode = "0";// bundle.getString("branchcode");
+
+            accno = "0";// bundle.getString("accno");
+            ifsc =  "0";//bundle.getString("ifsc");
+
+            check = "0";// bundle.getString("check");
+            adhar =  "0";//bundle.getString("adhar");
 
         }
 
@@ -411,6 +438,7 @@ public class SelfieFragment extends Fragment {
                             if (!obj.getBoolean("error")) {
                                 SharedPrefManager.getInstance(getContext()).IsRegistrationComplete(true);
                                 startActivity(new Intent(getContext(), HomeActivity.class));
+                                getActivity().finish();
 
                             } else {
                                 builder.setMessage(response)
@@ -472,9 +500,9 @@ public class SelfieFragment extends Fragment {
                 params.put("EmailId", email);
 
                 params.put("Gender", gender);
-                params.put("StateId", state);
-                params.put("CityId", city);
-                params.put("TahasilId", district);
+                params.put("StateId", stateId);
+                params.put("CityId",districtId);
+                params.put("TahasilId", TalukaId);
                 params.put("CompanyFirmName", companyname);
                 params.put("LandLineNo", "1");
                 params.put("APMCLicence", license);
@@ -489,10 +517,9 @@ public class SelfieFragment extends Fragment {
                 params.put("IFSCCode", ifsc);
                 params.put("UserPassword", "1");
                 params.put("AgentId", "0");
-                params.put("UploadCancelledCheckUrl", check);
-                params.put("UploadAdharCardPancardUrl", adhar);
-                params.put("ImageUrl", selfi);
-
+                params.put("UploadCancelledCheckUrl", "0");
+                params.put("UploadAdharCardPancardUrl", "0");
+                params.put("ImageUrl", "0");
 
                 return params;
             }

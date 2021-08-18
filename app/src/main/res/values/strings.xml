@@ -29,6 +29,11 @@
     <string name="action_starred_messages">Starred messages</string>
     <string name="action_status">Status</string>
 
+    <string name="data_submitted">Data submitted successfully, Do you want to Add more Quality?</string>
+
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
+
     <string name="action_clear_call_log">Clear call log</string>
     <string name="action_calls">Calls</string>
     <string name="action_refresh">Refresh</string>

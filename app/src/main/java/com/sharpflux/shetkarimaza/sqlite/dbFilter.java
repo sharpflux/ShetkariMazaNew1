@@ -57,6 +57,12 @@ public class dbFilter extends SQLiteOpenHelper {
         return res;
     }
 
+
+    public Integer DeleteDependantRecord (String FilterBy) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_NAME, "FILTERBY = ? ",new String[] {FilterBy});
+    }
+
     public Integer DeleteRecord (String FilterBy, String CorrespondanceId) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_NAME, "FILTERBY = ? AND CORESPONDENCEID = ?",new String[] {FilterBy,CorrespondanceId});
