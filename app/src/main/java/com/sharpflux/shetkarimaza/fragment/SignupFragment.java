@@ -34,10 +34,12 @@ import com.google.android.gms.auth.api.credentials.HintRequest;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.hbb20.CountryCodePicker;
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.activities.DetailFormActivity;
 import com.sharpflux.shetkarimaza.activities.MobileVerification;
 import com.sharpflux.shetkarimaza.activities.TabLayoutLogRegActivity;
 import com.sharpflux.shetkarimaza.activities.UserVerificationActivity;
 import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
+import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.utils.CheckDeviceIsOnline;
 import com.sharpflux.shetkarimaza.utils.CommonUtils;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
@@ -64,7 +66,7 @@ public class SignupFragment extends Fragment {
     AlertDialog.Builder builder;
     private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
     private static final int CREDENTIAL_PICKER_REQUEST = 1;
-
+    User user;
     public SignupFragment() {
 
     }
@@ -242,9 +244,8 @@ public class SignupFragment extends Fragment {
     }
 
 
-    private void GenerateOTP() {
 
-
+    private void registerUser() {
         final String username = eusername.getText().toString();
         final String middlename = edtmiddlename.getText().toString();
         final String lastname = edtlastname.getText().toString();
@@ -252,144 +253,82 @@ public class SignupFragment extends Fragment {
         final String password = epassword.getText().toString();
         final String cpassword = edtcpassword.getText().toString();
 
-
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_GENERATEOTP,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-
-                            JSONArray obj = new JSONArray(response);
-                            if (obj.length() == 0) {
-
-                                return;
-                            }
-
-                            for (int i = 0; i < obj.length(); i++) {
-                                JSONObject userJson = obj.getJSONObject(i);
-
-                                if (!userJson.getBoolean("error")) {
-                                    Intent intent = new Intent(getContext(), MobileVerification.class);
-                                    intent.putExtra("MobileNo","8605121954");
-                                    intent.putExtra("UserJson",userJson.toString());
-                                    startActivity(intent);
-                                    getActivity().finish();
-                                }
-                            }
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("OTPMobileNo", "8605121954");
-                return params;
-            }
-        };
-
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
-    }
-
-
-
-    private void getOtp() {
-
-        final String username = eusername.getText().toString();
-        final String middlename = edtmiddlename.getText().toString();
-        final String lastname = edtlastname.getText().toString();
-        final String mob = editTextMobile.getText().toString();
-        final String password = epassword.getText().toString();
-        final String cpassword = edtcpassword.getText().toString();
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_GENERATEOTP ,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_REGISTER,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
 
                         try {
 
+                            JSONObject obj = new JSONObject(response);
+                            if (!obj.getBoolean("error")) {
+                                Intent intent = new Intent(getContext(), MobileVerification.class);
+                                intent.putExtra("MobileNo",mob);
+                                intent.putExtra("UserId",obj.getString("UserId"));
+                                startActivity(intent);
+                                getActivity().finish();
 
-                            JSONArray obj = new JSONArray(response);
-                            for (int i = 0; i < obj.length(); i++) {
-                                JSONObject userJson = obj.getJSONObject(i);
-                                if (!userJson.getBoolean("error")) {
-                                    Intent intent = new Intent(getContext(), MobileVerification.class);
-                                    intent.putExtra("OTP", userJson.getString("OTP"));
-                                    intent.putExtra("FullName", username);
-                                    intent.putExtra("Middlename", "");
-                                    intent.putExtra("Lastname", lastname);
-                                    intent.putExtra("MobileNo", mob);
-                                    intent.putExtra("Password", password);
-                                    startActivity(intent);
+                            } else {
 
-                                } else {
-
-                                    builder.setMessage("Invalid User")
-                                            .setCancelable(false)
-
-                                            .setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int id) {
-                                                    //  Action for 'NO' Button
-                                                    dialog.cancel();
-
-                                                }
-                                            });
-
-                                    AlertDialog alert = builder.create();
-                                    alert.setTitle("User already exists with same Mobile No");
-                                    alert.show();
-                                }
-                            }
-
-                            customDialogLoadingProgressBar.dismiss();
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                        builder.setMessage(error.getMessage())
-                                .setCancelable(false)
-
-                                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        //  Action for 'NO' Button
-                                        dialog.cancel();
-
+                                final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                builder.setCancelable(false);
+                                builder.setMessage(obj.getString("message"));
+                                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent intent = new Intent(getContext(), TabLayoutLogRegActivity.class);
+                                        intent.putExtra("IsNewUser", "false");
+                                        startActivity(intent);
                                     }
                                 });
-
-                        AlertDialog alert = builder.create();
-                        alert.setTitle("Error");
-                        alert.show();
-                        customDialogLoadingProgressBar.dismiss();
-
+                                AlertDialog alert = builder.create();
+                                alert.show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("OTPMobileNo", mob);
+                params.put("UserId", "");
+                params.put("RegistrationTypeId", "0");
+                params.put("RegistrationCategoryId", "0");
+                params.put("FullName", username + " " + lastname);
+                params.put("MobileNo", mob);
+                params.put("AlternateMobile", "0");
+                params.put("Address", "0");
+                params.put("EmailId", "");
+                params.put("Gender", "0");
+                params.put("StateId", "0");
+                params.put("CityId", "0");
+                params.put("TahasilId", "0");
+                params.put("CompanyFirmName", "0");
+                params.put("LandLineNo", "0");
+                params.put("APMCLicence", "0");
+                params.put("CompanyRegNo", "0");
+                params.put("GSTNo", "0");
+                params.put("AccountHolderName", "0");
+                params.put("BankName", "0");
+                params.put("BranchCode", "0");
+                params.put("AccountNo", "0");
+                params.put("IFSCCode", "0");
+                params.put("UploadCancelledCheckUrl", "0");
+                params.put("UploadAdharCardPancardUrl", "0");
+                params.put("ImageUrl", "0");
+                params.put("UserPassword", password);
+                params.put("AgentId", "0");
                 return params;
             }
         };
+
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
@@ -406,7 +345,7 @@ public class SignupFragment extends Fragment {
             publishProgress("Sleeping..."); // Calls onProgressUpdate()
             try {
                 int time = Integer.parseInt(params[0]) * 1000;
-                getOtp();
+                registerUser();
                 Thread.sleep(time);
                 resp = "Slept for " + params[0] + " seconds";
 
@@ -440,81 +379,5 @@ public class SignupFragment extends Fragment {
         }
 
     }
-    /*private void getOtp1() {
-        //first getting the values
-        final String mobNo = editTextMobile.getText().toString();
-        final String mob = editTextMobile.getText().toString();
-        if (!CommonUtils.isValidPhone(mobNo)) {
-            editTextMobile.setError("Invalid Mobile number");
-            return;
-        }
-        //if everything is fine
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_OTP2+mob,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            //converting response to json object
-                            JSONObject obj = new JSONObject(response);
-                            //if no error in response
-                            if (!obj.getBoolean("error")) {
-                                Intent in = new Intent(SignupFragment.this,
-                                        UserVerificationActivity.class);
-                                in.putExtra("otp", obj.getString("OTP"));
-                                startActivity(in);
-                            } else {
 
-                                builder.setMessage("Invalid User")
-                                        .setCancelable(false)
-
-                                        .setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-                                                //  Action for 'NO' Button
-                                                dialog.cancel();
-
-                                            }
-                                        });
-
-                                AlertDialog alert = builder.create();
-                                alert.setTitle(response);
-                                alert.show();
-
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                        builder.setMessage("Invalid User")
-                                .setCancelable(false)
-
-                                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        //  Action for 'NO' Button
-                                        dialog.cancel();
-
-                                    }
-                                });
-
-                        AlertDialog alert = builder.create();
-                        alert.setTitle(error.getMessage());
-                        alert.show();
-
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("OTPMobileNo", mob);
-                return params;
-            }
-        };
-
-        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
-    }*/
 }

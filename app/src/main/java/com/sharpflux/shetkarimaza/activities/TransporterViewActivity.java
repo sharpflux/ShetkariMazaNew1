@@ -331,7 +331,7 @@ public class TransporterViewActivity extends AppCompatActivity implements SwipeR
 
 
             }
-        }, 2000);
+        }, 500);
 
 
     }

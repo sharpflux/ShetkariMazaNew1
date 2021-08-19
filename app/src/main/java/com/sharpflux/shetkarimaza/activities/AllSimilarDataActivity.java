@@ -10,6 +10,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -18,6 +20,9 @@ import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.Handler;
+import android.os.Looper;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -32,12 +37,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.adapter.RecyclerViewAdapter;
 import com.sharpflux.shetkarimaza.adapter.SimilarListAdapter;
 import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
 import com.sharpflux.shetkarimaza.filters.BottomSheetDialogSorting;
 import com.sharpflux.shetkarimaza.filters.BuyerFilterActivity;
 import com.sharpflux.shetkarimaza.filters.Filter1Activity;
 import com.sharpflux.shetkarimaza.filters.PriceFragment;
+import com.sharpflux.shetkarimaza.model.ContactDetail;
 import com.sharpflux.shetkarimaza.model.SimilarList;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.sqlite.dbBuyerFilter;
@@ -68,6 +75,9 @@ import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 
+import static com.android.volley.Request.Method.GET;
+import static com.sharpflux.shetkarimaza.utils.PaginationListener.PAGE_START;
+
 public class AllSimilarDataActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
@@ -81,7 +91,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
     int totalItems;
     int scrollOutItems;
     SimilarListAdapter myAdapter;
-    private int currentPage = PAGE_START;
+    private int currentPage = 1;
     private boolean isFirstLoad = false;
     private int totalPage = 10;
     int itemCount = 0;
@@ -91,32 +101,35 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
     public static final int PAGE_START = 1;
     private static final int PAGE_SIZE = 10;
-
+    private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
     dbLanguage mydatabase;
     String currentLanguage,language;
-    private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
 
+    List<SimilarList> mList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_similar_data);
+        customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(AllSimilarDataActivity.this);
 
         recyclerView = findViewById(R.id.similar_rvProductList);
         productlist = new ArrayList<>();
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        List<SimilarList> mList = new ArrayList<>();
+
         myDatabase = new dbBuyerFilter(getApplicationContext());
 
-        recyclerView.setAdapter(myAdapter);
+
+
         progressBar_filter = findViewById(R.id.progressBar_filter);
 
-        myAdapter = new SimilarListAdapter(AllSimilarDataActivity.this, mList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(myAdapter);
+        recyclerView = findViewById(R.id.similar_rvProductList);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+
+
 
         myLocale = getResources().getConfiguration().locale;
 
@@ -136,13 +149,10 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         AssignVariables();
         BundleAssign();
         setTitle(ItemName);
-
-
-        AllSimilarDataActivity.AsyncTaskRunner runner = new AllSimilarDataActivity.AsyncTaskRunner();
-        String sleepTime = "1";
-        runner.execute(sleepTime);
-
-
+        mList=new ArrayList<>();
+        loadMore(currentPage);
+        initAdapter();
+        initScrollListener();
 
         View showModalBottomSheet = findViewById(R.id.bottom);
         showModalBottomSheet.setOnClickListener(new View.OnClickListener() {
@@ -174,6 +184,38 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
 
     }
+    private void initAdapter() {
+        myAdapter = new SimilarListAdapter(AllSimilarDataActivity.this, mList);
+        recyclerView.setAdapter(myAdapter);
+    }
+
+    private void initScrollListener() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+                if (!isLoading) {
+                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == mList.size() - 1) {
+                        //bottom of list!
+                        currentPage++;
+                        loadMore(currentPage);
+                        isLoading = true;
+                    }
+                }
+            }
+        });
+
+
+    }
+
 
     private void BundleAssign()
     {
@@ -203,6 +245,229 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         DistrictId ="";
         priceids="";
     }
+
+
+
+    private void loadMore(final Integer currentPage) {
+        customDialogLoadingProgressBar.show();
+        if(!currentPage.equals(1)){
+            customDialogLoadingProgressBar.dismiss();
+            mList.add(null);
+            myAdapter.notifyItemInserted(mList.size() - 1);
+        }
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(!currentPage.equals(1)){
+                    mList.remove(mList.size() - 1);
+                    int scrollPosition = mList.size();
+                    myAdapter.notifyItemRemoved(scrollPosition);
+                    final int currentSize = scrollPosition;
+                    final int nextLimit = currentSize + 10;
+                }
+
+
+                bundle = getIntent().getExtras();
+
+                AssignVariables();
+                if (bundle != null) {
+
+                    BundleAssign();
+
+                    if(bundle.getString("Search")!=null) {
+                        if (bundle.getString("Search").contains("Filter")) {
+                            Cursor VARIETYCursor = myDatabase.FilterGetByFilterName("VARIETY");
+                            Cursor QUALITYCursor = myDatabase.FilterGetByFilterName("QUALITY");
+                            Cursor STATECursor = myDatabase.FilterGetByFilterName("STATE");
+                            Cursor DISTRICTCursor = myDatabase.FilterGetByFilterName("DISTRICT");
+                            Cursor TALUKACursor = myDatabase.FilterGetByFilterName("TALUKA");
+
+                            priceids=bundle.getString("SortBy");
+
+                            while (VARIETYCursor.moveToNext()) {
+                                if(VarityId==null)
+                                {
+                                    VarityId="";
+                                }
+                                VarityId = VarityId + VARIETYCursor.getString(0) + ",";
+                            }
+                            while (QUALITYCursor.moveToNext()) {
+                                if(QualityId==null)
+                                {
+                                    QualityId="";
+                                }
+                                QualityId = QualityId + QUALITYCursor.getString(0) + ",";
+                            }
+                            while (STATECursor.moveToNext()) {
+                                StatesID = StatesID + STATECursor.getString(0) + ",";
+                            }
+                            while (DISTRICTCursor.moveToNext()) {
+                                if(DistrictId==null)
+                                {
+                                    DistrictId="";
+                                }
+                                DistrictId = DistrictId + DISTRICTCursor.getString(0) + ",";
+                            }
+                            while (TALUKACursor.moveToNext()) {
+                                if(TalukaId==null)
+                                {
+                                    TalukaId="";
+                                }
+                                TalukaId = TalukaId + TALUKACursor.getString(0) + ",";
+                            }
+                        }
+                    }
+
+
+                    if (TalukaId != null) {
+                        if (TalukaId.equals(""))
+                            TalukaId = "0";
+                    } else {
+                        TalukaId = "0";
+                    }
+
+                    if (VarityId != null) {
+                        if (VarityId.equals(""))
+                            VarityId = "0";
+                    } else {
+                        VarityId = "0";
+                    }
+                    if (QualityId != null) {
+                        if (QualityId.equals(""))
+                            QualityId = "0";
+                    } else {
+                        QualityId = "0";
+                    }
+                    if (StatesID != null) {
+                        if (StatesID.equals(""))
+                            StatesID = "0";
+                    } else {
+                        StatesID = "0";
+                    }
+                    if (DistrictId != null) {
+                        if (DistrictId.equals(""))
+                            DistrictId = "0";
+                    } else {
+                        DistrictId = "0";
+                    }
+                    if (TalukaId != null) {
+                        if (TalukaId.equals(""))
+                            TalukaId = "0";
+                    } else {
+                        TalukaId = "0";
+                    }
+                    if (priceids != null) {
+                        if (priceids.equals(""))
+                            priceids = "0";
+                    } else {
+                        priceids = "0";
+                    }
+
+                    if(ItemTypeId==null)
+                    {
+                        Toast.makeText(AllSimilarDataActivity.this, "ITEM TYPE IS NULL", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+
+
+                    StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                            URLs.URL_REQESTS + "?StartIndex=" + currentPage + "&PageSize=" + PAGE_SIZE +
+                                    "&ItemTypeId=" + ItemTypeId + "&VarityId=" + VarityId + "&StateId=" + StatesID +
+                                    "&DistrictId=" + DistrictId + "&QualityId=" + QualityId + "&TalukaId="
+                                    + TalukaId+"&Language="+currentLanguage+"&SortByRate="+priceids,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+
+                                    try {
+                                        JSONArray obj = new JSONArray(response);
+                                        isFirstLoad = true;
+                                        for (int i = 0; i < obj.length(); i++) {
+                                            JSONObject userJson = obj.getJSONObject(i);
+                                            if (!userJson.getBoolean("error")) {
+                                                SimilarList sellOptions;
+                                                sellOptions = new SimilarList
+                                                        (
+                                                                userJson.getString("ImageUrl"),
+                                                                userJson.getString("FullName"),
+                                                                userJson.getString("MobileNo"),
+                                                                userJson.getString("ItemName"),
+                                                                userJson.getString("VarietyName"),
+                                                                userJson.getString("QualityType"),
+                                                                String.valueOf(userJson.getDouble("AvailableQuantity")),
+                                                                userJson.getString("MeasurementType"),
+                                                                String.valueOf(userJson.getDouble("ExpectedPrice")),
+                                                                userJson.getString("AvailableMonths"),
+                                                                userJson.getString("FarmAddress"),
+                                                                userJson.getString("StatesName"),
+                                                                userJson.getString("DistrictName"),
+                                                                userJson.getString("TalukaName"),
+                                                                userJson.getString("VillageName"),
+                                                                userJson.getString("Hector"),
+                                                                "",
+                                                                "",
+                                                                "",
+                                                                "",
+                                                                "",
+                                                                "",
+                                                                "",
+                                                                "0",
+                                                                userJson.getString("CategoryName_EN"),
+                                                                userJson.getString("Organic"),
+                                                                userJson.getString("OrganicCertiicateNo")
+
+                                                        );
+                                                mList.add(sellOptions);
+
+
+                                            }
+
+
+                                            else {
+                                                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+
+                                            }
+
+
+                                            myAdapter.notifyDataSetChanged();
+                                            isLoading = false;
+                                        }
+                                        customDialogLoadingProgressBar.dismiss();
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                        customDialogLoadingProgressBar.dismiss();
+                                    }
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    customDialogLoadingProgressBar.dismiss();
+                                    // Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }) {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<>();
+                            return params;
+                        }
+                    };
+                    stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2,
+                            DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                    VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
+                }
+
+
+            }
+        }, 500);
+
+
+    }
+
 
     private void SetDynamicDATA(String pageIndex) {
 

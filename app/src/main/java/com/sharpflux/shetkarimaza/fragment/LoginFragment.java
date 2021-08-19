@@ -34,6 +34,7 @@ import com.sharpflux.shetkarimaza.activities.ChooseActivity;
 import com.sharpflux.shetkarimaza.activities.DetailFormActivity;
 import com.sharpflux.shetkarimaza.activities.ForgotPasswordActivity;
 import com.sharpflux.shetkarimaza.activities.HomeActivity;
+import com.sharpflux.shetkarimaza.activities.MobileVerification;
 import com.sharpflux.shetkarimaza.activities.TabLayoutLogRegActivity;
 import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
 import com.sharpflux.shetkarimaza.filters.AgeFragment;
@@ -283,17 +284,28 @@ public class LoginFragment extends Fragment {
 
                                 if (!userJson.getBoolean("error")) {
 
-                                    user = new User(
-                                            userJson.getInt("UserId"),
-                                            userJson.getString("FullName"),
-                                            userJson.getString("EmailId"),
-                                            userJson.getString("MobileNo"), "", "",""
-                                            ,String.valueOf(    userJson.getInt("RegistrationTypeId")),
-                                            userJson.getBoolean("IsProfileComplete")
-                                    );
+                                    if( userJson.getBoolean("IsVerified")) {
+                                        user = new User(
+                                                userJson.getInt("UserId"),
+                                                userJson.getString("FullName"),
+                                                userJson.getString("EmailId"),
+                                                userJson.getString("MobileNo"), "", "", ""
+                                                , String.valueOf(userJson.getInt("RegistrationTypeId")),
+                                                userJson.getBoolean("IsProfileComplete"),
+                                                userJson.getBoolean("IsVerified")
+                                        );
+                                        SharedPrefManager.getInstance(getContext()).userLogin(user);
+                                        startActivity(new Intent(getContext(), HomeActivity.class));
+                                        getActivity().finish();
+                                    }
+                                    else {
 
-                                    SharedPrefManager.getInstance(getContext()).userLogin(user);
-                                    startActivity(new Intent(getContext(), HomeActivity.class));
+                                        Intent intent = new Intent(getContext(), MobileVerification.class);
+                                        intent.putExtra("MobileNo",  userJson.getString("MobileNo"));
+                                        intent.putExtra("UserId", String.valueOf( userJson.getInt("UserId")));
+                                        startActivity(intent);
+                                        getActivity().finish();
+                                    }
 
                                 }
                                 else {

@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -43,6 +44,7 @@ import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -65,8 +67,9 @@ public class MobileVerification extends AppCompatActivity implements OtpReceived
     String FullName = "", Middlename = "", Lastname = "", MobileNo = "", Password = "", Cpassword = "", Otp = "", resendOtp = "";
     MyCountDownTimer1 myCountDownTimer1;
     MyCountDownTimer2 myCountDownTimer2;
-
-
+    JSONObject obj;
+   String UserId ;
+    User user;
     CountDownTimer countDownTimer = new CountDownTimer(120000, 1000) {
         @Override
         public void onTick(long millisUntilFinished) {
@@ -127,6 +130,7 @@ public class MobileVerification extends AppCompatActivity implements OtpReceived
         if (bundle != null) {
             MobileNo = bundle.getString("MobileNo");
             tvOtpVerification.setText("OTP send to " + MobileNo);
+            UserId=bundle.getString("UserId");
         }
 
 
@@ -418,7 +422,7 @@ public class MobileVerification extends AppCompatActivity implements OtpReceived
             et2.setText(String.valueOf(otp.charAt(1)));
             et3.setText(String.valueOf(otp.charAt(2)));
             et4.setText(String.valueOf(otp.charAt(3)));
-            registerUser();
+            VerifyUser();
         }
     }
 
@@ -426,7 +430,61 @@ public class MobileVerification extends AppCompatActivity implements OtpReceived
     public void onOtpTimeout() {
 
     }
+    private void VerifyUser() {
 
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_VERIFYUSER,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+
+                            JSONArray obj = new JSONArray(response);
+                            if (obj.length() == 0) {
+                                return;
+                            }
+                            for (int i = 0; i < obj.length(); i++) {
+                                JSONObject userJson = obj.getJSONObject(i);
+                                if (!userJson.getBoolean("error")) {
+                                    user = new User(
+                                            userJson.getInt("UserId"),
+                                            userJson.getString("FullName"),
+                                            userJson.getString("EmailId"),
+                                            userJson.getString("MobileNo"), "", "", ""
+                                            , String.valueOf(userJson.getInt("RegistrationTypeId")),
+                                            userJson.getBoolean("IsProfileComplete"),
+                                            userJson.getBoolean("IsVerified")
+                                    );
+
+                                    SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
+                                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+
+                                }
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("UserId", UserId);
+                return params;
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
+    }
 
     private void registerUser() {
         bundle = getIntent().getExtras();
@@ -458,6 +516,7 @@ public class MobileVerification extends AppCompatActivity implements OtpReceived
                                         "",
                                         "",
                                         "",
+                                        false,
                                         false
                                 );
                                 SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
@@ -465,6 +524,7 @@ public class MobileVerification extends AppCompatActivity implements OtpReceived
                                 Intent intent = new Intent(getApplicationContext(), DetailFormActivity.class);
                                 intent.putExtra("IsNewUser", "true");
                                 startActivity(intent);
+
                             } else {
 
                                 final AlertDialog.Builder builder = new AlertDialog.Builder(MobileVerification.this);
@@ -473,7 +533,9 @@ public class MobileVerification extends AppCompatActivity implements OtpReceived
                                 builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        dialog.cancel();
+                                        Intent intent = new Intent(getApplicationContext(), TabLayoutLogRegActivity.class);
+                                        intent.putExtra("IsNewUser", "false");
+                                        startActivity(intent);
                                     }
                                 });
 

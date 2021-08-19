@@ -5,6 +5,7 @@ public class User {
     private int id;
     private String username, email, mobile, middlename, lastname,language,RegistrationTypeId;//IsCompleteRegistration;
     Boolean IsRegistrationComplete=false;
+    Boolean IsVerified=false;
     /*public User(int id, String username, String email, String mobile,
                 String middlename, String lastname, String isCompleteRegistration) {
         this.id = id;
@@ -17,7 +18,7 @@ public class User {
     }
 */
 
-    public User(int id, String username, String email, String mobile, String middlename, String lastname, String language,String registrationTypeId,Boolean isRegistrationComplete) {
+    public User(int id, String username, String email, String mobile, String middlename, String lastname, String language,String registrationTypeId,Boolean isRegistrationComplete,Boolean isVerified) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -27,7 +28,7 @@ public class User {
         this.language = language;
         this.RegistrationTypeId=registrationTypeId;
         this.IsRegistrationComplete=isRegistrationComplete;
-
+        this.IsVerified=isVerified;
     }
 
     public String getRegistrationTypeId() {
@@ -56,6 +57,14 @@ public class User {
 
     public String getUsername() {
         return username;
+    }
+
+    public Boolean getVerified() {
+        return IsVerified;
+    }
+
+    public void setVerified(Boolean verified) {
+        IsVerified = verified;
     }
 
     public void setUsername(String username) {

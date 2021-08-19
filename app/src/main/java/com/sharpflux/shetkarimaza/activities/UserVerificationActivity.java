@@ -146,6 +146,7 @@ public class UserVerificationActivity extends AppCompatActivity {
                                             "",
                                             "",
                                             "",
+                                            false,
                                             false
                                     );
                                     SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);

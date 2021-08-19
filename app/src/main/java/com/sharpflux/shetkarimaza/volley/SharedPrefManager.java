@@ -18,6 +18,7 @@ public class SharedPrefManager {
     private static final String KEY_LASTNAME = "lastname";
     private static final String KEY_REGISTRATIONTYPEID = "RegistrationTypeId";
     private static final String KEY_REGISTRATIONCOMPLETE= "IsRegistrationComplete";
+    private static final String KEY_ISVERIFIED= "IsVerified";
     //private static final String KEY_GENDER = "keygender";
     private static final String KEY_ID = "CustomerId";
     private static final String KEY_LANGUAGE = "currentLang";
@@ -51,6 +52,7 @@ public class SharedPrefManager {
         editor.putString(KEY_LANGUAGE, user.getLanguage());
         editor.putString(KEY_REGISTRATIONTYPEID, user.getRegistrationTypeId());
         editor.putBoolean(KEY_REGISTRATIONCOMPLETE, user.getRegistrationComplete());
+        editor.putBoolean(KEY_ISVERIFIED, user.getVerified());
         editor.apply();
     }
 
@@ -83,7 +85,9 @@ public class SharedPrefManager {
                 sharedPreferences.getString(KEY_LASTNAME, null),
                 sharedPreferences.getString(KEY_LANGUAGE, null),
                 sharedPreferences.getString(KEY_REGISTRATIONTYPEID, null),
-                sharedPreferences.getBoolean(KEY_REGISTRATIONCOMPLETE, false)
+                sharedPreferences.getBoolean(KEY_REGISTRATIONCOMPLETE, false),
+                sharedPreferences.getBoolean(KEY_ISVERIFIED, false)
+
         );
     }
 
