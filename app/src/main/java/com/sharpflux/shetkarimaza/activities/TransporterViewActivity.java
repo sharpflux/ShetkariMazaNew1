@@ -124,6 +124,7 @@ public class TransporterViewActivity extends AppCompatActivity implements SwipeR
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(TransporterViewActivity.this, Filter1Activity.class);
+                intent.putExtra("Activity","TransporterViewActivity");
                 startActivity(intent);
             }
         });
@@ -195,6 +196,10 @@ public class TransporterViewActivity extends AppCompatActivity implements SwipeR
                         Cursor TALUKACursor = myDatabase.FilterGetByFilterName("TALUKA");
 
                         while (STATECursor.moveToNext()) {
+                            if(StatesID==null)
+                            {
+                                StatesID="";
+                            }
                             StatesID = StatesID + STATECursor.getString(0) + ",";
                         }
 

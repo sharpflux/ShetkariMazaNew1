@@ -17,6 +17,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity;
 import com.sharpflux.shetkarimaza.filters.FilterActivity;
 import com.sharpflux.shetkarimaza.filters.SubCategoryFilter;
 import com.sharpflux.shetkarimaza.model.Product;
@@ -246,12 +247,12 @@ class FlowerViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
 
         myFilter.CategoryInsert(categoryId,ItemTypeId);
 
-        intent =  new Intent(context, FilterActivity.class);
+        intent =  new Intent(context, AllSimilarDataActivity.class);
+      //  intent =  new Intent(context, FilterActivity.class);
         intent.putExtra("ItemTypeId",ItemTypeId);
         intent.putExtra("categoryId",categoryId);
         intent.putExtra("ItemName",ItemName);
         intent.putExtra("IsVarietyAvailable",IsVarietyAvailable);
-
         context.startActivity(intent);
 
 

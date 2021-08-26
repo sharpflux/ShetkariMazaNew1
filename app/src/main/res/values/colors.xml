@@ -27,7 +27,7 @@
 
 <!--    <color name="colorPrimary">#3F8331</color> -->
 <!--    <color name="colorPrimary">#9cc63d</color>-->
-    <color name="colorPrimary">#7EAA18</color>  <!--FF9AC634-->
+    <color name="colorPrimary">#2ac17e</color>  <!--#7EAA18-->
     <!--#ff5fb04f-->
     <color name="colorPrimaryDark">#ff5fb04f</color>
     <color name="colorAccent">#CD7EAA18</color>
@@ -56,7 +56,7 @@
     <color name="foreground_material_dark">@android:color/white</color>
     <color name="foreground_material_light">@android:color/black</color>
     <color name="forgot_link_color">#ff8d97a0</color>
-    <color name="green">#ff99cc00</color>
+    <color name="green">#2ac17e </color> <!--#ff99cc00-->
     <color name="green_color_pdetail">#ff04b900</color>
     <color name="highlighted_text_material_dark">#6680cbc4</color>
     <color name="highlighted_text_material_light">#66009688</color>

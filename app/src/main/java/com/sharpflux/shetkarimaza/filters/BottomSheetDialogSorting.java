@@ -36,7 +36,7 @@ public class BottomSheetDialogSorting extends BottomSheetDialogFragment implemen
                 bundle = getArguments();
                 if (bundle != null) {
                     Intent i = new Intent(getContext(), AllSimilarDataActivity.class);
-                    i.putExtra("Search", bundle.getString("Search"));
+                    i.putExtra("Search","Filter");
                     i.putExtra("Id", bundle.getString("Id"));
                     i.putExtra("SortBy", "ASC");
                     i.putExtra("ItemTypeId",bundle.getString("ItemTypeId"));
@@ -45,6 +45,7 @@ public class BottomSheetDialogSorting extends BottomSheetDialogFragment implemen
                     i.putExtra("QualityId",bundle.getString("QualityId"));
                     i.putExtra("StatesID",bundle.getString("StatesID"));
                     i.putExtra("DistrictId",bundle.getString("DistrictId"));
+                    i.putExtra("categoryId",bundle.getString("categoryId"));
                     //i.putExtra("priceids",bundle.getString("priceids"));
                     startActivity(i);
                 }
@@ -57,7 +58,7 @@ public class BottomSheetDialogSorting extends BottomSheetDialogFragment implemen
                 bundle = getArguments();
                 if (bundle != null) {
                     Intent i = new Intent(getContext(), AllSimilarDataActivity.class);
-                    i.putExtra("Search", bundle.getString("Search"));
+                    i.putExtra("Search","Filter");
                     i.putExtra("Id", bundle.getString("Id"));
                     i.putExtra("SortBy", "DESC");
                     i.putExtra("ItemTypeId",bundle.getString("ItemTypeId"));
@@ -66,6 +67,7 @@ public class BottomSheetDialogSorting extends BottomSheetDialogFragment implemen
                     i.putExtra("QualityId",bundle.getString("QualityId"));
                     i.putExtra("StatesID",bundle.getString("StatesID"));
                     i.putExtra("DistrictId",bundle.getString("DistrictId"));
+                    i.putExtra("categoryId",bundle.getString("categoryId"));
                     //i.putExtra("priceids",bundle.getString("priceids"));
                     //
                     startActivity(i);

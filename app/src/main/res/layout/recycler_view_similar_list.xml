@@ -23,7 +23,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="15dp"
                 android:text="FarmerName"
-                android:fontFamily="@font/arima_madurai_medium"
+                android:fontFamily="@font/sf_pro_display_bold"
                 android:textSize="16sp"
                 android:textColor="@color/text_black"
                 android:textStyle="bold"
@@ -85,6 +85,7 @@
                             android:maxLines="1"
                             android:text="@string/variety"
                             android:ellipsize="end"
+                            android:fontFamily="@font/sf_pro_display_regular"
                             android:textColor="@color/text_black"
                             android:textSize="13sp"
                             />
@@ -99,6 +100,7 @@
                         android:maxLines="1"
                         android:text="@string/seller_variety"
                         android:ellipsize="end"
+                        android:fontFamily="@font/sf_pro_display_regular"
                         android:textColor="@color/text_black"
                         android:textSize="13sp"
                         />
@@ -129,6 +131,7 @@
                         android:maxLines="1"
                         android:ellipsize="end"
                         android:textColor="@color/lightGrey"
+                        android:fontFamily="@font/sf_pro_display_regular"
                         android:textSize="13sp"
                         android:text="City Center Building Hinjewadi Phase 1"
                         />
@@ -159,6 +162,7 @@
                             android:maxLines="1"
                             android:ellipsize="end"
                             android:textSize="13sp"
+                            android:fontFamily="@font/sf_pro_display_regular"
                             android:textColor="@color/blue_color_pdetail"
                             android:text="9989748390"
                             />
@@ -181,6 +185,7 @@
                     android:paddingBottom="7dp"
                     android:background="@drawable/rounded_corners_gradient"
                     android:text="@string/view_more"
+                    android:fontFamily="@font/sf_pro_display_regular"
                     android:textColor="@color/white"
                     android:textSize="11.5sp"
                     />
@@ -208,7 +213,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-
+                    android:fontFamily="@font/sf_pro_display_regular"
                     android:layout_marginStart="15dp"
                     android:layout_weight="1"
                     android:textSize="13sp"
@@ -229,6 +234,7 @@
                     android:textColor="@color/lightGrey"
                     android:maxLines="1"
                     android:singleLine="true"
+                    android:fontFamily="@font/sf_pro_display_regular"
                     android:ellipsize="end"
                     />
 

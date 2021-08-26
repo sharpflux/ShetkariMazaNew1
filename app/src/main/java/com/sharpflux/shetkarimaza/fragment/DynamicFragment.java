@@ -418,6 +418,8 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
 
         @Override
         protected void onPreExecute() {
+
+
             customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(getContext());
             customDialogLoadingProgressBar.show();
         }

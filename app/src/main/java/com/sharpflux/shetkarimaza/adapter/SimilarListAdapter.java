@@ -121,19 +121,16 @@ public class SimilarListAdapter  extends RecyclerView.Adapter<RecyclerView.ViewH
                 .load(mlist.get(position).getImageUrl()).placeholder(R.drawable.kisanmaza)
                 .into(holder.mImage);
 
-        //Picasso.get().load(mlist.get(position).getImageUrl()).resize(300, 300).into(holder.mImage);
+
         holder.mfullname.setText(mlist.get(position).getFullName());
         holder.mMobNo.setText(mlist.get(position).getMobileNo());
-        //holder.mName.setText(mlist.get(position).getName());
-        holder.mvarity.setText(mlist.get(position).getVarietyName()); //"VARIETY :"+
-        //holder.mQuality.setText("QUALITY :"+mlist.get(position).getQuality().toString());
-        //holder.mPrice.setText(String.valueOf("₹ "+mlist.get(position).getPrice()));
+
+        holder.mvarity.setText(mlist.get(position).getVarietyName());
+
         holder.tvFarmerAddress.setText(mlist.get(position).getFarm_address() + ", " + mlist.get(position).getState() + ", " + mlist.get(position).getTaluka());
 
-        //holder.tvAvailableQty.setText(mlist.get(position).getQuantity().toString());
-        //holder.tvExpectedPrice.setText( String.valueOf(Double.valueOf(mlist.get(position).getPrice())/ Double.valueOf(mlist.get(position).getQuantity())  ));
-        holder.tvPriceDetails.setText(String.valueOf(Double.valueOf(mlist.get(position).getPrice()) / Double.valueOf(mlist.get(position).getQuantity())) + " per " + mlist.get(position).getUnit().toString());
-//"Quantity avaialable in "
+        holder.tvPriceDetails.setText(mlist.get(position).getPerUnitPrice() + " per " + mlist.get(position).getUnit().toString());
+
         holder.mMobNo.setOnClickListener(new View.OnClickListener() {
 
             @Override

@@ -5,12 +5,14 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 
+import android.os.Looper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,6 +24,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -42,12 +45,15 @@ import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.AddPersonAdapter;
 import com.sharpflux.shetkarimaza.adapter.ContactDetailAdapter;
+import com.sharpflux.shetkarimaza.adapter.RecyclerViewAdapter;
 import com.sharpflux.shetkarimaza.customviews.CustomDialogAddFarm;
 import com.sharpflux.shetkarimaza.customviews.CustomDialogAddVehicle;
+import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
 import com.sharpflux.shetkarimaza.filters.BottomSheetDialogSorting;
 import com.sharpflux.shetkarimaza.filters.Filter1Activity;
 import com.sharpflux.shetkarimaza.model.AddPersonModel;
 import com.sharpflux.shetkarimaza.model.ContactDetail;
+import com.sharpflux.shetkarimaza.sqlite.dbFilter;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
@@ -73,13 +79,16 @@ import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 
+import static com.android.volley.Request.Method.GET;
+
 public class ContactDetailActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     List<ContactDetail> contactlist;
     Bundle bundle;
-    String TalukaId = "", VarityId = "", QualityId = "", ItemTypeId = "", StatesID = "", DistrictId = "";
+    String TalukaId = "", VarityId = "", QualityId = "", ItemTypeId = "", StatesID = "", DistrictId = "",SortBy="0";
+
     boolean isLoading = false;
     int currentItems;
     int totalItems;
@@ -95,7 +104,9 @@ public class ContactDetailActivity extends AppCompatActivity {
     AlertDialog.Builder builder;
     TextView txt_emptyView;
     LinearLayout lr_filterbtn;
-
+    List<ContactDetail> mList;
+    private int PageSize=15;
+    private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
     private RecyclerView
             recyclerView_addFarm;
     public static final int PAGE_START = 1;
@@ -103,19 +114,21 @@ public class ContactDetailActivity extends AppCompatActivity {
     private AddPersonAdapter  addPersonAdapter_farm;
     private ArrayList<AddPersonModel>  addPersonModelArrayList_farm;
     ImageView imageView_addFarm;
+    dbFilter myDatabase;
+    //https://newbedev.com/how-to-show-an-empty-view-with-a-recyclerview
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_detail);
 
         recyclerView = findViewById(R.id.contact_Detail_rvProductList);
-
+        customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(ContactDetailActivity.this);
         contactlist = new ArrayList<>();
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        List<ContactDetail> mList = new ArrayList<>();
-
+        mList = new ArrayList<>();
+        myDatabase = new dbFilter(ContactDetailActivity.this);
         addPersonModelArrayList_farm = new ArrayList<>();
 
         recyclerView.setAdapter(myAdapter);
@@ -123,6 +136,8 @@ public class ContactDetailActivity extends AppCompatActivity {
         progressBar_filter = findViewById(R.id.progressBar_filter);
         txt_emptyView = findViewById(R.id.txt_emptyView);
         lr_filterbtn = (LinearLayout) findViewById(R.id.lr_filterbtn);
+
+        txt_emptyView.setVisibility(View.GONE);
 
         imageView_addFarm = findViewById(R.id.imageView_addFarm);
         if(mList.size()==0)
@@ -139,8 +154,8 @@ public class ContactDetailActivity extends AppCompatActivity {
         recyclerView_addFarm.setLayoutManager(linearLayoutManager_farm);
 
         ItemTypeId="0";
-
         bundle = getIntent().getExtras();
+
       //  bundle.getString("ProductId");
         if (bundle != null) {
             ItemTypeId = bundle.getString("ProductId");
@@ -246,83 +261,22 @@ public class ContactDetailActivity extends AppCompatActivity {
 
 
 
-        myAdapter = new ContactDetailAdapter(ContactDetailActivity.this, mList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(myAdapter);
-
-
-        myLocale = getResources().getConfiguration().locale;
-
         ContactDetailActivity.AsyncTaskRunner runner = new ContactDetailActivity.AsyncTaskRunner();
         String sleepTime = "1";
         runner.execute(sleepTime);
 
-
-       /*  recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-
-                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
-                    // isLoading = true;
-                    progressBar_filter.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                currentItems = layoutManager.getChildCount();
-                totalItems = layoutManager.getItemCount();
-
-                scrollOutItems = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
-
-                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-
-
-             if (!isLoading) {
-                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == contactlist.size() - 1) {
-                        //bottom of list!
-                        currentPage++;
-                        ContactDetailActivity.AsyncTaskRunner runner = new ContactDetailActivity.AsyncTaskRunner();
-                        String sleepTime = String.valueOf(currentPage);
-                        runner.execute(sleepTime);
-                        isLoading = true;
-                        myAdapter.notifyDataSetChanged();
-                        isLoading = false;
-                        progressBar_filter.setVisibility(View.GONE);
-
-                    }
-
-                }
-
-
-     if (isLoading && (currentItems + scrollOutItems == totalItems)) {
-                    currentPage++;
-                    AllSimilarDataActivity.AsyncTaskRunner runner = new AllSimilarDataActivity.AsyncTaskRunner();
-                    String sleepTime =String.valueOf( currentPage);
-                    runner.execute(sleepTime);
-
-                    recyclerView.scrollToPosition(myAdapter.getItemCount()-1);
-                }
-
-            }
-
-        });*/
-
+        initAdapter();
+        initScrollListener();
+        myLocale = getResources().getConfiguration().locale;
         View showModalBottomSheet = findViewById(R.id.bottom);
+
         showModalBottomSheet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BottomSheetDialogSorting bottomSheetDialogFragment = new BottomSheetDialogSorting();
+              /*  BottomSheetDialogSorting bottomSheetDialogFragment = new BottomSheetDialogSorting();
                 bottomSheetDialogFragment.setArguments(bundle);
                 bottomSheetDialogFragment.setCancelable(true);
-                bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+                bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());*/
             }
         });
 
@@ -331,18 +285,117 @@ public class ContactDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ContactDetailActivity.this, Filter1Activity.class);
+                intent.putExtra("Activity","ContactDetailActivity");
+                intent.putExtra("ProductId",ItemTypeId);
                 startActivity(intent);
             }
         });
 
     }
 
+    private void initScrollListener() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+                if (!isLoading) {
+                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == mList.size() - 1) {
+                        //bottom of list!
+                        currentPage++;
+                        loadMore(currentPage);
+                        isLoading = true;
+                    }
+                }
+            }
+        });
 
 
-    private void SetDynamicDATA() {
+    }
+    private void initAdapter() {
+        myAdapter = new ContactDetailAdapter(ContactDetailActivity.this, mList);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(myAdapter);
+    }
+
+    private void loadMore(final Integer currentPage) {
+        customDialogLoadingProgressBar.show();
+        if(!currentPage.equals(1)){
+            customDialogLoadingProgressBar.dismiss();
+            mList.add(null);
+            myAdapter.notifyItemInserted(mList.size() - 1);
+        }
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (!currentPage.equals(1)) {
+                    mList.remove(mList.size() - 1);
+                    int scrollPosition = mList.size();
+                    myAdapter.notifyItemRemoved(scrollPosition);
+                    final int currentSize = scrollPosition;
+                    final int nextLimit = currentSize + 10;
+                }
+
+                SetDynamicDATA(currentPage);
+
+            }
+            }, 500);
+    }
+
+    private void SetDynamicDATA(Integer currentPage) {
 
 
         if (bundle != null) {
+
+
+            if(bundle.getString("Search")!=null) {
+                if (bundle.getString("Search").contains("Filter")) {
+                    Cursor STATECursor = myDatabase.FilterGetByFilterName("STATE");
+                    Cursor DISTRICTCursor = myDatabase.FilterGetByFilterName("DISTRICT");
+                    Cursor TALUKACursor = myDatabase.FilterGetByFilterName("TALUKA");
+
+                    while (STATECursor.moveToNext()) {
+                        if(StatesID==null)
+                        {
+                            StatesID="";
+                        }
+                        StatesID = StatesID + STATECursor.getString(0) + ",";
+                    }
+
+                    if(STATECursor.getCount()==0){
+                        myDatabase.DeleteDependantRecord("DISTRICT");
+                        myDatabase.DeleteDependantRecord("TALUKA");
+                    }
+                    while (DISTRICTCursor.moveToNext()) {
+                        if(DistrictId==null)
+                        {
+                            DistrictId="";
+                        }
+                        DistrictId = DistrictId + DISTRICTCursor.getString(0) + ",";
+                    }
+                    while (TALUKACursor.moveToNext()) {
+                        if(TalukaId==null)
+                        {
+                            TalukaId="";
+                        }
+                        TalukaId = TalukaId + TALUKACursor.getString(0) + ",";
+                    }
+                }
+            }
+
+
+
             if (TalukaId != null) {
                 if (TalukaId.equals(""))
                     TalukaId = "0";
@@ -382,7 +435,8 @@ public class ContactDetailActivity extends AppCompatActivity {
             }
 
 
-            StringRequest stringRequest = new StringRequest(Request.Method.GET,URLs.URL_CONTACTDET + "&RegistrationTypeId=" + ItemTypeId + "&StateId=" + StatesID + "&DistrictId=" + DistrictId + "&TalukaId=" + TalukaId + "&Language=en",
+
+            StringRequest stringRequest = new StringRequest(Request.Method.GET,URLs.URL_CONTACTDET + "StartIndex="+currentPage+"&PageSize="+PageSize + "&RegistrationTypeId=" + ItemTypeId + "&StateId=" + StatesID + "&DistrictId=" + DistrictId + "&TalukaId=" + TalukaId + "&Language=en",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -412,22 +466,19 @@ public class ContactDetailActivity extends AppCompatActivity {
                                                         userJson.getString("TalukaName")
                                                 );
 
-                                        contactlist.add(detail);
-                                        contactlist.size();
+                                        mList.add(detail);
+                                        mList.size();
 
-                                    }  /*if(obj.length()==0){
-                                        Toast.makeText(getApplicationContext(),"Data base is empty",Toast.LENGTH_SHORT).show();
-                                    }*/
+                                    }
                                     else {
                                         Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
                                     }
 
-                                    myAdapter = new ContactDetailAdapter(ContactDetailActivity.this, contactlist);
-                                    recyclerView.setAdapter(myAdapter);
+                                    myAdapter.notifyDataSetChanged();
+                                    isLoading = false;
 
                                    if(myAdapter.getItemCount()==0);{
                                        txt_emptyView.setVisibility(View.VISIBLE);
-                                        //lr_filterbtn.setVisibility(View.GONE);
                                     }
                                         txt_emptyView.setVisibility(View.GONE);
                                         lr_filterbtn.setVisibility(View.VISIBLE);
@@ -470,15 +521,9 @@ public class ContactDetailActivity extends AppCompatActivity {
             publishProgress("Sleeping..."); // Calls onProgressUpdate()
             try {
 
-               /* SetDynamicDATA();
-                Thread.sleep(100);
 
-                resp = "Slept for " + params[0] + " seconds";*/
+                SetDynamicDATA(Integer.parseInt(params[0]));
 
-                int time = Integer.parseInt(params[0]) * 1000;
-                SetDynamicDATA();
-                Thread.sleep(time);
-                resp = "Slept for " + params[0] + " seconds";
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -506,30 +551,9 @@ public class ContactDetailActivity extends AppCompatActivity {
 
     }
 
-   /* @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_contact_detail, menu);
-        return super.onCreateOptionsMenu(menu);
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        if (itemId == R.id.menu_download) {
-            exportToExcel();
-        }
-
-
-        return super.onOptionsItemSelected(item);
-    }
-*/
-
-
     private void exportToExcel() {
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             // Do the file write
 
             final String fileName = "MyOrderList.xls";
@@ -552,7 +576,7 @@ public class ContactDetailActivity extends AppCompatActivity {
             //above 24 api new version
             Uri apkURI = FileProvider.getUriForFile(
                     ContactDetailActivity.this,
-                    this.getApplicationContext()
+                    getApplicationContext()
                             .getPackageName() + ".fileprovider", file);
             intent.setDataAndType(apkURI, "application/vnd.ms-excel");
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);

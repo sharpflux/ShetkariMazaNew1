@@ -265,6 +265,7 @@ public class SignupFragment extends Fragment {
                                 Intent intent = new Intent(getContext(), MobileVerification.class);
                                 intent.putExtra("MobileNo",mob);
                                 intent.putExtra("UserId",obj.getString("UserId"));
+                                intent.putExtra("Otp",obj.getString("Otp"));
                                 startActivity(intent);
                                 getActivity().finish();
 

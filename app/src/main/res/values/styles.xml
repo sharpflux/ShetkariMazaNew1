@@ -23,6 +23,9 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+
+
+
     <style name="AppBarOverlay" parent="Widget.AppCompat.Light.ActionBar.Solid">
         <item name="elevation">0dp</item>
     </style>
@@ -74,18 +77,29 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
+        <item name="android:textSize">14dp</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
+    </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
+
+        <item name="android:textSize">14dp</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
+    </style>
 
     <style name="ToolBarStyle">
         <item name="android:textColorPrimary">@android:color/white</item>
         <item name="android:textColorSecondary">@android:color/white</item>
         <item name="actionMenuTextColor">@android:color/white</item>
         <item name="android:textSize">20dp</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
     </style>
 
-
+    <style name="NewFontStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">14dp</item>
+    </style>
     <style name="ganaral_primarystyle">
 
         <item name="android:textSize">14dp</item>
@@ -137,14 +151,21 @@
     <!-- for tab -->
     <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
         <item name="tabTextAppearance">@style/MyCustomTextAppearance</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
     <style name="MyCustomTextAppearance" parent="TextAppearance.Design.Tab">
-        <item name="textAllCaps">false</item>
+
         <item name="android:textSize">18dp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:fontFamily">@font/sfpro_display_bold</item>
-
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
     <!--  <style name="tab_text" parent="@android:style/TextAppearance.Widget.TabWidget">

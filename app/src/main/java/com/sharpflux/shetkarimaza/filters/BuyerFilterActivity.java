@@ -1,8 +1,12 @@
 package com.sharpflux.shetkarimaza.filters;
 
+import android.app.AlertDialog;
+import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -11,10 +15,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity;
 import com.sharpflux.shetkarimaza.activities.ContactDetailActivity;
+import com.sharpflux.shetkarimaza.fragment.FirstFragment;
 import com.sharpflux.shetkarimaza.sqlite.dbBuyerFilter;
 import com.sharpflux.shetkarimaza.sqlite.dbFilter;
 import com.sharpflux.shetkarimaza.utils.Constant;
@@ -37,7 +43,8 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
     TextView brands_text, category_text, size_text, varity_text, quality_text, colour_text, verify_text, btnFilterData, btnClear;
     StringBuilder varity_builder_id;
     dbBuyerFilter myDatabase;
-    String ItemTypeId = "",TalukaId = "",VarityId = "",QualityId = "",StatesID = "",DistrictId = "",priceids = "";
+    String ItemTypeId = "",TalukaId = "",VarityId = "",QualityId = "",StatesID = "",DistrictId = "",priceids = "",categoryId="";
+    boolean IsVarietyAvailable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +104,8 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
             StatesID = bundle.getString("StatesID");
             DistrictId = bundle.getString("DistrictId");
             priceids=bundle.getString("priceids");
+            IsVarietyAvailable=bundle.getBoolean("IsVarietyAvailable");
+            categoryId=bundle.getString("categoryId");
         }
 
         //It is used to already have a selected fragment on the screen
@@ -105,16 +114,26 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
         Fragment myFragment = new BuyerFilterFragment();
 
 
-        bundle.putString("Filter", "VARIETY");
-        myFragment.setArguments(bundle);
-        activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).addToBackStack(null).commit();
-
-
         varity_color.setVisibility(View.VISIBLE);
         quality_color.setVisibility(View.INVISIBLE);
         category_color.setVisibility(View.INVISIBLE);
         size_color.setVisibility(View.INVISIBLE);
         brands_color.setVisibility(View.INVISIBLE);
+
+        if(!IsVarietyAvailable){
+            varity_linear.setVisibility(View.GONE);
+            bundle.putString("Filter", Constant.QUALITY);
+            myFragment.setArguments(bundle);
+            activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).
+                  commit();
+        }
+        else {
+            bundle.putString("Filter",Constant.VARIETY);
+            myFragment.setArguments(bundle);
+            activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).commit();
+        }
+
+
 
        /*price_color.setVisibility(View.INVISIBLE);
        discount_color.setVisibility(View.INVISIBLE);
@@ -134,6 +153,7 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
                     StatesID = bundle.getString("StatesID");
                     DistrictId = bundle.getString("DistrictId");
                     priceids=bundle.getString("priceids");
+                    categoryId=bundle.getString("categoryId");
                 }
 
                 Intent intent = new Intent(getApplicationContext(), AllSimilarDataActivity.class);
@@ -146,7 +166,8 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
                 intent.putExtra("StatesID", StatesID);
                 intent.putExtra("DistrictId", DistrictId);
                 intent.putExtra("priceids", priceids);
-
+                intent.putExtra("categoryId", categoryId);
+                intent.putExtra("IsVarietyAvailable",IsVarietyAvailable);
                 startActivity(intent);
                 finish();
 
@@ -174,6 +195,7 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
                     StatesID = bundle.getString("StatesID");
                     DistrictId = bundle.getString("DistrictId");
                     priceids=bundle.getString("priceids");
+                    categoryId=bundle.getString("categoryId");
                 }
 
                 Intent intent = new Intent(getApplicationContext(), AllSimilarDataActivity.class);
@@ -186,12 +208,31 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
                 intent.putExtra("StatesID", StatesID);
                 intent.putExtra("DistrictId", DistrictId);
                 intent.putExtra("priceids", priceids);
+                intent.putExtra("categoryId", categoryId);
+                intent.putExtra("IsVarietyAvailable",IsVarietyAvailable);
                 startActivity(intent);
                 finish();
             }
         });
     }
+    @Override
+    public void onBackPressed() {
 
+        Intent intent = new Intent(getApplicationContext(), AllSimilarDataActivity.class);
+        intent.putExtra("Search", "Filter");
+        intent.putExtra("SortBy", priceids);
+        intent.putExtra("ItemTypeId", ItemTypeId);
+        intent.putExtra("TalukaId", TalukaId);
+        intent.putExtra("VarietyId", VarityId);
+        intent.putExtra("QualityId", QualityId);
+        intent.putExtra("StatesID", StatesID);
+        intent.putExtra("DistrictId", DistrictId);
+        intent.putExtra("priceids", priceids);
+        intent.putExtra("categoryId", categoryId);
+        intent.putExtra("IsVarietyAvailable",IsVarietyAvailable);
+        startActivity(intent);
+        finish();
+    }
 
     @Override
     public void onClick(View v) {

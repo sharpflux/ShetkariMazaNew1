@@ -56,10 +56,12 @@ public class DetailFormActivity extends AppCompatActivity {
 
 
 
+
+
     @Override
     public void onBackPressed() {
 
-       final FragmentManager fm = getFragmentManager();
+        final FragmentManager fm = getFragmentManager();
         if (fm.getBackStackEntryCount() > 0) {
 
             final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogTheme);
@@ -100,9 +102,7 @@ public class DetailFormActivity extends AppCompatActivity {
 
 
 
-    }
-
-    private void tellFragments(){
+    }private void tellFragments(){
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
         for(Fragment f : fragments){
             if(f != null && f instanceof SecondFragment)

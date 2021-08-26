@@ -303,6 +303,7 @@ public class LoginFragment extends Fragment {
                                         Intent intent = new Intent(getContext(), MobileVerification.class);
                                         intent.putExtra("MobileNo",  userJson.getString("MobileNo"));
                                         intent.putExtra("UserId", String.valueOf( userJson.getInt("UserId")));
+                                        intent.putExtra("Otp",userJson.getString("Otp"));
                                         startActivity(intent);
                                         getActivity().finish();
                                     }

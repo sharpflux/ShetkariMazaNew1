@@ -33,7 +33,7 @@
 
     <string name="Yes">Yes</string>
     <string name="No">No</string>
-
+    <string name="Subscribe">Subscribe</string>
     <string name="action_clear_call_log">Clear call log</string>
     <string name="action_calls">Calls</string>
     <string name="action_refresh">Refresh</string>
@@ -45,7 +45,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-
+    <string name="Vegetable">Vegetable</string>
+    <string name="fresh">Fresh</string>
     <string name="buyer">Buyer</string>
     <string name="seller">Seller</string>
 
@@ -300,5 +301,9 @@
     <string name="quaterly_plan">Quaterly Plan</string>
     <string name="yearly_plan">Yearly Plan</string>
     <string name="monthly_plan">Monthly Plan</string>
+    <string name="apply">Apply</string>
+    <string name="clear">Clear</string>
+
+
 
 </resources>

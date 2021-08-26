@@ -119,7 +119,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     ArrayList<Product> list;
     Product sellOptions;
     Button btn_take_selfie, btnAdd;
-    LinearLayout btnFormSubmit,btnAddMore;
+    LinearLayout btnFormSubmit, btnAddMore;
     TextView hideImageTvSelfie, tv_rate, hideAgeId;
     CustomRecyclerViewDialog customDialog;
     public static String DATEFORMATTED = "";
@@ -149,7 +149,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     private ArrayList<Uri> arrayList;
     private ArrayList<String> ImagesList;
     StringBuilder builder;
-    TextInputLayout lt_txtAge, lr_subCategory, lr_quality, lr_botanicalName, lr_variety, lr_areaInHector,textInputAvailableMonth;
+    TextInputLayout lt_txtAge, lr_subCategory, lr_quality, lr_botanicalName, lr_variety, lr_areaInHector, textInputAvailableMonth;
     Integer REQUEST_CAMERA = 1, SELECT_FILE = 0;
 
     private UserInfoDBManager userInfoDBManager = null;
@@ -274,7 +274,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         edtsurveyNo = findViewById(R.id.edtsurveyNo);
         scrollableContents = findViewById(R.id.scrollableContents);
 
-        textInputAvailableMonth=findViewById(R.id.textInputAvailableMonth);
+        textInputAvailableMonth = findViewById(R.id.textInputAvailableMonth);
 
 
         edtDays = findViewById(R.id.edtDays);
@@ -396,31 +396,30 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
         }
         //AGE
-        if (ProductId.equals("1") || ProductId.equals("2")|| ProductId.equals("3")|| ProductId.equals("4")|| ProductId.equals("6")|| ProductId.equals("17")) {
+        if (ProductId.equals("1") || ProductId.equals("2") || ProductId.equals("3") || ProductId.equals("4") || ProductId.equals("6") || ProductId.equals("17")) {
             lt_txtAge.setVisibility(View.GONE);
         }
 
 
-
         // organic no display
-        if (ProductId.equals("10") ) {
+        if (ProductId.equals("10")) {
             LinearLayout1.setVisibility(View.GONE);
             textInputAvailableMonth.setVisibility(View.GONE);
             lr_areaInHector.setVisibility(View.GONE);
         }
 
-        if (ProductId.equals("35") ) {
+        if (ProductId.equals("35")) {
             LinearLayout1.setVisibility(View.GONE);
 
         }
 
         // area no display
-        if (ProductId.equals("14") ) {
+        if (ProductId.equals("14")) {
             lr_areaInHector.setVisibility(View.GONE);
 
         }
 
-        if (ProductId.equals("42") ) {
+        if (ProductId.equals("42")) {
             lt_txtAge.setVisibility(View.GONE);
             lr_areaInHector.setVisibility(View.GONE);
         }
@@ -457,17 +456,13 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
                 if (rb1 != null) {
 
-                    org = rb1.getHint().toString();
+                    org = "Organic";//rb1.getHint().toString();
 
-                    Toast.makeText(getApplicationContext(),
-                            org,
-                            Toast.LENGTH_LONG).show();
+
                 } else if (rb2 != null) {
-                    org = rb2.getHint().toString();
+                    org = "Inorganic";//rb2.getHint().toString();
 
-                    Toast.makeText(getApplicationContext(),
-                            org,
-                            Toast.LENGTH_LONG).show();
+
                 }
 
             }
@@ -788,8 +783,8 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
             Picasso.get().load(extras.getString("ImageUrl")).into(img_banner_profile_placeholder);
             ImageUrlupload = extras.getString("ImageUrl");
 
-            if(ImageUrlupload!=null)
-            ImageUrl = convertUrlToBase64(ImageUrlupload);
+            if (ImageUrlupload != null)
+                ImageUrl = convertUrlToBase64(ImageUrlupload);
 
 
           /*  BitmapDrawable drawable = (BitmapDrawable) img_banner_profile_placeholder.getDrawable();
@@ -844,7 +839,6 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
                 StringBuffer errorMessageBuf = new StringBuffer();
 
-
                 if (lt_txtAge.getVisibility() == View.VISIBLE) {
                     days = edtDays.getText().toString();
                 } else {
@@ -857,14 +851,6 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                     certificateno = "0";
                 }
 
-
-               /* if(LinearLayout1.getVisibility()==View.VISIBLE)
-                {
-                    org = edtDays.getText().toString();
-                }
-                else {
-                    org ="0";
-                }*/
 
                 if (lr_subCategory.getVisibility() == View.VISIBLE) {
                     String catId = hideSubCatId.getText().toString();
@@ -884,7 +870,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
                 //quality
                 if (ProductId.equals("6") || ProductId.equals("4") || ProductId.equals("8") || ProductId.equals("15") || ProductId.equals("3") || ProductId.equals("10") || ProductId.equals("35") || ProductId.equals("43 ")) {
-                   // edtAQuality.setVisibility(View.GONE);
+                    // edtAQuality.setVisibility(View.GONE);
                 }
 //
 
@@ -901,20 +887,6 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                     edtAQuantity.requestFocus();
                     return;
                 }
-              /*  if(!rb1.isChecked()||!rb2.isChecked())
-                {//Grp is your radio group object
-                    rb1.setError("please select organic or Non organic");
-                    rb1.requestFocus();
-                    rb2.setError("please select organic or Non organic");
-                    rb2.requestFocus();
-                    return;
-                }
-
-                if (TextUtils.isEmpty(certificateno)) {
-                    edtcertifiedno.setError("Please enter your certificateno.");
-                    edtcertifiedno.requestFocus();
-                    return;
-                }*/
 
                 if (TextUtils.isEmpty(unit)) {
                     edtUnit.setError("Please enter your unit");
@@ -928,7 +900,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                     return;
                 }
 
-                if(!ProductId.equals("10")){
+                if (!ProductId.equals("10")) {
                     if (TextUtils.isEmpty(availablityInMonths)) {
                         edtavailablityInMonths.setError("Please enter your available month");
                         edtavailablityInMonths.requestFocus();
@@ -975,104 +947,74 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 }
 
 
-                if (TextUtils.isEmpty(productType)) {
-                    errorMessageBuf.append("Username can not be empty./r/n");
-                } else if (TextUtils.isEmpty(productType)) {
-                    errorMessageBuf.append("Password can not be empty./r/n");
-                } else if (TextUtils.isEmpty(productType)) {
-                    errorMessageBuf.append("Email can not be empty./r/n");
-                }
-
-                if (errorMessageBuf.length() > 0) {
-                    Toast.makeText(getApplicationContext(), errorMessageBuf.toString(), Toast.LENGTH_SHORT).show();
-                } else {
-
-                    if (hidVarietyId.equals("") || productVariety.equals("")) {
-                        hidVarietyId.setText("0");
-                        productVariety = "0";
-
-                    }
-
-                    if (quality.equals("") || hidQualityId.equals("")) {
-                        quality = "0";
-                        hidQualityId.setText("0");
-                    }
-
-                    if (edtcertifiedno.getText().toString().equals("")) {
-                        certificateno = "0";
-
-                    }
-
-                    if (edtareahector.getText().toString().equals("")) {
-                        areaheactor = "0";
-
-                    }
-
-                    if (AgeGroupId.equals("")) {
-                        hideAgeId.setText("0");
-                    }
-
-                    if (userId == -1) {
-
-
-                        builder.append("<Parent>");
-                        builder.append("<Assign>");
-                        builder.append("<RequestId>" + 0 + "</RequestId>");
-                        builder.append("<Id>" + 1 + "</Id>");
-                        builder.append("<UserId>" + UserId + "</UserId>");
-                        builder.append("<productTypeId>" + hidItemTypeId.getText().toString() + "</productTypeId>");
-                        builder.append("<productVarietyId>" + hidVarietyId.getText().toString() + "</productVarietyId>");
-                        builder.append("<qualityId>" + hidQualityId.getText().toString() + "</qualityId>");
-                        builder.append("<quantity>" + quantity + "</quantity>");
-                        builder.append("<unitId>" + hidMeasurementId.getText().toString() + "</unitId>");
-                        builder.append("<expectedPrice>" + total + "</expectedPrice>");
-                        builder.append("<days>" + days + "</days>");
-                        builder.append("<availablityInMonths>" + availablityInMonths + "</availablityInMonths>");
-                        builder.append("<address>" + address + "</address>");
-                        builder.append("<stateId>" + hideStateId.getText().toString() + "</stateId>");
-                        builder.append("<districtId>" + hideDistrictId.getText().toString() + "</districtId>");
-                        builder.append("<talukaId>" + hideTalukaId.getText().toString() + "</talukaId>");
-                        builder.append("<villagenam>" + villagenam + "</villagenam>");
-                        builder.append("<areaheactor>" + areaheactor + "</areaheactor>");
-                        builder.append("<imagename>" +  "0"+ "</imagename>"); //ImageUrl
-                        builder.append("<organic>" + org + "</organic>");
-                        builder.append("<certificateno>" + certificateno + "</certificateno>");
-                        builder.append("<SurveyNo>" + surveyNo + "</SurveyNo>");
-                        builder.append("<AgeGroupId>" + hideAgeId.getText().toString() + "</AgeGroupId>");
-                        builder.append("</Assign>");
-                        builder.append("</Parent>");
-                        AsyncTaskRunnerNewEntry runner = new AsyncTaskRunnerNewEntry();
-                        runner.execute("0"); // No meaning for 0
-
-                        // Insert new user account.
-/*                        userInfoDBManager.insertAccount(productType, hidItemTypeId.getText().toString(), productVariety, hidVarietyId.getText().toString(),
-                                quality, hidQualityId.getText().toString(), quantity, unit, hidMeasurementId.getText().toString(), total,
-                                days, availablityInMonths, address, state, hideStateId.getText().toString(),
-                                district, hideDistrictId.getText().toString(), taluka, hideTalukaId.getText().toString(),
-                                villagenam, areaheactor, ImageUrl, org, certificateno, surveyNo, hideAgeId.getText().toString());*/
-
-
-                        /*userInfoDBManager.newInsert(productType, hidItemTypeId.getText().toString(), productVariety, hidVarietyId.getText().toString(),
-                                quality, hidQualityId.getText().toString(), quantity, unit, hidMeasurementId.getText().toString(), total,
-                                days,availablityInMonths, address, state, hideStateId.getText().toString(),
-                                district, hideDistrictId.getText().toString(), taluka, hideTalukaId.getText().toString(),
-                                villagenam, areaheactor, ImageUrl,org,certificateno,surveyNo,hideAgeId.getText().toString());
-
-*/
-                    } else {
-                        // Update exist user account.
-                        userInfoDBManager.updateAccount(userId, productVariety, days, productType);
-                    }
-
-                 /*    Toast.makeText(getApplicationContext(), "User account is saved successfully.", Toast.LENGTH_SHORT).show();
-                   finish();
-                */
+                if (hidVarietyId.equals("") || productVariety.equals("")) {
+                    hidVarietyId.setText("0");
+                    productVariety = "0";
 
                 }
+
+                if (quality.equals("") || hidQualityId.equals("")) {
+                    quality = "0";
+                    hidQualityId.setText("0");
+                }
+
+                if (edtcertifiedno.getText().toString().equals("")) {
+                    certificateno = "0";
+
+                }
+
+                if (edtareahector.getText().toString().equals("")) {
+                    areaheactor = "0";
+
+                }
+
+                if (AgeGroupId.equals("")) {
+                    hideAgeId.setText("0");
+                }
+
+
+                if (TextUtils.isEmpty(hidItemTypeId.getText().toString())) {
+                    edtproductType.setError("Please select Product Type");
+                    edtproductType.requestFocus();
+                    return;
+                }
+
+              else if (hidItemTypeId.getText().toString().equals("0")) {
+                    edtproductType.setError("Please select Product Type");
+                    edtproductType.requestFocus();
+                    return;
+                }
+
+                builder.append("<Parent>");
+                builder.append("<Assign>");
+                builder.append("<RequestId>" + 0 + "</RequestId>");
+                builder.append("<Id>" + 1 + "</Id>");
+                builder.append("<UserId>" + UserId + "</UserId>");
+                builder.append("<productTypeId>" + hidItemTypeId.getText().toString() + "</productTypeId>");
+                builder.append("<productVarietyId>" + hidVarietyId.getText().toString() + "</productVarietyId>");
+                builder.append("<qualityId>" + hidQualityId.getText().toString() + "</qualityId>");
+                builder.append("<quantity>" + quantity + "</quantity>");
+                builder.append("<unitId>" + hidMeasurementId.getText().toString() + "</unitId>");
+                builder.append("<expectedPrice>" + total + "</expectedPrice>");
+                builder.append("<days>" + days + "</days>");
+                builder.append("<availablityInMonths>" + availablityInMonths + "</availablityInMonths>");
+                builder.append("<address>" + address + "</address>");
+                builder.append("<stateId>" + hideStateId.getText().toString() + "</stateId>");
+                builder.append("<districtId>" + hideDistrictId.getText().toString() + "</districtId>");
+                builder.append("<talukaId>" + hideTalukaId.getText().toString() + "</talukaId>");
+                builder.append("<villagenam>" + villagenam + "</villagenam>");
+                builder.append("<areaheactor>" + areaheactor + "</areaheactor>");
+                builder.append("<imagename>" + "0" + "</imagename>"); //ImageUrl
+                builder.append("<organic>" + org + "</organic>");
+                builder.append("<certificateno>" + certificateno + "</certificateno>");
+                builder.append("<SurveyNo>" + surveyNo + "</SurveyNo>");
+                builder.append("<AgeGroupId>" + hideAgeId.getText().toString() + "</AgeGroupId>");
+                builder.append("</Assign>");
+                builder.append("</Parent>");
+                AsyncTaskRunnerNewEntry runner = new AsyncTaskRunnerNewEntry();
+                runner.execute("0");
             }
         });
-
-
 
 
     }
@@ -1261,7 +1203,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 else if (params[0].toString() == "Variety")
                     fetcher.loadList("VarietyName", edtproductVariety, URLs.URL_VARIATY + hidItemTypeId.getText() + "&Language=" + currentLanguage, "VarietyId", hidVarietyId, "", "", "Variety", "", null, null, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "Quality")
-                    fetcher.loadList("QualityType", edtAQuality, URLs.URL_QUALITY + "?Language=" + currentLanguage+"&CategoryId=" + ProductId, "QualityId", hidQualityId, "", "", "Available Quality", "", null, null, customDialogLoadingProgressBar);
+                    fetcher.loadList("QualityType", edtAQuality, URLs.URL_QUALITY + "?Language=" + currentLanguage + "&CategoryId=" + ProductId, "QualityId", hidQualityId, "", "", "Available Quality", "", null, null, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "Unit")
                     fetcher.loadList("MeasurementType", edtUnit, URLs.URL_UNIT + "?CategoryId=" + ProductId + "&Language=" + currentLanguage, "MeasurementId", hidMeasurementId, "", "", "Unit", "", null, null, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "state")
@@ -1391,7 +1333,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
                 bitmaplocal = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
                 bitmaplocal.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-                bitmap=bitmaplocal;
+                bitmap = bitmaplocal;
                 ImageUrl = getStringImage(bitmap);
 
             } catch (IOException e) {
@@ -1416,7 +1358,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
         thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
 
-        bitmap=thumbnail;
+        bitmap = thumbnail;
         ImageUrl = Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);
         File destination = new File(Environment.getExternalStorageDirectory(),
                 System.currentTimeMillis() + ".jpg");
@@ -1474,7 +1416,6 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     }
 
 
-
     private void submitToDb() {
 
 
@@ -1485,10 +1426,9 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                     customDialogLoadingProgressBar.dismiss();
                     JSONObject obj = new JSONObject(new String(response.data));
 
-                    if(obj.getBoolean("error")){
+                    if (obj.getBoolean("error")) {
                         Toast.makeText(ProductInfoForSaleActivity.this, obj.getString("message"), Toast.LENGTH_SHORT).show();
-                    }
-                    else {
+                    } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(ProductInfoForSaleActivity.this);
                         builder.setCancelable(false);
                         builder.setMessage(getResources().getString(R.string.data_submitted));
@@ -1525,7 +1465,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         customDialogLoadingProgressBar.dismiss();
-                        Toast.makeText(ProductInfoForSaleActivity.this,"Network Error !" +error.networkResponse.statusCode, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProductInfoForSaleActivity.this, "Network Error !" + error.networkResponse.statusCode, Toast.LENGTH_SHORT).show();
                     }
                 }) {
 
@@ -1549,23 +1489,24 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
             protected Map<String, DataPart> getByteData() {
                 Map<String, DataPart> params = new HashMap<>();
 
-                    try {
-                      //  bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),Uri.fromFile(new File(item.getPicturePath())) );
-                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bos);
-                        params.put("image_file", new DataPart("image"+"i"+".jpg", getFileDataFromDrawable(bitmap) ));
+                try {
+                    //  bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),Uri.fromFile(new File(item.getPicturePath())) );
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bos);
+                    params.put("image_file", new DataPart("image" + "i" + ".jpg", getFileDataFromDrawable(bitmap)));
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 return params;
             }
         };
-        volleyMultipartRequest.setRetryPolicy(new DefaultRetryPolicy(0,DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        volleyMultipartRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleySingleton.getInstance(this).addToRequestQueue(volleyMultipartRequest);
 
     }
+
     public byte[] getFileDataFromDrawable(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
@@ -1734,7 +1675,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //if user pressed "yes", then he is allowed to exit from applicationdialog.cancel();
-                               // Intent i = new Intent(ProductInfoForSaleActivity.this, HomeActivity.class);
+                                // Intent i = new Intent(ProductInfoForSaleActivity.this, HomeActivity.class);
                                 //startActivity(i);
                                 dialog.dismiss();
 
@@ -1753,7 +1694,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("Error------------",error.getMessage());
+                        Log.d("Error------------", error.getMessage());
                         Toast.makeText(ProductInfoForSaleActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
@@ -1782,7 +1723,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
             try {
 
-          //  submitNewEntry();
+                //  submitNewEntry();
                 submitToDb();
 
             } catch (Exception e) {

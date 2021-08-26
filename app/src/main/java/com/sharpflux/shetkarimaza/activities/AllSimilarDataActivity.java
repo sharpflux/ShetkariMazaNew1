@@ -64,6 +64,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 
 import jxl.Workbook;
 import jxl.WorkbookSettings;
@@ -85,7 +86,8 @@ public class AllSimilarDataActivity extends AppCompatActivity {
     List<SimilarList> productlist;
     Bundle bundle;
 
-    String TalukaId = "", VarityId = "", QualityId = "", ItemTypeId = "", StatesID = "", DistrictId = "",priceids="",ItemName;
+    String TalukaId = "", VarityId = "", QualityId = "", ItemTypeId = "", StatesID = "", DistrictId = "",priceids="",ItemName,categoryId="";
+    boolean IsVarietyAvailable;
     boolean isLoading = false;
     int currentItems;
     int totalItems;
@@ -100,7 +102,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
     dbBuyerFilter myDatabase;
 
     public static final int PAGE_START = 1;
-    private static final int PAGE_SIZE = 10;
+    private static final int PAGE_SIZE = 15;
     private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
     dbLanguage mydatabase;
     String currentLanguage,language;
@@ -178,6 +180,8 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                 intent.putExtra("StatesID",StatesID);
                 intent.putExtra("DistrictId",DistrictId);
                 intent.putExtra("priceids",priceids);
+                intent.putExtra("IsVarietyAvailable",IsVarietyAvailable);
+                intent.putExtra("categoryId",categoryId);
                 startActivity(intent);
             }
         });
@@ -223,7 +227,8 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         if (bundle != null) {
             ItemTypeId = bundle.getString("ItemTypeId");
             ItemName = bundle.getString("ItemName");
-            ItemName = bundle.getString("ItemName");
+            categoryId = bundle.getString("categoryId");
+            IsVarietyAvailable=bundle.getBoolean("IsVarietyAvailable");
             //TalukaId = bundle.getString("TalukaId");
            //VarityId = bundle.getString("VarietyId");
           // QualityId = bundle.getString("QualityId");
@@ -358,10 +363,10 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                     } else {
                         TalukaId = "0";
                     }
-                    if (priceids != null) {
+                    if (!priceids.equals(null) ) {
                         if (priceids.equals(""))
                             priceids = "0";
-                    } else {
+                    } else  if (priceids .equals(null) ){
                         priceids = "0";
                     }
 
@@ -417,8 +422,8 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                                                                 "0",
                                                                 userJson.getString("CategoryName_EN"),
                                                                 userJson.getString("Organic"),
-                                                                userJson.getString("OrganicCertiicateNo")
-
+                                                                userJson.getString("OrganicCertiicateNo"),
+                                                                String.valueOf(  userJson.getDouble("PerUnitPrice"))
                                                         );
                                                 mList.add(sellOptions);
 
@@ -430,7 +435,6 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                                                 Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
 
                                             }
-
 
                                             myAdapter.notifyDataSetChanged();
                                             isLoading = false;
@@ -619,8 +623,8 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                                                         "0",
                                                         userJson.getString("CategoryName_EN"),
                                                         userJson.getString("Organic"),
-                                                        userJson.getString("OrganicCertiicateNo")
-
+                                                        userJson.getString("OrganicCertiicateNo"),
+                                                        String.valueOf(  userJson.getDouble("PerUnitPrice"))
                                                 );
 
                                         productlist.add(sellOptions);
@@ -749,11 +753,17 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             // Do the file write
 
-            final String fileName = "MyOrderList.xls";
+            int min = 65;
+            int max = 80;
 
-            //Saving file in external storage
-            File sdCard = Environment.getExternalStorageDirectory();
-            File directory = new File(sdCard.getAbsolutePath() + "/shetkrimaza");
+            Random r = new Random();
+            int randomNumber = r.nextInt(max - min + 1) + min;
+
+            final String fileName = ItemName+"_"+String.valueOf(randomNumber)+"_"+".xls";
+
+
+          //  File sdCard = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            File directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "KisanMaza");
 
             //create directory if not exist
             if (!directory.isDirectory()) {
@@ -782,7 +792,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                 builder.setCancelable(false);
                 builder.setTitle("File downloaded Successfully...");
                 //builder.setMessage("You don't have excel Application!Please download it!");
-                builder.setMessage("Go to ShetkariMaza folder in your phone storage!");
+                builder.setMessage("Go to KisanMaza folder in your phone storage!");
 
                 builder.setIcon(R.drawable.ic_check_circle);
 
@@ -808,7 +818,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                 WritableCellFormat titleformat = new WritableCellFormat(titleFont);
                 workbook = Workbook.createWorkbook(file, wbSettings);
                 //Excel sheet name. 0 represents first sheet
-                WritableSheet sheet = workbook.createSheet("MyOrder List", 0);
+                WritableSheet sheet = workbook.createSheet("FarmerList_", 0);
 //
                 try {
 
@@ -834,28 +844,26 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
                     int j = 1;
 
-                    for (int i = 0; i < productlist.size(); i++) {
-
-                        sheet.addCell(new Label(0, j, productlist.get(i).getCategeryName()));
-                        sheet.addCell(new Label(1, j, productlist.get(i).getName()));
-                        sheet.addCell(new Label(2, j, productlist.get(i).getVarietyName()));
-                        sheet.addCell(new Label(3, j, productlist.get(i).getQuality()));
-                        sheet.addCell(new Label(4, j, productlist.get(i).getOrganic()));
-                        sheet.addCell(new Label(5, j, productlist.get(i).getCertificateNo()));
-                        sheet.addCell(new Label(6, j, productlist.get(i).getQuantity()));
-                        sheet.addCell(new Label(7, j, productlist.get(i).getUnit()));
-                        sheet.addCell(new Label(8, j, productlist.get(i).getPrice()));
-                        sheet.addCell(new Label(9, j, productlist.get(i).getAvailable_month()));
-                        sheet.addCell(new Label(10, j, productlist.get(i).getFarm_address()));
-                        sheet.addCell(new Label(11, j, productlist.get(i).getSurveyNo()));
-                        sheet.addCell(new Label(12, j, productlist.get(i).getState()));
-                        sheet.addCell(new Label(13, j, productlist.get(i).getDistrict()));
-                        sheet.addCell(new Label(14, j, productlist.get(i).getTaluka()));
-                        sheet.addCell(new Label(15, j, productlist.get(i).getVillage()));
-                        sheet.addCell(new Label(16, j, productlist.get(i).getHector()));
-                        sheet.addCell(new Label(17, j, productlist.get(i).getFullName()));
-                        sheet.addCell(new Label(18, j, productlist.get(i).getMobileNo()));
-
+                    for (int i = 0; i < mList.size(); i++) {
+                        sheet.addCell(new Label(0, j, mList.get(i).getCategeryName()));
+                        sheet.addCell(new Label(1, j, mList.get(i).getName()));
+                        sheet.addCell(new Label(2, j, mList.get(i).getVarietyName()));
+                        sheet.addCell(new Label(3, j, mList.get(i).getQuality()));
+                        sheet.addCell(new Label(4, j, mList.get(i).getOrganic()));
+                        sheet.addCell(new Label(5, j, mList.get(i).getCertificateNo()));
+                        sheet.addCell(new Label(6, j, mList.get(i).getQuantity()));
+                        sheet.addCell(new Label(7, j, mList.get(i).getUnit()));
+                        sheet.addCell(new Label(8, j, mList.get(i).getPrice()));
+                        sheet.addCell(new Label(9, j, mList.get(i).getAvailable_month()));
+                        sheet.addCell(new Label(10, j, mList.get(i).getFarm_address()));
+                        sheet.addCell(new Label(11, j, mList.get(i).getSurveyNo()));
+                        sheet.addCell(new Label(12, j, mList.get(i).getState()));
+                        sheet.addCell(new Label(13, j, mList.get(i).getDistrict()));
+                        sheet.addCell(new Label(14, j, mList.get(i).getTaluka()));
+                        sheet.addCell(new Label(15, j, mList.get(i).getVillage()));
+                        sheet.addCell(new Label(16, j, mList.get(i).getHector()));
+                        sheet.addCell(new Label(17, j, mList.get(i).getFullName()));
+                        sheet.addCell(new Label(18, j, mList.get(i).getMobileNo()));
                         j++;
                     }
 
@@ -876,12 +884,17 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
         } else {
             // Request permission from the user
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
 
         }
     }
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case 0:
+                exportToExcel();
+        }
+    }
     @Override
     public void onBackPressed() {
         super.onBackPressed();

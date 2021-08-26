@@ -49,7 +49,7 @@
                         android:layout_marginStart="9.7dp"
                         android:paddingBottom="16dp"
                         android:paddingTop="16dp"
-                        android:text="Variety"
+                        android:text="@string/variety"
                         android:textColor="@color/color_black"
                         android:textStyle="normal" />
 
@@ -80,7 +80,7 @@
                         android:layout_marginStart="9.7dp"
                         android:paddingBottom="16dp"
                         android:paddingTop="16dp"
-                        android:text="Quality"
+                        android:text="@string/quality"
                         android:textColor="@color/color_black"
                         android:textStyle="normal" />
 
@@ -111,7 +111,7 @@
                         android:layout_marginStart="9.7dp"
                         android:paddingBottom="16dp"
                         android:paddingTop="16dp"
-                        android:text="State"
+                        android:text="@string/state"
                         android:textColor="@color/color_black"
                         android:textStyle="normal" />
 
@@ -143,7 +143,7 @@
                         android:layout_marginStart="9.7dp"
                         android:paddingBottom="16dp"
                         android:paddingTop="15.3dp"
-                        android:text="District"
+                        android:text="@string/dist"
                         android:textColor="@color/color_black"
                         android:textStyle="normal" />
 
@@ -182,7 +182,7 @@
                         android:layout_marginStart="9.7dp"
                         android:paddingBottom="16dp"
                         android:paddingTop="15.3dp"
-                        android:text="Taluka"
+                        android:text="@string/taluka"
                         android:textColor="@color/color_black"
                         android:textStyle="normal" />
 
@@ -292,7 +292,7 @@
             android:gravity="center"
             android:paddingBottom="16.3dp"
             android:paddingTop="16.3dp"
-            android:text="Clear"
+            android:text="@string/clear"
             android:textColor="#000000"
             android:textSize="13.3sp" />
 
@@ -305,7 +305,7 @@
             android:gravity="center"
             android:paddingBottom="16.3dp"
             android:paddingTop="16.3dp"
-            android:text="Apply"
+            android:text="@string/apply"
             android:textColor="@color/white"
             android:textSize="13.3sp" />
 

@@ -8,15 +8,19 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
@@ -28,9 +32,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.SubscriptionPlanActivity;
+import com.sharpflux.shetkarimaza.adapter.BannerAdapter;
 import com.sharpflux.shetkarimaza.adapter.HomeSliderAdapter;
 import com.sharpflux.shetkarimaza.adapter.MyCategoryTypeAdapter;
 import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
+import com.sharpflux.shetkarimaza.model.ListModel;
 import com.sharpflux.shetkarimaza.model.MyCategoryType;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
@@ -75,11 +81,18 @@ public class CategoryFragment extends Fragment {
    Runnable runnable_viewPager;
     int currentPage = 0;
     User user;
+    RecyclerView recyclerView2;
+    ArrayList<ListModel> listModels1;
     public CategoryFragment() {
         // Required empty public constructor
     }
-
-
+    BannerAdapter bannerAdapter;
+    String[] txt_vegType;
+    ViewPager viewPager2;
+    LinearLayout li_line1;
+    LinearLayout li_line2;
+    LinearLayout li_line3;
+    int CURRENTPAGE = 2;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -89,10 +102,44 @@ public class CategoryFragment extends Fragment {
         textView_category = view.findViewById(R.id.textView_category);
         mGridLayoutManager = new GridLayoutManager(getContext(), 3);
         mRecyclerView.setLayoutManager(mGridLayoutManager);
+        this.txt_vegType = new String[]{"VEGETABLE", "VEGETABLE & Fruits", "VEGETABLE", "VEGETABLE,Fruits"};
+        this.listModels1 = new ArrayList<>();
+        this.recyclerView2 = (RecyclerView) view.findViewById(R.id.recyclerBanner);
+        this.recyclerView2.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        this.recyclerView2.setItemAnimator(new DefaultItemAnimator());
+        this.listModels1 = new ArrayList<>();
+        for (String listModel2 : this.txt_vegType) {
+            this.listModels1.add(new ListModel(listModel2));
+        }
+        BannerAdapter bannerAdapter2 = new BannerAdapter(getContext(), this.listModels1);
+        this.bannerAdapter = bannerAdapter2;
+        this.recyclerView2.setAdapter(bannerAdapter2);
+
 
         mydatabase = new dbLanguage(getContext());
         customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(getContext());
         categoryList = new ArrayList<>();
+
+
+
+        this.li_line1 = (LinearLayout) view.findViewById(R.id.li_line1);
+        this.li_line2 = (LinearLayout) view.findViewById(R.id.li_line2);
+        this.li_line3 = (LinearLayout) view.findViewById(R.id.li_line3);
+
+        ViewPager viewPager2 = (ViewPager) view.findViewById(R.id.viewPager);
+        this.viewPager2 = viewPager2;
+        viewPager2.setPageMargin(15);
+        this.viewPager2.setPadding(16, 0, 16, 0);
+        int i5 = this.CURRENTPAGE;
+        if (i5 < 2) {
+            int i6 = i5 + 1;
+            this.CURRENTPAGE = i6;
+            this.viewPager2.setCurrentItem(i6);
+            setcompletedStates(this.CURRENTPAGE);
+            Log.e("CURRENTPAGE", this.CURRENTPAGE + "");
+        }
+
+
        // parentShimmerLayout =view.findViewById(R.id.shimmer_view_container);
 
      /*   myLocale = getResources().getConfiguration().locale;
@@ -198,7 +245,23 @@ public class CategoryFragment extends Fragment {
 
         return view;
     }
-
+    public void setcompletedStates(int CURRENTPAGE2) {
+        if (CURRENTPAGE2 == 0) {
+            this.li_line1.setBackgroundResource(R.drawable.green_line);
+            this.li_line2.setBackgroundResource(R.drawable.circle_white);
+            this.li_line3.setBackgroundResource(R.drawable.circle_white);
+        }
+        if (CURRENTPAGE2 == 1) {
+            this.li_line1.setBackgroundResource(R.drawable.circle_white);
+            this.li_line2.setBackgroundResource(R.drawable.green_line);
+            this.li_line3.setBackgroundResource(R.drawable.circle_white);
+        }
+        if (CURRENTPAGE2 == 2) {
+            this.li_line1.setBackgroundResource(R.drawable.circle_white);
+            this.li_line2.setBackgroundResource(R.drawable.circle_white);
+            this.li_line3.setBackgroundResource(R.drawable.green_line);
+        }
+    }
 
     public class FadeOutTransformation implements ViewPager.PageTransformer{
         @Override

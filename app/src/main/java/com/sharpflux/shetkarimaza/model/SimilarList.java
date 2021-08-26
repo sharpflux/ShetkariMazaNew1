@@ -30,7 +30,7 @@ public class SimilarList {
     private String organic;
     private String certificateNo;
     private String BotanicalName;
-
+    private String   PerUnitPrice;
 
 
     public SimilarList(String url, String imageUrl, String fullName, String mobileNo, String name,
@@ -68,7 +68,7 @@ public class SimilarList {
                        String quality, String quantity, String unit, String price, String available_month,
                        String farm_address, String state, String district, String taluka, String village, String hector,
                        String itemTypeId, String varietyId, String qualityId, String measurementId, String stateId,
-                       String districtId, String talukaId, String requstId, String surveyNo, String categoryId, String categeryName) {
+                       String districtId, String talukaId, String requstId, String surveyNo, String categoryId, String categeryName,String perUnitPrice) {
         ImageUrl = imageUrl;
         FullName = fullName;
         MobileNo = mobileNo;
@@ -96,6 +96,7 @@ public class SimilarList {
         this.surveyNo = surveyNo;
         this.categoryId = categoryId;
         this.categeryName = categeryName;
+        this.PerUnitPrice=perUnitPrice;
     }
 
     public SimilarList(String imageUrl, String fullName, String mobileNo,
@@ -444,5 +445,14 @@ public class SimilarList {
 
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
+    }
+
+
+    public String getPerUnitPrice() {
+        return PerUnitPrice;
+    }
+
+    public void setPerUnitPrice(String perUnitPrice) {
+        PerUnitPrice = perUnitPrice;
     }
 }

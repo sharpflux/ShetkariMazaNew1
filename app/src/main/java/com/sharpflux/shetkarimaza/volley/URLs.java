@@ -25,7 +25,7 @@ public class URLs {
     public static final String URL_ORDERDETAILS=Main_URL+"api/RequestAPI/GETRequestsApi?StartIndex=1&PageSize=500&UserId=";
     public static final String URL_RATE=Main_URL+"api/RateMasterAPI/GETRateMasterApi?";
     public static String URL_OTP2=Main_URL+"User_Authentication/GetOTP?MobileNo=";
-    public static String URL_CONTACTDET=Main_URL+"api/Registration/RegistrationFilterGET?StartIndex=1&PageSize=500";
+    public static String URL_CONTACTDET=Main_URL+"api/Registration/RegistrationFilterGET?";
     public static String URL_PROCESSOR=Main_URL+"api/ItemMasterApi/GetIsProcessAPI?Language=";
     public static String URL_VEHICLETYPE=Main_URL+"api/Vehical/Get_VehicalTypeAPI";
     public static String URL_ALL_TRANSPORTER=Main_URL+"api/TransporterAPI/Get_TransporterDetailsAPI?Search=s";

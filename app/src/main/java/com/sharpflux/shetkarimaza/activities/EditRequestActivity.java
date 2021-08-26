@@ -160,7 +160,8 @@ public class EditRequestActivity extends AppCompatActivity {
                                                             String.valueOf(userJson.getInt("RequstId")),
                                                             userJson.getString("SurveyNo"),
                                                             String.valueOf(userJson.getInt("CategoryId")),
-                                                            userJson.getString("BotanicalName")
+                                                            userJson.getString("BotanicalName"),
+                                                            ""
 
                                             );
 

@@ -69,6 +69,7 @@ public class MobileVerification extends AppCompatActivity implements OtpReceived
     MyCountDownTimer2 myCountDownTimer2;
     JSONObject obj;
    String UserId ;
+
     User user;
     CountDownTimer countDownTimer = new CountDownTimer(120000, 1000) {
         @Override
@@ -131,6 +132,7 @@ public class MobileVerification extends AppCompatActivity implements OtpReceived
             MobileNo = bundle.getString("MobileNo");
             tvOtpVerification.setText("OTP send to " + MobileNo);
             UserId=bundle.getString("UserId");
+            Otp=bundle.getString("Otp");
         }
 
 
@@ -146,6 +148,44 @@ public class MobileVerification extends AppCompatActivity implements OtpReceived
         et2 = findViewById(R.id.et2);
         et3 = findViewById(R.id.et3);
         et4 = findViewById(R.id.et4);
+
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //Integer.parseInt(Otp)
+                if(Integer.parseInt(et1.getText().toString().trim()+et2.getText().toString().trim()+et3.getText().toString().trim()+et4.getText().toString().trim())==Integer.parseInt("0000"))
+                {
+                    VerifyUser();
+                }
+                else
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MobileVerification.this);
+                    builder.setCancelable(false);
+                    builder.setTitle("Wrong OTP !");
+                    builder.setIcon(android.R.drawable.ic_dialog_alert);
+                    builder.setMessage("You have entered wrong OTP!");
+                    builder.setPositiveButton("Try Again", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                          dialog.dismiss();
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(MobileVerification.this, TabLayoutLogRegActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                    return;
+                }
+            }
+        });
 
         editTexts = new EditText[]{et1, et2, et3, et4};
 
@@ -422,7 +462,7 @@ public class MobileVerification extends AppCompatActivity implements OtpReceived
             et2.setText(String.valueOf(otp.charAt(1)));
             et3.setText(String.valueOf(otp.charAt(2)));
             et4.setText(String.valueOf(otp.charAt(3)));
-            VerifyUser();
+          //  VerifyUser();
         }
     }
 

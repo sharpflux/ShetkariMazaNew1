@@ -1,6 +1,7 @@
 package com.sharpflux.shetkarimaza.filters;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import android.view.View;
@@ -13,11 +14,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity;
 import com.sharpflux.shetkarimaza.activities.ContactDetailActivity;
 import com.sharpflux.shetkarimaza.activities.TransporterViewActivity;
 import com.sharpflux.shetkarimaza.sqlite.dbFilter;
+import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class Filter1Activity extends AppCompatActivity implements View.OnClickListener {
@@ -40,6 +44,7 @@ public class Filter1Activity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter1);
+
 
 
         btnFilterData = findViewById(R.id.btnFilterData);
@@ -86,7 +91,7 @@ public class Filter1Activity extends AppCompatActivity implements View.OnClickLi
         bundle.putString("Filter", "STATE");
         myFragment.setArguments(bundle);
         activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).addToBackStack(null).commit();
-
+        bundle = getIntent().getExtras();
 
         brands_color.setVisibility(View.VISIBLE);
         category_color.setVisibility(View.INVISIBLE);
@@ -102,25 +107,75 @@ public class Filter1Activity extends AppCompatActivity implements View.OnClickLi
         btnFilterData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Filter1Activity.this, TransporterViewActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("Search", "Filter");
-                startActivity(intent);
+
+                if (bundle != null) {
+
+                    if(bundle.getString("Activity").equals("ContactDetailActivity")){
+                        Intent intent = new Intent(Filter1Activity.this, ContactDetailActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("Search", "Filter");
+                        intent.putExtra("ProductId", bundle.getString("ProductId"));
+                        startActivity(intent);
+                    }
+                    if(bundle.getString("Activity").equals("TransporterViewActivity")){
+                        Intent intent = new Intent(Filter1Activity.this, TransporterViewActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("Search", "Filter");
+                        startActivity(intent);
+                    }
+                }
+
             }
         });
 
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 myDatabase.DeleteRecordAll();
+
+                if (bundle != null) {
+
+                    if(bundle.getString("Activity").equals("ContactDetailActivity")){
+                        Intent intent = new Intent(Filter1Activity.this, ContactDetailActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("Search", "Filter");
+                        intent.putExtra("ProductId", bundle.getString("ProductId"));
+                        startActivity(intent);
+                    }
+                    if(bundle.getString("Activity").equals("TransporterViewActivity")){
+                        Intent intent = new Intent(Filter1Activity.this, TransporterViewActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("Search", "Filter");
+                        startActivity(intent);
+                    }
+                }
+
+            }
+        });
+    }
+    @Override
+    public void onBackPressed() {
+        myDatabase.DeleteRecordAll();
+        if (bundle != null) {
+
+            if(bundle.getString("Activity").equals("ContactDetailActivity")){
+                Intent intent = new Intent(Filter1Activity.this, ContactDetailActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("Search", "Filter");
+                intent.putExtra("ProductId", bundle.getString("ProductId"));
+                startActivity(intent);
+            }
+            if(bundle.getString("Activity").equals("TransporterViewActivity")){
                 Intent intent = new Intent(Filter1Activity.this, TransporterViewActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("Search", "Filter");
                 startActivity(intent);
             }
-        });
-    }
+        }
 
+    }
 
     @Override
     public void onClick(View v) {

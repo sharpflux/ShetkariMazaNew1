@@ -26,6 +26,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.model.SubCategoryFilter1;
 import com.sharpflux.shetkarimaza.sqlite.dbFilter;
+import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
@@ -35,6 +36,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import static java.security.AccessController.getContext;
@@ -53,7 +55,9 @@ public class FilterFragment extends Fragment {
     SearchView searchView;
     Filter1Adapter myAdapter;
     dbFilter mydatabase;
-
+    dbLanguage mydatabaseLanguage;
+    Locale myLocale;
+    String currentLanguage, language;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
@@ -62,7 +66,15 @@ public class FilterFragment extends Fragment {
         productlist = new ArrayList<>();
         layoutManager = new LinearLayoutManager(getContext());
 
+        mydatabaseLanguage = new dbLanguage(getContext());
+        myLocale = getResources().getConfiguration().locale;
 
+        Cursor cursor = mydatabaseLanguage.LanguageGet(language);
+
+        while (cursor.moveToNext()) {
+            currentLanguage = cursor.getString(0);
+
+        }
         recyclerView.setLayoutManager(layoutManager);
         searchView = view.findViewById(R.id.searchView);
 
@@ -87,7 +99,7 @@ public class FilterFragment extends Fragment {
 
             case "STATE":
 
-                Url = URLs.URL_STATE + "?Language=en";
+                Url = URLs.URL_STATE + "?Language="+currentLanguage;
                 IdColumn = "StatesID";
                 NameColumn = "StatesName";
                 break;
@@ -101,7 +113,7 @@ public class FilterFragment extends Fragment {
                     Stateids = Stateids + StateCursor.getString(0) + ",";
                 }
 
-                Url = URLs.URL_DISTRICT + Stateids + "&Language=en";
+                Url = URLs.URL_DISTRICT + Stateids + "&Language="+currentLanguage;
                 IdColumn = "DistrictId";
                 NameColumn = "DistrictName";
                 break;
@@ -116,7 +128,7 @@ public class FilterFragment extends Fragment {
                 }
 
 
-                Url = URLs.URL_TALUKA + Districtids + "&Language=en";
+                Url = URLs.URL_TALUKA + Districtids + "&Language="+currentLanguage;
                 IdColumn = "TalukasId";
                 NameColumn = "TalukaName";
                 break;

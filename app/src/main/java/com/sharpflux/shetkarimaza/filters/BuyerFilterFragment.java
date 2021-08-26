@@ -27,6 +27,7 @@ import com.sharpflux.shetkarimaza.model.BuyerFilter;
 import com.sharpflux.shetkarimaza.model.SubCategoryFilter1;
 import com.sharpflux.shetkarimaza.sqlite.dbBuyerFilter;
 import com.sharpflux.shetkarimaza.sqlite.dbFilter;
+import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
@@ -36,6 +37,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -46,7 +48,7 @@ public class BuyerFilterFragment extends Fragment {
     LinearLayoutManager layoutManager;
     ArrayList<BuyerFilter> productlist;
     Button btn_next,btn_back,btnFilterData;
-    String DistrictId="", TalukaId="",VarityId="",QualityId="",itemTypeId="",StatesID="",VarietyId="",priceids="";
+    String DistrictId="", TalukaId="",VarityId="",QualityId="",itemTypeId="",StatesID="",VarietyId="",priceids="",categoryId="";
     Bundle extras;
     StringBuilder taluka_builder_id = new StringBuilder();
     SearchView searchView;
@@ -54,6 +56,9 @@ public class BuyerFilterFragment extends Fragment {
     dbBuyerFilter mydatabase;
     Bundle bundle;
     String ItemTypeId="";
+    dbLanguage mydatabaseLanguage;
+    Locale myLocale;
+    String currentLanguage, language;
 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,6 +66,16 @@ public class BuyerFilterFragment extends Fragment {
         view = inflater.inflate(R.layout.buyer_filter_fragment, container, false);
         recyclerView = view.findViewById(R.id.rcv_vriety);
         productlist = new ArrayList<>();
+
+        mydatabaseLanguage = new dbLanguage(getContext());
+        myLocale = getResources().getConfiguration().locale;
+
+        Cursor cursor = mydatabaseLanguage.LanguageGet(language);
+
+        while (cursor.moveToNext()) {
+            currentLanguage = cursor.getString(0);
+
+        }
 
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -74,7 +89,7 @@ public class BuyerFilterFragment extends Fragment {
         StatesID = getArguments().getString("StatesID");
         DistrictId = getArguments().getString("DistrictId");
         priceids = getArguments().getString("priceids");
-
+        categoryId= getArguments().getString("categoryId");
 
         mydatabase = new dbBuyerFilter(getContext());
         AsyncTaskRunner runner = new AsyncTaskRunner();
@@ -94,21 +109,20 @@ public class BuyerFilterFragment extends Fragment {
 
             case "VARIETY":
 
-                Url= URLs.URL_VARIATY+ItemTypeId+"&Language=en";
+                Url= URLs.URL_VARIATY+ItemTypeId+"&Language="+currentLanguage;
                 IdColumn="VarietyId";
                 NameColumn="VarietyName";
                 break;
 
                 case "QUALITY":
-
-                Url= URLs.URL_QUALITY+"?Language=en";
+                Url= URLs.URL_QUALITY+"?Language="+currentLanguage+ "&CategoryId=" + categoryId;
                 IdColumn="QualityId";
                 NameColumn="QualityType";
                 break;
 
             case "STATE":
 
-                Url= URLs.URL_STATE+"?Language=en";
+                Url= URLs.URL_STATE+"?Language="+currentLanguage;
                 IdColumn="StatesID";
                 NameColumn="StatesName";
                 break;
@@ -122,7 +136,7 @@ public class BuyerFilterFragment extends Fragment {
                     Stateids=Stateids+StateCursor.getString(0)+",";
                 }
 
-                Url= URLs.URL_DISTRICT+Stateids+"&Language=en";
+                Url= URLs.URL_DISTRICT+Stateids+"&Language="+currentLanguage;
                 IdColumn="DistrictId";
                 NameColumn="DistrictName";
                 break;
@@ -137,7 +151,7 @@ public class BuyerFilterFragment extends Fragment {
                 }
 
 
-                Url= URLs.URL_TALUKA+Districtids+"&Language=en";
+                Url= URLs.URL_TALUKA+Districtids+"&Language="+currentLanguage;
                 IdColumn="TalukasId";
                 NameColumn="TalukaName";
                 break;
