@@ -138,11 +138,11 @@
     <string name="Name_of_Taluka">तहसील का नाम</string>
     <string name="dist">जिला</string>
     <string name="state">राज्य</string>
-    <string name="company_name">कंपनी का नाम / फर्म का नाम</string>
-    <string name="Landlin_no">लैंडलाइन नंबर.</string>
-    <string name="APMC_licance">एपीएमसी लाइसेंस</string>
-    <string name="Company_Regin_no">कंपनी क्षेत्र संख्या</string>
-    <string name="GST_no">जीएसटी संख्या.</string>
+    <string name="company_name">कंपनी का नाम / फर्म का नाम (ऐच्छिक)</string>
+    <string name="Landlin_no">लैंडलाइन नंबर. (ऐच्छिक)</string>
+    <string name="APMC_licance">एपीएमसी लाइसेंस (ऐच्छिक)</string>
+    <string name="Company_Regin_no">कंपनी क्षेत्र संख्या (ऐच्छिक)</string>
+    <string name="GST_no">जीएसटी संख्या.(ऐच्छिक)</string>
     <string name="next">अगला</string>
     <string name="account_holder_name">खाताधारक का नाम पासबुक के अनुसार</string>
     <string name="bank_name">बैंक का नाम (केवल राष्ट्रकृत बैंक)</string>
@@ -317,5 +317,6 @@
     <string name="monthly_plan">Monthly Plan</string>
     <string name="apply">लागू करना</string>
     <string name="clear">साफ करा</string>
-
+    <string name="registersuccess">आप सफलतापूर्वक पंजीकृत हैं! आपका रजिस्टर नंबर है : </string>
+    <string name="registered">सफलतापूर्वक पंजीकृत</string>
 </resources>

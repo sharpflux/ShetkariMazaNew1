@@ -113,11 +113,19 @@ public class SecondFragment extends DialogFragment {
         Cursor cursor = mydatabase.LanguageGet(language);
 
 
-        while (cursor.moveToNext()) {
-            currentLanguage = cursor.getString(0);
-
+        if(cursor.getCount()==0) {
+            currentLanguage="en";
         }
+        else{
+            while (cursor.moveToNext()) {
+                currentLanguage = cursor.getString(0);
+                if( currentLanguage==null)
+                {
+                    currentLanguage="en";
+                }
 
+            }
+        }
 
         bundle = getArguments();
 
@@ -193,36 +201,30 @@ public class SecondFragment extends DialogFragment {
                     return;
                 }
 
-                if (TextUtils.isEmpty(village)) {
+              /*  if (TextUtils.isEmpty(village)) {
                     city.setError("Please enter your village");
                     city.requestFocus();
                     return;
-                }
-
+                }*/
                 if (TextUtils.isEmpty(firmname)) {
-                    companyname.setError("Please enter your firm name");
-                    companyname.requestFocus();
-                    return;
+                    firmname="0";
                 }
 
                 if (TextUtils.isEmpty(apmc)) {
-                    license.setError("Please enter your apmc license");
-                    license.requestFocus();
-                    return;
+                    apmc="0";
                 }
 
                 if (TextUtils.isEmpty(companyreg)) {
-                    companyregnno.setError("Please enter your company reg no");
-                    companyregnno.requestFocus();
-                    return;
+                    companyreg="0";
                 }
 
-                if (TextUtils.isEmpty(gst)) {
-                    gstno.setError("Please enter your gst no");
-                    gstno.requestFocus();
-                    return;
-                }
+                 if (TextUtils.isEmpty(gst)) {
+                  //  gstno.setError("Please enter your gst no");
+                    //gstno.requestFocus();
+                   // return;
 
+                     gst="0";
+                }
 
 
                 Bundle bundle = new Bundle();
@@ -234,16 +236,16 @@ public class SecondFragment extends DialogFragment {
                 bundle.putString("AlternateMobile", alternateMobile);
                 bundle.putString("Email", email);
                 bundle.putString("address", address.getText().toString());
-                bundle.putString("city", city.getText().toString());
+                bundle.putString("city","0" ); //city.getText().toString()
                 bundle.putString("TalukaId", hideTalukaId.getText().toString());
                 bundle.putString("district", edtdistrict.getText().toString());
                 bundle.putString("districtId", hideDistrictId.getText().toString());
                 bundle.putString("state", edtstate.getText().toString());
                 bundle.putString("stateId", hideStateId.getText().toString());
-                bundle.putString("companyname", companyname.getText().toString());
-                bundle.putString("license", license.getText().toString());
-                bundle.putString("companyregnno", companyregnno.getText().toString());
-                bundle.putString("gstno", gstno.getText().toString());
+                bundle.putString("companyname", firmname);
+                bundle.putString("license", apmc);
+                bundle.putString("companyregnno", companyreg);
+                bundle.putString("gstno",gst);//gstno.getText().toString()
                 bundle.putString("IsNewUser", IsNewUser);
 
                 FragmentTransaction transection =getActivity().getSupportFragmentManager().beginTransaction();
@@ -315,14 +317,14 @@ public class SecondFragment extends DialogFragment {
             publishProgress("Sleeping..."); // Calls onProgressUpdate()
             try {
                 if (params[0].toString() == "state")
-                    fetcher.loadList("StatesName", edtstate, URLs.URL_STATE + "?StatesID=15&Language=en", "StatesID", hideStateId, "", "","State","",null,null,customDialogLoadingProgressBar);
+                    fetcher.loadList("StatesName", edtstate, URLs.URL_STATE + "?StatesID=15&Language="+currentLanguage, "StatesID", hideStateId, "", "","State","",null,null,customDialogLoadingProgressBar);
                    // fetcher.loadList("StatesName", edtstate, URLs.URL_STATE, "StatesID", hideStateId, "", "");
 
                 else if (params[0].toString() == "district")
-                    fetcher.loadList("DistrictName", edtdistrict, URLs.URL_DISTRICT + hideStateId.getText()+"," + "&Language=en", "DistrictId", hideDistrictId, "", "","District","",null,null,customDialogLoadingProgressBar);
+                    fetcher.loadList("DistrictName", edtdistrict, URLs.URL_DISTRICT + hideStateId.getText()+"," + "&Language="+currentLanguage, "DistrictId", hideDistrictId, "", "","District","",null,null,customDialogLoadingProgressBar);
 
                 else if (params[0].toString() == "taluka")
-                    fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText()+"," + "&Language=en", "TalukasId", hideTalukaId, "", "","Taluka","",null,null,customDialogLoadingProgressBar);
+                    fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText()+"," + "&Language="+currentLanguage, "TalukasId", hideTalukaId, "", "","Taluka","",null,null,customDialogLoadingProgressBar);
                 else if (params[0].toString() == "userdetails")
                 {
                     GetUserDetails();
@@ -392,7 +394,7 @@ public class SecondFragment extends DialogFragment {
 
     }
     private void GetUserDetails() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_REGISTRATIONGETUSERDETAILS + "&UserId="+user.getId() +"&Language=" + currentLanguage,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_REGISTRATIONGETUSERDETAILS + "UserId="+user.getId() +"&Language=" + currentLanguage,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -439,9 +441,9 @@ public class SecondFragment extends DialogFragment {
 
 
 
-                                    hideDistrictId.setText(String.valueOf(userJson.getInt("DistrictId")));
-                                    hideStateId.setText(String.valueOf(userJson.getInt("TahasilId")));
-                                    hideTalukaId.setText(String.valueOf(userJson.getInt("CityId")));
+                                    hideDistrictId.setText(String.valueOf(userJson.getInt("CityId")));
+                                    hideStateId.setText(String.valueOf(userJson.getInt("StateId")));
+                                    hideTalukaId.setText(String.valueOf(userJson.getInt("TalukaId")));
 
 
 

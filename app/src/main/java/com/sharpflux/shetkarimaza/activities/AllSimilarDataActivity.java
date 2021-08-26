@@ -143,9 +143,18 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
         Cursor cursor = mydatabase.LanguageGet(language);
 
-        while (cursor.moveToNext()) {
-            currentLanguage = cursor.getString(0);
+        if(cursor.getCount()==0) {
+            currentLanguage="en";
+        }
+        else{
+            while (cursor.moveToNext()) {
+                currentLanguage = cursor.getString(0);
+                if( currentLanguage==null)
+                {
+                    currentLanguage="en";
+                }
 
+            }
         }
 
         AssignVariables();
@@ -897,6 +906,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
+        myDatabase.delete();
         super.onBackPressed();
         finish();
     }

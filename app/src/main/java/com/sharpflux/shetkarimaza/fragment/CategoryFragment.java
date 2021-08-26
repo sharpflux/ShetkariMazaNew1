@@ -171,15 +171,27 @@ public class CategoryFragment extends Fragment {
         };
 
 
-         user = SharedPrefManager.getInstance(getContext()).getUser();
+        user = SharedPrefManager.getInstance(getContext()).getUser();
         myLocale = getResources().getConfiguration().locale;
         language = user.getLanguage();
         progressBar = view.findViewById(R.id.progressBar);
         Cursor cursor = mydatabase.LanguageGet(language);
 
-        while (cursor.moveToNext()) {
-            currentLanguage = cursor.getString(0);
+        myLocale = getResources().getConfiguration().locale;
 
+
+        if(cursor.getCount()==0) {
+            currentLanguage="en";
+        }
+        else{
+            while (cursor.moveToNext()) {
+                currentLanguage = cursor.getString(0);
+                if( currentLanguage==null)
+                {
+                    currentLanguage="en";
+                }
+
+            }
         }
 
         textView_category.setOnClickListener(new View.OnClickListener() {
@@ -190,32 +202,6 @@ public class CategoryFragment extends Fragment {
             }
         });
 
-       /* mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if(newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL)
-                {
-                    isScrolling = true;
-                }
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                currentItems = mGridLayoutManager.getChildCount();
-                totalItems = mGridLayoutManager.getItemCount();
-                scrollOutItems = mGridLayoutManager.findFirstVisibleItemPosition();
-
-                if(isScrolling && (currentItems + scrollOutItems == totalItems))
-                {
-                    isScrolling = false;
-                    setDynamicFragmentToTabLayout();
-
-
-                }
-            }
-        });*/
 
         AsyncTaskRunner runner = new AsyncTaskRunner();
         runner.execute("1");
@@ -226,22 +212,12 @@ public class CategoryFragment extends Fragment {
             public void onLoadMore(int page, int totalItemsCount) {
                 isLoading = true;
                 int currentSize = myCategoryTypeAdapter.getItemCount();
-
                 CategoryFragment.AsyncTaskRunner runner = new CategoryFragment.AsyncTaskRunner();
                 String sleepTime = String.valueOf(page+1);
                 runner.execute(sleepTime);
-
-
             }
         });
 
-
-
-
-
-
-        //parentShimmerLayout.startShimmerAnimation();
-      // setDynamicFragmentToTabLayout();
 
         return view;
     }

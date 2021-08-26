@@ -217,7 +217,6 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
     }
     @Override
     public void onBackPressed() {
-
         Intent intent = new Intent(getApplicationContext(), AllSimilarDataActivity.class);
         intent.putExtra("Search", "Filter");
         intent.putExtra("SortBy", priceids);

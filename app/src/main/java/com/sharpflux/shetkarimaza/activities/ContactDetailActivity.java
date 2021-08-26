@@ -477,19 +477,22 @@ public class ContactDetailActivity extends AppCompatActivity {
                                     myAdapter.notifyDataSetChanged();
                                     isLoading = false;
 
-                                   if(myAdapter.getItemCount()==0);{
-                                       txt_emptyView.setVisibility(View.VISIBLE);
-                                    }
-                                        txt_emptyView.setVisibility(View.GONE);
-                                        lr_filterbtn.setVisibility(View.VISIBLE);
+
+
 
                                 }
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+                            if(mList.size()==0){
+                                txt_emptyView.setVisibility(View.VISIBLE);
+                            }
+                            else {
+                                txt_emptyView.setVisibility(View.GONE);
 
-
+                            }
+                            lr_filterbtn.setVisibility(View.VISIBLE);
                         }
                     },
                     new Response.ErrorListener() {
@@ -667,7 +670,9 @@ public class ContactDetailActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+       myDatabase.delete();
       Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
       startActivity(intent);
+      finish();
     }
 }

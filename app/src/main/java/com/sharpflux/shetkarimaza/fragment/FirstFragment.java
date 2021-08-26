@@ -123,8 +123,18 @@ public class FirstFragment extends Fragment {
 
         Cursor cursor = mydatabase.LanguageGet(language);
 
-        if (cursor.getCount() == 0) {
+        if(cursor.getCount()==0) {
+            currentLanguage="en";
+        }
+        else{
+            while (cursor.moveToNext()) {
+                currentLanguage = cursor.getString(0);
+                if( currentLanguage==null)
+                {
+                    currentLanguage="en";
+                }
 
+            }
         }
 
 
@@ -145,10 +155,6 @@ public class FirstFragment extends Fragment {
 
         }
 
-        while (cursor.moveToNext()) {
-            currentLanguage = cursor.getString(0);
-
-        }
 
 
         editfullname.setText(username);

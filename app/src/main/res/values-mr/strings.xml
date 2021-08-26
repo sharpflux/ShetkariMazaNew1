@@ -132,11 +132,11 @@
     <string name="Name_of_Taluka">तहसीलचे नाव</string>
     <string name="dist">जिल्हा</string>
     <string name="state">राज्य</string>
-    <string name="company_name">कंपनीचे नाव / फर्मचे नाव</string>
+    <string name="company_name">कंपनीचे नाव / फर्मचे नाव (पर्यायी)</string>
     <string name="Landlin_no">लँडलाइन क्रमांक</string>
-    <string name="APMC_licance">एपीएमसी परवाना</string>
-    <string name="Company_Regin_no">कंपनी क्षेत्र क्रमांक</string>
-    <string name="GST_no">जीएसटी क्रमांक.</string>
+    <string name="APMC_licance">एपीएमसी परवाना (पर्यायी)</string>
+    <string name="Company_Regin_no">कंपनी क्षेत्र क्रमांक (पर्यायी)</string>
+    <string name="GST_no">जीएसटी क्रमांक. (पर्यायी) </string>
     <string name="next">पुढे</string>
     <string name="account_holder_name">पासबुकनुसार खातेधारकाचे नाव</string>
     <string name="bank_name">बँक नाव (केवळ राष्ट्रीयकृत बँक)</string>
@@ -315,5 +315,6 @@
     <string name="apply">
 लागू करा</string>
     <string name="clear">साफ करा</string>
-
+    <string name="registersuccess">तुम्ही यशस्वीरित्या नोंदणीकृत आहात! तुमची नोंदणी क्रमांक आहे : </string>
+    <string name="registered">यशस्वीरित्या नोंदणीकृत</string>
 </resources>

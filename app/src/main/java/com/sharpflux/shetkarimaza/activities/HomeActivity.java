@@ -8,9 +8,11 @@ import android.database.Cursor;
 import android.os.Bundle;
 
 import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -52,6 +54,7 @@ public class HomeActivity extends AppCompatActivity
     public String languagePref_ID;
     dbLanguage mydatabase;
 
+    Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,21 +64,62 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        myLocale = getResources().getConfiguration().locale;
+
+
+        mydatabase = new dbLanguage(getApplicationContext());
+        Cursor cursor = mydatabase.LanguageGet(language);
+        if(cursor.getCount()==0) {
+            currentLanguage="en";
+        }
+        else{
+            while (cursor.moveToNext()) {
+                currentLanguage = cursor.getString(0);
+                if( currentLanguage==null)
+                {
+                    currentLanguage="en";
+                }
+                changeLang(cursor.getString(0));
+            }
+        }
+
+
+
         llHeader = findViewById(R. id.llHeader);
+
+        bundle = getIntent().getExtras();
+        if (bundle != null) {
+          if(bundle.getInt("UserId")!=0) {
+              AlertDialog.Builder popupSuccess = new AlertDialog.Builder(HomeActivity.this);
+              ViewGroup viewGroup = findViewById(android.R.id.content);
+              View dialogView = LayoutInflater.from(HomeActivity.this).inflate(R.layout.custom_dialog_registration_success, viewGroup, false);
+
+              TextView textViewMsg=(TextView) dialogView.findViewById(R.id.tvSuccessMesg);
+              textViewMsg.setText(getResources().getString(R.string.registersuccess) +String.valueOf(bundle.getInt("UserId")));
+              popupSuccess.setView(dialogView);
+              AlertDialog alertDialog = popupSuccess.create();
+              alertDialog.show();
+
+              dialogView.findViewById(R.id.buttonOk).setOnClickListener(new View.OnClickListener() {
+                  @Override
+                  public void onClick(View view) {
+                      alertDialog.dismiss();
+                  }
+              });
+          }
+
+        }
+
+
+
+
+
+
 
 
        // searchView = findViewById(R.id.searchViewHome);
 
         //saleButton = findViewById(R.id.saleButton);
-        myLocale = getResources().getConfiguration().locale;
-
-        mydatabase = new dbLanguage(getApplicationContext());
-        Cursor cursor = mydatabase.LanguageGet(language);
-
-        while (cursor.moveToNext()) {
-            currentLanguage = cursor.getString(0);
-            changeLang(cursor.getString(0));
-        }
 
         if (!CheckDeviceIsOnline.isNetworkConnected(this)) {
 

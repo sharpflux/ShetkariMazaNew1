@@ -72,11 +72,19 @@ public class BuyerFilterFragment extends Fragment {
 
         Cursor cursor = mydatabaseLanguage.LanguageGet(language);
 
-        while (cursor.moveToNext()) {
-            currentLanguage = cursor.getString(0);
-
+        if(cursor.getCount()==0) {
+            currentLanguage="en";
         }
+        else{
+            while (cursor.moveToNext()) {
+                currentLanguage = cursor.getString(0);
+                if( currentLanguage==null)
+                {
+                    currentLanguage="en";
+                }
 
+            }
+        }
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
        searchView =view.findViewById(R.id.searchView);

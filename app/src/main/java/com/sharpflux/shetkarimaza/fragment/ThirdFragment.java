@@ -126,9 +126,18 @@ public class ThirdFragment extends Fragment {
 
         ((DetailFormActivity) getActivity()).setActionBarTitle(getString(R.string.BankDetails));
 
-        while (cursor.moveToNext()) {
-            currentLanguage = cursor.getString(0);
+        if(cursor.getCount()==0) {
+            currentLanguage="en";
+        }
+        else{
+            while (cursor.moveToNext()) {
+                currentLanguage = cursor.getString(0);
+                if( currentLanguage==null)
+                {
+                    currentLanguage="en";
+                }
 
+            }
         }
 
 

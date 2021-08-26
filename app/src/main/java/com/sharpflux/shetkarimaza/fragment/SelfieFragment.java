@@ -40,6 +40,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.DetailFormActivity;
 import com.sharpflux.shetkarimaza.activities.HomeActivity;
+import com.sharpflux.shetkarimaza.activities.SelectLanguageActivity;
 import com.sharpflux.shetkarimaza.activities.SelfieActivity;
 import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
 import com.sharpflux.shetkarimaza.model.User;
@@ -343,16 +344,12 @@ public class SelfieFragment extends Fragment {
     public void saveOrderDetails() {
 
         String adhartv = hideImageTvSelfie.getText().toString();
-
         if (TextUtils.isEmpty(adhartv)) {
-            btn_take_selfie.setError("Please upload your Selfie");
-            btn_take_selfie.requestFocus();
-            return;
+            adhartv="0";
         }
-
+        final String ImageUrl=adhartv;
 
         bundle = getArguments();
-
 
         if (bundle != null) {
             final String image;
@@ -437,7 +434,9 @@ public class SelfieFragment extends Fragment {
 
                             if (!obj.getBoolean("error")) {
                                 SharedPrefManager.getInstance(getContext()).IsRegistrationComplete(true);
-                                startActivity(new Intent(getContext(), HomeActivity.class));
+                                Intent lin = new Intent(getContext(), HomeActivity.class);
+                                lin.putExtra("UserId",obj.getInt("UserId"));
+                                startActivity(lin);
                                 getActivity().finish();
 
                             } else {
@@ -519,7 +518,7 @@ public class SelfieFragment extends Fragment {
                 params.put("AgentId", "0");
                 params.put("UploadCancelledCheckUrl", "0");
                 params.put("UploadAdharCardPancardUrl", "0");
-                params.put("ImageUrl", "0");
+                params.put("ImageUrl", ImageUrl);
 
                 return params;
             }

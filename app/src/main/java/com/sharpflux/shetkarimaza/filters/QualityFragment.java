@@ -98,10 +98,18 @@ public class QualityFragment extends Fragment {
 
         Cursor cursor = mydatabase.LanguageGet(language);
 
+        if(cursor.getCount()==0) {
+            currentLanguage="en";
+        }
+        else{
+            while (cursor.moveToNext()) {
+                currentLanguage = cursor.getString(0);
+                if( currentLanguage==null)
+                {
+                    currentLanguage="en";
+                }
 
-        while (cursor.moveToNext()) {
-            currentLanguage = cursor.getString(0);
-
+            }
         }
 
         BundleAssign();

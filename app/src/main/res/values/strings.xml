@@ -109,15 +109,15 @@
     <string name="Name_of_Taluka">Name of Taluka*</string>
     <string name="dist">District *</string>
     <string name="state">State *</string>
-    <string name="company_name">Company name / Firm name *</string>
+    <string name="company_name">Company name / Firm name (Optional)</string>
     <string name="Ware_House_Name">Ware House Name</string>
     <string name="VehicalNo">Vehical No</string>
     <string name="Capacity">Capacity</string>
     <string name="VehicalType">Vehical Type</string>
     <string name="Landlin_no">Landline No.</string>
-    <string name="APMC_licance">APMC license No *</string>
-    <string name="Company_Regin_no">Company Register number *</string>
-    <string name="GST_no">GST No. *</string>
+    <string name="APMC_licance">APMC license No (Optional)</string>
+    <string name="Company_Regin_no">Company Register number (Optional)</string>
+    <string name="GST_no">GST No.</string>
     <string name="next">Next</string>
     <string name="account_holder_name">Bank Account name as per passbook *</string>
     <string name="bank_name">Name of Bank(Nationallised bank only) *</string>
@@ -303,7 +303,7 @@
     <string name="monthly_plan">Monthly Plan</string>
     <string name="apply">Apply</string>
     <string name="clear">Clear</string>
-
-
+    <string name="registersuccess">You are successfully registered ! Your Register No is :</string>
+    <string name="registered">Registered Successfully</string>
 
 </resources>

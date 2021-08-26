@@ -100,9 +100,18 @@ public class SubCategoryFragment extends Fragment {
         Cursor cursor = mydatabase.LanguageGet(language);
 
 
-        while (cursor.moveToNext()) {
-            currentLanguage = cursor.getString(0);
+        if(cursor.getCount()==0) {
+            currentLanguage="en";
+        }
+        else{
+            while (cursor.moveToNext()) {
+                currentLanguage = cursor.getString(0);
+                if( currentLanguage==null)
+                {
+                    currentLanguage="en";
+                }
 
+            }
         }
         txt_nurseryName = view.findViewById(R.id.txt_group);
         productlist = new ArrayList<>();

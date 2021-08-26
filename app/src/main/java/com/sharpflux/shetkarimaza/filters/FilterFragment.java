@@ -71,9 +71,18 @@ public class FilterFragment extends Fragment {
 
         Cursor cursor = mydatabaseLanguage.LanguageGet(language);
 
-        while (cursor.moveToNext()) {
-            currentLanguage = cursor.getString(0);
+        if(cursor.getCount()==0) {
+            currentLanguage="en";
+        }
+        else{
+            while (cursor.moveToNext()) {
+                currentLanguage = cursor.getString(0);
+                if( currentLanguage==null)
+                {
+                    currentLanguage="en";
+                }
 
+            }
         }
         recyclerView.setLayoutManager(layoutManager);
         searchView = view.findViewById(R.id.searchView);
@@ -127,11 +136,23 @@ public class FilterFragment extends Fragment {
                     Districtids = Districtids + Talukacursor.getString(0) + ",";
                 }
 
-
                 Url = URLs.URL_TALUKA + Districtids + "&Language="+currentLanguage;
                 IdColumn = "TalukasId";
                 NameColumn = "TalukaName";
                 break;
+
+            case "VEHICLE":
+                String VehicleIds = "";
+                Cursor VehicleCursor = mydatabase.FilterGetByFilterName("DISTRICT");
+                while (VehicleCursor.moveToNext()) {
+                    VehicleIds = VehicleIds + VehicleCursor.getString(0) + ",";
+                }
+
+                Url = URLs.URL_GETVEHICLE + "&Language="+currentLanguage;
+                IdColumn = "VehicalId";
+                NameColumn = "VehicalType";
+                break;
+
 
 
         }

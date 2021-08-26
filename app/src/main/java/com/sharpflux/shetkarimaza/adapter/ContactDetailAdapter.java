@@ -126,7 +126,14 @@ public class ContactDetailAdapter  extends RecyclerView.Adapter<RecyclerView.Vie
                 + mItemList.get(position).getState() + "");
         viewHolder.mMobNo.setText(mItemList.get(position).getMobileNo());
 
+        viewHolder.mMobNo.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", mItemList.get(position).getMobileNo(), null));
+                mContext.startActivity(intent);
+            }
+        });
 
 
     }

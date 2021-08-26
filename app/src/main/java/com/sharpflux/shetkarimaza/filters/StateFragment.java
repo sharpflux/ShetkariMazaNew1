@@ -92,11 +92,19 @@ public class StateFragment extends Fragment {
         Cursor cursor = mydatabase.LanguageGet(language);
         myDatabase = new dbBuyerFilter(getContext());
 
-        while (cursor.moveToNext()) {
-            currentLanguage = cursor.getString(0);
-
+        if(cursor.getCount()==0) {
+            currentLanguage="en";
         }
+        else{
+            while (cursor.moveToNext()) {
+                currentLanguage = cursor.getString(0);
+                if( currentLanguage==null)
+                {
+                    currentLanguage="en";
+                }
 
+            }
+        }
         BundleAssign();
         extras = getArguments();
         if (QualityId.equals(null)&&VarityId.equals(null)) {

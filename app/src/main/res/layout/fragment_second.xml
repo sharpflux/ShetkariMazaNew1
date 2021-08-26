@@ -151,6 +151,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 style="@style/formTextInputLayout"
+                android:visibility="gone"
                 >
 
                 <EditText
@@ -212,6 +213,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+
                 style="@style/formTextInputLayout"
                 >
 
@@ -221,7 +223,6 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/GST_no"
                     android:inputType="none"
-
                     android:textColor="@color/text_black"
                     android:textSize="15sp" />
 
@@ -269,7 +270,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/arima_madurai_medium"
+            android:fontFamily="@font/poppins_bold"
             android:layout_gravity="center"
             android:gravity="center"
             android:text="@string/next"

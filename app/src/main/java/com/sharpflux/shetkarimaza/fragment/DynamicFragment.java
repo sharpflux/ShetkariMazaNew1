@@ -124,6 +124,21 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
 
         Cursor cursor = mydatabase.LanguageGet(language);
 
+        if(cursor.getCount()==0) {
+            currentLanguage="en";
+        }
+        else{
+            while (cursor.moveToNext()) {
+                currentLanguage = cursor.getString(0);
+                if( currentLanguage==null)
+                {
+                    currentLanguage="en";
+                }
+
+            }
+        }
+
+
         if(getArguments().getString("IsGroup")!=null){
             if(getArguments().getString("IsGroup").contains("True")) {
                 subcategoryLinear.setVisibility(View.VISIBLE);
@@ -158,13 +173,10 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
         });*/
 
 
-        while (cursor.moveToNext()) {
-            currentLanguage = cursor.getString(0);
 
-        }
         txt_nurseryName=view.findViewById(R.id.txt_group);
 
-        myLocale = getResources().getConfiguration().locale;
+
 
         DynamicFragment.AsyncTaskRunner runner = new DynamicFragment.AsyncTaskRunner();
         runner.execute("1");
@@ -182,8 +194,6 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
         });
 
 
-
-        // setDynamicFragmentToTabLayout();
 
 
         return view;

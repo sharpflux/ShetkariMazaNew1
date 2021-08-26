@@ -29,6 +29,36 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/vehicle_linear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/vehicle_color"
+                        android:layout_width="5.3dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/gradient_upside_down"
+                        android:orientation="vertical" />
+
+                    <TextView
+                        android:id="@+id/vehicle_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="9.7dp"
+                        android:paddingBottom="16dp"
+                        android:paddingTop="16dp"
+                        android:text="@string/VehicalType"
+                        android:textColor="@color/color_black"
+                        android:textStyle="normal" />
+
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.3dp"
+                    android:background="@color/grey_4a" />
+                <LinearLayout
                     android:id="@+id/states_linear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -49,7 +79,7 @@
                         android:layout_marginStart="9.7dp"
                         android:paddingBottom="16dp"
                         android:paddingTop="16dp"
-                        android:text="State"
+                        android:text="@string/state"
                         android:textColor="@color/color_black"
                         android:textStyle="normal" />
 
@@ -80,7 +110,7 @@
                         android:layout_marginStart="9.7dp"
                         android:paddingBottom="16dp"
                         android:paddingTop="15.3dp"
-                        android:text="District"
+                        android:text="@string/dist"
                         android:textColor="@color/color_black"
                         android:textStyle="normal" />
 
@@ -119,7 +149,7 @@
                         android:layout_marginStart="9.7dp"
                         android:paddingBottom="16dp"
                         android:paddingTop="15.3dp"
-                        android:text="Taluka"
+                        android:text="@string/taluka"
                         android:textColor="@color/color_black"
                         android:textStyle="normal" />
 
@@ -229,7 +259,7 @@
             android:gravity="center"
             android:paddingBottom="16.3dp"
             android:paddingTop="16.3dp"
-            android:text="Clear"
+            android:text="@string/clear"
             android:textColor="#000000"
             android:textSize="13.3sp" />
 
@@ -242,7 +272,7 @@
             android:gravity="center"
             android:paddingBottom="16.3dp"
             android:paddingTop="16.3dp"
-            android:text="Apply"
+            android:text="@string/apply"
             android:textColor="@color/white"
             android:textSize="13.3sp" />
 

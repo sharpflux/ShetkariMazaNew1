@@ -23,9 +23,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.LanguageAdapter;
+import com.sharpflux.shetkarimaza.model.LanguageModal;
 import com.sharpflux.shetkarimaza.model.MyLanguage;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
+import com.sharpflux.shetkarimaza.volley.SharedPrefLanguage;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 
 import java.util.ArrayList;
@@ -43,7 +45,7 @@ public class SelectLanguageActivity extends AppCompatActivity {
     String currentLanguage = "en", currentLang;
     User user;
     dbLanguage mydatabase;
-
+    LanguageModal language;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +81,9 @@ public class SelectLanguageActivity extends AppCompatActivity {
 
                     if(adapter.getSelected().getLanguageName().equals("English"))
                     {
+
+                        SharedPrefManager.getInstance(getApplicationContext()).ChangeLanguage("en");
+
                         mydatabase.LanguageInsert("en");
                         setLocale("en");
                         recreate();
@@ -86,12 +91,14 @@ public class SelectLanguageActivity extends AppCompatActivity {
 
                     else if(adapter.getSelected().getLanguageName().equals("हिन्दी"))
                     {
+                        SharedPrefManager.getInstance(getApplicationContext()).ChangeLanguage("hi");
                         mydatabase.LanguageInsert("hi");
                         setLocale("hi");
                         recreate();
                     }
                     else if(adapter.getSelected().getLanguageName().equals("मराठी"))
                     {
+                        SharedPrefManager.getInstance(getApplicationContext()).ChangeLanguage("mr");
                         mydatabase.LanguageInsert("mr");
                         setLocale("mr");
                         recreate();
