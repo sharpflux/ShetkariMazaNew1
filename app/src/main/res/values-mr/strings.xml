@@ -234,7 +234,8 @@
 
     <string name="list_added_item">जोडलेल्या वस्तूंची यादी</string>
     <string name="enter_your_village_Name">आपल्या गावाचे नाव प्रविष्ट करा *</string>
-    <string name="enter_your_area_in_hector">हेक्टर मध्ये आपले क्षेत्र प्रविष्ट करा *</string>
+    <string name="enter_your_area_in_hector">हेक्टर मध्ये आपले क्षेत्र प्रविष्ट करा (
+पर्यायी)</string>
     <string name="upload_multiple_files">एकाधिक फायली अपलोड करा</string>
     <string name="choose_images">प्रतिमा निवडा</string>
     <string name="view_list">सूची पहा</string>
@@ -317,4 +318,5 @@
     <string name="clear">साफ करा</string>
     <string name="registersuccess">तुम्ही यशस्वीरित्या नोंदणीकृत आहात! तुमची नोंदणी क्रमांक आहे : </string>
     <string name="registered">यशस्वीरित्या नोंदणीकृत</string>
+    <string name="AvailableInMonth">महिन्यात उपलब्ध</string>
 </resources>

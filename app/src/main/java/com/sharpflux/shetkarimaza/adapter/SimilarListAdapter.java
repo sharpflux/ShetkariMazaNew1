@@ -86,7 +86,7 @@ public class SimilarListAdapter  extends RecyclerView.Adapter<RecyclerView.ViewH
         CircleImageView mImage;
         CardView cardView;
         TextView mMobNo;
-        TextView textView_viewMore, mName, mfullname, mvarity, mQuality, mPrice, tvFarmerAddress, tvAvailableQty, tvExpectedPrice, tvPriceDetails;
+        TextView textView_viewMore, mName, mfullname, mvarity, mQuality, mPrice, tvFarmerAddress, tvAvailableQty, tvExpectedPrice, tvPriceDetails,tvAvailableInMonth;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -98,6 +98,7 @@ public class SimilarListAdapter  extends RecyclerView.Adapter<RecyclerView.ViewH
             mvarity = itemView.findViewById(R.id.row_cartlist_tvVarity);
             tvFarmerAddress = itemView.findViewById(R.id.tvFarmerAddress);
             tvPriceDetails = itemView.findViewById(R.id.tvPriceDetails);
+            tvAvailableInMonth=itemView.findViewById(R.id.tvAvailableInMonth);
         }
     }
 
@@ -130,6 +131,8 @@ public class SimilarListAdapter  extends RecyclerView.Adapter<RecyclerView.ViewH
         holder.tvFarmerAddress.setText(mlist.get(position).getFarm_address() + ", " + mlist.get(position).getState() + ", " + mlist.get(position).getTaluka());
 
         holder.tvPriceDetails.setText(mlist.get(position).getPerUnitPrice() + " per " + mlist.get(position).getUnit().toString());
+
+        holder.tvAvailableInMonth.setText(mlist.get(position).getAvailable_month());
 
         holder.mMobNo.setOnClickListener(new View.OnClickListener() {
 

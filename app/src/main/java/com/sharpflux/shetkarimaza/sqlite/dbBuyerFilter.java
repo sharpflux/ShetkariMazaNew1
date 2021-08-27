@@ -80,7 +80,10 @@ public class dbBuyerFilter extends SQLiteOpenHelper {
         Cursor cursor =  db.rawQuery(query, new String[] {FilterBy});
         return cursor;
     }
-
+    public Integer DeleteDependantRecord (String FilterBy) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_NAME, "FILTERBY = ? ",new String[] {FilterBy});
+    }
     public Cursor getAllData() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("select * from "+TABLE_NAME,null);

@@ -23,6 +23,19 @@
 
             />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <TextView
+        android:gravity="center"
+        android:id="@+id/txt_emptyView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/no_data"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:fontFamily="@font/arima_madurai_medium"
+        android:textColor="@color/error_color_material"
+        android:textSize="20sp"/>
+
     <LinearLayout
         android:id="@+id/lr_filterbtn"
         android:layout_width="match_parent"

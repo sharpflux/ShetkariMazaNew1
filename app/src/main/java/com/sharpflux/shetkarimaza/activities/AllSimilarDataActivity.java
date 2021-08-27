@@ -27,7 +27,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -86,7 +88,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
     List<SimilarList> productlist;
     Bundle bundle;
 
-    String TalukaId = "", VarityId = "", QualityId = "", ItemTypeId = "", StatesID = "", DistrictId = "",priceids="",ItemName,categoryId="";
+    String TalukaId = "", VarityId = "", AvailableMonth = "", QualityId = "", ItemTypeId = "", StatesID = "", DistrictId = "",priceids="",ItemName,categoryId="";
     boolean IsVarietyAvailable;
     boolean isLoading = false;
     int currentItems;
@@ -100,7 +102,8 @@ public class AllSimilarDataActivity extends AppCompatActivity {
     ProgressBar progressBar_filter;
     Locale myLocale;
     dbBuyerFilter myDatabase;
-
+    TextView txt_emptyView;
+    LinearLayout lr_filterbtn;
     public static final int PAGE_START = 1;
     private static final int PAGE_SIZE = 15;
     private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
@@ -122,7 +125,10 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
         myDatabase = new dbBuyerFilter(getApplicationContext());
 
+        txt_emptyView = findViewById(R.id.txt_emptyView);
+        lr_filterbtn = (LinearLayout) findViewById(R.id.lr_filterbtn);
 
+        txt_emptyView.setVisibility(View.GONE);
 
         progressBar_filter = findViewById(R.id.progressBar_filter);
 
@@ -164,6 +170,12 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         loadMore(currentPage);
         initAdapter();
         initScrollListener();
+
+        if(mList.size()==0)
+        {
+            lr_filterbtn.setVisibility(View.GONE);
+        }
+
 
         View showModalBottomSheet = findViewById(R.id.bottom);
         showModalBottomSheet.setOnClickListener(new View.OnClickListener() {
@@ -298,7 +310,25 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                             Cursor DISTRICTCursor = myDatabase.FilterGetByFilterName("DISTRICT");
                             Cursor TALUKACursor = myDatabase.FilterGetByFilterName("TALUKA");
 
+                            Cursor AVAILABLEMONTHCursor = myDatabase.FilterGetByFilterName("AVAILABLEMONTH");
+
                             priceids=bundle.getString("SortBy");
+
+
+                            while (AVAILABLEMONTHCursor.moveToNext()) {
+                                if(AvailableMonth==null)
+                                {
+                                    AvailableMonth="";
+                                }
+                                AvailableMonth = AvailableMonth + AVAILABLEMONTHCursor.getString(0) + ",";
+                            }
+
+
+
+                            priceids=bundle.getString("SortBy");
+
+
+
 
                             while (VARIETYCursor.moveToNext()) {
                                 if(VarityId==null)
@@ -378,6 +408,12 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                     } else  if (priceids .equals(null) ){
                         priceids = "0";
                     }
+                    if (AvailableMonth != null) {
+                        if (AvailableMonth.equals(""))
+                            AvailableMonth = "0";
+                    } else {
+                        AvailableMonth = "0";
+                    }
 
                     if(ItemTypeId==null)
                     {
@@ -391,7 +427,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                             URLs.URL_REQESTS + "?StartIndex=" + currentPage + "&PageSize=" + PAGE_SIZE +
                                     "&ItemTypeId=" + ItemTypeId + "&VarityId=" + VarityId + "&StateId=" + StatesID +
                                     "&DistrictId=" + DistrictId + "&QualityId=" + QualityId + "&TalukaId="
-                                    + TalukaId+"&Language="+currentLanguage+"&SortByRate="+priceids,
+                                    + TalukaId+"&Language="+currentLanguage+"&SortByRate="+priceids+"&AvailableMonths="+AvailableMonth,
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
@@ -447,12 +483,29 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
                                             myAdapter.notifyDataSetChanged();
                                             isLoading = false;
+
+                                            if(mList.size()==0){
+                                                txt_emptyView.setVisibility(View.VISIBLE);
+                                            }
+                                            else {
+                                                txt_emptyView.setVisibility(View.GONE);
+
+                                            }
+                                            lr_filterbtn.setVisibility(View.VISIBLE);
                                         }
                                         customDialogLoadingProgressBar.dismiss();
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                         customDialogLoadingProgressBar.dismiss();
+                                        if(mList.size()==0){
+                                            txt_emptyView.setVisibility(View.VISIBLE);
+                                        }
+                                        else {
+                                            txt_emptyView.setVisibility(View.GONE);
+
+                                        }
+                                        lr_filterbtn.setVisibility(View.VISIBLE);
                                     }
                                 }
                             },
@@ -460,6 +513,14 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
                                     customDialogLoadingProgressBar.dismiss();
+                                    if(mList.size()==0){
+                                        txt_emptyView.setVisibility(View.VISIBLE);
+                                    }
+                                    else {
+                                        txt_emptyView.setVisibility(View.GONE);
+
+                                    }
+                                    lr_filterbtn.setVisibility(View.VISIBLE);
                                     // Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }) {
@@ -493,6 +554,8 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
             if(bundle.getString("Search")!=null) {
                 if (bundle.getString("Search").contains("Filter")) {
+
+                    Cursor AVAILABLEMONTHCursor = myDatabase.FilterGetByFilterName("AVAILABLEMONTH");
                     Cursor VARIETYCursor = myDatabase.FilterGetByFilterName("VARIETY");
                     Cursor QUALITYCursor = myDatabase.FilterGetByFilterName("QUALITY");
                     Cursor STATECursor = myDatabase.FilterGetByFilterName("STATE");
@@ -500,6 +563,17 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                     Cursor TALUKACursor = myDatabase.FilterGetByFilterName("TALUKA");
 
                     priceids=bundle.getString("SortBy");
+
+
+                    while (AVAILABLEMONTHCursor.moveToNext()) {
+                        if(AvailableMonth==null)
+                        {
+                            AvailableMonth="";
+                        }
+                        AvailableMonth = AvailableMonth + AVAILABLEMONTHCursor.getString(0) + ",";
+                    }
+
+
 
                     while (VARIETYCursor.moveToNext()) {
                         if(VarityId==null)
@@ -580,6 +654,14 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                 priceids = "0";
             }
 
+            if (AvailableMonth != null) {
+                if (AvailableMonth.equals(""))
+                    AvailableMonth = "0";
+            } else {
+                AvailableMonth = "0";
+            }
+
+
             if(ItemTypeId==null)
             {
                 Toast.makeText(AllSimilarDataActivity.this, "ITEM TYPE IS NULL", Toast.LENGTH_SHORT).show();
@@ -592,7 +674,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                     URLs.URL_REQESTS + "?StartIndex=" + pageIndex + "&PageSize=" + PAGE_SIZE +
                             "&ItemTypeId=" + ItemTypeId + "&VarityId=" + VarityId + "&StateId=" + StatesID +
                             "&DistrictId=" + DistrictId + "&QualityId=" + QualityId + "&TalukaId="
-                            + TalukaId+"&Language="+currentLanguage+"&SortByRate="+priceids,
+                            + TalukaId+"&Language="+currentLanguage+"&SortByRate="+priceids+"&AvailableMonths="+AvailableMonth,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -635,7 +717,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                                                         userJson.getString("OrganicCertiicateNo"),
                                                         String.valueOf(  userJson.getDouble("PerUnitPrice"))
                                                 );
-
+                                        sellOptions.setEmail(userJson.getString("EmailId"));
                                         productlist.add(sellOptions);
                                         productlist.size();
 
@@ -850,7 +932,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                     sheet.addCell(new Label(16, 0, "Area in hector", titleformat));
                     sheet.addCell(new Label(17, 0, "Full Name", titleformat));
                     sheet.addCell(new Label(18, 0, "Mobile No.", titleformat));
-
+                    sheet.addCell(new Label(19, 0, "Email.", titleformat));
                     int j = 1;
 
                     for (int i = 0; i < mList.size(); i++) {
@@ -862,7 +944,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                         sheet.addCell(new Label(5, j, mList.get(i).getCertificateNo()));
                         sheet.addCell(new Label(6, j, mList.get(i).getQuantity()));
                         sheet.addCell(new Label(7, j, mList.get(i).getUnit()));
-                        sheet.addCell(new Label(8, j, mList.get(i).getPrice()));
+                        sheet.addCell(new Label(8, j, mList.get(i).getPerUnitPrice()));
                         sheet.addCell(new Label(9, j, mList.get(i).getAvailable_month()));
                         sheet.addCell(new Label(10, j, mList.get(i).getFarm_address()));
                         sheet.addCell(new Label(11, j, mList.get(i).getSurveyNo()));
@@ -873,6 +955,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                         sheet.addCell(new Label(16, j, mList.get(i).getHector()));
                         sheet.addCell(new Label(17, j, mList.get(i).getFullName()));
                         sheet.addCell(new Label(18, j, mList.get(i).getMobileNo()));
+                        sheet.addCell(new Label(18, j, mList.get(i).getEmail()));
                         j++;
                     }
 

@@ -67,6 +67,11 @@ public class BuyerFilterAdapter extends RecyclerView.Adapter<BuyerFilterViewHold
                 holder.chkbox.setChecked(true);
             }
         }
+        if(holder.FilterBy.equals("STATE"))
+        {
+            myDatabase.DeleteDependantRecord("DISTRICT");
+            myDatabase.DeleteDependantRecord("TALUKA");
+        }
     }
 
     @Override

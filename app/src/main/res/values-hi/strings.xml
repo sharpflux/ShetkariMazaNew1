@@ -239,7 +239,7 @@
 
     <string name="list_added_item">जोड़े गए आइटमों की सूची</string>
     <string name="enter_your_village_Name">अपना गाँव का नाम दर्ज करें *</string>
-    <string name="enter_your_area_in_hector">हेक्टर में अपना क्षेत्र दर्ज करें *</string>
+    <string name="enter_your_area_in_hector">हेक्टर में अपना क्षेत्र दर्ज करें (ऐच्छिक)</string>
     <string name="upload_multiple_files">एकाधिक फ़ाइलें अपलोड करें</string>
     <string name="choose_images">छवियाँ चुनें</string>
     <string name="view_list">सूची देखें</string>
@@ -319,4 +319,5 @@
     <string name="clear">साफ करा</string>
     <string name="registersuccess">आप सफलतापूर्वक पंजीकृत हैं! आपका रजिस्टर नंबर है : </string>
     <string name="registered">सफलतापूर्वक पंजीकृत</string>
+    <string name="AvailableInMonth">महीने में उपलब्ध</string>
 </resources>

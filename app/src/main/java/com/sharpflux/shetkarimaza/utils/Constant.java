@@ -8,4 +8,5 @@ public class Constant {
    public static String DISTRICT="DISTRICT";
    public static String TALUKA="TALUKA";
    public static String AGE="AGE";
+   public static String AVAILABLEMONTH="AVAILABLEMONTH";
 }

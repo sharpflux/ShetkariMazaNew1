@@ -36,11 +36,11 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
     FrameLayout container;
     ArrayList<SubCategoryFilter> productlist;
     //Every layout and view is mentioned here with which the logic will work on screen....
-    LinearLayout brands_linear, category_linear,size_linear, varity_linear,  quality_linear;
+    LinearLayout brands_linear, category_linear,size_linear, varity_linear,linearAvailableMonth,  quality_linear;
 
-    LinearLayout brands_color, category_color, size_color, varity_color, quality_color;
+    LinearLayout brands_color, category_color, size_color, varity_color, quality_color,month_color;
 
-    TextView brands_text, category_text, size_text, varity_text, quality_text, colour_text, verify_text, btnFilterData, btnClear;
+    TextView brands_text, category_text, size_text, varity_text, quality_text, colour_text, verify_text, btnFilterData, btnClear,month_text;
     StringBuilder varity_builder_id;
     dbBuyerFilter myDatabase;
     String ItemTypeId = "",TalukaId = "",VarityId = "",QualityId = "",StatesID = "",DistrictId = "",priceids = "",categoryId="";
@@ -71,28 +71,28 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
         size_linear = findViewById(R.id.taluka_linear);
         varity_linear = findViewById(R.id.varity_linear);
         quality_linear = findViewById(R.id.quality_linear);
-
+        linearAvailableMonth= findViewById(R.id.linearAvailableMonth);
 
         brands_color = findViewById(R.id.brands_color);
         category_color = findViewById(R.id.category_color);
         size_color = findViewById(R.id.size_color);
         varity_color = findViewById(R.id.varity_color);
         quality_color = findViewById(R.id.quality_color);
-
+        month_color = findViewById(R.id.month_color);
 
         brands_text = findViewById(R.id.brands_text);
         category_text = findViewById(R.id.category_text);
         size_text = findViewById(R.id.size_text);
         varity_text = findViewById(R.id.varity_text);
         quality_text = findViewById(R.id.quality_text);
-
+        month_text = findViewById(R.id.month_text);
 
         brands_linear.setOnClickListener(this);
         category_linear.setOnClickListener(this);
         size_linear.setOnClickListener(this);
         varity_linear.setOnClickListener(this);
         quality_linear.setOnClickListener(this);
-
+        linearAvailableMonth.setOnClickListener(this);
 
         bundle = getIntent().getExtras();
         // bundle.getString("ItemTypeId");
@@ -119,6 +119,7 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
         category_color.setVisibility(View.INVISIBLE);
         size_color.setVisibility(View.INVISIBLE);
         brands_color.setVisibility(View.INVISIBLE);
+        month_color.setVisibility(View.INVISIBLE);
 
         if(!IsVarietyAvailable){
             varity_linear.setVisibility(View.GONE);
@@ -250,6 +251,7 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
                 brands_color.setVisibility(View.INVISIBLE);
                 category_color.setVisibility(View.INVISIBLE);
                 size_color.setVisibility(View.INVISIBLE);
+                month_color.setVisibility(View.INVISIBLE);
                 break;
 
             case R.id.quality_linear:
@@ -264,20 +266,37 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
                 brands_color.setVisibility(View.INVISIBLE);
                 category_color.setVisibility(View.INVISIBLE);
                 size_color.setVisibility(View.INVISIBLE);
+                month_color.setVisibility(View.INVISIBLE);
                 break;
 
-            case R.id.states_linear:
+            case R.id.linearAvailableMonth:
 
-                bundle.putString("Filter", Constant.STATE);
+                bundle.putString("Filter", Constant.AVAILABLEMONTH);
                 AppCompatActivity activity2 = (AppCompatActivity) v.getContext();
                 Fragment myFragment2 = new BuyerFilterFragment();
                 myFragment2.setArguments(bundle);
                 activity2.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment2).addToBackStack(null).commit();
                 varity_color.setVisibility(View.INVISIBLE);
                 quality_color.setVisibility(View.INVISIBLE);
+                brands_color.setVisibility(View.INVISIBLE);
+                category_color.setVisibility(View.INVISIBLE);
+                size_color.setVisibility(View.INVISIBLE);
+                month_color.setVisibility(View.VISIBLE);
+                break;
+
+            case R.id.states_linear:
+
+                bundle.putString("Filter", Constant.STATE);
+                AppCompatActivity activity44 = (AppCompatActivity) v.getContext();
+                Fragment myFragment44 = new BuyerFilterFragment();
+                myFragment44.setArguments(bundle);
+                activity44.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment44).addToBackStack(null).commit();
+                varity_color.setVisibility(View.INVISIBLE);
+                quality_color.setVisibility(View.INVISIBLE);
                 brands_color.setVisibility(View.VISIBLE);
                 category_color.setVisibility(View.INVISIBLE);
                 size_color.setVisibility(View.INVISIBLE);
+                month_color.setVisibility(View.INVISIBLE);
                 break;
 
             case R.id.District_linear:
@@ -292,6 +311,7 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
                 brands_color.setVisibility(View.INVISIBLE);
                 category_color.setVisibility(View.VISIBLE);
                 size_color.setVisibility(View.INVISIBLE);
+                month_color.setVisibility(View.INVISIBLE);
                 break;
 
             case R.id.taluka_linear:
@@ -306,6 +326,7 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
                 brands_color.setVisibility(View.INVISIBLE);
                 category_color.setVisibility(View.INVISIBLE);
                 size_color.setVisibility(View.VISIBLE);
+                month_color.setVisibility(View.INVISIBLE);
                 break;
 
 

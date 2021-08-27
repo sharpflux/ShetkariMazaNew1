@@ -40,6 +40,7 @@ import com.sharpflux.shetkarimaza.model.AddPersonModel;
 import com.sharpflux.shetkarimaza.model.ContactDetail;
 import com.sharpflux.shetkarimaza.model.PostItem;
 import com.sharpflux.shetkarimaza.sqlite.dbFilter;
+import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.utils.EndlessRecyclerViewScrollListener;
 import com.sharpflux.shetkarimaza.utils.PaginationListener;
 import com.sharpflux.shetkarimaza.volley.URLs;
@@ -64,7 +65,7 @@ public class TransporterViewActivity extends AppCompatActivity implements SwipeR
    private RecyclerView recyclerView;
     List<ContactDetail> contactlist;
     Bundle bundle;
-    String TalukaId = "", VarityId = "", QualityId = "", ItemTypeId = "", StatesID = "", DistrictId = "",SortBy="0";
+    String TalukaId = "", VarityId = "", QualityId = "", ItemTypeId = "", VehicleTypeId = "",StatesID = "", DistrictId = "",SortBy="0";
     boolean isLoading = false;
 
 
@@ -87,6 +88,11 @@ public class TransporterViewActivity extends AppCompatActivity implements SwipeR
     TextView txt_emptyView;
     dbFilter myDatabase;
     public  List<ContactDetail> mItemList;
+    dbLanguage mydatabaseLanguage;
+    Locale myLocale;
+    String currentLanguage, language;
+    LinearLayout lr_filterbtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +101,31 @@ public class TransporterViewActivity extends AppCompatActivity implements SwipeR
         recyclerView = findViewById(R.id.recyclerView);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+
+        txt_emptyView = findViewById(R.id.txt_emptyView);
+        lr_filterbtn = (LinearLayout) findViewById(R.id.lr_filterbtn);
+
+        txt_emptyView.setVisibility(View.GONE);
+
+
+        mydatabaseLanguage = new dbLanguage(TransporterViewActivity.this);
+        myLocale = getResources().getConfiguration().locale;
+
+        Cursor cursor = mydatabaseLanguage.LanguageGet(language);
+
+        if(cursor.getCount()==0) {
+            currentLanguage="en";
+        }
+        else{
+            while (cursor.moveToNext()) {
+                currentLanguage = cursor.getString(0);
+                if( currentLanguage==null)
+                {
+                    currentLanguage="en";
+                }
+
+            }
+        }
 
         myDatabase = new dbFilter(TransporterViewActivity.this);
 
@@ -139,7 +170,13 @@ public class TransporterViewActivity extends AppCompatActivity implements SwipeR
         recyclerViewAdapter = new RecyclerViewAdapter(TransporterViewActivity.this,mItemList);
         recyclerView.setAdapter(recyclerViewAdapter);
     }
-
+    @Override
+    public void onBackPressed() {
+        myDatabase.delete();
+        Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
     private void initScrollListener() {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -191,9 +228,19 @@ public class TransporterViewActivity extends AppCompatActivity implements SwipeR
 
                 if(bundle.getString("Search")!=null) {
                     if (bundle.getString("Search").contains("Filter")) {
+
+                        Cursor VEHICLETYPECursor = myDatabase.FilterGetByFilterName("VEHICLE");
                         Cursor STATECursor = myDatabase.FilterGetByFilterName("STATE");
                         Cursor DISTRICTCursor = myDatabase.FilterGetByFilterName("DISTRICT");
                         Cursor TALUKACursor = myDatabase.FilterGetByFilterName("TALUKA");
+
+                        while (VEHICLETYPECursor.moveToNext()) {
+                            if(VehicleTypeId==null)
+                            {
+                                VehicleTypeId="";
+                            }
+                            VehicleTypeId = VehicleTypeId + VEHICLETYPECursor.getString(0) + ",";
+                        }
 
                         while (STATECursor.moveToNext()) {
                             if(StatesID==null)
@@ -264,13 +311,20 @@ public class TransporterViewActivity extends AppCompatActivity implements SwipeR
                     TalukaId = "0";
                 }
 
+                if (VehicleTypeId != null) {
+                    if (VehicleTypeId.equals(""))
+                        VehicleTypeId = "0";
+                } else {
+                    VehicleTypeId = "0";
+                }
+
                 bundle = getIntent().getExtras();
                 if (bundle != null) {
                     if(bundle.getString("SortBy")!=null)
                         SortBy = bundle.getString("SortBy");
                 }
 
-                StringRequest stringRequest = new StringRequest(GET,URLs.URL_GETTRANSPORTERS +"StartIndex="+currentPage+"&PageSize="+PageSize +"&StateId=" + StatesID + "&DistrictId=" + DistrictId + "&TalukaId=" + TalukaId + "&VehicleTypeId=0 &Language=en &SortByRate="+SortBy,
+                StringRequest stringRequest = new StringRequest(GET,URLs.URL_GETTRANSPORTERS +"StartIndex="+currentPage+"&PageSize="+PageSize +"&StateId=" + StatesID + "&DistrictId=" + DistrictId + "&TalukaId=" + TalukaId + "&VehicleTypeId="+VehicleTypeId+ "&Language="+ currentLanguage+"&SortByRate="+SortBy,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -312,7 +366,13 @@ public class TransporterViewActivity extends AppCompatActivity implements SwipeR
                                     customDialogLoadingProgressBar.dismiss();
                                     e.printStackTrace();
                                 }
-
+                                if(mItemList.size()==0){
+                                    txt_emptyView.setVisibility(View.VISIBLE);
+                                }
+                                else {
+                                    txt_emptyView.setVisibility(View.GONE);
+                                }
+                                lr_filterbtn.setVisibility(View.VISIBLE);
                                 customDialogLoadingProgressBar.dismiss();
                             }
                         },

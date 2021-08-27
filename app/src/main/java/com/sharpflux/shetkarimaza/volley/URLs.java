@@ -41,6 +41,9 @@ public class URLs {
 
     public static final String URL_GENERATEOTP=Main_URL+"api/Utilities/GetOtpAndAddUpdateUser";
     public static final String URL_VERIFYUSER=Main_URL+"api/Registration/RegistrationUpdateIsVerified" ;
+    public static final String URL_GetAvailableMonthsDynamic=Main_URL+"api/RequestAPI/GetAvailableMonthsDynamic?StartIndex=0" ;
+
+
 
   /*  public static final String URL_LOGIN = "http://apimaza.supergo.in/api/Users/Login";
     public static final String URL_RECYCLER="http://apimaza.supergo.in/api/Categories/GetCategories?Language=";

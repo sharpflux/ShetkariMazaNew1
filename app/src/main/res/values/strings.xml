@@ -222,7 +222,7 @@
 
     <string name="list_added_item">ProductList</string>
     <string name="enter_your_village_Name">Enter your village Name *</string>
-    <string name="enter_your_area_in_hector">Enter your area in hector *</string>
+    <string name="enter_your_area_in_hector">Enter your area in hector (Optional)</string>
     <string name="upload_multiple_files">Upload Multiple Files</string>
     <string name="choose_images">Choose Images</string>
     <string name="view_list">View List</string>
@@ -305,5 +305,5 @@
     <string name="clear">Clear</string>
     <string name="registersuccess">You are successfully registered ! Your Register No is :</string>
     <string name="registered">Registered Successfully</string>
-
+    <string name="AvailableInMonth">Available in Month</string>
 </resources>

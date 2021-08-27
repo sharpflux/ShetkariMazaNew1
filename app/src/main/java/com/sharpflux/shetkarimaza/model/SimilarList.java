@@ -31,7 +31,7 @@ public class SimilarList {
     private String certificateNo;
     private String BotanicalName;
     private String   PerUnitPrice;
-
+    private String   Email;
 
     public SimilarList(String url, String imageUrl, String fullName, String mobileNo, String name,
                        String varietyName, String quality, String quantity, String unit, String price,
@@ -205,6 +205,14 @@ public class SimilarList {
         this.organic = organic;
         this.certificateNo = certificateNo;
         BotanicalName = botanicalName;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
     }
 
     public String getBotanicalName() {

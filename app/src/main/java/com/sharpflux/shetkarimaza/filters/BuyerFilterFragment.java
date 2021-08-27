@@ -164,6 +164,19 @@ public class BuyerFilterFragment extends Fragment {
                 NameColumn="TalukaName";
                 break;
 
+            case "AVAILABLEMONTH":
+
+                String AvailableMonthIds="";
+                Cursor MONTHSCURSOR = mydatabase.FilterGetByFilterName("AVAILABLEMONTH");
+                while (MONTHSCURSOR.moveToNext()) {
+                    AvailableMonthIds=AvailableMonthIds+MONTHSCURSOR.getString(0)+",";
+                }
+
+                Url= URLs.URL_GetAvailableMonthsDynamic;
+                IdColumn="AvailableMonthId";
+                NameColumn="AvailableMonths";
+                break;
+
 
         }
         ActualUrl=Url;

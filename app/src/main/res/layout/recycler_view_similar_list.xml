@@ -15,22 +15,49 @@
             android:duplicateParentState="true"
             >
 
-            <TextView
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/row_cartlist_FarmerName"
+                android:orientation="horizontal"
+
                 android:layout_marginTop="10dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:text="FarmerName"
-                android:fontFamily="@font/sf_pro_display_bold"
-                android:textSize="16sp"
-                android:textColor="@color/text_black"
-                android:textStyle="bold"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:ellipsize="end"
-                />
+                >
+
+
+
+
+                <TextView
+                    android:id="@+id/row_cartlist_FarmerName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:layout_marginStart="15dp"
+                    android:layout_weight="1"
+                    android:textSize="13sp"
+                    android:text="FarmerName"
+                    android:textColor="@color/lightGrey"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvAvailableInMonth"
+                    android:layout_marginEnd="15dp"
+                    android:textSize="13sp"
+                    android:text="@string/available_quantity"
+                    android:textColor="@color/lightGrey"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:fontFamily="@font/sf_pro_display_regular"
+                    android:ellipsize="end"
+                    />
+
+
+            </LinearLayout>
 
 
 

@@ -1,6 +1,8 @@
 package com.sharpflux.shetkarimaza.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -129,7 +131,13 @@ public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerView.View
             viewHolder.tvPriceDetails.setVisibility(View.GONE);
             viewHolder.tvRateDescription.setVisibility(View.GONE);
         }
-
+        viewHolder.mMobNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", mItemList.get(position).getMobileNo(), null));
+                mContext.startActivity(intent);
+            }
+        });
 
 
     }

@@ -121,12 +121,12 @@ public class TransporterVehicleAddActivity extends AppCompatActivity {
                     return;
                 }
 
-                if (TextUtils.isEmpty(surveyNo)) {
+              /*  if (TextUtils.isEmpty(surveyNo)) {
                     edtsurveyNo.setError("Please enter Survey No");
                     edtsurveyNo.requestFocus();
                     customDialogLoadingProgressBar.dismiss();
                     return;
-                }
+                }*/
                 if (TextUtils.isEmpty(state)) {
                     edtstate.setError("Please enter your state");
                     edtstate.requestFocus();
@@ -148,19 +148,19 @@ public class TransporterVehicleAddActivity extends AppCompatActivity {
                     return;
                 }
 
-                if (TextUtils.isEmpty(villagenam)) {
+            /*    if (TextUtils.isEmpty(villagenam)) {
                     edtvillage.setError("Please enter your village name");
                     edtvillage.requestFocus();
                     customDialogLoadingProgressBar.dismiss();
                     return;
-                }
+                }*/
 
-                if (TextUtils.isEmpty(surveyNo)) {
+              /*  if (TextUtils.isEmpty(surveyNo)) {
                     edtsurveyNo.setError("Please enter your Survey No.");
                     edtsurveyNo.requestFocus();
                     customDialogLoadingProgressBar.dismiss();
                     return;
-                }
+                }*/
 
 
                 AsyncTaskRunner runner = new AsyncTaskRunner();
@@ -283,11 +283,11 @@ public class TransporterVehicleAddActivity extends AppCompatActivity {
                 params.put("VehicalNo", edtVehcileNo.getText().toString());
                 params.put("Rate", edtRateperKm.getText().toString());
                 params.put("TransportAddress", edtaddres.getText().toString());
-                params.put("SurveyNo",edtsurveyNo.getText().toString());
+                params.put("SurveyNo","0");
                 params.put("StateId",  hideStateId.getText().toString() );
                 params.put("DistrictId", hideDistrictId.getText().toString());
                 params.put("TahasilId", hideTalukaId.getText().toString());
-                params.put("VillageName", edtvillage.getText().toString());
+                params.put("VillageName", "0");
                 return params;
             }
         };
