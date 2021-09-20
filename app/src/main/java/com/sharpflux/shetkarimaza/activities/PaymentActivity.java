@@ -80,7 +80,7 @@ public class PaymentActivity extends Activity implements PaymentResultListener {
                 amount_in_rs = amount*100;
                 options.put("amount", amount_in_rs);
 
-                co.setKeyID("rzp_live_bLLjDAjUEB89hP");
+                co.setKeyID("rzp_live_CMT7eyRNO7UCnQ");
             co.open(activity, options);
             }
 /*

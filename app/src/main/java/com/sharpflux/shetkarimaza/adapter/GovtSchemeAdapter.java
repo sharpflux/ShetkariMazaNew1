@@ -2,7 +2,6 @@ package com.sharpflux.shetkarimaza.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,23 +16,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.sharpflux.shetkarimaza.R;
-import com.sharpflux.shetkarimaza.activities.ProductDetailsForBuyerActivity;
-import com.sharpflux.shetkarimaza.activities.ProductInfoForSaleActivity;
+import com.sharpflux.shetkarimaza.activities.GovtSchemeDetailsActivity;
+import com.sharpflux.shetkarimaza.activities.GovtSchemes;
 import com.sharpflux.shetkarimaza.model.ContactDetail;
 import com.sharpflux.shetkarimaza.volley.URLs;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-
-public class ContactDetailAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class GovtSchemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
     private Context mContext;
-    public  List<ContactDetail> mItemList;
+    public List<ContactDetail> mItemList;
 
-    public ContactDetailAdapter(Context mContext, List<ContactDetail> itemList) {
+    public GovtSchemeAdapter(Context mContext, List<ContactDetail> itemList) {
         this.mContext = mContext;
         mItemList = itemList;
     }
@@ -42,7 +39,7 @@ public class ContactDetailAdapter  extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_ITEM) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_registration, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_govt_schemes, parent, false);
             return new ItemViewHolder(view);
         } else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading, parent, false);
@@ -79,26 +76,17 @@ public class ContactDetailAdapter  extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
 
-    private class ItemViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener  {
+    private class ItemViewHolder extends RecyclerView.ViewHolder   implements View.OnClickListener {
 
-        ImageView mImage;
-        TextView mfullname,mAddress,mMobNo,mState,mDistrict,mTaluka,tvCompanyName,tvPriceDetails,tvRateDescription;
-        String name,mobileNo,address,state,district,taluka,ImageUrl;
+        ImageView imgGovtScheme;
+        TextView tvSchemeTitle;
         LinearLayout linearRateView;
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
-            mImage = itemView.findViewById(R.id.img_contact_detail);
-            mfullname = itemView.findViewById(R.id.tvName);
-            mAddress = itemView.findViewById(R.id.tvAddress);
-            mMobNo = itemView.findViewById(R.id.tv_MobNo);
-            mState = itemView.findViewById(R.id.tvState);
-            mDistrict = itemView.findViewById(R.id.tvDistrict);
-            mTaluka = itemView.findViewById(R.id.tvTaluka);
-            tvCompanyName=itemView.findViewById(R.id.tvCompanyName);
-            tvPriceDetails=itemView.findViewById(R.id.tvPriceDetails);
-            linearRateView=itemView.findViewById(R.id.linearRateView);
-            tvRateDescription=itemView.findViewById(R.id.tvRateDescription);
+            imgGovtScheme = itemView.findViewById(R.id.imgGovtScheme);
+            tvSchemeTitle=itemView.findViewById(R.id.tvSchemeTitle);
         }
+
 
         @Override
         public void onClick(View view) {
@@ -123,20 +111,26 @@ public class ContactDetailAdapter  extends RecyclerView.Adapter<RecyclerView.Vie
 
     private void populateItemRows(ItemViewHolder viewHolder, int position) {
         Glide.with(mContext).load(URLs.Main_URL+mItemList.get(position).getImage())
-                .placeholder(R.drawable.kisanmaza).into(viewHolder.mImage);
+                .placeholder(R.drawable.kisanmaza).into(viewHolder.imgGovtScheme);
 
-        viewHolder.mfullname.setText(mItemList.get(position).getFullName());
-        viewHolder.mAddress.setText(mItemList.get(position).getAddress()+", "
-                + mItemList.get(position).getTaluka() + ", "
-                + mItemList.get(position).getDistrict() + ", "
-                + mItemList.get(position).getState() + "");
-        viewHolder.mMobNo.setText(mItemList.get(position).getMobileNo());
+        viewHolder.tvSchemeTitle.setText(mItemList.get(position).getFullName());
 
-        viewHolder.mMobNo.setOnClickListener(new View.OnClickListener() {
+
+        viewHolder.imgGovtScheme.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", mItemList.get(position).getMobileNo(), null));
+                Intent intent = new Intent(mContext, GovtSchemeDetailsActivity.class);
+                intent.putExtra("ProductId", "categoryId");
+                mContext.startActivity(intent);
+            }
+        });
+        viewHolder.tvSchemeTitle.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, GovtSchemeDetailsActivity.class);
+                intent.putExtra("ProductId", "categoryId");
                 mContext.startActivity(intent);
             }
         });

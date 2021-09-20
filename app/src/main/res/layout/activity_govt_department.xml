@@ -2,31 +2,37 @@
 <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:id="@+id/fragment_order_list_llContainer"
+    android:id="@+id/fragment_order_list_llContainer2"
     android:background="@color/transparent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <include android:id="@+id/toolbarData"  layout="@layout/toolbar"></include>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefresh"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/contact_Detail_rvProductList2"
+        android:scrollbars="vertical"
+        android:stackFromBottom="true"
+        android:layout_alignParentTop="true"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="52dp"
-        >
+        android:layout_marginBottom="50dp"
+        android:layout_weight="1" />
+    <ProgressBar
+        android:id="@+id/progressBar_filter2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/similar_rvProductList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
 
-            />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-    <TextView
+ <!--   <TextView
         android:gravity="center"
         android:id="@+id/txt_emptyView"
         android:layout_width="match_parent"
@@ -36,7 +42,9 @@
         android:layout_gravity="center"
         android:fontFamily="@font/arima_madurai_medium"
         android:textColor="@color/error_color_material"
-        android:textSize="20sp"/>
+        android:textSize="20sp"/>-->
+
+
     <LinearLayout
         android:id="@+id/lr_filterbtn"
         android:layout_width="match_parent"
@@ -59,6 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:tint="@color/gray"
                 app:srcCompat="@drawable/ic_sort" />
 
             <TextView
@@ -67,7 +76,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="25.7dp"
                 android:text="@string/sort"
-                android:textColor="#000000"
+                android:textColor="@color/gray"
                 android:textSize="15sp" />
 
         </LinearLayout>
@@ -100,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="25.7dp"
-                android:text="@string/filter"
+                android:text="Filter"
                 android:textColor="#000000"
                 android:textSize="15sp" />
 
@@ -161,7 +170,7 @@
                     android:id="@+id/imageView_addFarm"
                     android:layout_marginStart="10dp"
                     android:src="@drawable/add11"
-
+                    android:tint="@color/colorPrimary"
 
                     />
 
@@ -170,4 +179,6 @@
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
 </RelativeLayout>
+

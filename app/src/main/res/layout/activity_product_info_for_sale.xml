@@ -1053,7 +1053,7 @@
                     />
 
 
-                <TextView
+                <EditText
                     android:id="@+id/hideImageTvSelfie"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -1079,71 +1079,71 @@
                 android:layout_gravity="center"
                 android:background="@drawable/rounded_corners_gradient" />
 
-            <TextView
+            <EditText
                 android:id="@+id/hidItemTypeId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="hidden value"
+                android:text="0"
                 android:textSize="20dp"
                 android:visibility="gone" />
 
-            <TextView
+            <EditText
                 android:id="@+id/hidVarietyId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="hidden value"
+                android:text="0"
                 android:textSize="20dp"
                 android:visibility="gone" />
 
-            <TextView
+            <EditText
                 android:id="@+id/hidQualityId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="hidden value"
+                android:text="0"
                 android:textSize="20dp"
                 android:visibility="gone" />
 
-            <TextView
+            <EditText
                 android:id="@+id/hidMeasurementId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="hidden value"
+                android:text="0"
                 android:textSize="20dp"
                 android:visibility="gone" />
 
-            <TextView
+            <EditText
                 android:id="@+id/hidstateId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="hidden value"
+                android:text="0"
                 android:textSize="20dp"
                 android:visibility="gone" />
 
-            <TextView
+            <EditText
                 android:id="@+id/hideStateId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="hidden value"
+                android:text="0"
                 android:textSize="20dp"
                 android:visibility="gone" />
 
-            <TextView
+            <EditText
                 android:id="@+id/hideDistrictId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="hidden value"
+                android:text="0"
                 android:textSize="20dp"
                 android:visibility="gone" />
 
-            <TextView
+            <EditText
                 android:id="@+id/hideTalukaId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="hidden value"
+                android:text="0"
                 android:textSize="20dp"
                 android:visibility="gone" />
 
-            <TextView
+            <EditText
                 android:id="@+id/hideRequstId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -1151,7 +1151,7 @@
                 android:textSize="20dp"
                 android:visibility="gone" />
 
-            <TextView
+            <EditText
                 android:id="@+id/hideAgeId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -1159,11 +1159,11 @@
                 android:textSize="20dp"
                 android:visibility="gone" />
 
-            <TextView
+            <EditText
                 android:id="@+id/hideSubCatId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="hidden value"
+                android:text="0"
                 android:textSize="20dp"
                 android:visibility="gone" />
         </LinearLayout>

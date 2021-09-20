@@ -320,4 +320,8 @@
     <string name="registersuccess">आप सफलतापूर्वक पंजीकृत हैं! आपका रजिस्टर नंबर है : </string>
     <string name="registered">सफलतापूर्वक पंजीकृत</string>
     <string name="AvailableInMonth">महीने में उपलब्ध</string>
+    <string name="recordsfound">
+रिकॉर्ड मिला</string>
+
+    <string name="showing">रिकॉर्ड दिखा रहा है : </string>
 </resources>

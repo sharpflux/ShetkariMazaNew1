@@ -306,4 +306,8 @@
     <string name="registersuccess">You are successfully registered ! Your Register No is :</string>
     <string name="registered">Registered Successfully</string>
     <string name="AvailableInMonth">Available in Month</string>
+    <string name="recordsfound">Records found</string>
+    <string name="showing">Showing Records : </string>
+
+
 </resources>

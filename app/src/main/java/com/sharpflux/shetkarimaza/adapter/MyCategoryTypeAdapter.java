@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.BuyerActivity;
 import com.sharpflux.shetkarimaza.activities.ContactDetailActivity;
+import com.sharpflux.shetkarimaza.activities.GovtDepartmentActivity;
 import com.sharpflux.shetkarimaza.activities.HomeActivity;
 import com.sharpflux.shetkarimaza.activities.SellerActivity;
 import com.sharpflux.shetkarimaza.activities.TransporterVehicleAddActivity;
@@ -165,6 +166,12 @@ class MyCategoryTypeHolder extends RecyclerView.ViewHolder implements View.OnCli
         }
         else if (categoryId.equals("27") ) {
             Intent intent = new Intent(context, TransporterViewActivity.class);
+            intent.putExtra("ProductId", categoryId);
+            context.startActivity(intent);
+
+        }
+        else if (categoryId.equals("33") ) {
+            Intent intent = new Intent(context, GovtDepartmentActivity.class);
             intent.putExtra("ProductId", categoryId);
             context.startActivity(intent);
 

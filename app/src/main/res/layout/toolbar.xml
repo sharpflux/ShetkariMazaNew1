@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/colorPrimary"
+    android:layout_height="wrap_content">
+
+
+
+    <ImageView
+        android:id="@+id/ImgBack2"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:tint="@color/white"
+        android:src="@drawable/backspace_24dp"/>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/ToolbartvItemName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Item Name"
+            android:textSize="16sp"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/white"
+            android:layout_marginLeft="25dp"/>
+        <TextView
+            android:id="@+id/tvRecordsCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0 Rocord found"
+            android:textSize="11sp"
+            android:fontFamily="@font/sfpro_display_bold"
+            android:textColor="@color/white"
+            android:layout_marginLeft="25dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <ImageView
+            android:id="@+id/ImgdownloadExcel"
+            android:src="@drawable/ic_file_download"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_height="wrap_content">
+        </ImageView>
+    </LinearLayout>
+
+
+</androidx.appcompat.widget.Toolbar>

@@ -251,8 +251,10 @@ public class CategoryFragment extends Fragment {
 
     private void setDynamicFragmentToTabLayout(Integer PageSize) {
 
+
+        //SUPPLIED PageSize=99 for detect show the categories whose are usefull for Home Page (IsHomePageCategory)
        StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_RType+PageSize+"&PageSize=15&Language="+currentLanguage+"&UserId="+user.getId(),
+                URLs.URL_RType+PageSize+"&PageSize=99&Language="+currentLanguage+"&UserId="+user.getId(),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

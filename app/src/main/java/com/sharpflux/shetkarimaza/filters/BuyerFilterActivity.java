@@ -43,7 +43,7 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
     TextView brands_text, category_text, size_text, varity_text, quality_text, colour_text, verify_text, btnFilterData, btnClear,month_text;
     StringBuilder varity_builder_id;
     dbBuyerFilter myDatabase;
-    String ItemTypeId = "",TalukaId = "",VarityId = "",QualityId = "",StatesID = "",DistrictId = "",priceids = "",categoryId="";
+    String ItemName="",ItemTypeId = "",TalukaId = "",VarityId = "",QualityId = "",StatesID = "",DistrictId = "",priceids = "",categoryId="";
     boolean IsVarietyAvailable;
 
     @Override
@@ -106,6 +106,7 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
             priceids=bundle.getString("priceids");
             IsVarietyAvailable=bundle.getBoolean("IsVarietyAvailable");
             categoryId=bundle.getString("categoryId");
+            ItemName=bundle.getString("ItemName");
         }
 
         //It is used to already have a selected fragment on the screen
@@ -155,6 +156,8 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
                     DistrictId = bundle.getString("DistrictId");
                     priceids=bundle.getString("priceids");
                     categoryId=bundle.getString("categoryId");
+                    ItemName=bundle.getString("ItemName");
+
                 }
 
                 Intent intent = new Intent(getApplicationContext(), AllSimilarDataActivity.class);
@@ -169,6 +172,7 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
                 intent.putExtra("priceids", priceids);
                 intent.putExtra("categoryId", categoryId);
                 intent.putExtra("IsVarietyAvailable",IsVarietyAvailable);
+                intent.putExtra("ItemName",ItemName);
                 startActivity(intent);
                 finish();
 
@@ -197,6 +201,7 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
                     DistrictId = bundle.getString("DistrictId");
                     priceids=bundle.getString("priceids");
                     categoryId=bundle.getString("categoryId");
+                    ItemName=bundle.getString("ItemName");
                 }
 
                 Intent intent = new Intent(getApplicationContext(), AllSimilarDataActivity.class);
@@ -211,6 +216,7 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
                 intent.putExtra("priceids", priceids);
                 intent.putExtra("categoryId", categoryId);
                 intent.putExtra("IsVarietyAvailable",IsVarietyAvailable);
+                intent.putExtra("ItemName",ItemName);
                 startActivity(intent);
                 finish();
             }
@@ -230,6 +236,7 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
         intent.putExtra("priceids", priceids);
         intent.putExtra("categoryId", categoryId);
         intent.putExtra("IsVarietyAvailable",IsVarietyAvailable);
+        intent.putExtra("ItemName",ItemName);
         startActivity(intent);
         finish();
     }

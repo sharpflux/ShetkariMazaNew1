@@ -319,4 +319,8 @@
     <string name="registersuccess">तुम्ही यशस्वीरित्या नोंदणीकृत आहात! तुमची नोंदणी क्रमांक आहे : </string>
     <string name="registered">यशस्वीरित्या नोंदणीकृत</string>
     <string name="AvailableInMonth">महिन्यात उपलब्ध</string>
+    <string name="recordsfound">
+रेकॉर्ड सापडला</string>
+    <string name="showing">
+रेकॉर्ड दाखवत आहे : </string>
 </resources>

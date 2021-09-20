@@ -120,13 +120,13 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     Product sellOptions;
     Button btn_take_selfie, btnAdd;
     LinearLayout btnFormSubmit, btnAddMore;
-    TextView hideImageTvSelfie, tv_rate, hideAgeId;
+    TextView  tv_rate, hideAgeId;
     CustomRecyclerViewDialog customDialog;
     public static String DATEFORMATTED = "";
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private Date date1;
     DataFetcher fetcher;
-    TextView hidItemTypeId, hidVarietyId, hidQualityId, hidMeasurementId, hideStateId, hideDistrictId, hideTalukaId, hideRequstId, hideSubCatId;
+    EditText hidItemTypeId, hidVarietyId, hidQualityId, hidMeasurementId, hideStateId, hideDistrictId, hideTalukaId, hideRequstId, hideSubCatId,hideImageTvSelfie;
     Locale myLocale;
     String ProductId, productTypeId, productVarietyId, qualityId, unitId, monthId, stateId, districtId, talukaId, certificateno;
     String StateId;
@@ -1213,11 +1213,9 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 else if (params[0].toString() == "taluka")
                     fetcher.loadList("TalukaName", edttaluka, URLs.URL_TALUKA + hideDistrictId.getText() + ",&Language=" + currentLanguage, "TalukasId", hideTalukaId, "", "", "Taluka", "", null, null, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "Age")
-                    fetcher.loadList("AgeGroupName", edtDays, URLs.URL_AGE + "Language=" + currentLanguage, "AgeGroupId", hideAgeId, "", "", "Age", "", null, null, customDialogLoadingProgressBar);
-
+                    fetcher.loadList("AgeGroupName", edtDays, URLs.URL_AGE + "Language=" + currentLanguage+ "&CategoryId=" + ProductId+ "&itemTypeId=" + hidItemTypeId.getText() , "AgeGroupId", hideAgeId, "", "", "Age", "", null, null, customDialogLoadingProgressBar);
                 if (params[0].toString() == "CategoryName")
                     fetcher.loadList("ItemName", sub_category_name, URLs.URL_NAME + "1&PageSize=500&CategoryId=" + hidItemTypeId.getText() + "&Language=" + currentLanguage, "ItemTypeId", hideSubCatId, "CategoryId", ProductId, "Category Name", "BotanicalName", null, null, customDialogLoadingProgressBar);
-
                 else if (params[0].toString() == "Update") {
                     submitToDb();
                 }

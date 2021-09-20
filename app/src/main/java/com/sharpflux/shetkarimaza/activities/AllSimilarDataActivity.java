@@ -1,13 +1,24 @@
 package com.sharpflux.shetkarimaza.activities;
 
 import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.app.TaskStackBuilder;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 
@@ -15,6 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -23,12 +35,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.os.PersistableBundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +65,7 @@ import com.sharpflux.shetkarimaza.filters.PriceFragment;
 import com.sharpflux.shetkarimaza.model.ContactDetail;
 import com.sharpflux.shetkarimaza.model.SimilarList;
 import com.sharpflux.shetkarimaza.model.User;
+import com.sharpflux.shetkarimaza.service.MyJobService;
 import com.sharpflux.shetkarimaza.sqlite.dbBuyerFilter;
 import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
@@ -61,6 +78,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.acl.Permission;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -88,7 +106,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
     List<SimilarList> productlist;
     Bundle bundle;
 
-    String TalukaId = "", VarityId = "", AvailableMonth = "", QualityId = "", ItemTypeId = "", StatesID = "", DistrictId = "",priceids="",ItemName,categoryId="";
+    String TalukaId = "", VarityId = "", AvailableMonth = "", QualityId = "", ItemTypeId = "", StatesID = "", DistrictId = "", priceids = "", ItemName, categoryId = "";
     boolean IsVarietyAvailable;
     boolean isLoading = false;
     int currentItems;
@@ -101,16 +119,26 @@ public class AllSimilarDataActivity extends AppCompatActivity {
     int itemCount = 0;
     ProgressBar progressBar_filter;
     Locale myLocale;
-    dbBuyerFilter myDatabase;
+    dbBuyerFilter myDatabaseBuyer;
     TextView txt_emptyView;
     LinearLayout lr_filterbtn;
     public static final int PAGE_START = 1;
-    private static final int PAGE_SIZE = 15;
+    private static final int PAGE_SIZE = 50;
     private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
     dbLanguage mydatabase;
-    String currentLanguage,language;
+    String currentLanguage, language;
 
+    private int messageCount = 0;
+    private static Uri alarmSound;
+    // Vibration pattern long array
+    private final long[] pattern = {100, 300, 300, 300};
+    private NotificationManager mNotificationManager;
+
+    androidx.appcompat.widget.Toolbar toolbarData;
+    TextView ToolbartvItemName, tvRecordsCount;
     List<SimilarList> mList;
+    ImageView ImgBack2, ImgdownloadExcel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,7 +151,22 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        myDatabase = new dbBuyerFilter(getApplicationContext());
+        myDatabaseBuyer = new dbBuyerFilter(getApplicationContext());
+
+
+        // DEFAULT ALARM SOUND
+        alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        // INITIALIZE NOTIFICATION MANAGER
+        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+
+        toolbarData = findViewById(R.id.toolbarData);
+        ToolbartvItemName = findViewById(R.id.ToolbartvItemName);
+        tvRecordsCount = findViewById(R.id.tvRecordsCount);
+        ImgBack2 = findViewById(R.id.ImgBack2);
+        ImgdownloadExcel = findViewById(R.id.ImgdownloadExcel);
+
 
         txt_emptyView = findViewById(R.id.txt_emptyView);
         lr_filterbtn = (LinearLayout) findViewById(R.id.lr_filterbtn);
@@ -137,6 +180,21 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
 
+        ImgdownloadExcel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DownloadExcel();
+            }
+        });
+
+        ImgBack2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AllSimilarDataActivity.this, BuyerActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
         myLocale = getResources().getConfiguration().locale;
@@ -149,15 +207,13 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
         Cursor cursor = mydatabase.LanguageGet(language);
 
-        if(cursor.getCount()==0) {
-            currentLanguage="en";
-        }
-        else{
+        if (cursor.getCount() == 0) {
+            currentLanguage = "en";
+        } else {
             while (cursor.moveToNext()) {
                 currentLanguage = cursor.getString(0);
-                if( currentLanguage==null)
-                {
-                    currentLanguage="en";
+                if (currentLanguage == null) {
+                    currentLanguage = "en";
                 }
 
             }
@@ -165,14 +221,15 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
         AssignVariables();
         BundleAssign();
-        setTitle(ItemName);
-        mList=new ArrayList<>();
+
+        ToolbartvItemName.setText(ItemName);
+        // setTitle(ItemName);
+        mList = new ArrayList<>();
         loadMore(currentPage);
         initAdapter();
         initScrollListener();
 
-        if(mList.size()==0)
-        {
+        if (mList.size() == 0) {
             lr_filterbtn.setVisibility(View.GONE);
         }
 
@@ -181,6 +238,14 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         showModalBottomSheet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+/*
+                Intent resultIntent = new Intent(AllSimilarDataActivity.this, HomeActivity.class);
+
+
+                showNotification(AllSimilarDataActivity.this,"Testing", "Body",resultIntent);*/
+
+
                 BottomSheetDialogSorting bottomSheetDialogFragment = new BottomSheetDialogSorting();
                 bottomSheetDialogFragment.setArguments(bundle);
                 bottomSheetDialogFragment.setCancelable(true);
@@ -194,21 +259,23 @@ public class AllSimilarDataActivity extends AppCompatActivity {
             public void onClick(View v) {
                 BundleAssign();
                 Intent intent = new Intent(AllSimilarDataActivity.this, BuyerFilterActivity.class);
-                intent.putExtra("ItemTypeId",ItemTypeId);
-                intent.putExtra("TalukaId",TalukaId);
-                intent.putExtra("VarietyId",VarityId);
-                intent.putExtra("QualityId",QualityId);
-                intent.putExtra("StatesID",StatesID);
-                intent.putExtra("DistrictId",DistrictId);
-                intent.putExtra("priceids",priceids);
-                intent.putExtra("IsVarietyAvailable",IsVarietyAvailable);
-                intent.putExtra("categoryId",categoryId);
+                intent.putExtra("ItemTypeId", ItemTypeId);
+                intent.putExtra("TalukaId", TalukaId);
+                intent.putExtra("VarietyId", VarityId);
+                intent.putExtra("QualityId", QualityId);
+                intent.putExtra("StatesID", StatesID);
+                intent.putExtra("DistrictId", DistrictId);
+                intent.putExtra("priceids", priceids);
+                intent.putExtra("IsVarietyAvailable", IsVarietyAvailable);
+                intent.putExtra("categoryId", categoryId);
+                intent.putExtra("ItemName", ItemName);
                 startActivity(intent);
             }
         });
 
 
     }
+
     private void initAdapter() {
         myAdapter = new SimilarListAdapter(AllSimilarDataActivity.this, mList);
         recyclerView.setAdapter(myAdapter);
@@ -242,41 +309,40 @@ public class AllSimilarDataActivity extends AppCompatActivity {
     }
 
 
-    private void BundleAssign()
-    {
+    private void BundleAssign() {
         bundle = getIntent().getExtras();
         if (bundle != null) {
             ItemTypeId = bundle.getString("ItemTypeId");
             ItemName = bundle.getString("ItemName");
             categoryId = bundle.getString("categoryId");
-            IsVarietyAvailable=bundle.getBoolean("IsVarietyAvailable");
+            IsVarietyAvailable = bundle.getBoolean("IsVarietyAvailable");
             //TalukaId = bundle.getString("TalukaId");
-           //VarityId = bundle.getString("VarietyId");
-          // QualityId = bundle.getString("QualityId");
-           //StatesID = bundle.getString("StatesID");
-           //DistrictId = bundle.getString("DistrictId");
-           //priceids=bundle.getString("priceids");
+            //VarityId = bundle.getString("VarietyId");
+            // QualityId = bundle.getString("QualityId");
+            //StatesID = bundle.getString("StatesID");
+            //DistrictId = bundle.getString("DistrictId");
+            //priceids=bundle.getString("priceids");
 
         }
 
     }
 
-    private void AssignVariables()
-    {
+    private void AssignVariables() {
         ItemTypeId = "";
         TalukaId = "";
         VarityId = "";
-        QualityId ="";
-        StatesID ="";
-        DistrictId ="";
-        priceids="";
+        QualityId = "";
+        StatesID = "";
+        DistrictId = "";
+        priceids = "";
     }
 
 
-
     private void loadMore(final Integer currentPage) {
+
+
         customDialogLoadingProgressBar.show();
-        if(!currentPage.equals(1)){
+        if (!currentPage.equals(1)) {
             customDialogLoadingProgressBar.dismiss();
             mList.add(null);
             myAdapter.notifyItemInserted(mList.size() - 1);
@@ -286,7 +352,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(!currentPage.equals(1)){
+                if (!currentPage.equals(1)) {
                     mList.remove(mList.size() - 1);
                     int scrollPosition = mList.size();
                     myAdapter.notifyItemRemoved(scrollPosition);
@@ -302,45 +368,39 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
                     BundleAssign();
 
-                    if(bundle.getString("Search")!=null) {
+                    if (bundle.getString("Search") != null) {
                         if (bundle.getString("Search").contains("Filter")) {
-                            Cursor VARIETYCursor = myDatabase.FilterGetByFilterName("VARIETY");
-                            Cursor QUALITYCursor = myDatabase.FilterGetByFilterName("QUALITY");
-                            Cursor STATECursor = myDatabase.FilterGetByFilterName("STATE");
-                            Cursor DISTRICTCursor = myDatabase.FilterGetByFilterName("DISTRICT");
-                            Cursor TALUKACursor = myDatabase.FilterGetByFilterName("TALUKA");
+                            Cursor VARIETYCursor = myDatabaseBuyer.FilterGetByFilterName("VARIETY");
+                            Cursor QUALITYCursor = myDatabaseBuyer.FilterGetByFilterName("QUALITY");
+                            Cursor STATECursor = myDatabaseBuyer.FilterGetByFilterName("STATE");
+                            Cursor DISTRICTCursor = myDatabaseBuyer.FilterGetByFilterName("DISTRICT");
+                            Cursor TALUKACursor = myDatabaseBuyer.FilterGetByFilterName("TALUKA");
 
-                            Cursor AVAILABLEMONTHCursor = myDatabase.FilterGetByFilterName("AVAILABLEMONTH");
+                            Cursor AVAILABLEMONTHCursor = myDatabaseBuyer.FilterGetByFilterName("AVAILABLEMONTH");
 
-                            priceids=bundle.getString("SortBy");
+                            priceids = bundle.getString("SortBy");
 
 
                             while (AVAILABLEMONTHCursor.moveToNext()) {
-                                if(AvailableMonth==null)
-                                {
-                                    AvailableMonth="";
+                                if (AvailableMonth == null) {
+                                    AvailableMonth = "";
                                 }
                                 AvailableMonth = AvailableMonth + AVAILABLEMONTHCursor.getString(0) + ",";
                             }
 
 
-
-                            priceids=bundle.getString("SortBy");
-
-
+                            priceids = bundle.getString("SortBy");
 
 
                             while (VARIETYCursor.moveToNext()) {
-                                if(VarityId==null)
-                                {
-                                    VarityId="";
+                                if (VarityId == null) {
+                                    VarityId = "";
                                 }
                                 VarityId = VarityId + VARIETYCursor.getString(0) + ",";
                             }
                             while (QUALITYCursor.moveToNext()) {
-                                if(QualityId==null)
-                                {
-                                    QualityId="";
+                                if (QualityId == null) {
+                                    QualityId = "";
                                 }
                                 QualityId = QualityId + QUALITYCursor.getString(0) + ",";
                             }
@@ -348,16 +408,14 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                                 StatesID = StatesID + STATECursor.getString(0) + ",";
                             }
                             while (DISTRICTCursor.moveToNext()) {
-                                if(DistrictId==null)
-                                {
-                                    DistrictId="";
+                                if (DistrictId == null) {
+                                    DistrictId = "";
                                 }
                                 DistrictId = DistrictId + DISTRICTCursor.getString(0) + ",";
                             }
                             while (TALUKACursor.moveToNext()) {
-                                if(TalukaId==null)
-                                {
-                                    TalukaId="";
+                                if (TalukaId == null) {
+                                    TalukaId = "";
                                 }
                                 TalukaId = TalukaId + TALUKACursor.getString(0) + ",";
                             }
@@ -402,10 +460,10 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                     } else {
                         TalukaId = "0";
                     }
-                    if (!priceids.equals(null) ) {
+                    if (!priceids.equals(null)) {
                         if (priceids.equals(""))
                             priceids = "0";
-                    } else  if (priceids .equals(null) ){
+                    } else if (priceids.equals(null)) {
                         priceids = "0";
                     }
                     if (AvailableMonth != null) {
@@ -415,25 +473,25 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                         AvailableMonth = "0";
                     }
 
-                    if(ItemTypeId==null)
-                    {
+                    if (ItemTypeId == null) {
                         Toast.makeText(AllSimilarDataActivity.this, "ITEM TYPE IS NULL", Toast.LENGTH_SHORT).show();
                         return;
                     }
-
 
 
                     StringRequest stringRequest = new StringRequest(Request.Method.GET,
                             URLs.URL_REQESTS + "?StartIndex=" + currentPage + "&PageSize=" + PAGE_SIZE +
                                     "&ItemTypeId=" + ItemTypeId + "&VarityId=" + VarityId + "&StateId=" + StatesID +
                                     "&DistrictId=" + DistrictId + "&QualityId=" + QualityId + "&TalukaId="
-                                    + TalukaId+"&Language="+currentLanguage+"&SortByRate="+priceids+"&AvailableMonths="+AvailableMonth,
+                                    + TalukaId + "&Language=" + currentLanguage + "&SortByRate=" + priceids + "&AvailableMonths=" + AvailableMonth,
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
 
                                     try {
                                         JSONArray obj = new JSONArray(response);
+
+
                                         isFirstLoad = true;
                                         for (int i = 0; i < obj.length(); i++) {
                                             JSONObject userJson = obj.getJSONObject(i);
@@ -468,40 +526,44 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                                                                 userJson.getString("CategoryName_EN"),
                                                                 userJson.getString("Organic"),
                                                                 userJson.getString("OrganicCertiicateNo"),
-                                                                String.valueOf(  userJson.getDouble("PerUnitPrice"))
+                                                                String.valueOf(userJson.getDouble("PerUnitPrice"))
                                                         );
                                                 mList.add(sellOptions);
+                                                //
 
-
-                                            }
-
-
-                                            else {
+                                            } else {
                                                 Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
 
                                             }
 
                                             myAdapter.notifyDataSetChanged();
-                                            isLoading = false;
 
-                                            if(mList.size()==0){
-                                                txt_emptyView.setVisibility(View.VISIBLE);
-                                            }
-                                            else {
-                                                txt_emptyView.setVisibility(View.GONE);
+                                            //tvRecordsCount.setText( obj.getJSONObject(FIRST_ELEMENT).toString()+getResources().getString( R.string.recordsfound ));
 
-                                            }
-                                            lr_filterbtn.setVisibility(View.VISIBLE);
                                         }
+
+
+                                        if (obj.length() > 0) {
+                                            tvRecordsCount.setText(obj.getJSONObject(0).getString("totalCount").toString() + " " + getResources().getString(R.string.recordsfound) + " | " + getResources().getString(R.string.showing) + String.valueOf(mList.size()));
+                                        } else {
+
+                                        }
+
+                                        if (mList.size() == 0) {
+                                            txt_emptyView.setVisibility(View.VISIBLE);
+                                        } else {
+                                            txt_emptyView.setVisibility(View.GONE);
+                                        }
+                                        lr_filterbtn.setVisibility(View.VISIBLE);
                                         customDialogLoadingProgressBar.dismiss();
+                                        isLoading = false;
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                         customDialogLoadingProgressBar.dismiss();
-                                        if(mList.size()==0){
+                                        if (myAdapter.getItemCount() == 0) {
                                             txt_emptyView.setVisibility(View.VISIBLE);
-                                        }
-                                        else {
+                                        } else {
                                             txt_emptyView.setVisibility(View.GONE);
 
                                         }
@@ -513,10 +575,9 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
                                     customDialogLoadingProgressBar.dismiss();
-                                    if(mList.size()==0){
+                                    if (myAdapter.getItemCount() == 0) {
                                         txt_emptyView.setVisibility(View.VISIBLE);
-                                    }
-                                    else {
+                                    } else {
                                         txt_emptyView.setVisibility(View.GONE);
 
                                     }
@@ -543,7 +604,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
     }
 
 
-    private void SetDynamicDATA(String pageIndex) {
+    public void SetDynamicDATA(String pageIndex) {
 
         bundle = getIntent().getExtras();
 
@@ -552,40 +613,36 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
             BundleAssign();
 
-            if(bundle.getString("Search")!=null) {
+            if (bundle.getString("Search") != null) {
                 if (bundle.getString("Search").contains("Filter")) {
 
-                    Cursor AVAILABLEMONTHCursor = myDatabase.FilterGetByFilterName("AVAILABLEMONTH");
-                    Cursor VARIETYCursor = myDatabase.FilterGetByFilterName("VARIETY");
-                    Cursor QUALITYCursor = myDatabase.FilterGetByFilterName("QUALITY");
-                    Cursor STATECursor = myDatabase.FilterGetByFilterName("STATE");
-                    Cursor DISTRICTCursor = myDatabase.FilterGetByFilterName("DISTRICT");
-                    Cursor TALUKACursor = myDatabase.FilterGetByFilterName("TALUKA");
+                    Cursor AVAILABLEMONTHCursor = myDatabaseBuyer.FilterGetByFilterName("AVAILABLEMONTH");
+                    Cursor VARIETYCursor = myDatabaseBuyer.FilterGetByFilterName("VARIETY");
+                    Cursor QUALITYCursor = myDatabaseBuyer.FilterGetByFilterName("QUALITY");
+                    Cursor STATECursor = myDatabaseBuyer.FilterGetByFilterName("STATE");
+                    Cursor DISTRICTCursor = myDatabaseBuyer.FilterGetByFilterName("DISTRICT");
+                    Cursor TALUKACursor = myDatabaseBuyer.FilterGetByFilterName("TALUKA");
 
-                    priceids=bundle.getString("SortBy");
+                    priceids = bundle.getString("SortBy");
 
 
                     while (AVAILABLEMONTHCursor.moveToNext()) {
-                        if(AvailableMonth==null)
-                        {
-                            AvailableMonth="";
+                        if (AvailableMonth == null) {
+                            AvailableMonth = "";
                         }
                         AvailableMonth = AvailableMonth + AVAILABLEMONTHCursor.getString(0) + ",";
                     }
 
 
-
                     while (VARIETYCursor.moveToNext()) {
-                        if(VarityId==null)
-                        {
-                            VarityId="";
+                        if (VarityId == null) {
+                            VarityId = "";
                         }
                         VarityId = VarityId + VARIETYCursor.getString(0) + ",";
                     }
                     while (QUALITYCursor.moveToNext()) {
-                        if(QualityId==null)
-                        {
-                            QualityId="";
+                        if (QualityId == null) {
+                            QualityId = "";
                         }
                         QualityId = QualityId + QUALITYCursor.getString(0) + ",";
                     }
@@ -593,16 +650,14 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                         StatesID = StatesID + STATECursor.getString(0) + ",";
                     }
                     while (DISTRICTCursor.moveToNext()) {
-                        if(DistrictId==null)
-                        {
-                            DistrictId="";
+                        if (DistrictId == null) {
+                            DistrictId = "";
                         }
                         DistrictId = DistrictId + DISTRICTCursor.getString(0) + ",";
                     }
                     while (TALUKACursor.moveToNext()) {
-                        if(TalukaId==null)
-                        {
-                            TalukaId="";
+                        if (TalukaId == null) {
+                            TalukaId = "";
                         }
                         TalukaId = TalukaId + TALUKACursor.getString(0) + ",";
                     }
@@ -662,19 +717,17 @@ public class AllSimilarDataActivity extends AppCompatActivity {
             }
 
 
-            if(ItemTypeId==null)
-            {
+            if (ItemTypeId == null) {
                 Toast.makeText(AllSimilarDataActivity.this, "ITEM TYPE IS NULL", Toast.LENGTH_SHORT).show();
                 return;
             }
-
 
 
             StringRequest stringRequest = new StringRequest(Request.Method.GET,
                     URLs.URL_REQESTS + "?StartIndex=" + pageIndex + "&PageSize=" + PAGE_SIZE +
                             "&ItemTypeId=" + ItemTypeId + "&VarityId=" + VarityId + "&StateId=" + StatesID +
                             "&DistrictId=" + DistrictId + "&QualityId=" + QualityId + "&TalukaId="
-                            + TalukaId+"&Language="+currentLanguage+"&SortByRate="+priceids+"&AvailableMonths="+AvailableMonth,
+                            + TalukaId + "&Language=" + currentLanguage + "&SortByRate=" + priceids + "&AvailableMonths=" + AvailableMonth,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -715,7 +768,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                                                         userJson.getString("CategoryName_EN"),
                                                         userJson.getString("Organic"),
                                                         userJson.getString("OrganicCertiicateNo"),
-                                                        String.valueOf(  userJson.getDouble("PerUnitPrice"))
+                                                        String.valueOf(userJson.getDouble("PerUnitPrice"))
                                                 );
                                         sellOptions.setEmail(userJson.getString("EmailId"));
                                         productlist.add(sellOptions);
@@ -780,8 +833,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String result)
-        {
+        protected void onPostExecute(String result) {
 
         }
 
@@ -798,6 +850,39 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
     }
 
+
+    public void showNotification(Context context, String title, String body, Intent intent) {
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+
+        int notificationId = 1;
+        String channelId = "channel-01";
+        String channelName = "Channel Name";
+        int importance = NotificationManager.IMPORTANCE_HIGH;
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel mChannel = new NotificationChannel(
+                    channelId, channelName, importance);
+            notificationManager.createNotificationChannel(mChannel);
+        }
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, channelId)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(title)
+                .setContentText(body);
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addNextIntent(intent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(
+                0,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+        mBuilder.setContentIntent(resultPendingIntent);
+
+        notificationManager.notify(notificationId, mBuilder.build());
+    }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -809,7 +894,12 @@ public class AllSimilarDataActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.download) {
-            exportToExcel();
+
+
+            DownloadExcel();
+
+
+            //  exportToExcel();
         }
 
       /*  if (itemId == R.id.menu_filter) {
@@ -839,6 +929,76 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    public void DownloadExcel() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+            builder.setTitle("Confirm");
+            builder.setMessage("Are you sure you want to downoad excel?");
+
+            builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+                public void onClick(DialogInterface dialog, int which) {
+                    // Do nothing but close the dialog
+
+                    PersistableBundle extras = new PersistableBundle();
+                    extras.putString("ItemTypeId", ItemTypeId);
+                    extras.putString("TalukaId", TalukaId);
+                    extras.putString("VarietyId", VarityId);
+                    extras.putString("QualityId", QualityId);
+                    extras.putString("StatesID", StatesID);
+                    extras.putString("DistrictId", DistrictId);
+                    extras.putString("priceids", priceids);
+                    extras.putString("categoryId", categoryId);
+                    extras.putString("ItemName", ItemName);
+
+                    JobInfo.Builder builder = new JobInfo.Builder(0, new ComponentName(getApplicationContext(), MyJobService.class));
+                    builder.setPersisted(true).setExtras(extras);
+                        /*if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.N){
+                            builder.setPeriodic(1*60*1000,60*60*10000);
+                        }else {
+                            builder.setPeriodic(1*60*1000);
+                        }*/
+
+                    // Start the job
+                    JobScheduler scheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
+                    // start and get the result
+                    int jobResult = scheduler.schedule(builder.build());
+
+                    if (jobResult == JobScheduler.RESULT_FAILURE) {
+                        Log.d("TAG", "Job failed to start");
+                    } else if (jobResult == JobScheduler.RESULT_SUCCESS) {
+
+                        Log.d("TAG", "Job Running");
+                    }
+
+                }
+            });
+
+            builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    // Do nothing
+                    dialog.dismiss();
+                }
+            });
+
+            AlertDialog alert = builder.create();
+            alert.show();
+        } else {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+
+        }
+
+
+    }
+
+
     private void exportToExcel() {
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -850,10 +1010,10 @@ public class AllSimilarDataActivity extends AppCompatActivity {
             Random r = new Random();
             int randomNumber = r.nextInt(max - min + 1) + min;
 
-            final String fileName = ItemName+"_"+String.valueOf(randomNumber)+"_"+".xls";
+            final String fileName = ItemName + "_" + String.valueOf(randomNumber) + "_" + ".xls";
 
 
-          //  File sdCard = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            //  File sdCard = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
             File directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "KisanMaza");
 
             //create directory if not exist
@@ -976,20 +1136,110 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
         } else {
             // Request permission from the user
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
 
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
-            case 0:
-                exportToExcel();
+            case 0: {
+                //exportToExcel();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+                builder.setTitle("Confirm");
+                builder.setMessage("Are you sure you want to downoad excel?");
+
+                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing but close the dialog
+
+                        PersistableBundle extras = new PersistableBundle();
+                        extras.putString("selectedImages", "selectedImages");
+
+                        JobInfo.Builder builder = new JobInfo.Builder(0, new ComponentName(getApplicationContext(), MyJobService.class));
+                        builder.setPersisted(true).setExtras(extras);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            builder.setPeriodic(1 * 60 * 1000, 60 * 60 * 10000);
+                        } else {
+                            builder.setPeriodic(1 * 60 * 1000);
+                        }
+
+                        // Start the job
+                        JobScheduler scheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
+                        // start and get the result
+                        int jobResult = scheduler.schedule(builder.build());
+
+                        if (jobResult == JobScheduler.RESULT_FAILURE) {
+                            Log.d("TAG", "Job failed to start");
+                        } else if (jobResult == JobScheduler.RESULT_SUCCESS) {
+
+                            Log.d("TAG", "Job Running");
+                        }
+
+                    }
+                });
+
+                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        // Do nothing
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+                alert.show();
+
+
+            }
         }
+    }
+
+    public void OpenExcel(File file) {
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        //intent.setDataAndType(Uri.fromFile(file),"application/vnd.ms-excel");//old version
+        //above 24 api new version
+        Uri apkURI = FileProvider.getUriForFile(
+                AllSimilarDataActivity.this,
+                this.getApplicationContext()
+                        .getPackageName() + ".fileprovider", file);
+        intent.setDataAndType(apkURI, "application/vnd.ms-excel");
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intent, 0);
+            // startActivity(intent);
+        } else {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(AllSimilarDataActivity.this);
+            builder.setCancelable(false);
+            builder.setTitle("File downloaded Successfully...");
+            //builder.setMessage("You don't have excel Application!Please download it!");
+            builder.setMessage("Go to KisanMaza folder in your phone storage!");
+
+            builder.setIcon(R.drawable.ic_check_circle);
+
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+
     }
     @Override
     public void onBackPressed() {
-        myDatabase.delete();
+        myDatabaseBuyer.delete();
         super.onBackPressed();
         finish();
     }
