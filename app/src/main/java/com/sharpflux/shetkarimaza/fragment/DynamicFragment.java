@@ -175,9 +175,6 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
 
 
         txt_nurseryName=view.findViewById(R.id.txt_group);
-
-
-
         DynamicFragment.AsyncTaskRunner runner = new DynamicFragment.AsyncTaskRunner();
         runner.execute("1");
 
@@ -233,7 +230,9 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
                                                         userJson.getString("ItemTypeId"),
                                                         CategoryId,
                                                         "",
-                                                        userJson.getBoolean("IsVarietyAvailable"));
+                                                        userJson.getBoolean("IsVarietyAvailable"),
+                                                        userJson.getBoolean("IsGroup")
+                                                        );
 
                                         productlist.add(sellOptions);
                                         String ItemTypeId =userJson.getString("ItemTypeId");

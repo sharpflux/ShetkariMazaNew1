@@ -799,9 +799,9 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
             name_botanical.setText(BotanicalName);
 
             if (extras.getString("Type") != null) {
-                btnFormSubmit.setVisibility(View.VISIBLE);
-                btnAdd.setVisibility(View.GONE);
-                btnAddMore.setVisibility(View.GONE);
+//                btnFormSubmit.setVisibility(View.VISIBLE);
+           //     btnAdd.setVisibility(View.GONE);
+               // btnAddMore.setVisibility(View.GONE);
             }
 
         }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:orientation="vertical" android:id="@+id/li_Coupon"
+    android:background="@drawable/rect_dotted_coupon_unselected"
+    android:paddingBottom="18dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="16dp">
+    <LinearLayout android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp" android:layout_marginRight="15dp">
+        <TextView android:textSize="18sp" android:textColor="@color/black"
+            android:layout_gravity="center" android:id="@+id/txt_CouponDiscount"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            android:text="Get Rs. 50 Off" android:layout_weight="1"
+            android:fontFamily="@font/sf_pro_display_semibold"/>
+        <TextView android:textSize="14sp" android:textColor="@color/white"
+            android:id="@+id/txt_CouponCode"
+            android:background="@drawable/rectangle_coupon"
+            android:paddingLeft="15dp" android:paddingTop="6.3dp"
+            android:paddingRight="15dp" android:paddingBottom="7.7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Activate" android:fontFamily="@font/sf_pro_display_semibold"/>
+    </LinearLayout>
+    <TextView android:textSize="13sp"
+        android:textColor="@color/smoke_gray"
+        android:id="@+id/txt_CouponTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="12dp"
+        android:text="Get Rs 300 off on purchase of Rs 600 and above" android:fontFamily="@font/sf_pro_display_semibold"/>
+</LinearLayout>

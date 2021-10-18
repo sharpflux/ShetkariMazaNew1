@@ -1,11 +1,13 @@
 package com.sharpflux.shetkarimaza.activities;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 
 import android.os.Bundle;
 
+import android.provider.Settings;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -72,9 +74,10 @@ public class EditRequestActivity extends AppCompatActivity {
         List<SimilarList> mList = new ArrayList<>();
 
 
+      //  Settings.Secure.putString(this.getContentResolver(), "accessibility_display_daltonizer_enabled", "1");
+        //Settings.Secure.putString(this.getContentResolver(), "accessibility_display_daltonizer", "0");
 
-
-
+       // startActivity(new Intent(android.provider.Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS));
 
 
         myLocale = getResources().getConfiguration().locale;

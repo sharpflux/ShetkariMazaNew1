@@ -105,7 +105,7 @@ public class ContactDetailActivity extends AppCompatActivity {
     TextView txt_emptyView;
     LinearLayout lr_filterbtn;
     List<ContactDetail> mList;
-    private int PageSize=15;
+    private int PageSize=50;
     private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
     private RecyclerView
             recyclerView_addFarm;
@@ -115,6 +115,8 @@ public class ContactDetailActivity extends AppCompatActivity {
     private ArrayList<AddPersonModel>  addPersonModelArrayList_farm;
     ImageView imageView_addFarm;
     dbFilter myDatabase;
+    TextView ToolbartvItemName, tvRecordsCount;
+    ImageView ImgBack2;
     //https://newbedev.com/how-to-show-an-empty-view-with-a-recyclerview
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +139,18 @@ public class ContactDetailActivity extends AppCompatActivity {
         txt_emptyView = findViewById(R.id.txt_emptyView);
         lr_filterbtn = (LinearLayout) findViewById(R.id.lr_filterbtn);
 
+        ImgBack2 = findViewById(R.id.ImgBack2);
+
+
+        ImgBack2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myDatabase.delete();
+                Intent intent = new Intent(ContactDetailActivity.this, HomeActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         txt_emptyView.setVisibility(View.GONE);
 
         imageView_addFarm = findViewById(R.id.imageView_addFarm);
@@ -145,13 +159,16 @@ public class ContactDetailActivity extends AppCompatActivity {
             lr_filterbtn.setVisibility(View.GONE);
         }
 
-        recyclerView_addFarm = findViewById(R.id.recyclerView_addFarm);
+        ToolbartvItemName = findViewById(R.id.ToolbartvItemName);
+        tvRecordsCount = findViewById(R.id.tvRecordsCount);
+
+     /*   recyclerView_addFarm = findViewById(R.id.recyclerView_addFarm);
         addPersonAdapter_farm = new AddPersonAdapter(ContactDetailActivity.this, addPersonModelArrayList_farm,
                 "Farm");
         recyclerView_addFarm.setAdapter(addPersonAdapter_farm);
         recyclerView_addFarm.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager_farm = new LinearLayoutManager(ContactDetailActivity.this);
-        recyclerView_addFarm.setLayoutManager(linearLayoutManager_farm);
+        recyclerView_addFarm.setLayoutManager(linearLayoutManager_farm);*/
 
         ItemTypeId="0";
         bundle = getIntent().getExtras();
@@ -165,7 +182,7 @@ public class ContactDetailActivity extends AppCompatActivity {
             StatesID = bundle.getString("StatesID");
             DistrictId = bundle.getString("DistrictId");
         }
-        imageView_addFarm.setOnClickListener(new View.OnClickListener() {
+    /*    imageView_addFarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -216,46 +233,65 @@ public class ContactDetailActivity extends AppCompatActivity {
                     setTitle("Nursery Owner");
                 }
             }
-        });
+        });*/
 
         if (ItemTypeId.equals("1")) {
+            ToolbartvItemName.setText("Processor");
             setTitle("Processor");
         } else if (ItemTypeId.equals("4")) {
+            ToolbartvItemName.setText("Producer");
             setTitle("Producer");
         } else if (ItemTypeId.equals("5")) {
+            ToolbartvItemName.setText("Commission Agent");
             setTitle("Commission Agent");
         } else if (ItemTypeId.equals("6")) {
+            ToolbartvItemName.setText("Service Provider");
             setTitle("Service Provider");
         } else if (ItemTypeId.equals("16")) {
+            ToolbartvItemName.setText("Individual Farmers");
             setTitle("Individual Farmers");
         } else if (ItemTypeId.equals("17")) {
+            ToolbartvItemName.setText("Farmer Group");
             setTitle("Farmer Group");
         } else if (ItemTypeId.equals("18")) {
+            ToolbartvItemName.setText("Trader");
             setTitle("Trader");
         } else if (ItemTypeId.equals("20")) {
+            ToolbartvItemName.setText("FPO/FPC");
             setTitle("FPO/FPC");
         } else if (ItemTypeId.equals("21")) {
+            ToolbartvItemName.setText("Govt. Agency");
             setTitle("Govt. Agency");
         } else if (ItemTypeId.equals("22")) {
+            ToolbartvItemName.setText("Individual Customer");
             setTitle("Individual Customer");
         } else if (ItemTypeId.equals("23")) {
+            ToolbartvItemName.setText("Exporter");
             setTitle("Exporter");
         } else if (ItemTypeId.equals("24")) {
+            ToolbartvItemName.setText("Processor");
             setTitle("Retailer");
         } else if (ItemTypeId.equals("26")) {
+            ToolbartvItemName.setText("Processor");
             setTitle("Warehouse");
         } else if (ItemTypeId.equals("27")) {
+            ToolbartvItemName.setText("Transporter");
             setTitle("Transporter");
         } else if (ItemTypeId.equals("28")) {
+            ToolbartvItemName.setText("Packer");
             setTitle("Packer");
         } else if (ItemTypeId.equals("29")) {
+            ToolbartvItemName.setText("Franchise");
             setTitle("Franchise");
         }else if (ItemTypeId.equals("30")) {
+            ToolbartvItemName.setText("Bank Loan Consultants");
             setTitle("Bank Loan Consultants");
         }else if (ItemTypeId.equals("31"))
         {
+            ToolbartvItemName.setText("Project Consultant");
             setTitle("Project Consultant");
         } else if (ItemTypeId.equals("32")) {
+            ToolbartvItemName.setText("Nursery Owner");
             setTitle("Nursery Owner");
         }
 
@@ -473,7 +509,11 @@ public class ContactDetailActivity extends AppCompatActivity {
                                     else {
                                         Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
                                     }
+                                    if (obj.length() > 0) {
+                                        tvRecordsCount.setText(obj.getJSONObject(0).getString("totalCount").toString() + " " + getResources().getString(R.string.recordsfound) + " | " + getResources().getString(R.string.showing) + String.valueOf(mList.size()));
+                                    } else {
 
+                                    }
                                     myAdapter.notifyDataSetChanged();
                                     isLoading = false;
 

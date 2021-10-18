@@ -106,7 +106,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
     List<SimilarList> productlist;
     Bundle bundle;
 
-    String TalukaId = "", VarityId = "", AvailableMonth = "", QualityId = "", ItemTypeId = "", StatesID = "", DistrictId = "", priceids = "", ItemName, categoryId = "";
+    String TalukaId = "", VarityId = "", AvailableMonth = "", Age = "",QualityId = "", ItemTypeId = "", StatesID = "", DistrictId = "", priceids = "", ItemName, categoryId = "";
     boolean IsVarietyAvailable;
     boolean isLoading = false;
     int currentItems;
@@ -161,7 +161,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
 
-        toolbarData = findViewById(R.id.toolbarData);
+        //toolbarData = findViewById(R.id.toolbarData);
         ToolbartvItemName = findViewById(R.id.ToolbartvItemName);
         tvRecordsCount = findViewById(R.id.tvRecordsCount);
         ImgBack2 = findViewById(R.id.ImgBack2);
@@ -375,8 +375,8 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                             Cursor STATECursor = myDatabaseBuyer.FilterGetByFilterName("STATE");
                             Cursor DISTRICTCursor = myDatabaseBuyer.FilterGetByFilterName("DISTRICT");
                             Cursor TALUKACursor = myDatabaseBuyer.FilterGetByFilterName("TALUKA");
-
                             Cursor AVAILABLEMONTHCursor = myDatabaseBuyer.FilterGetByFilterName("AVAILABLEMONTH");
+                            Cursor AGECursor = myDatabaseBuyer.FilterGetByFilterName("AGE");
 
                             priceids = bundle.getString("SortBy");
 
@@ -419,6 +419,15 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                                 }
                                 TalukaId = TalukaId + TALUKACursor.getString(0) + ",";
                             }
+
+
+                            while (AGECursor.moveToNext()) {
+                                if (Age == null) {
+                                    Age = "";
+                                }
+                                Age = Age + AGECursor.getString(0) + ",";
+                            }
+
                         }
                     }
 
@@ -473,6 +482,13 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                         AvailableMonth = "0";
                     }
 
+                    if (Age != null) {
+                        if (Age.equals(""))
+                            Age = "0";
+                    } else {
+                        Age = "0";
+                    }
+
                     if (ItemTypeId == null) {
                         Toast.makeText(AllSimilarDataActivity.this, "ITEM TYPE IS NULL", Toast.LENGTH_SHORT).show();
                         return;
@@ -483,7 +499,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                             URLs.URL_REQESTS + "?StartIndex=" + currentPage + "&PageSize=" + PAGE_SIZE +
                                     "&ItemTypeId=" + ItemTypeId + "&VarityId=" + VarityId + "&StateId=" + StatesID +
                                     "&DistrictId=" + DistrictId + "&QualityId=" + QualityId + "&TalukaId="
-                                    + TalukaId + "&Language=" + currentLanguage + "&SortByRate=" + priceids + "&AvailableMonths=" + AvailableMonth,
+                                    + TalukaId + "&Language=" + currentLanguage + "&SortByRate=" + priceids + "&AvailableMonths=" + AvailableMonth+ "&Age=" + Age,
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {

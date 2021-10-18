@@ -324,6 +324,8 @@ public class LoginFragment extends Fragment {
                                     AlertDialog alert = builder.create();
                                     alert.show();
 
+                                    customDialogLoadingProgressBar.dismiss();
+
                                 }
 
 
@@ -333,7 +335,7 @@ public class LoginFragment extends Fragment {
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-
+                            customDialogLoadingProgressBar.dismiss();
                         }
                     }
                 },
@@ -353,6 +355,7 @@ public class LoginFragment extends Fragment {
 
                         AlertDialog alert = builder.create();
                         alert.show();
+                        customDialogLoadingProgressBar.dismiss();
                     }
                 }) {
             @Override

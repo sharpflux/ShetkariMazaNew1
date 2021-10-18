@@ -9,7 +9,7 @@ public class SellOptions {
     private  String CategoryId;
     private  String ItemName;
     private boolean IsVarietyAvailable;
-
+    private boolean IsGroupItem;
     public SellOptions(String image, String productlist, String productId) {
         this.image = image;
         this.productlist = productlist;
@@ -32,15 +32,23 @@ public class SellOptions {
         ItemName = itemName;
     }
 
-    public SellOptions(String image, String productlist, String productId, String categoryId, String itemName, boolean isVarietyAvailable) {
+    public SellOptions(String image, String productlist, String productId, String categoryId, String itemName, boolean isVarietyAvailable,boolean isGroupItem) {
         this.image = image;
         this.productlist = productlist;
         this.productId = productId;
         CategoryId = categoryId;
         ItemName = itemName;
         IsVarietyAvailable = isVarietyAvailable;
+        IsGroupItem=isGroupItem;
     }
 
+    public boolean isGroupItem() {
+        return IsGroupItem;
+    }
+
+    public void setGroupItem(boolean groupItem) {
+        IsGroupItem = groupItem;
+    }
 
     public boolean isVarietyAvailable() {
         return IsVarietyAvailable;

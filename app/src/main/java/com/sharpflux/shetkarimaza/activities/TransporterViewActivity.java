@@ -92,7 +92,8 @@ public class TransporterViewActivity extends AppCompatActivity implements SwipeR
     Locale myLocale;
     String currentLanguage, language;
     LinearLayout lr_filterbtn;
-
+    TextView ToolbartvItemName, tvRecordsCount;
+    ImageView ImgBack2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +108,8 @@ public class TransporterViewActivity extends AppCompatActivity implements SwipeR
 
         txt_emptyView.setVisibility(View.GONE);
 
+        ToolbartvItemName = findViewById(R.id.ToolbartvItemName);
+        tvRecordsCount = findViewById(R.id.tvRecordsCount);
 
         mydatabaseLanguage = new dbLanguage(TransporterViewActivity.this);
         myLocale = getResources().getConfiguration().locale;
@@ -137,7 +140,24 @@ public class TransporterViewActivity extends AppCompatActivity implements SwipeR
         initAdapter();
         initScrollListener();
 
+        ImgBack2 = findViewById(R.id.ImgBack2);
+
+
+        ImgBack2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myDatabase.delete();
+                Intent intent = new Intent(TransporterViewActivity.this, HomeActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
+
         txt_emptyView = findViewById(R.id.txt_emptyView);
+
+        ToolbartvItemName.setText("Transporter");
 
         View showModalBottomSheet = findViewById(R.id.bottom);
         showModalBottomSheet.setOnClickListener(new View.OnClickListener() {
@@ -359,7 +379,11 @@ public class TransporterViewActivity extends AppCompatActivity implements SwipeR
 
                                         recyclerViewAdapter.notifyDataSetChanged();
                                         isLoading = false;
+                                        if (obj.length() > 0) {
+                                            tvRecordsCount.setText(obj.getJSONObject(0).getString("totalCount").toString() + " " + getResources().getString(R.string.recordsfound) + " | " + getResources().getString(R.string.showing) + String.valueOf(mItemList.size()));
+                                        } else {
 
+                                        }
                                     }
 
                                 } catch (JSONException e) {

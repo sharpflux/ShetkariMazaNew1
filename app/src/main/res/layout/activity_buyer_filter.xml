@@ -60,6 +60,36 @@
                     android:background="@color/grey_4a" />
 
                 <LinearLayout
+                    android:id="@+id/age_linear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/age_color"
+                        android:layout_width="5.3dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/gradient_upside_down"
+                        android:orientation="vertical" />
+
+                    <TextView
+                        android:id="@+id/age_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="9.7dp"
+                        android:paddingBottom="16dp"
+                        android:paddingTop="16dp"
+                        android:text="@string/seller_age_days"
+                        android:textColor="@color/color_black"
+                        android:textStyle="normal" />
+
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.3dp"
+                    android:background="@color/grey_4a" />
+                <LinearLayout
                     android:id="@+id/quality_linear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -89,7 +119,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.3dp"
                     android:background="@color/grey_4a" />
-
 
                 <LinearLayout
                     android:id="@+id/linearAvailableMonth"

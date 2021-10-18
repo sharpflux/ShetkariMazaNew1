@@ -518,7 +518,7 @@ public class SelfieFragment extends Fragment {
                 params.put("AgentId", "0");
                 params.put("UploadCancelledCheckUrl", "0");
                 params.put("UploadAdharCardPancardUrl", "0");
-                params.put("ImageUrl", ImageUrl);
+                params.put("ImageUrl", "0");
 
                 return params;
             }

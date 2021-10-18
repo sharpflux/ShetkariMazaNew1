@@ -14,9 +14,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:noHistory="true"
+            android:name=".activities.TermsActivity"
+
+            ></activity>
         <activity
-            android:parentActivityName=".activities.GovtSchemes"
-            android:name=".activities.GovtSchemeDetailsActivity"></activity>
+            android:name=".activities.Membership"
+            android:parentActivityName=".activities.HomeActivity"
+            android:theme="@style/SellerDarkAppTheme" />
+        <activity
+            android:name=".activities.GovtSchemeDetailsActivity"
+            android:parentActivityName=".activities.GovtSchemes" />
         <activity
             android:name=".activities.GovtSchemes"
             android:parentActivityName=".activities.GovtDepartmentActivity"
@@ -29,8 +37,7 @@
         <activity
             android:name=".activities.TransporterViewActivity"
             android:label="@string/transporter"
-            android:parentActivityName=".activities.HomeActivity"
-            android:theme="@style/SellerDarkAppTheme" />
+            android:parentActivityName=".activities.HomeActivity" />
         <activity
             android:name=".activities.TransporterVehicleAddActivity"
             android:label="@string/addVehicle"
@@ -45,7 +52,7 @@
             android:name=".activities.ContactDetailActivity"
             android:noHistory="true"
             android:parentActivityName=".activities.HomeActivity"
-            android:theme="@style/SellerDarkAppTheme" />
+            />
         <activity
             android:name=".activities.BuyerActivity"
             android:label="@string/buyer"
@@ -95,7 +102,7 @@
         <activity
             android:name=".activities.AllSimilarDataActivity"
             android:noHistory="true"
-            android:parentActivityName=".activities.BuyerActivity"/>
+            android:parentActivityName=".activities.BuyerActivity" />
         <activity
             android:name=".activities.ProductDetailsForBuyerActivity"
             android:label="Detail Information"
@@ -132,11 +139,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service
-            android:name=".service.MyJobService"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE"/>
+
         <meta-data
             android:name="com.razorpay.ApiKey"
             android:value="rzp_live_CMT7eyRNO7UCnQ" />
@@ -164,17 +167,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-
-        <receiver
-            android:name=".receiver.BootReceiver"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="android.permission.RECEIVE_BOOT_COMPLETED" >
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -182,8 +174,24 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
+
+        <receiver
+            android:name=".receiver.BootReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".service.MyJobService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -205,6 +213,8 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+
     <uses-permission
         android:name="org.apache.http.legacy"
         android:required="false" />

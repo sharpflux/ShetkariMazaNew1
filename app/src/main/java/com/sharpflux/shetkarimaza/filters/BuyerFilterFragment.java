@@ -128,8 +128,13 @@ public class BuyerFilterFragment extends Fragment {
                 NameColumn="QualityType";
                 break;
 
-            case "STATE":
+            case "AGE":
+                Url= URLs.URL_AGE+"Language="+currentLanguage+ "&CategoryId=" + categoryId+ "&itemTypeId=" +ItemTypeId;
+                IdColumn="AgeGroupId";
+                NameColumn="AgeGroupName";
+                break;
 
+            case "STATE":
                 Url= URLs.URL_STATE+"?Language="+currentLanguage;
                 IdColumn="StatesID";
                 NameColumn="StatesName";
@@ -137,7 +142,6 @@ public class BuyerFilterFragment extends Fragment {
 
 
             case "DISTRICT":
-
                 String Stateids="";
                 Cursor StateCursor = mydatabase.FilterGetByFilterName("STATE");
                 while (StateCursor.moveToNext()) {
@@ -157,8 +161,7 @@ public class BuyerFilterFragment extends Fragment {
                 while (Talukacursor.moveToNext()) {
                     Districtids=Districtids+Talukacursor.getString(0)+",";
                 }
-
-
+                
                 Url= URLs.URL_TALUKA+Districtids+"&Language="+currentLanguage;
                 IdColumn="TalukasId";
                 NameColumn="TalukaName";

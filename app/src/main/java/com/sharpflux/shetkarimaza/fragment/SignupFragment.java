@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -37,6 +38,7 @@ import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.DetailFormActivity;
 import com.sharpflux.shetkarimaza.activities.MobileVerification;
 import com.sharpflux.shetkarimaza.activities.TabLayoutLogRegActivity;
+import com.sharpflux.shetkarimaza.activities.TermsActivity;
 import com.sharpflux.shetkarimaza.activities.UserVerificationActivity;
 import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
 import com.sharpflux.shetkarimaza.model.User;
@@ -66,6 +68,7 @@ public class SignupFragment extends Fragment {
     AlertDialog.Builder builder;
     private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
     private static final int CREDENTIAL_PICKER_REQUEST = 1;
+    TextView tvTermsConditions;
     User user;
     public SignupFragment() {
 
@@ -107,13 +110,19 @@ public class SignupFragment extends Fragment {
 
 
 
-
-
+        tvTermsConditions=view.findViewById(R.id.tvTermsConditions);
 
         eusername = view.findViewById(R.id.eusername);
         edtmiddlename = view.findViewById(R.id.middlename);
         edtlastname = view.findViewById(R.id.lastname);
         editTextMobile = view.findViewById(R.id.emobnum);
+
+            tvTermsConditions.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(getContext(), TermsActivity.class));
+                }
+            });
 
 
             editTextMobile.setOnFocusChangeListener(new View.OnFocusChangeListener() {

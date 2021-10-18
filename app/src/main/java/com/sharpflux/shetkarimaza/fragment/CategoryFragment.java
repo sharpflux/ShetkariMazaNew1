@@ -31,6 +31,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.activities.Membership;
 import com.sharpflux.shetkarimaza.activities.SubscriptionPlanActivity;
 import com.sharpflux.shetkarimaza.adapter.BannerAdapter;
 import com.sharpflux.shetkarimaza.adapter.HomeSliderAdapter;
@@ -197,7 +198,7 @@ public class CategoryFragment extends Fragment {
         textView_category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), SubscriptionPlanActivity.class);
+                Intent intent = new Intent(getContext(), Membership.class);
                 getContext().startActivity(intent);
             }
         });
@@ -286,58 +287,6 @@ public class CategoryFragment extends Fragment {
                                 myCategoryTypeAdapter = new MyCategoryTypeAdapter(getContext(), categoryList);
                                 mRecyclerView.setAdapter(myCategoryTypeAdapter);
 
-
-
-                                /*mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                                    @Override
-                                    public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                                        super.onScrollStateChanged(recyclerView, newState);
-                                    }
-
-                                    @Override
-                                    public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                                        super.onScrolled(recyclerView, dx, dy);
-
-                                        LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-
-                                        if (!isLoading) {
-                                            if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == categoryList.size() - 1) {
-
-                                                categoryList.add(null);
-                                                myCategoryTypeAdapter.notifyItemInserted(categoryList.size() - 1);
-
-                                                Handler handler = new Handler();
-
-                                                handler.postDelayed(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        categoryList.remove(categoryList.size() - 1);
-                                                        int scrollPosition = categoryList.size();
-                                                        myCategoryTypeAdapter.notifyItemRemoved(scrollPosition);
-                                                        int currentSize = scrollPosition;
-                                                        int nextLimit = currentSize + 3;
-
-                                                        while (currentSize - 1 < nextLimit) {
-                                                            // productlist.add(sellOptions);
-                                                            currentSize++;
-                                                        }
-
-                                                        myCategoryTypeAdapter.notifyDataSetChanged();
-                                                        isLoading = false;
-                                                    }
-                                                }, 1000);
-
-                                                isLoading = true;
-                                            }
-                                        }
-                                    }
-                                });*/
-
-
-
-
-
-
                             }
 
                             myCategoryTypeAdapter.notifyDataSetChanged();
@@ -345,16 +294,13 @@ public class CategoryFragment extends Fragment {
                             customDialogLoadingProgressBar.dismiss();
 
 
-                          /*  parentShimmerLayout.stopShimmerAnimation();
-                            parentShimmerLayout.setVisibility(View.GONE);*/
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                             customDialogLoadingProgressBar.dismiss();
                         }
                     }
                 },
-//
+
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
@@ -366,6 +312,13 @@ public class CategoryFragment extends Fragment {
                 Map<String, String> params = new HashMap<>();
                 return params;
             }
+
+           @Override
+           public Map<String, String> getHeaders() throws AuthFailureError {
+               HashMap<String, String> headers = new HashMap<String, String>();
+               headers.put("Content-Type", "application/json; charset=utf-8");
+               return headers;
+           }
         };
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));

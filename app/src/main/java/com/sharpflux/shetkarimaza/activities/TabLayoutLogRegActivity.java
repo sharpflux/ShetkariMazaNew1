@@ -75,9 +75,7 @@ TabLayoutLogRegActivity extends AppCompatActivity  {
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-
                 viewPager_details.setCurrentItem(tab.getPosition());
-
             }
 
             @Override
@@ -90,8 +88,6 @@ TabLayoutLogRegActivity extends AppCompatActivity  {
 
             }
         });
-
-
 
 
 

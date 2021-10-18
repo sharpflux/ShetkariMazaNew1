@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.activities.Membership;
+import com.sharpflux.shetkarimaza.activities.PaymentActivity;
 import com.sharpflux.shetkarimaza.activities.SubscriptionPlanActivity;
 import com.sharpflux.shetkarimaza.model.ListModel;
 
@@ -36,7 +38,7 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.ViewHolder
         holder.btnSubscribe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, SubscriptionPlanActivity.class);
+                Intent intent = new Intent(context, Membership.class);
                 context.startActivity(intent);
             }
         });

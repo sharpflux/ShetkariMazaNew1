@@ -22,7 +22,7 @@ import java.io.ByteArrayOutputStream;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class PaymentActivity extends Activity implements PaymentResultListener {
+public class    PaymentActivity extends Activity implements PaymentResultListener {
     private static final String TAG = PaymentActivity.class.getSimpleName();
     private CircleImageView circleImageView_razopPay;
     //https://s3.amazonaws.com/rzp-mobile/images/rzp.png

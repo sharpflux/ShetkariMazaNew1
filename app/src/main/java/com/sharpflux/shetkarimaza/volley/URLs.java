@@ -2,7 +2,7 @@ package com.sharpflux.shetkarimaza.volley;
 
 public class URLs {
 
-    public static  final  String Main_URL="http://kisanmaza.sharpflux.com/";
+    public static  final  String Main_URL="https://kisanmaza.sharpflux.com/";
 
     public static final String URL_REGISTER = Main_URL+"api/Registration/User";
     public static final String URL_LOGIN = Main_URL+"api/Users/Login";
@@ -43,7 +43,8 @@ public class URLs {
     public static final String URL_VERIFYUSER=Main_URL+"api/Registration/RegistrationUpdateIsVerified" ;
     public static final String URL_GetAvailableMonthsDynamic=Main_URL+"api/RequestAPI/GetAvailableMonthsDynamic?StartIndex=0" ;
     public static final String URL_GovtDepartmentGet=Main_URL+"api/Govt/GovtDepartmentGet";
-
+    public static final String URL_PackageMasterGETApi=Main_URL+"api/MembershipApi/PackageMasterGETApi";
+    public static final String URL_POST_MEMBERSHIP              = Main_URL+"api/MembershipApi/MembershipSubscriberInsertUpdate";
 
   /*  public static final String URL_LOGIN = "http://apimaza.supergo.in/api/Users/Login";
     public static final String URL_RECYCLER="http://apimaza.supergo.in/api/Categories/GetCategories?Language=";

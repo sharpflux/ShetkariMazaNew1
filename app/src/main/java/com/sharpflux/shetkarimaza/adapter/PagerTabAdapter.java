@@ -27,11 +27,11 @@ public class PagerTabAdapter extends FragmentStatePagerAdapter {
         //Returning the current tabs
         switch (position) {
             case 0:
-                LoginFragment tab1 = new LoginFragment();
-                return tab1;
-            case 1:
                 SignupFragment tab2 = new SignupFragment();
                 return tab2;
+            case 1:
+                LoginFragment tab1 = new LoginFragment();
+                return tab1;
             default:
                 return null;
         }

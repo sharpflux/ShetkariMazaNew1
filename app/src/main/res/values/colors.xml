@@ -24,7 +24,7 @@
     <color name="lightGrey">#888888</color>
     <color name="blackShade">#272727</color>
     <color name="lightBlack">#363636</color>
-
+    <color name="smoke_gray">#a2a2a2</color>
 <!--    <color name="colorPrimary">#3F8331</color> -->
 <!--    <color name="colorPrimary">#9cc63d</color>-->
     <color name="colorPrimary">#2ac17e</color>  <!--#7EAA18-->

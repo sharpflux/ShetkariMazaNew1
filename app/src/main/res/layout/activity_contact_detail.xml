@@ -1,184 +1,367 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:id="@+id/fragment_order_list_llContainer"
-    android:background="@color/transparent"
+    android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    tools:context=".activities.AllSimilarDataActivity">
 
-
-
-<androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/contact_Detail_rvProductList"
-    android:scrollbars="vertical"
-    android:stackFromBottom="true"
-    android:layout_alignParentTop="true"
-    android:visibility="visible"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginBottom="50dp"
-    android:layout_weight="1" />
-    <ProgressBar
-        android:id="@+id/progressBar_filter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:visibility="gone"
-        android:layout_centerInParent="true"
-        />
-
-
-    <TextView
-        android:gravity="center"
-        android:id="@+id/txt_emptyView"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/no_data"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:fontFamily="@font/arima_madurai_medium"
-        android:textColor="@color/error_color_material"
-        android:textSize="20sp"/>
-
-
-    <LinearLayout
-        android:id="@+id/lr_filterbtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:id="@+id/bottom"
-            android:layout_width="0dp"
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:id="@+id/progressBar_filter"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            />
 
+        <TextView
             android:gravity="center"
-            android:paddingBottom="14.7dp"
-            android:paddingTop="15.3dp">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:tint="@color/gray"
-                app:srcCompat="@drawable/ic_sort" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="25.7dp"
-                android:text="@string/sort"
-                android:textColor="@color/gray"
-                android:textSize="15sp" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="10.3dp"
-            android:layout_marginTop="10.3dp"
-            android:background="@color/grey_4a" />
-
-        <LinearLayout
-            android:id="@+id/tv_filter"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:paddingBottom="14.7dp"
-            android:paddingTop="15.3dp">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="15dp"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/filter1" />
-
-            <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="25.7dp"
-                android:text="Filter"
-                android:textColor="#000000"
-                android:textSize="15sp" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        app:cardElevation="0.5dp"
-        android:visibility="gone"
-        >
-        <LinearLayout
+            android:id="@+id/txt_emptyView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:paddingBottom="10dp"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:gravity="center"
+            android:text="@string/no_data"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:fontFamily="@font/arima_madurai_medium"
+            android:textColor="@color/error_color_material"
+            android:textSize="20sp"/>
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="70dp"
+            android:layout_marginBottom="52dp"
             >
 
-
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/contact_Detail_rvProductList"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/recyclerView_addFarm"
-                android:background="@color/white"
-                />
+                android:layout_height="match_parent"
 
+                />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:cardElevation="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/linearlayout_addMoreFarm"
-                android:layout_marginTop="10dp"
+                android:background="@color/colorPrimary"
                 android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:clickable="true"
-                >
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/add_more"
-                    android:textColor="@color/textcolor"
-                    android:textSize="15sp"
-
-                    />
+                android:paddingTop="17.3dp"
+                android:paddingBottom="15dp">
 
                 <ImageView
+                    android:id="@+id/ImgBack2"
                     android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:id="@+id/imageView_addFarm"
-                    android:layout_marginStart="10dp"
-                    android:src="@drawable/add11"
-                    android:tint="@color/colorPrimary"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="18dp"
+                    android:src="@drawable/backspace_24dp"/>
 
-                    />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="28.3dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/ToolbartvItemName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sfpro_display_semibold"
+                        android:text="ORDER # 3872868123"
+                        android:textColor="@color/white"
+                        android:textSize="13.3sp" />
+
+
+                    <TextView
+                        android:id="@+id/tvRecordsCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sfpro_display_semibold"
+                        android:text="0 Rocord found"
+                        android:textColor="@color/white"
+                        android:textSize="10.3sp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </FrameLayout>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="10dp"
+        android:layout_alignParentBottom="true">
+        <LinearLayout
+            android:id="@+id/lr_filterbtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/bottom"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+
+                android:gravity="center"
+                android:paddingBottom="14.7dp"
+                android:paddingTop="15.3dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_sort" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="25.7dp"
+                    android:text="@string/sort"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
 
             </LinearLayout>
 
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10.3dp"
+                android:layout_marginTop="10.3dp"
+                android:background="@color/grey_4a" />
+
+            <LinearLayout
+                android:id="@+id/tv_filter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingBottom="14.7dp"
+                android:paddingTop="15.3dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/filter1" />
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="25.7dp"
+                    android:text="@string/filter"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
 </RelativeLayout>
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:id="@+id/fragment_order_list_llContainer"
+        android:background="@color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/contact_Detail_rvProductList"
+        android:scrollbars="vertical"
+        android:stackFromBottom="true"
+        android:layout_alignParentTop="true"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
+        android:layout_weight="1" />
+        <ProgressBar
+            android:id="@+id/progressBar_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            />
+
+
+        <TextView
+            android:gravity="center"
+            android:id="@+id/txt_emptyView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/no_data"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:fontFamily="@font/arima_madurai_medium"
+            android:textColor="@color/error_color_material"
+            android:textSize="20sp"/>
+
+
+        <LinearLayout
+            android:id="@+id/lr_filterbtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/bottom"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+
+                android:gravity="center"
+                android:paddingBottom="14.7dp"
+                android:paddingTop="15.3dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:tint="@color/gray"
+                    app:srcCompat="@drawable/ic_sort" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="25.7dp"
+                    android:text="@string/sort"
+                    android:textColor="@color/gray"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10.3dp"
+                android:layout_marginTop="10.3dp"
+                android:background="@color/grey_4a" />
+
+            <LinearLayout
+                android:id="@+id/tv_filter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingBottom="14.7dp"
+                android:paddingTop="15.3dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/filter1" />
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="25.7dp"
+                    android:text="Filter"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:cardElevation="0.5dp"
+            android:visibility="gone"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="10dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:gravity="center"
+                >
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/recyclerView_addFarm"
+                    android:background="@color/white"
+                    />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/linearlayout_addMoreFarm"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:clickable="true"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/add_more"
+                        android:textColor="@color/textcolor"
+                        android:textSize="15sp"
+
+                        />
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/imageView_addFarm"
+                        android:layout_marginStart="10dp"
+                        android:src="@drawable/add11"
+                        android:tint="@color/colorPrimary"
+
+                        />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>-->
 
