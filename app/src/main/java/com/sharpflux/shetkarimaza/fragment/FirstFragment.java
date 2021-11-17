@@ -5,7 +5,9 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.material.textfield.TextInputLayout;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.HomeActivity;
 import com.sharpflux.shetkarimaza.adapter.MyCategoryTypeAdapter;
@@ -54,7 +57,7 @@ import java.util.Map;
 
 public class FirstFragment extends Fragment {
 
-    EditText Rtype_edit, Rcategory_edit, editfullname, mobileNo, AlternateMobile, Email, name_botanical,hidRegTypeId;
+    EditText editSubType,Rtype_edit, Rcategory_edit, editfullname, mobileNo, AlternateMobile, Email, name_botanical,hidRegTypeId;
 
     ArrayList<Product> list;
     private ArrayList<MyProcessor> processorList;
@@ -63,7 +66,7 @@ public class FirstFragment extends Fragment {
     private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
     DataFetcher fetcher;
 
-    TextView  hidRegCagteId;
+    TextView  hidRegCagteId,hidSubCategoryId;
 
     MyProcessor myProcessor;
     Product sellOptions;
@@ -74,7 +77,7 @@ public class FirstFragment extends Fragment {
     LinearLayout btn_next;
     String gender = "";
     private OnStepOneListener mListener;
-    private String UserId, username, usermobileno, useremail;
+    private String UserId, username, usermobileno, useremail,ModelName;
 
     dbLanguage mydatabase;
     String currentLanguage, language;
@@ -87,6 +90,8 @@ public class FirstFragment extends Fragment {
     Bundle bundle;
     public String IsNewUser;
 
+
+    TextInputLayout tabSubCategoryType;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -96,6 +101,7 @@ public class FirstFragment extends Fragment {
         Rcategory_edit = view.findViewById(R.id.edtRegicategory);
         hidRegTypeId = view.findViewById(R.id.hidRegTypeId);
         hidRegCagteId = view.findViewById(R.id.hidRegCagteId);
+        hidSubCategoryId=view.findViewById(R.id.hidSubCategoryId);
         IsNewUser="0";
         rg = view.findViewById(R.id.radioGroup1);
         rb1 = view.findViewById(R.id.radio1);
@@ -106,6 +112,12 @@ public class FirstFragment extends Fragment {
         editfullname = view.findViewById(R.id.editfullname);
         mobileNo = view.findViewById(R.id.mobileNo);
         name_botanical = view.findViewById(R.id.name_botanical);
+
+
+        tabSubCategoryType=view.findViewById(R.id.tabSubCategoryType);
+        editSubType=view.findViewById(R.id.editSubType);
+
+        editSubType.setHint( getResources().getString(R.string.Type));
 
         AlternateMobile = view.findViewById(R.id.AlternateMobile);
         Email = view.findViewById(R.id.Email);
@@ -220,6 +232,7 @@ public class FirstFragment extends Fragment {
                 bundle.putString("AlternateMobile", alterNo);
                 bundle.putString("Email", email);
                 bundle.putString("IsNewUser", IsNewUser);
+                bundle.putString("SubCategroyTypeId", hidSubCategoryId.getText().toString());
 
                 FragmentTransaction transection = getActivity().getSupportFragmentManager().beginTransaction();
                 SecondFragment mfragment = new SecondFragment();
@@ -248,6 +261,18 @@ public class FirstFragment extends Fragment {
         });
 
 
+        editSubType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FirstFragment.AsyncTaskRunner runner = new FirstFragment.AsyncTaskRunner();
+                String sleepTime = "SubCate";
+                runner.execute(sleepTime);
+
+
+            }
+        });
+
         Rcategory_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -256,6 +281,44 @@ public class FirstFragment extends Fragment {
                 runner.execute(sleepTime);
             }
         });
+
+
+        hidRegTypeId.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,  int before, int count) {
+
+                if(s.toString().trim().equals("36") || s.toString().trim().equals("37")){
+                    tabSubCategoryType.setVisibility(View.VISIBLE);
+                }
+                else {
+                    tabSubCategoryType.setVisibility(View.GONE);
+                }
+                if(s.equals("36")) {
+                    ModelName = getResources().getString(R.string.HiringMachinery);
+                    editSubType.setHint( getResources().getString(R.string.WhichMachine));
+
+                    //tabSubCategoryType.setHint(getResources().getString(R.string.WhichMachine));
+                }
+                if(s.equals("37")) {
+                    ModelName = getResources().getString(R.string.LabourforAgri);
+                    //tabSubCategoryType.setHint(getResources().getString(R.string.WhoYouAre));
+                    editSubType.setHint( getResources().getString(R.string.WhoYouAre));
+                }
+
+                editSubType.setText("");
+                hidSubCategoryId.setText("");
+            }
+        });
+
 
 
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -331,10 +394,13 @@ public class FirstFragment extends Fragment {
                 if (params[0].toString() == "type")
                     fetcher.loadList("RegistrationType", Rtype_edit, URLs.URL_RType + "1&PageSize=15&Language=" + currentLanguage + "&UserId=0",
                             "RegistrationTypeId", hidRegTypeId, "", "", "Registration Type", "", null, null, customDialogLoadingProgressBar);
+                else if (params[0].toString() == "SubCate")
+                    fetcher.loadList("SubCategoriesName", editSubType, URLs.URL_MasterSubCategoriesGET + "Language=" + currentLanguage + "&CategoryId="+hidRegTypeId.getText(),
+                            "MasterSubCategoriesId", hidSubCategoryId, "", "", ModelName, "", null, null, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "cate")
-                    fetcher.loadList("RegistrationCategoryName",
-                            Rcategory_edit, URLs.URL_RCategary, "RegistrationCategoryId", hidRegCagteId,
-                            "", "", "Registration Category Name", "", null, null, customDialogLoadingProgressBar);
+                    fetcher.loadList("SubCategoriesName",
+                            Rcategory_edit, URLs.URL_RCategary, "MasterSubCategoriesId", hidSubCategoryId,
+                            "", "", ModelName, "", null, null, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "userdetails") {
                     GetUserDetails();
                 }

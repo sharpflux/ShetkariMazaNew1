@@ -22,7 +22,7 @@ public class URLs {
     public static final String URL_OTP=Main_URL+"User_Authentication/OTPGenerate";
     public static final String URL_TALUKA=Main_URL+"Api/GetMultipleTalukasApi/GetMultipleTalukas?DistrictsID=";
     public static final String URL_RESETPASS=Main_URL+"api/UserUdatePasswordAPI/UpdatePasswordApi";
-    public static final String URL_ORDERDETAILS=Main_URL+"api/RequestAPI/GETRequestsApi?StartIndex=1&PageSize=500&UserId=";
+    public static final String URL_ORDERDETAILS=Main_URL+"api/RequestAPI/GETRequestsApi?";
     public static final String URL_RATE=Main_URL+"api/RateMasterAPI/GETRateMasterApi?";
     public static String URL_OTP2=Main_URL+"User_Authentication/GetOTP?MobileNo=";
     public static String URL_CONTACTDET=Main_URL+"api/Registration/RegistrationFilterGET?";
@@ -32,6 +32,9 @@ public class URLs {
     public static String URL_TRANSPORTER_DETAILS=Main_URL+"api/TransporterAPI/TransporterVehicalDetails?UserId=1";
     public static String URL_SUBcATEGORY=Main_URL+"api/ItemMasterApi/Get_SubCatItems?ItemTypeId=";
     public static String URL_AGE=Main_URL+"api/AgeGroupAPI/GetAgeGroupAPI?";
+    public static String URL_MasterSubCategoriesGET=Main_URL+"api/MasterSubCategoriesAPI/MasterSubCategoriesGET?";
+
+
 
     public static String URL_REGISTRATIONGETUSERDETAILS=Main_URL+"api/Registration/RegistrationGetUserDetails?";
 

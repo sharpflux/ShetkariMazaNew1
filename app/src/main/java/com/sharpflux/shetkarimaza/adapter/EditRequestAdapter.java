@@ -52,6 +52,8 @@ public class EditRequestAdapter extends RecyclerView.Adapter<EditRequesViewHolde
         holder.mQuality.setText(String.valueOf(  mlist.get(currentPosition).getQuality()));
         holder.Imageupload=mlist.get(currentPosition).getImageUrl();
 
+        holder.tvFarmerAddress.setText(mlist.get(currentPosition).getFarm_address() + ", " + mlist.get(currentPosition).getState() + ", " + mlist.get(currentPosition).getTaluka());
+
         double priceperunit=0.00;
         double quant=0.00;
 
@@ -85,13 +87,10 @@ public class EditRequestAdapter extends RecyclerView.Adapter<EditRequesViewHolde
         if( mlist.get(currentPosition).getQuality().equals(""))
             holder.mQuality.setText("Not Available");
 
-        holder.btn_update.setOnClickListener(new View.OnClickListener() {
+      holder.btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Context context=v.getContext();
-
-
-
                 Intent i= new Intent(context, ProductInfoForSaleActivity.class);
                 i.putExtra("Type","flag");
                 i.putExtra("ImageUrl",mlist.get(currentPosition).getImageUrl());
@@ -116,21 +115,22 @@ public class EditRequestAdapter extends RecyclerView.Adapter<EditRequesViewHolde
                 i.putExtra("DistrictId",mlist.get(currentPosition).getDistrictId());
                 i.putExtra("TalukaId",mlist.get(currentPosition).getTalukaId());
                 i.putExtra("RequstId",mlist.get(currentPosition).getRequstId());
-                i.putExtra("ProductId",mlist.get(currentPosition).getItemTypeId());
+                i.putExtra("ProductId",mlist.get(currentPosition).getCategoryId());
                 i.putExtra("SurveyNo",mlist.get(currentPosition).getSurveyNo());
                 i.putExtra("BotanicalName",mlist.get(currentPosition).getBotanicalName());
-
+                i.putExtra("Organic",mlist.get(currentPosition).getOrganic());
+                i.putExtra("IsEdit",true);
                 context.startActivity(i);
             }
         });
-        holder.btnCancel.setOnClickListener(new View.OnClickListener() {
+        /*holder.btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Context context=view.getContext();
                 Intent i= new Intent(context, HomeActivity.class);
                 context.startActivity(i);
             }
-        });
+        });*/
     }
 
 
@@ -143,8 +143,8 @@ public class EditRequestAdapter extends RecyclerView.Adapter<EditRequesViewHolde
 abstract class EditRequesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     ImageView mImage;
-    TextView mName,mvarity,mQuality,mPrice;
-    Button btn_update,btnCancel;
+    TextView mName,mvarity,mQuality,mPrice,tvFarmerAddress;
+    TextView btn_update,btnCancel;
     String ItemName,VarietyName,QualityType,AvailableQuantity,
             MeasurementType,ExpectedPrice,AvailableMonths,FarmAddress,
             SurveyNo,StatesName,DistrictName,TalukaName,VillageName,Hector,Imageupload;
@@ -156,8 +156,9 @@ abstract class EditRequesViewHolder extends RecyclerView.ViewHolder implements V
         mvarity = itemView.findViewById(R.id.row_cartlist_tvVarity);
         mQuality = itemView.findViewById(R.id.row_cartlist_tvQuality);
         mPrice = itemView.findViewById(R.id.row_cartlist_tvPrice);
+        tvFarmerAddress=itemView.findViewById(R.id.tvFarmerAddress);
         btn_update = itemView.findViewById(R.id.btn_update);
-        btnCancel = itemView.findViewById(R.id.btnCancel);
+       // btnCancel = itemView.findViewById(R.id.btnCancel);
         itemView.setOnClickListener(this);
 
 

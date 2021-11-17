@@ -36,9 +36,9 @@ public class RateAdapter extends RecyclerView.Adapter<RateAdapterViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RateAdapterViewHolder holder, int i) {
-        holder.mfrom.setText(mlist.get(i).getFromdate());
-        holder.mto.setText(mlist.get(i).getTodate());
-        holder.mrate.setText(mlist.get(i).getRate());
+        holder.mfrom.setText(mlist.get(i).getFromdate() +" - "+mlist.get(i).getTodate());
+        //holder.mto.setText(mlist.get(i).getTodate());
+        holder.mrate.setText("₹ "+mlist.get(i).getRate());
         holder.munit.setText(mlist.get(i).getUnit());
 
 
@@ -55,8 +55,8 @@ class RateAdapterViewHolder  extends RecyclerView.ViewHolder  {
     RateAdapterViewHolder(View itemView) {
         super(itemView);
 
-        mfrom = itemView.findViewById(R.id.tv_from);
-        mto = itemView.findViewById(R.id.tv_to);
+        mfrom = itemView.findViewById(R.id.tv_fromdate);
+       // mto = itemView.findViewById(R.id.tv_to);
         mrate = itemView.findViewById(R.id.rate);
         munit = itemView.findViewById(R.id.rate_unit);
 

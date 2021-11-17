@@ -55,7 +55,7 @@ public class SecondFragment extends DialogFragment {
     ArrayList<Product> list;
     LinearLayout btn_next;
     Bundle bundle;
-    String name = "", registrationTypeId = "", registrationCategoryId = "", gender = "", mobile = "", alternateMobile = "", email = "";
+    String name = "", registrationTypeId = "", registrationCategoryId = "", gender = "", mobile = "", alternateMobile = "", email = "",SubCategroyTypeId="";
     DataFetcher fetcher;
     private CustomRecyclerViewDialog customDialog;
     Product sellOptions;
@@ -137,7 +137,7 @@ public class SecondFragment extends DialogFragment {
             mobile = bundle.getString("Mobile");
             alternateMobile = bundle.getString("AlternateMobile");
             email = bundle.getString("Email");
-
+            SubCategroyTypeId= bundle.getString("SubCategroyTypeId");
 
             IsNewUser = bundle.getString("IsNewUser");
 
@@ -152,7 +152,18 @@ public class SecondFragment extends DialogFragment {
                 gstno.setVisibility(View.GONE);
                 companyregnno.setVisibility(View.GONE);
             }
-
+            else if(registrationTypeId.contains("36") || registrationTypeId.contains("37")){
+                // companyname.setHint("Nursery Name");
+                TICompany.setHint("Nursery Name");
+                TICompany.setVisibility(View.GONE);
+                textLayoutAddress.setHint("Address");
+                companyregnno.setText("0");
+                gstno.setText("0");
+                license.setText("0");
+                license.setVisibility(View.GONE);
+                gstno.setVisibility(View.GONE);
+                companyregnno.setVisibility(View.GONE);
+            }
 
         }
 
@@ -247,6 +258,7 @@ public class SecondFragment extends DialogFragment {
                 bundle.putString("companyregnno", companyreg);
                 bundle.putString("gstno",gst);//gstno.getText().toString()
                 bundle.putString("IsNewUser", IsNewUser);
+                bundle.putString("SubCategroyTypeId", SubCategroyTypeId);
 
                 FragmentTransaction transection =getActivity().getSupportFragmentManager().beginTransaction();
                 transection.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);

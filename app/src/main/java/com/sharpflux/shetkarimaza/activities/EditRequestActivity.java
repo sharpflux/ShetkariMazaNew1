@@ -122,18 +122,19 @@ public class EditRequestActivity extends AppCompatActivity {
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_ORDERDETAILS+userId+"&Language="+currentLanguage,
+                URLs.URL_ORDERDETAILS+"StartIndex=1&PageSize=500&UserId="+userId+"&Language="+currentLanguage,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONArray array = new JSONArray(response);
-
+                            productlist.clear();
                             if( array.length()==0){
                                 txt_emptyView.setVisibility(View.VISIBLE);
                             }
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject userJson = array.getJSONObject(i);
+
                                 if (!userJson.getBoolean("error")) {
                                     SimilarList sellOptions;
                                     sellOptions = new SimilarList
@@ -153,19 +154,20 @@ public class EditRequestActivity extends AppCompatActivity {
                                                     userJson.getString("TalukaName"),
                                                     userJson.getString("VillageName"),
                                                     userJson.getString("Hector"),
-                                                            String.valueOf(userJson.getInt("ItemTypeId")),
-                                                            String.valueOf(userJson.getInt("VarietyId")),
-                                                            String.valueOf(userJson.getInt("QualityId")),
-                                                            String.valueOf(userJson.getInt("MeasurementId")),
-                                                            String.valueOf(userJson.getInt("StateId")),
-                                                            String.valueOf(userJson.getInt("DistrictId")),
-                                                            String.valueOf(userJson.getInt("TalukaId")),
-                                                            String.valueOf(userJson.getInt("RequstId")),
-                                                            userJson.getString("SurveyNo"),
-                                                            String.valueOf(userJson.getInt("CategoryId")),
-                                                            userJson.getString("BotanicalName"),
-                                                            ""
-
+                                                    String.valueOf(userJson.getInt("ItemTypeId")),
+                                                    String.valueOf(userJson.getInt("VarietyId")),
+                                                    String.valueOf(userJson.getInt("QualityId")),
+                                                    String.valueOf(userJson.getInt("MeasurementId")),
+                                                    String.valueOf(userJson.getInt("StateId")),
+                                                    String.valueOf(userJson.getInt("DistrictId")),
+                                                    String.valueOf(userJson.getInt("TalukaId")),
+                                                    String.valueOf(userJson.getInt("RequstId")),
+                                                    userJson.getString("SurveyNo"),
+                                                    String.valueOf(userJson.getInt("CategoryId")),
+                                                    "",
+                                                     userJson.getString("Organic"),
+                                                     "",
+                                                            userJson.getString("BotanicalName")
                                             );
 
                                     productlist.add(sellOptions);

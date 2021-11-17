@@ -46,7 +46,8 @@ public class BottomSheetDialogSorting extends BottomSheetDialogFragment implemen
                     i.putExtra("StatesID",bundle.getString("StatesID"));
                     i.putExtra("DistrictId",bundle.getString("DistrictId"));
                     i.putExtra("categoryId",bundle.getString("categoryId"));
-                    //i.putExtra("priceids",bundle.getString("priceids"));
+                    i.putExtra("IsVarietyAvailable", bundle.getBoolean("IsVarietyAvailable"));
+                    i.putExtra("ItemName", bundle.getString("ItemName"));
                     startActivity(i);
                 }
             }
@@ -68,9 +69,10 @@ public class BottomSheetDialogSorting extends BottomSheetDialogFragment implemen
                     i.putExtra("StatesID",bundle.getString("StatesID"));
                     i.putExtra("DistrictId",bundle.getString("DistrictId"));
                     i.putExtra("categoryId",bundle.getString("categoryId"));
-                    //i.putExtra("priceids",bundle.getString("priceids"));
-                    //
+                    i.putExtra("IsVarietyAvailable", bundle.getBoolean("IsVarietyAvailable"));
+                    i.putExtra("ItemName", bundle.getString("ItemName"));
                     startActivity(i);
+
                 }
             }
         });

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,6 +21,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 
@@ -29,9 +32,15 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -48,6 +57,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -59,11 +71,17 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.adapter.CouponAdapter;
 import com.sharpflux.shetkarimaza.adapter.DataAdapter;
+import com.sharpflux.shetkarimaza.adapter.RateAdapter;
+import com.sharpflux.shetkarimaza.adapter.SimilarListAdapter;
 import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
 import com.sharpflux.shetkarimaza.customviews.CustomRecyclerViewDialog;
 import com.sharpflux.shetkarimaza.fragment.RateDialogFragment;
+import com.sharpflux.shetkarimaza.model.CouponModel;
 import com.sharpflux.shetkarimaza.model.Product;
+import com.sharpflux.shetkarimaza.model.RateData;
+import com.sharpflux.shetkarimaza.model.SimilarList;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.sqlite.UserInfoDBManager;
 import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
@@ -87,11 +105,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -208,6 +229,14 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     DataAdapter dataAdapter;
     public static int MY_PERMISSIONS_REQUEST = 1;
     ScrollView scrollableContents;
+    LinearLayout lr_rate;
+    Boolean IsEdit;
+
+    private RateAdapter rateAdapter;
+    private ArrayList<RateData> rateModels;
+    private RecyclerView recyclerView;
+
+
 
     @SuppressLint("WrongThread")
     @Override
@@ -232,6 +261,10 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         User user = SharedPrefManager.getInstance(this).getUser();
         userid = (Integer) user.getId();
         UserId = userid.toString();
+
+        lr_rate=findViewById(R.id.lr_rate);
+
+        rateModels = new ArrayList<>();
 
         //hidden
         hidItemTypeId = findViewById(R.id.hidItemTypeId);
@@ -327,7 +360,8 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         if (bundle != null) {
 
             ProductId = bundle.getString("ProductId");
-
+            IsEdit=bundle.getBoolean("IsEdit");
+            RequstId="0";
         }
 
         //age
@@ -490,8 +524,13 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                     priceperunit = 0; // your default value
                 }
 
-                total = quant * priceperunit;
-                edtTotalamt.setText(Double.toString(total));
+                String   total2 = String.format("%f",quant * priceperunit) ;//String.format("%.2f",  quant * priceperunit);
+              //  edtTotalamt.setText(String.format("%.2f",quant * priceperunit));
+
+                NumberFormat formatter = new DecimalFormat("#.#####");
+
+
+                edtTotalamt.setText(formatter.format(quant * priceperunit));
             }
 
             @Override
@@ -652,8 +691,113 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         tv_rate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openDialog();
 
+
+                if(edtproductType.getText().toString().equals(""))
+                {
+                    AlertDialog.Builder popupSuccess = new AlertDialog.Builder(ProductInfoForSaleActivity.this);
+                    ViewGroup viewGroup = findViewById(android.R.id.content);
+                    View dialogView = LayoutInflater.from(ProductInfoForSaleActivity.this).inflate(R.layout.custom_dialog_failed, viewGroup, false);
+
+                    TextView textViewMsg=(TextView) dialogView.findViewById(R.id.tvSuccessMesg);
+
+
+                    textViewMsg.setText(getResources().getString(R.string.MessageItemSelect));
+                    popupSuccess.setView(dialogView);
+                    AlertDialog alertDialog = popupSuccess.create();
+                    alertDialog.show();
+
+                    dialogView.findViewById(R.id.buttonOk).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alertDialog.dismiss();
+                        }
+                    });
+
+
+                    dialogView.findViewById(R.id.img_close).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alertDialog.dismiss();
+                        }
+                    });
+                    return;
+                }
+
+
+                //openDialog();
+                final Dialog slideDialog;
+                LinearLayout cancel,linearAddress;
+                final Context context = view.getContext();
+                LinearLayout btn;
+                final EditText edt_FamilyMemberName,edt_Age;
+                final RadioGroup rg_gender;
+                final RadioButton rbMale,rbFemale,rbOther;
+                final  TextView tvHeadingDialog;
+                final String[] GenderSelected = new String[1];
+                slideDialog = new Dialog(context, R.style.CustomDialogAnimation);
+                slideDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                // Setting dialogview
+                Window window = slideDialog.getWindow();
+                //  window.setGravity(Gravity.BOTTOM);
+
+                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+                slideDialog.setContentView(R.layout.activity_rate_guide);
+
+
+                WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+                slideDialog.getWindow().getAttributes().windowAnimations = R.style.CustomDialogAnimation;
+                layoutParams.copyFrom(slideDialog.getWindow().getAttributes());
+
+                //int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.90);
+                int height = (int) ( context.getResources().getDisplayMetrics().heightPixels * 0.730);
+
+                layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+                layoutParams.height = height;
+                layoutParams.gravity = Gravity.BOTTOM;
+
+                slideDialog.getWindow().setAttributes(layoutParams);
+                slideDialog.setCancelable(true);
+                slideDialog.setCanceledOnTouchOutside(true);
+
+                String[] txt_CouponCode = {"GROCY50", "GROCY10", "GROCY60", "GROCY30"};
+                String[] txt_CouponDiscount = {"Get Rs. 50 Off", "Get Rs. 10% Off", "Get Rs. 10% Off", "Get Rs. 50 Off"};
+                String[] txt_CouponTitle = {"Get Rs 200 off on purchase of Rs 300 and above", "Get Rs 300 off on purchase of Rs 600 and above", "Get Rs 200 off on your first order", "Get Rs 200 off on purchase of Rs 300 and above"};
+
+
+
+                recyclerView =  slideDialog.findViewById(R.id.recyclerCoupon);
+                recyclerView.setLayoutManager(new LinearLayoutManager(ProductInfoForSaleActivity.this));
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+
+
+
+
+                RateGuide(1);
+                initAdapter(rateModels);
+
+
+
+
+                tvHeadingDialog=slideDialog.findViewById(R.id.tvHeadingDialog);
+
+                tvHeadingDialog.setText(edtproductType.getText().toString() +" - "+getResources().getString(R.string.rateguide));
+
+                cancel = slideDialog.findViewById(R.id.cancel);
+
+
+
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        slideDialog.dismiss();
+                    }
+                });
+
+
+
+                slideDialog.show();
             }
 
 
@@ -727,64 +871,70 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             img_banner_profile_placeholder.setImageBitmap(decodedByte);
             */
-            String ItemName = extras.getString("ItemName");
-            edtproductType.setText(ItemName);
 
-            /*String BotanicalName = extras.getString("BotanicalName");
-            name_botanical.setText(BotanicalName);*/
+            if(IsEdit) {
+                String ItemName = extras.getString("ItemName");
+                edtproductType.setText(ItemName);
+
+                String BotanicalName = extras.getString("BotanicalName");
+                name_botanical.setText(BotanicalName);
+
+                String Organic = extras.getString("Organic");
+                if (Organic.equals("Organic"))
+                    rb1.setChecked(true);
+                else rb2.setChecked(true);
+
+                String VarietyName = extras.getString("VarietyName");
+                edtproductVariety.setText(VarietyName);
+                String QualityType = extras.getString("QualityType");
+                edtAQuality.setText(QualityType);
+                String AvailableQuantity = extras.getString("AvailableQuantity");
+                edtAQuantity.setText(AvailableQuantity);
+                String MeasurementType = extras.getString("MeasurementType");
+                edtUnit.setText(MeasurementType);
+                String ExpectedPrice = extras.getString("ExpectedPrice");
+                edtExpectedPrice.setText(ExpectedPrice);
+                String AvailableMonths = extras.getString("AvailableMonths");
+                edtavailablityInMonths.setText(AvailableMonths);
+                String FarmAddress = extras.getString("FarmAddress");
+                edtaddres.setText(FarmAddress);
+                String StatesName = extras.getString("StatesName");
+                edtstate.setText(StatesName);
+                String DistrictName = extras.getString("DistrictName");
+                edtdistrict.setText(DistrictName);
+                String TalukaName = extras.getString("TalukaName");
+                edttaluka.setText(TalukaName);
+                String VillageName = extras.getString("VillageName");
+                edtvillage.setText(VillageName);
+                String Hector = extras.getString("Hector");
+                edtareahector.setText(Hector);
+                String ItemTypeId = extras.getString("ItemTypeId");
+                hidItemTypeId.setText(ItemTypeId);
+                String VarietyId = extras.getString("VarietyId");
+                hidVarietyId.setText(VarietyId);
+                String QualityId = extras.getString("QualityId");
+                hidQualityId.setText(QualityId);
+                String MeasurementId = extras.getString("MeasurementId");
+                hidMeasurementId.setText(MeasurementId);
+                String StateId = extras.getString("StateId");
+                hideStateId.setText(StateId);
+                String DistrictId = extras.getString("DistrictId");
+                hideDistrictId.setText(DistrictId);
+                String TalukaId = extras.getString("TalukaId");
+                hideTalukaId.setText(TalukaId);
+                RequstId = extras.getString("RequstId");
+                hideRequstId.setText(RequstId);
+                AgeGroupId = extras.getString("AgeGroupId");
+                hideAgeId.setText(AgeGroupId);
+                String SurveyNo = extras.getString("SurveyNo");
+                edtsurveyNo.setText(SurveyNo);
 
 
-            String VarietyName = extras.getString("VarietyName");
-            edtproductVariety.setText(VarietyName);
-            String QualityType = extras.getString("QualityType");
-            edtAQuality.setText(QualityType);
-            String AvailableQuantity = extras.getString("AvailableQuantity");
-            edtAQuantity.setText(AvailableQuantity);
-            String MeasurementType = extras.getString("MeasurementType");
-            edtUnit.setText(MeasurementType);
-            String ExpectedPrice = extras.getString("ExpectedPrice");
-            edtExpectedPrice.setText(ExpectedPrice);
-            String AvailableMonths = extras.getString("AvailableMonths");
-            edtavailablityInMonths.setText(AvailableMonths);
-            String FarmAddress = extras.getString("FarmAddress");
-            edtaddres.setText(FarmAddress);
-            String StatesName = extras.getString("StatesName");
-            edtstate.setText(StatesName);
-            String DistrictName = extras.getString("DistrictName");
-            edtdistrict.setText(DistrictName);
-            String TalukaName = extras.getString("TalukaName");
-            edttaluka.setText(TalukaName);
-            String VillageName = extras.getString("VillageName");
-            edtvillage.setText(VillageName);
-            String Hector = extras.getString("Hector");
-            edtareahector.setText(Hector);
-            String ItemTypeId = extras.getString("ItemTypeId");
-            hidItemTypeId.setText(ItemTypeId);
-            String VarietyId = extras.getString("VarietyId");
-            hidVarietyId.setText(VarietyId);
-            String QualityId = extras.getString("QualityId");
-            hidQualityId.setText(QualityId);
-            String MeasurementId = extras.getString("MeasurementId");
-            hidMeasurementId.setText(MeasurementId);
-            String StateId = extras.getString("StateId");
-            hideStateId.setText(StateId);
-            String DistrictId = extras.getString("DistrictId");
-            hideDistrictId.setText(DistrictId);
-            String TalukaId = extras.getString("TalukaId");
-            hideTalukaId.setText(TalukaId);
-            RequstId = extras.getString("RequstId");
-            hideRequstId.setText(RequstId);
-            AgeGroupId = extras.getString("AgeGroupId");
-            hideAgeId.setText(AgeGroupId);
-            String SurveyNo = extras.getString("SurveyNo");
-            edtsurveyNo.setText(SurveyNo);
+                Picasso.get().load(extras.getString("ImageUrl")).into(img_banner_profile_placeholder);
+                ImageUrlupload = extras.getString("ImageUrl");
 
-
-            Picasso.get().load(extras.getString("ImageUrl")).into(img_banner_profile_placeholder);
-            ImageUrlupload = extras.getString("ImageUrl");
-
-            if (ImageUrlupload != null)
-                ImageUrl = convertUrlToBase64(ImageUrlupload);
+                if (ImageUrlupload != null)
+                    ImageUrl = convertUrlToBase64(ImageUrlupload);
 
 
           /*  BitmapDrawable drawable = (BitmapDrawable) img_banner_profile_placeholder.getDrawable();
@@ -795,15 +945,13 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
             byte[] imageBytes = baos.toByteArray();
             imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);*/
 
-            String BotanicalName = extras.getString("BotanicalName");
-            name_botanical.setText(BotanicalName);
-
-            if (extras.getString("Type") != null) {
+                if (extras.getString("Type") != null) {
 //                btnFormSubmit.setVisibility(View.VISIBLE);
-           //     btnAdd.setVisibility(View.GONE);
-               // btnAddMore.setVisibility(View.GONE);
-            }
+                    //     btnAdd.setVisibility(View.GONE);
+                    // btnAddMore.setVisibility(View.GONE);
+                }
 
+            }
         }
 
         if (edtAQuality.equals("")) {
@@ -840,7 +988,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 StringBuffer errorMessageBuf = new StringBuffer();
 
                 if (lt_txtAge.getVisibility() == View.VISIBLE) {
-                    days = edtDays.getText().toString();
+                    days = hideAgeId.getText().toString();
                 } else {
                     days = "0";
                 }
@@ -987,7 +1135,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
                 builder.append("<Parent>");
                 builder.append("<Assign>");
-                builder.append("<RequestId>" + 0 + "</RequestId>");
+                builder.append("<RequestId>" + RequstId + "</RequestId>");
                 builder.append("<Id>" + 1 + "</Id>");
                 builder.append("<UserId>" + UserId + "</UserId>");
                 builder.append("<productTypeId>" + hidItemTypeId.getText().toString() + "</productTypeId>");
@@ -1019,7 +1167,10 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
 
     }
 
-
+    private void initAdapter(List<RateData> rateDatalst) {
+        rateAdapter = new RateAdapter(ProductInfoForSaleActivity.this, rateDatalst);
+        recyclerView.setAdapter(rateAdapter);
+    }
     public String convertUrlToBase64(String url) {
         URL newurl;
         Bitmap bitmap;
@@ -1708,6 +1859,97 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         VolleySingleton.getInstance(ProductInfoForSaleActivity.this).addToRequestQueue(stringRequest);
 
 
+    }
+
+
+
+    private void RateGuide(final Integer currentPage) {
+
+
+        customDialogLoadingProgressBar.show();
+        if (!currentPage.equals(1)) {
+            customDialogLoadingProgressBar.dismiss();
+            rateModels.add(null);
+            rateAdapter.notifyItemInserted(rateModels.size() - 1);
+        }
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (!currentPage.equals(1)) {
+                                        rateModels.remove(rateModels.size() - 1);
+                                        int scrollPosition = rateModels.size();
+                                        rateAdapter.notifyItemRemoved(scrollPosition);
+                                        final int currentSize = scrollPosition;
+                                        final int nextLimit = currentSize + 10;
+                                    }
+
+                                    StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                                            URLs.URL_RATE + "ItemTypeId="+hidItemTypeId.getText()+"&VarietyId=0&QualityId=0&MonthYear="+edtavailablityInMonths.getText()+"&Language=en",
+                                            new Response.Listener<String>() {
+                                                @Override
+                                                public void onResponse(String response) {
+
+                                                    try {
+                                                        JSONArray obj = new JSONArray(response);
+                                                        rateModels.clear();
+                                                        for (int i = 0; i < obj.length(); i++) {
+                                                            JSONObject userJson = obj.getJSONObject(i);
+                                                            if (!userJson.getBoolean("error")) {
+                                                                RateData sellOptions;
+                                                                sellOptions = new RateData
+                                                                        (
+                                                                                userJson.getString("FromDates"),
+                                                                                userJson.getString("ToDates"),
+                                                                                userJson.getString("Rates"),
+                                                                                userJson.getString("MeasurementType")
+                                                                        );
+                                                                rateModels.add(sellOptions);
+                                                                //
+
+                                                            } else {
+                                                                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+
+                                                            }
+
+                                                            rateAdapter.notifyDataSetChanged();
+                                                            customDialogLoadingProgressBar.dismiss();
+                                                        }
+
+
+
+
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                        customDialogLoadingProgressBar.dismiss();
+
+                                                    }
+                                                }
+                                            },
+                                            new Response.ErrorListener() {
+                                                @Override
+                                                public void onErrorResponse(VolleyError error) {
+                                                    customDialogLoadingProgressBar.dismiss();
+
+                                                }
+                                            }) {
+                                        @Override
+                                        protected Map<String, String> getParams() throws AuthFailureError {
+                                            Map<String, String> params = new HashMap<>();
+                                            return params;
+                                        }
+                                    };
+                                    stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2,
+                                            DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                                    VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
+                                }
+
+
+                            }
+                , 500);
+
+        customDialogLoadingProgressBar.dismiss();
     }
 
 

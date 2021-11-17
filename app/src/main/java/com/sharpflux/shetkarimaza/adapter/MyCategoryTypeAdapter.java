@@ -19,6 +19,7 @@ import com.sharpflux.shetkarimaza.activities.BuyerActivity;
 import com.sharpflux.shetkarimaza.activities.ContactDetailActivity;
 import com.sharpflux.shetkarimaza.activities.GovtDepartmentActivity;
 import com.sharpflux.shetkarimaza.activities.HomeActivity;
+import com.sharpflux.shetkarimaza.activities.MachinHireActivity;
 import com.sharpflux.shetkarimaza.activities.SellerActivity;
 import com.sharpflux.shetkarimaza.activities.TransporterVehicleAddActivity;
 import com.sharpflux.shetkarimaza.activities.TransporterViewActivity;
@@ -51,8 +52,6 @@ public class MyCategoryTypeAdapter extends RecyclerView.Adapter<MyCategoryTypeHo
 
     @Override
     public MyCategoryTypeHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-
         if (viewType == VIEW_TYPE_ITEM) {
             View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_merchant, parent, false);
             return new MyCategoryTypeHolder(mView);
@@ -60,8 +59,6 @@ public class MyCategoryTypeAdapter extends RecyclerView.Adapter<MyCategoryTypeHo
             View nview = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading, parent, false);
             return new MyCategoryTypeHolder(nview);
         }
-
-
     }
 
     @Override
@@ -73,11 +70,7 @@ public class MyCategoryTypeAdapter extends RecyclerView.Adapter<MyCategoryTypeHo
             try {
                 //Picasso.get().load(mList.get(position).getImage()).into(((MyCategoryTypeHolder) holder).mImage);
 
-                Glide.with(mContext)
-                        .load(URLs.Main_URL+mList.get(position).getImage()).placeholder(R.drawable.kisanmaza)
-                        .into(holder.mImage);
-
-
+                Glide.with(mContext).load(URLs.Main_URL+mList.get(position).getImage()).placeholder(R.drawable.kisanmaza).into(holder.mImage);
 
                 ((MyCategoryTypeHolder) holder).categoryId = mList.get(position).getCategoryTypeId();
                 ((MyCategoryTypeHolder) holder).UserRegistrationTypeId = mList.get(position).getUserRegistrationTypeId();
@@ -94,15 +87,10 @@ public class MyCategoryTypeAdapter extends RecyclerView.Adapter<MyCategoryTypeHo
                 }
 
 
-            } catch (Exception d) {
+            }
+            catch (Exception d) {
 
             }
-      /*  else if (holder instanceof LoadingViewHolderSeller1)
-        {
-            showLoadingView1((LoadingViewHolderSeller1) holder, position);
-        }*/
-
-
     }
 
 
@@ -176,10 +164,19 @@ class MyCategoryTypeHolder extends RecyclerView.ViewHolder implements View.OnCli
             context.startActivity(intent);
 
         }
+
+        else if (categoryId.equals("36") || categoryId.equals("37")) {
+            Intent intent = new Intent(context, MachinHireActivity.class);
+            intent.putExtra("ProductId", categoryId);
+            context.startActivity(intent);
+        }
         else
         {
             Intent intent = new Intent(context, ContactDetailActivity.class);
             intent.putExtra("ProductId", categoryId);
+            intent.putExtra("RegistrationSubTypeId", "0");
+            intent.putExtra("IsSubCategory", false);
+            intent.putExtra("Name", "No");
             context.startActivity(intent);
         }
     }

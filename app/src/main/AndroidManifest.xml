@@ -14,10 +14,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:noHistory="true"
-            android:name=".activities.TermsActivity"
 
+        <activity android:name=".activities.MachinHireActivity"
+            android:parentActivityName=".activities.HomeActivity"
+            android:theme="@style/SellerDarkAppTheme"
             ></activity>
+        <activity
+            android:name=".activities.TermsActivity"
+            android:noHistory="true" />
         <activity
             android:name=".activities.Membership"
             android:parentActivityName=".activities.HomeActivity"
@@ -45,14 +49,13 @@
             android:theme="@style/SellerDarkAppTheme" />
         <activity android:name=".activities.SubscriptionPlanActivity" />
         <activity android:name=".activities.SubGroupActivity" />
-        <activity android:name=".filters.Filter1Activity" />
-        <activity android:name=".filters.BuyerFilterActivity" />
+        <activity android:name=".filters.Filter1Activity"  android:noHistory="true"/>
+        <activity android:name=".filters.BuyerFilterActivity"  android:noHistory="true" />
         <activity android:name=".activities.AddListActivityTest" />
         <activity
             android:name=".activities.ContactDetailActivity"
             android:noHistory="true"
-            android:parentActivityName=".activities.HomeActivity"
-            />
+            android:parentActivityName=".activities.HomeActivity" />
         <activity
             android:name=".activities.BuyerActivity"
             android:label="@string/buyer"

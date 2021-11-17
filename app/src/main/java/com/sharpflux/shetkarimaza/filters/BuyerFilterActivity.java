@@ -145,24 +145,15 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).commit();
             }
 
-
         }
 
-
         else {
-            age_linear.setVisibility(View.VISIBLE);
-
-            if(!IsVarietyAvailable){
+                age_linear.setVisibility(View.VISIBLE);
                 varity_linear.setVisibility(View.GONE);
-                bundle.putString("Filter", Constant.QUALITY);
-                myFragment.setArguments(bundle);
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).commit();
-            }
-            else {
+                age_color.setVisibility(View.VISIBLE);
                 bundle.putString("Filter",Constant.AGE);
                 myFragment.setArguments(bundle);
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).commit();
-            }
         }
 
 

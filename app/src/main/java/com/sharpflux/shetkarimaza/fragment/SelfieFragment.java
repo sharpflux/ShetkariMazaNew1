@@ -90,7 +90,7 @@ public class SelfieFragment extends Fragment {
     private String address = "", city = "", district = "", state = "", companyname = "",
             license = "", companyregnno = "", gstno = "", names = "", registrationTypeId = "",
             registrationCategoryId = "", gender = "", mobile = "", alternateMobile = "", email = "",
-            accountname = "", bankname = "", branchcode = "", accno = "", ifsc = "", check = "", adhar = "", selfie = "",stateId = "", districtId = "", TalukaId = "";
+            accountname = "", bankname = "", branchcode = "", accno = "", ifsc = "", check = "", adhar = "", selfie = "",stateId = "", districtId = "", TalukaId = "",SubCategroyTypeId="";
 
     private Intent iin;
     private Bundle bundle;
@@ -382,7 +382,7 @@ public class SelfieFragment extends Fragment {
             districtId = bundle.getString("districtId");
             TalukaId = bundle.getString("TalukaId");
 
-
+            SubCategroyTypeId = bundle.getString("SubCategroyTypeId");
 
             bankname = "0";//bundle.getString("bankname");
             branchcode = "0";// bundle.getString("branchcode");
@@ -490,14 +490,12 @@ public class SelfieFragment extends Fragment {
                 Map<String, String> params = new HashMap<>();
                 params.put("UserId", UserId);
                 params.put("RegistrationTypeId", registrationTypeId);
-                params.put("RegistrationCategoryId", "0");
+                params.put("RegistrationCategoryId", SubCategroyTypeId);
                 params.put("FullName", names);
-
                 params.put("MobileNo", mobile);
                 params.put("AlternateMobile", alternateMobile);
                 params.put("Address", address);
                 params.put("EmailId", email);
-
                 params.put("Gender", gender);
                 params.put("StateId", stateId);
                 params.put("CityId",districtId);
@@ -505,12 +503,10 @@ public class SelfieFragment extends Fragment {
                 params.put("CompanyFirmName", companyname);
                 params.put("LandLineNo", "1");
                 params.put("APMCLicence", license);
-
                 params.put("CompanyRegNo", companyregnno);
                 params.put("GSTNo", gstno);
                 params.put("AccountHolderName", accountname);
                 params.put("BankName", bankname);
-
                 params.put("BranchCode", branchcode);
                 params.put("AccountNo", accno);
                 params.put("IFSCCode", ifsc);

@@ -77,6 +77,34 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
+            <TextView
+                android:id="@+id/hidSubCategoryId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="hidden value"
+                android:textSize="20dp"
+                android:visibility="gone" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tabSubCategoryType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                style="@style/formTextInputLayout"
+                >
+
+                <EditText
+                    android:id="@+id/editSubType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:textColor="@color/text_black"
+                    android:textSize="15sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -94,7 +122,6 @@
                     android:textColor="@color/text_black"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-
                     android:hint="@string/registration_category"
                     android:inputType="none"
                     android:textSize="15sp"

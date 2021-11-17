@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.os.Looper;
 import android.os.PersistableBundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -68,7 +69,7 @@ import jxl.write.biff.RowsExceededException;
 public class MyJobService extends JobService {
 
     private static final String TAG = MyJobService.class.getSimpleName();
-    String TalukaId = "", VarityId = "", AvailableMonth = "", QualityId = "", ItemTypeId = "", StatesID = "", DistrictId = "",priceids="",ItemName,categoryId="";
+    String TalukaId = "", VarityId = "", AvailableMonth = "", QualityId = "",Age = "", ItemTypeId = "", StatesID = "", DistrictId = "",priceids="",ItemName,categoryId="";
     PersistableBundle bundle;
     dbBuyerFilter myDatabaseBuyer;
     dbLanguage mydatabase;
@@ -206,8 +207,17 @@ public class MyJobService extends JobService {
                     Cursor STATECursor = myDatabaseBuyer.FilterGetByFilterName("STATE");
                     Cursor DISTRICTCursor = myDatabaseBuyer.FilterGetByFilterName("DISTRICT");
                     Cursor TALUKACursor = myDatabaseBuyer.FilterGetByFilterName("TALUKA");
+                    Cursor AGECursor = myDatabaseBuyer.FilterGetByFilterName("AGE");
 
                     priceids=bundle.getString("SortBy");
+
+                    while (AGECursor.moveToNext()) {
+                        if (Age == null) {
+                            Age = "";
+                        }
+                        Age = Age + AGECursor.getString(0) + ",";
+                    }
+
 
 
                     while (AVAILABLEMONTHCursor.moveToNext()) {
@@ -306,10 +316,26 @@ public class MyJobService extends JobService {
                 AvailableMonth = "0";
             }
 
+            if (Age != null) {
+                if (Age.equals(""))
+                    Age = "0";
+            } else {
+                Age = "0";
+            }
 
-            if(ItemTypeId==null)
+
+
+        if(ItemTypeId==null)
             {
-                Toast.makeText(getApplicationContext(), "ITEM TYPE IS NULL", Toast.LENGTH_SHORT).show();
+
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "ITEM TYPE IS NULL", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
                 return;
             }
 
@@ -319,7 +345,7 @@ public class MyJobService extends JobService {
                     URLs.URL_REQESTS + "?StartIndex=" + 1 + "&PageSize=" + 100000 +
                             "&ItemTypeId=" + ItemTypeId + "&VarityId=" + VarityId + "&StateId=" + StatesID +
                             "&DistrictId=" + DistrictId + "&QualityId=" + QualityId + "&TalukaId="
-                            + TalukaId+"&Language="+currentLanguage+"&SortByRate="+priceids+"&AvailableMonths="+AvailableMonth,
+                            + TalukaId+"&Language="+currentLanguage+"&SortByRate="+priceids+"&AvailableMonths="+AvailableMonth+ "&Age=" + Age,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -395,7 +421,6 @@ public class MyJobService extends JobService {
                                             if (!userJson.getBoolean("error")) {
 
                                                // mBuilder.setContentText(String.valueOf(i)).setProgress(obj.length(),i,false);
-
 
 
 

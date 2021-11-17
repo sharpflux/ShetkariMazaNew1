@@ -87,7 +87,7 @@ public class ContactDetailActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     List<ContactDetail> contactlist;
     Bundle bundle;
-    String TalukaId = "", VarityId = "", QualityId = "", ItemTypeId = "", StatesID = "", DistrictId = "",SortBy="0";
+    String TalukaId = "", VarityId = "", QualityId = "", ItemTypeId = "", StatesID = "", DistrictId = "",SortBy="0",RegistrationSubTypeId="0",CategoryName="0";
 
     boolean isLoading = false;
     int currentItems;
@@ -117,6 +117,7 @@ public class ContactDetailActivity extends AppCompatActivity {
     dbFilter myDatabase;
     TextView ToolbartvItemName, tvRecordsCount;
     ImageView ImgBack2;
+    Boolean IsSubCategory;
     //https://newbedev.com/how-to-show-an-empty-view-with-a-recyclerview
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,6 +182,10 @@ public class ContactDetailActivity extends AppCompatActivity {
             QualityId = bundle.getString("QualityId");
             StatesID = bundle.getString("StatesID");
             DistrictId = bundle.getString("DistrictId");
+            RegistrationSubTypeId= bundle.getString("RegistrationSubTypeId");
+            IsSubCategory=bundle.getBoolean("IsSubCategory");
+            RegistrationSubTypeId= bundle.getString("RegistrationSubTypeId");
+            CategoryName= bundle.getString("Name");
         }
     /*    imageView_addFarm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -295,7 +300,29 @@ public class ContactDetailActivity extends AppCompatActivity {
             setTitle("Nursery Owner");
         }
 
+        else if (ItemTypeId.equals("35")) {
+            ToolbartvItemName.setText("Krushi Seva Kendra");
+            setTitle("Krushi Seva Kendra");
+        }
 
+        else if (ItemTypeId.equals("34")) {
+            ToolbartvItemName.setText("Insurance Agency");
+            setTitle("Insurance Agency");
+        }
+        else if (ItemTypeId.equals("36")) {
+            ToolbartvItemName.setText("Tracktors");
+            setTitle("Tracktors");
+        }
+
+        else if (ItemTypeId.equals("37")) {
+            ToolbartvItemName.setText("Krushi Kamgaar");
+            setTitle("Krushi Kamgaar");
+        }
+
+        else {
+            ToolbartvItemName.setText(CategoryName);
+            setTitle(CategoryName);
+        }
 
         ContactDetailActivity.AsyncTaskRunner runner = new ContactDetailActivity.AsyncTaskRunner();
         String sleepTime = "1";
@@ -470,9 +497,14 @@ public class ContactDetailActivity extends AppCompatActivity {
                 TalukaId = "0";
             }
 
+            if (RegistrationSubTypeId != null) {
+                if (RegistrationSubTypeId.equals(""))
+                    RegistrationSubTypeId = "0";
+            } else {
+                RegistrationSubTypeId = "0";
+            }
 
-
-            StringRequest stringRequest = new StringRequest(Request.Method.GET,URLs.URL_CONTACTDET + "StartIndex="+currentPage+"&PageSize="+PageSize + "&RegistrationTypeId=" + ItemTypeId + "&StateId=" + StatesID + "&DistrictId=" + DistrictId + "&TalukaId=" + TalukaId + "&Language=en",
+            StringRequest stringRequest = new StringRequest(Request.Method.GET,URLs.URL_CONTACTDET + "StartIndex="+currentPage+"&PageSize="+PageSize + "&RegistrationTypeId=" + ItemTypeId  + "&RegistrationSubTypeId=" + RegistrationSubTypeId+ "&StateId=" + StatesID + "&DistrictId=" + DistrictId + "&TalukaId=" + TalukaId + "&Language=en",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -485,11 +517,7 @@ public class ContactDetailActivity extends AppCompatActivity {
                                     JSONObject userJson = obj.getJSONObject(i);
 
                                     if (!userJson.getBoolean("error")) {
-                                        String imageUrl = userJson.getString("ImageUrl")
-                                                .substring(oldAPI.length(),
-                                                        userJson.getString("ImageUrl").length());
-
-
+                                        String imageUrl = userJson.getString("ImageUrl").substring(oldAPI.length(),userJson.getString("ImageUrl").length());
                                         ContactDetail detail;
                                         detail = new ContactDetail
                                                 (

@@ -1,114 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt"
     android:orientation="horizontal"
-    android:layout_margin="20dp"
-    android:weightSum="4">
-
-
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_marginTop="10dp"
-    android:layout_weight="1">
-    <TextView
-        android:fontFamily="@font/sfpro_display_bold"
-        android:id="@+id/tv_fromdate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="From Date"
-        android:textSize="12.5dp"
-        android:layout_marginLeft="10dp"
-        />
-    <TextView
-        android:id="@+id/tv_from"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="From Date"
-        android:textSize="12.5dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        />
-</LinearLayout>
-
+    android:background="@drawable/rectangle_gray_favourite"
+    android:paddingLeft="11dp" android:paddingTop="11dp"
+    android:paddingRight="13dp" android:paddingBottom="11dp"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:background="@drawable/custom_merchnt_border"
+        android:layout_gravity="center"
         android:orientation="vertical"
-        android:layout_marginTop="10dp"
-        android:layout_weight="1">
-    <TextView
-        android:fontFamily="@font/sfpro_display_bold"
-        android:id="@+id/tv_todate"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="To Date"
-        android:textSize="12.5dp"
-       />
-        <TextView
-            android:id="@+id/tv_to"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="To Date"
-            android:textSize="12.5dp"
-            android:layout_marginTop="10dp"/>
-    </LinearLayout>
-
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="10dp"
-        android:layout_weight="1">
-    <TextView
-        android:fontFamily="@font/sfpro_display_bold"
-        android:id="@+id/tv_rate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Rate"
-        android:textSize="12.5dp"
-      />
-
-        <TextView
-            android:id="@+id/rate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rate"
-            android:textSize="12.5dp"
-            android:layout_marginTop="10dp"/>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="10dp"
-        android:layout_weight="1">
-        <TextView
-            android:fontFamily="@font/sfpro_display_bold"
-            android:id="@+id/tv_unit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Per Unit"
-            android:textSize="12.5dp"
-            />
-        <TextView
+        android:layout_marginLeft="13dp">
+        <TextView android:textSize="12sp"
+            android:textColor="@color/green"
             android:id="@+id/rate_unit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="/Kg"
-            android:textSize="12.5dp"
-            android:layout_marginTop="10dp"/>
-    </LinearLayout>
+            android:text="@string/kg"
+            android:fontFamily="@font/sf_pro_display_semibold"/>
 
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <TextView android:textSize="13sp"
+                android:id="@+id/tv_fromdate"
+
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/producer"
+                android:layout_weight="1"
+                android:fontFamily="@font/sf_pro_display_semibold"/>
+
+            <TextView android:textSize="14sp"
+                android:id="@+id/rate"
+                android:textColor="@color/green"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rate"
+                android:fontFamily="@font/sf_pro_display_semibold"/>
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
+
 

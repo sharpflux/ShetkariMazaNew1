@@ -60,8 +60,7 @@ public class DataFetcher {
         list.clear();
 
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

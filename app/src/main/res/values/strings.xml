@@ -292,6 +292,7 @@
     <string name="quality">Quality</string>
     <string name="qty">Qty.</string>
     <string name="rate">Rate</string>
+    <string name="rateguide">Rate guide</string>
     <string name="total">Total</string>
     <string name="i_want_to_sell">I want to sell</string>
     <string name="of">of</string>
@@ -309,10 +310,18 @@
     <string name="recordsfound">Records found</string>
     <string name="showing">Showing Records : </string>
 
+    <string name="MessageItemSelect">कृपया पहले आइटम चुनें</string>
+    <string name="SoldOut">Sold out</string>
     <string name="what_is_lorem_ipsum">What is Lorem Ipsum?</string>
     <string name="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi elementum, erat eu volutpat semper, magna nisl rutrum mi, eu convallis mauris mi vel tortor. Nulla vehicula orci a semper tincidunt. Nam consectetur interdum orci, ut venenatis diam lobortis ut. Aliquam mollis nunc enim, in fermentum tortor pulvinar vel. Cras at nisl risus. Mauris vehicula ultricies justo tempus lacinia. Donec laoreet magna ut sapien convallis fermentum. Curabitur lacinia augue a urna aliquet accumsan at a purus. Phasellus varius, arcu quis vestibulum dignissim, elit nisl ullamcorper lectus, at placerat risus enim id lectus. Proin vel malesuada tellus. Maecenas molestie, ipsum non dapibus viverra, mauris est convallis arcu, et eleifend quam eros nec nisl. Quisque pulvinar enim metus, nec dapibus tellus tempor non. Nulla sed placerat est, vitae volutpat turpis.</string>
     <string name="where_can_i_get_some">Where can I get some?</string>
     <string name="description_subtext">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi elementum, erat eu volutpat semper, magna nisl rutrum mi, eu convallis mauris mi vel tortor. Nulla vehicula orci a semper tincidunt. Nam consectetur interdum orci, ut venenatis diam lobortis ut. Aliquam mollis nunc enim, in fermentum tortor pulvinar vel. Cras at nisl risus. Mauris vehicula ultricies justo tempus lacinia. Donec laoreet magna ut sapien convallis fermentum. Curabitur lacinia augue a urna aliquet accumsan at a purus. Phasellus varius, arcu quis vestibulum dignissim, elit nisl ullamcorper lectus, at placerat risus enim id lectus.</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="terms_and_condition"> By creating an account, you are agreeing to our Terms and Conditions </string>
+
+    <string name="HiringMachinery">Hiring Machinery</string>
+    <string name="LabourforAgri">Labour for Agri</string>
+    <string name="WhichMachine">Which Machine ?</string>
+    <string name="WhoYouAre">Who you are ?</string>
+    <string name="Type">Type ?</string>
 </resources>
