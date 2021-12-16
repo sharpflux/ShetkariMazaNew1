@@ -1,21 +1,30 @@
 package com.sharpflux.shetkarimaza.fragment;
 
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -25,6 +34,15 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.DetailFormActivity;
@@ -43,13 +61,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 
-public class SecondFragment extends DialogFragment {
+public class SecondFragment extends DialogFragment implements OnMapReadyCallback {
     EditText hideStateId, hideDistrictId,hideTalukaId;
     EditText address, city, edtdistrict,edttaluka, edtstate, companyname, license, companyregnno, gstno,name_botanical;
     ArrayList<Product> list;
@@ -65,10 +85,13 @@ public class SecondFragment extends DialogFragment {
     String currentLanguage,language;
     TextInputLayout TICompany,textLayoutAddress;
     User user;
-
+    EditText edtaddress;
     public String IsNewUser;
-
-
+    private Location currentLocation;
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    private static final int MY_PERMISSIONS_REQUEST_CODE = 123;
+    private static final int LOCATION_REQUEST_CODE = 101;
+    Button btnCurrentAddress;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -82,6 +105,12 @@ public class SecondFragment extends DialogFragment {
         btn_next =   (view.findViewById(R.id.secondbtnnext));
 
         address = view.findViewById(R.id.edtaddress);
+
+
+
+        edtaddress = view.findViewById(R.id.edtaddress);
+
+
         textLayoutAddress=view.findViewById(R.id.textLayoutAddress);
 
         user = SharedPrefManager.getInstance(getContext()).getUser();
@@ -105,6 +134,8 @@ public class SecondFragment extends DialogFragment {
         hideStateId = view.findViewById(R.id.hideStateId);
         hideDistrictId = view.findViewById(R.id.hideDistrictId);
         hideTalukaId = view.findViewById(R.id.hideTalukaId);
+
+        btnCurrentAddress = view.findViewById(R.id.btnCurrentAddress);
 
         User user = SharedPrefManager.getInstance(getContext()).getUser();
         myLocale = getResources().getConfiguration().locale;
@@ -313,9 +344,119 @@ public class SecondFragment extends DialogFragment {
         }
 
 
+        btnCurrentAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
+                if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+                    return;
+                }
+                fetchLastLocation();
+            }
+        });
 
         return view;
 
+    }
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+    }
+
+    public List<Address> getAddress(Context ctx, double lat, double lng) {
+        String fullAdd = null;
+        List<Address> addresses = null;
+        try {
+            Geocoder geocoder = new Geocoder(ctx, Locale.getDefault());
+            addresses = geocoder.getFromLocation(lat, lng, 1);
+            if (addresses.size() > 0) {
+                Address address = addresses.get(0);
+                fullAdd = address.getAddressLine(0);
+
+                // if you want only city or pin code use following code //
+                   /* String Location = address.getLocality();
+                    String zip = address.getPostalCode();
+                    String Country = address.getCountryName(); */
+            }
+
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        return addresses;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_CODE: {
+                // When request is cancelled, the results array are empty
+                if (
+                        (grantResults.length > 0) &&
+                                (grantResults[0]
+                                        + grantResults[1]
+                                        + grantResults[2]
+                                        + grantResults[3]
+                                        + grantResults[4]
+                                        + grantResults[5]
+                                        == PackageManager.PERMISSION_GRANTED
+                                )
+                ) {
+                    // Permissions are granted
+                    Toast.makeText(getContext(), "Permissions granted.", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Permissions are denied
+                    Toast.makeText(getContext(), "Permissions denied.", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+        }
+    }
+
+    private void fetchLastLocation() {
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        Task<Location> task = fusedLocationProviderClient.getLastLocation();
+        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    currentLocation = location;
+                    List<Address> addresses = getAddress(getContext(), currentLocation.getLatitude(), currentLocation.getLongitude());
+
+
+                    if (addresses != null) {
+
+                        if (addresses.size() > 0) {
+                            Address address = addresses.get(0);
+                            edtaddress.setText(addresses.get(0).getAddressLine(0));
+                            edtstate.setText(address.getAdminArea());
+                            edtdistrict.setText(address.getSubAdminArea());
+                            edttaluka.setText(address.getLocality()+ " " + address.getSubLocality());
+
+                           // edt_address2.setText(addresses.get(0).getAddressLine(1));
+                          //  edt_pinCode.setText(address.getPostalCode());
+                          //  edt_city.setText(address.getLocality() + " " + address.getSubLocality());
+                         //   edt_state.setText(address.getAdminArea() +" "+ address.getSubAdminArea() );
+                           // DeliveryLocation=new LatLng(address.getLatitude(),address.getLongitude());
+                        }
+
+
+
+                    }
+
+
+
+
+                } else {
+                    Toast.makeText(getContext(), "No Location recorded", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
 

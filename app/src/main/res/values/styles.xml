@@ -8,7 +8,10 @@
         <item name="colorAccent">@color/colorGray</item>
         <item name="android:statusBarColor">@color/colorPrimary</item>
     </style>
-
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/gray</item>
+        <item name="colorControlActivated">#60b243</item>
+    </style>
     <!-- Base application theme. -->
     <style name="SellerDarkAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:fontFamily">@font/sfpro_display_regular</item>

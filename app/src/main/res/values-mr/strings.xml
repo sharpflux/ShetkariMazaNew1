@@ -338,4 +338,12 @@
     <string name="WhichMachine">कोणती मशीन  ?</string>
     <string name="WhoYouAre">तुम्ही कोण आहात ?</string>
     <string name="Type">प्रकार ?</string>
+    <string name="welcome_to_Kisan">किसान माझा मध्ये आपले स्वागत आहे</string>
+    <string name="let_s_first_check_that_we_deliver_to_nyour_address">प्रथम तुमचा पत्ता तपासूया</string>
+    <string name="rating_review"> रिव्यु </string>
+    <string name="choose_location">स्थान निवडा</string>
+    <string name="choose_your_location_and_nstart_shopping">आपले स्थान निवडा आणि प्रारंभ करा</string>
+    <string name="use_current_location">वर्तमान स्थान वापरा</string>
+    <string name="viewing">रेकॉर्ड बघत आहात  :</string>
+    <string name="RateUs">Rate us</string>
 </resources>

@@ -138,6 +138,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
     TextView ToolbartvItemName, tvRecordsCount;
     List<SimilarList> mList;
     ImageView ImgBack2, ImgdownloadExcel;
+    TextView tvViewing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,6 +171,8 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
         txt_emptyView = findViewById(R.id.txt_emptyView);
         lr_filterbtn = (LinearLayout) findViewById(R.id.lr_filterbtn);
+
+        tvViewing=findViewById(R.id.tvViewing);
 
         txt_emptyView.setVisibility(View.GONE);
 
@@ -282,6 +285,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
     }
 
     private void initScrollListener() {
+
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -302,6 +306,10 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                         isLoading = true;
                     }
                 }
+
+                int firstElementPosition=linearLayoutManager.findFirstVisibleItemPosition();
+                int lastElementPosition=linearLayoutManager.findLastVisibleItemPosition();
+                tvViewing.setText( getResources().getString(R.string.viewing)+  String.valueOf( firstElementPosition+1) +" - "+String.valueOf( lastElementPosition+1));
             }
         });
 

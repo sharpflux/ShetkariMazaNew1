@@ -338,4 +338,13 @@
     <string name="WhichMachine">कौनसी मशीन ?</string>
     <string name="WhoYouAre">तुम्ही कोण आहात ?</string>
     <string name="Type">नमूना ?</string>
+    <string name="welcome_to_Kisan">किसान माझा में आपका स्वागत है</string>
+    <string name="let_s_first_check_that_we_deliver_to_nyour_address">
+आइए पहले अपना पता जांचें</string>
+    <string name="rating_review"> रिव्यु </string>
+    <string name="choose_location">स्थान चुनें</string>
+    <string name="choose_your_location_and_nstart_shopping">अपना स्थान चुनें और शुरू करें</string>
+    <string name="use_current_location">वर्तमान स्थान का उपयोग करें</string>
+    <string name="viewing">रेकॉर्ड देख रहे हो :</string>
+    <string name="RateUs">Rate us</string>
 </resources>

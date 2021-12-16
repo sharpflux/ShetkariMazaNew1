@@ -24,6 +24,17 @@
             android:paddingBottom="13dp"
             android:orientation="vertical">
 
+            <Button
+                android:id="@+id/btnCurrentAddress"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="50dp"
+                android:background="@drawable/myrect"
+                android:drawableLeft="@drawable/current_location"
+                android:textAlignment="center"
+                android:text="USE CURRENT LOCATION"/>
+
             <EditText
                 android:id="@+id/hidRegTypeId"
                 android:layout_width="wrap_content"

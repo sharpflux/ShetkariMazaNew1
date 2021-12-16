@@ -118,6 +118,7 @@ public class ContactDetailActivity extends AppCompatActivity {
     TextView ToolbartvItemName, tvRecordsCount;
     ImageView ImgBack2;
     Boolean IsSubCategory;
+    TextView tvViewing;
     //https://newbedev.com/how-to-show-an-empty-view-with-a-recyclerview
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,7 +143,7 @@ public class ContactDetailActivity extends AppCompatActivity {
 
         ImgBack2 = findViewById(R.id.ImgBack2);
 
-
+        tvViewing=findViewById(R.id.tvViewing);
         ImgBack2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -377,6 +378,10 @@ public class ContactDetailActivity extends AppCompatActivity {
                         isLoading = true;
                     }
                 }
+
+                int firstElementPosition=linearLayoutManager.findFirstVisibleItemPosition();
+                int lastElementPosition=linearLayoutManager.findLastVisibleItemPosition();
+                tvViewing.setText( getResources().getString(R.string.viewing)+  String.valueOf( firstElementPosition+1) +" - "+String.valueOf(  lastElementPosition+1));
             }
         });
 

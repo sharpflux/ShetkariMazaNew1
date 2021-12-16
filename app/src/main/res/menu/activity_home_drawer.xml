@@ -39,6 +39,16 @@
             android:id="@+id/nav_tols"
             android:icon="@drawable/ic_person_black"
             android:title="@string/menu_aboutus" />
+
+        <item
+            android:id="@+id/nav_rate"
+            android:icon="@drawable/ic_rate"
+            android:title="@string/RateUs" />
+
+        <item
+            android:id="@+id/nav_review"
+            android:icon="@drawable/ic_review"
+            android:title="@string/rating_review" />
     </group>
 
     <item android:title="@string/communicate">

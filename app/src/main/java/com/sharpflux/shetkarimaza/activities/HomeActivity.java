@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 
+import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -31,6 +34,7 @@ import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.fragment.CategoryFragment;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
+import com.sharpflux.shetkarimaza.utils.AppUtils;
 import com.sharpflux.shetkarimaza.utils.CheckDeviceIsOnline;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 
@@ -53,8 +57,8 @@ public class HomeActivity extends AppCompatActivity
     public static final String KEY_PREF_LANGUAGE = "pref_language";
     public String languagePref_ID;
     dbLanguage mydatabase;
-
     Bundle bundle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,31 @@ public class HomeActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         myLocale = getResources().getConfiguration().locale;
+
+
+        if (!AppUtils.isLocationEnabled(HomeActivity.this)) {
+            // notify user
+            android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(HomeActivity.this);
+            dialog.setMessage("Location not enabled!");
+            dialog.setPositiveButton("Open location settings", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivity(myIntent);
+                }
+            });
+            dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    // TODO Auto-generated method stub
+                    Toast.makeText(HomeActivity.this, "Cannot Proceed Further...!", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+            dialog.show();
+        }
+
 
 
         mydatabase = new dbLanguage(getApplicationContext());
@@ -314,6 +343,14 @@ public class HomeActivity extends AppCompatActivity
 
           Intent lin = new Intent(HomeActivity.this, SelectLanguageActivity.class);
           startActivity(lin);
+        }
+
+        else if (id == R.id.nav_rate) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.sharpflux.diapertohome")));
+        }
+        else if (id == R.id.nav_review) {
+            Intent lin = new Intent(HomeActivity.this, ReviewActivity.class);
+            startActivity(lin);
         }
 
 

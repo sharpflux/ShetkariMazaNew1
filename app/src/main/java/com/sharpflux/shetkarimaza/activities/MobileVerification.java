@@ -154,6 +154,33 @@ public class MobileVerification extends AppCompatActivity implements OtpReceived
             @Override
             public void onClick(View view) {
 
+
+                if (TextUtils.isEmpty(et1.getText().toString())) {
+                    et1.setError("Please enter");
+                    et1.requestFocus();
+
+                    return;
+                }
+                if (TextUtils.isEmpty(et2.getText().toString())) {
+                    et2.setError("Please enter");
+                    et2.requestFocus();
+
+                    return;
+                }
+                if (TextUtils.isEmpty(et3.getText().toString())) {
+                    et3.setError("Please enter");
+                    et3.requestFocus();
+
+                    return;
+                }
+                if (TextUtils.isEmpty(et4.getText().toString())) {
+                    et4.setError("Please enter");
+                    et4.requestFocus();
+
+                    return;
+                }
+
+
                 //Integer.parseInt(Otp)
                 if(Integer.parseInt(et1.getText().toString().trim()+et2.getText().toString().trim()+et3.getText().toString().trim()+et4.getText().toString().trim())==Integer.parseInt("0000"))
                 {

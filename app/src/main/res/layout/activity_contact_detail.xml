@@ -95,6 +95,17 @@
                         android:text="0 Rocord found"
                         android:textColor="@color/white"
                         android:textSize="10.3sp" />
+
+                    <TextView
+                        android:id="@+id/tvViewing"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sfpro_display_semibold"
+                        android:text="Viewing : "
+                        android:textColor="@color/white"
+                        android:textSize="10.3sp" />
+
                 </LinearLayout>
 
 

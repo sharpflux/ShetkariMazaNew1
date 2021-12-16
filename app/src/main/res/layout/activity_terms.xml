@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardElevation="3dp">
-        <include layout="@layout/toolbar_recommended" />
+        <include  layout="@layout/toolbar_recommended" />
     </androidx.cardview.widget.CardView>
     <TextView android:textSize="16sp" android:textColor="@color/black" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="16dp" android:layout_marginTop="17.7dp" android:text="@string/what_is_lorem_ipsum"/>
     <TextView android:textSize="13sp" android:textColor="@color/smoke_gray" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="16dp" android:layout_marginTop="13.3dp" android:layout_marginRight="16dp" android:text="@string/description" android:lineSpacingExtra="4dp" android:fontFamily="@font/sf_pro_display_regular"/>

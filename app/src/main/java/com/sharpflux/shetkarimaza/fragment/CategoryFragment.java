@@ -279,7 +279,7 @@ public class CategoryFragment extends Fragment {
                                                     userJson.getString("RegistrationTypeId"),
                                                     userJson.getString("UserRegistrationTypeId")
                                             );
-                                    categoryList.add(myCategoryType);
+                                        categoryList.add(myCategoryType);
                                 } else {
                                     Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                                 }
