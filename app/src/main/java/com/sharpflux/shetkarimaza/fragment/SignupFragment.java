@@ -335,6 +335,11 @@ public class SignupFragment extends Fragment {
                 params.put("ImageUrl", "0");
                 params.put("UserPassword", password);
                 params.put("AgentId", "0");
+                params.put("Latitude", "0");
+                params.put("Longitude", "0");
+                params.put("GPSState", "0");
+                params.put("GPSDistrict", "0");
+                params.put("GPSTaluka", "0");
                 return params;
             }
         };

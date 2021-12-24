@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_gravity="center" android:orientation="vertical"
+        android:background="@drawable/rectangle_white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" android:layout_centerInParent="true">
+        <ImageView android:layout_gravity="center" android:layout_width="130dp"
+            android:layout_height="130dp" android:layout_marginTop="51dp"
+            android:src="@drawable/ic_location_icon"/>
+        <TextView android:textSize="20sp" android:textColor="@color/black"
+            android:layout_gravity="center" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_marginTop="33dp"
+            android:text="@string/enable_your_location" android:fontFamily="@font/sf_pro_display_semibold"/>
+        <TextView android:textSize="16sp" android:textColor="@color/smoke_gray" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="14dp" android:text="@string/please_allow_to_use_your_location" android:lineSpacingExtra="5dp" android:fontFamily="@font/sf_pro_display_regular" android:textAlignment="center"/>
+        <Button android:textSize="16sp" android:id="@+id/buttonOk" android:textColor="@color/white" android:background="@drawable/rectangle_green_btn" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="61dp" android:layout_marginTop="20sp" android:layout_marginRight="61dp" android:layout_marginBottom="58dp" android:text="@string/enable_location" android:fontFamily="@font/sf_pro_display_semibold"/>
+    </LinearLayout>
+</LinearLayout>

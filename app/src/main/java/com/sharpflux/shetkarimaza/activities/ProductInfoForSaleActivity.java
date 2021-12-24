@@ -17,6 +17,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.CountDownTimer;
@@ -27,6 +30,7 @@ import android.os.StrictMode;
 import android.provider.MediaStore;
 
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -68,6 +72,13 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.sharpflux.shetkarimaza.R;
@@ -124,7 +135,7 @@ import okhttp3.RequestBody;
 import static com.sharpflux.shetkarimaza.activities.SelfieActivity.RequestPermissionCode;
 
 
-public class ProductInfoForSaleActivity extends AppCompatActivity {
+public class ProductInfoForSaleActivity extends AppCompatActivity  implements OnMapReadyCallback {
 
 
     ImageView img_banner_profile_placeholder;
@@ -162,7 +173,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     private View parentView;
     private GridView listView;
     ImageView imageView;
-    String ItemTypeId = "", VarityId = "", QualityId = "";
+    String ItemTypeId = "", VarityId = "", QualityId = "",Latitude="",Longitude="",GPSState="",GPSDistrict="",GPSTaluka="";
     // private ProgressBar mProgressBar;
     private Button btnChoose;
     int c = 0;
@@ -236,7 +247,14 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     private ArrayList<RateData> rateModels;
     private RecyclerView recyclerView;
 
+    private Location currentLocation;
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    private static final int MY_PERMISSIONS_REQUEST_CODE = 123;
+    private static final int LOCATION_REQUEST_CODE = 101;
 
+    TextView tvCurrentAddress;
+
+    LinearLayout linearAddress;
 
     @SuppressLint("WrongThread")
     @Override
@@ -307,6 +325,8 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         edtsurveyNo = findViewById(R.id.edtsurveyNo);
         scrollableContents = findViewById(R.id.scrollableContents);
 
+
+
         textInputAvailableMonth = findViewById(R.id.textInputAvailableMonth);
 
 
@@ -335,12 +355,32 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         tv_rate = findViewById(R.id.tv_rate);
         lt_txtAge = findViewById(R.id.lt_txtAge);
         lr_quality = findViewById(R.id.lr_quality);
-
+        tvCurrentAddress=findViewById(R.id.tvCurrentAddress);
         //  imageView = findViewById(R.id.imageView);
 
 
         parentView = findViewById(R.id.parent_layout);
         listView = findViewById(R.id.listView);
+
+        linearAddress=findViewById(R.id.linearAddress);
+
+        linearAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProductInfoForSaleActivity.this, LocationActivityPlaces.class);
+                intent.putExtra("ActivityState", "started");
+                startActivity(intent);
+            }
+        });
+
+        tvCurrentAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProductInfoForSaleActivity.this, LocationActivityPlaces.class);
+                intent.putExtra("ActivityState", "started");
+                startActivity(intent);
+            }
+        });
 
         EnableRuntimePermission();
 
@@ -1082,11 +1122,11 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                     return;
                 }
 
-                if (TextUtils.isEmpty(villagenam)) {
+                /*if (TextUtils.isEmpty(villagenam)) {
                     edtvillage.setError("Please enter your village name");
                     edtvillage.requestFocus();
                     return;
-                }
+                }*/
 
                 if (TextUtils.isEmpty(surveyNo)) {
                     edtsurveyNo.setError("Please enter your Survey No.");
@@ -1163,7 +1203,12 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
                 runner.execute("0");
             }
         });
-
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(ProductInfoForSaleActivity.this);
+        if (ActivityCompat.checkSelfPermission(ProductInfoForSaleActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(ProductInfoForSaleActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(ProductInfoForSaleActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+            return;
+        }
+        fetchLastLocation();
 
     }
 
@@ -1532,25 +1577,6 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public void onRequestPermissionsResult(int RC, String per[], int[] PResult) {
-
-        switch (RC) {
-
-            case RequestPermissionCode:
-
-                if (PResult.length > 0 && PResult[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    //   Toast.makeText(ProductInfoForSaleActivity.this, "Permission Granted, Now your application can access CAMERA.", Toast.LENGTH_LONG).show();
-
-                } else {
-
-                    // Toast.makeText(ProductInfoForSaleActivity.this, "Permission Canceled, Now your application cannot access CAMERA.", Toast.LENGTH_LONG).show();
-
-                }
-                break;
-        }
-    }
 
     public void refreshAllContent(final long timetoupdate) {
         new CountDownTimer(timetoupdate, 1000) {
@@ -1996,5 +2022,105 @@ public class ProductInfoForSaleActivity extends AppCompatActivity {
         }
 
 
+    }
+
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+    }
+
+    public List<Address> getAddress(Context ctx, double lat, double lng) {
+        String fullAdd = null;
+        List<Address> addresses = null;
+        try {
+            Geocoder geocoder = new Geocoder(ctx, Locale.getDefault());
+            addresses = geocoder.getFromLocation(lat, lng, 1);
+            if (addresses.size() > 0) {
+                Address address = addresses.get(0);
+                fullAdd = address.getAddressLine(0);
+
+                // if you want only city or pin code use following code //
+                   /* String Location = address.getLocality();
+                    String zip = address.getPostalCode();
+                    String Country = address.getCountryName(); */
+            }
+
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        return addresses;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_CODE: {
+                // When request is cancelled, the results array are empty
+                if (
+                        (grantResults.length > 0) &&
+                                (grantResults[0]
+                                        + grantResults[1]
+                                        + grantResults[2]
+                                        + grantResults[3]
+                                        + grantResults[4]
+                                        + grantResults[5]
+                                        == PackageManager.PERMISSION_GRANTED
+                                )
+                ) {
+                    // Permissions are granted
+                    Toast.makeText(ProductInfoForSaleActivity.this, "Permissions granted.", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Permissions are denied
+                    Toast.makeText(ProductInfoForSaleActivity.this, "Permissions denied.", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+        }
+    }
+
+    private void fetchLastLocation() {
+        if (ActivityCompat.checkSelfPermission(ProductInfoForSaleActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(ProductInfoForSaleActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        Task<Location> task = fusedLocationProviderClient.getLastLocation();
+        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    currentLocation = location;
+                    List<Address> addresses = getAddress(ProductInfoForSaleActivity.this, currentLocation.getLatitude(), currentLocation.getLongitude());
+
+
+                    if (addresses != null) {
+
+                        if (addresses.size() > 0) {
+                            Address address = addresses.get(0);
+                            tvCurrentAddress.setText(addresses.get(0).getAddressLine(0));
+
+
+
+                            Latitude=String.valueOf(address.getLatitude());
+                            Longitude=String.valueOf(address.getLongitude());
+
+                            GPSState=address.getAdminArea();
+                            GPSDistrict=address.getSubAdminArea();
+                            GPSTaluka=address.getSubAdminArea();
+                        }
+
+
+
+                    }
+
+
+
+
+                } else {
+                    Toast.makeText(ProductInfoForSaleActivity.this, "No Location recorded", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

@@ -31,6 +31,9 @@
 
     <string name="data_submitted">Data submitted successfully, Do you want to Add more Quality?</string>
 
+    <string name="data_submitted_successfully">Data submitted successfully</string>
+    <string name="enable_your_location">Enable Your Location</string>
+    <string name="please_allow_to_use_your_location">Please allow to use your location.</string>
     <string name="Yes">Yes</string>
     <string name="No">No</string>
     <string name="Subscribe">Subscribe</string>
@@ -331,4 +334,7 @@
     <string name="use_current_location">Use Current Location</string>
     <string name="viewing">Viewing Record:</string>
     <string name="RateUs">Rate us</string>
+
+    <string name="enable_location">Enable Location</string>
+    <string name="SearchNearbyLocation">Search by your Near Location</string>
 </resources>

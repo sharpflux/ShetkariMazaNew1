@@ -72,8 +72,28 @@ public class HomeActivity extends AppCompatActivity
 
 
         if (!AppUtils.isLocationEnabled(HomeActivity.this)) {
+
+/*            Intent intent = new Intent(HomeActivity.this, EnableLocationActivity.class);
+            startActivity(intent);
+            finish();*/
+
+           /* AlertDialog.Builder popupSuccess = new AlertDialog.Builder(HomeActivity.this);
+            ViewGroup viewGroup = findViewById(android.R.id.content);
+            View dialogView = LayoutInflater.from(HomeActivity.this).inflate(R.layout.custom_dialog_enable_location, viewGroup, false);
+            popupSuccess.setView(dialogView);
+            AlertDialog alertDialog = popupSuccess.create();
+            alertDialog.show();
+
+            dialogView.findViewById(R.id.buttonOk).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivity(myIntent);
+                }
+            });*/
+
             // notify user
-            android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(HomeActivity.this);
+         android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(HomeActivity.this);
             dialog.setMessage("Location not enabled!");
             dialog.setPositiveButton("Open location settings", new DialogInterface.OnClickListener() {
                 @Override

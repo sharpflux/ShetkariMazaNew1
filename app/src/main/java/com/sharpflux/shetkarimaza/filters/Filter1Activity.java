@@ -159,6 +159,27 @@ public class Filter1Activity extends AppCompatActivity implements View.OnClickLi
 
             }
         });
+
+
+        findViewById(R.id.buttonOk).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myDatabase.DeleteRecordAll();
+                if(bundle.getString("Activity").equals("ContactDetailActivity")){
+                    Intent intent = new Intent(Filter1Activity.this, ContactDetailActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("Search", "Filter");
+                    intent.putExtra("ProductId", bundle.getString("ProductId"));
+                    startActivity(intent);
+                }
+                if(bundle.getString("Activity").equals("TransporterViewActivity")){
+                    Intent intent = new Intent(Filter1Activity.this, TransporterViewActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("Search", "Filter");
+                    startActivity(intent);
+                }
+            }
+        });
     }
     @Override
     public void onBackPressed() {

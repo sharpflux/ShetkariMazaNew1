@@ -346,4 +346,9 @@
     <string name="use_current_location">वर्तमान स्थान वापरा</string>
     <string name="viewing">रेकॉर्ड बघत आहात  :</string>
     <string name="RateUs">Rate us</string>
+    <string name="data_submitted_successfully">डेटा यशस्वीरित्या सबमिट केला</string>
+    <string name="enable_your_location">तुमचे स्थान सक्षम करा</string>
+    <string name="please_allow_to_use_your_location">कृपया तुमचे स्थान वापरण्याची परवानगी द्या.</string>
+    <string name="enable_location">स्थान सक्षम करा</string>
+    <string name="SearchNearbyLocation">तुमच्या जवळच्या स्थानानुसार शोधा</string>
 </resources>

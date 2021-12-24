@@ -75,7 +75,8 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
     ArrayList<Product> list;
     LinearLayout btn_next;
     Bundle bundle;
-    String name = "", registrationTypeId = "", registrationCategoryId = "", gender = "", mobile = "", alternateMobile = "", email = "",SubCategroyTypeId="";
+    String name = "", registrationTypeId = "", registrationCategoryId = "", gender = "", mobile = "", alternateMobile = "", email = "",SubCategroyTypeId=""
+    ,Latitude="",Longitude="",GPSState="",GPSDistrict="",GPSTaluka="" ;
     DataFetcher fetcher;
     private CustomRecyclerViewDialog customDialog;
     Product sellOptions;
@@ -92,6 +93,7 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
     private static final int MY_PERMISSIONS_REQUEST_CODE = 123;
     private static final int LOCATION_REQUEST_CODE = 101;
     Button btnCurrentAddress;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -290,17 +292,19 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
                 bundle.putString("gstno",gst);//gstno.getText().toString()
                 bundle.putString("IsNewUser", IsNewUser);
                 bundle.putString("SubCategroyTypeId", SubCategroyTypeId);
+                bundle.putString("Latitude", Latitude);
+                bundle.putString("Longitude", Longitude);
+                bundle.putString("GPSState", GPSState);
+                bundle.putString("GPSDistrict", GPSDistrict);
+                bundle.putString("GPSTaluka", GPSTaluka);
 
                 FragmentTransaction transection =getActivity().getSupportFragmentManager().beginTransaction();
                 transection.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-               // ThirdFragment mfragment = new ThirdFragment();
                 SelfieFragment mfragment = new SelfieFragment();
-                mfragment.setArguments(bundle); //data being send to SecondFragment
+                mfragment.setArguments(bundle);
                 transection.replace(R.id.dynamic_fragment_frame_layout, mfragment);
                 transection.addToBackStack("SelfieFragment");
                 transection.commit();
-
-
             }
         });
 
@@ -437,6 +441,13 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
                             edtstate.setText(address.getAdminArea());
                             edtdistrict.setText(address.getSubAdminArea());
                             edttaluka.setText(address.getLocality()+ " " + address.getSubLocality());
+
+
+                            Latitude=String.valueOf(address.getLatitude());
+                            Longitude=String.valueOf(address.getLongitude());
+                            GPSState=address.getAdminArea();
+                            GPSDistrict=address.getSubAdminArea();
+                            GPSTaluka=address.getSubAdminArea();
 
                            // edt_address2.setText(addresses.get(0).getAddressLine(1));
                           //  edt_pinCode.setText(address.getPostalCode());
@@ -598,7 +609,12 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
                                     hideStateId.setText(String.valueOf(userJson.getInt("StateId")));
                                     hideTalukaId.setText(String.valueOf(userJson.getInt("TalukaId")));
 
-
+                                    Latitude=userJson.getString("Latitude");
+                                    Longitude=userJson.getString("Longitude");
+                                    
+                                    GPSState=userJson.getString("StatesName");
+                                    GPSDistrict=userJson.getString("DistrictName");
+                                    GPSTaluka=userJson.getString("TalukaName");
 
                                 } else {
                                     Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();

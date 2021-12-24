@@ -2,10 +2,14 @@ package com.sharpflux.shetkarimaza.activities;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -42,6 +46,13 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.AddPersonAdapter;
 import com.sharpflux.shetkarimaza.adapter.ContactDetailAdapter;
@@ -81,13 +92,13 @@ import jxl.write.biff.RowsExceededException;
 
 import static com.android.volley.Request.Method.GET;
 
-public class ContactDetailActivity extends AppCompatActivity {
+public class ContactDetailActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     List<ContactDetail> contactlist;
     Bundle bundle;
-    String TalukaId = "", VarityId = "", QualityId = "", ItemTypeId = "", StatesID = "", DistrictId = "",SortBy="0",RegistrationSubTypeId="0",CategoryName="0";
+    String TalukaId = "", VarityId = "", QualityId = "", ItemTypeId = "", StatesID = "", DistrictId = "",SortBy="0",RegistrationSubTypeId="0",CategoryName="0",Latitude="0",Longitude="0";
 
     boolean isLoading = false;
     int currentItems;
@@ -119,11 +130,27 @@ public class ContactDetailActivity extends AppCompatActivity {
     ImageView ImgBack2;
     Boolean IsSubCategory;
     TextView tvViewing;
+
+    private Location currentLocation;
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    private static final int MY_PERMISSIONS_REQUEST_CODE = 123;
+    private static final int LOCATION_REQUEST_CODE = 101;
+
+
     //https://newbedev.com/how-to-show-an-empty-view-with-a-recyclerview
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_detail);
+
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(ContactDetailActivity.this);
+        if (ActivityCompat.checkSelfPermission(ContactDetailActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(ContactDetailActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(ContactDetailActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+            return;
+        }
+        fetchLastLocation();
+
 
         recyclerView = findViewById(R.id.contact_Detail_rvProductList);
         customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(ContactDetailActivity.this);
@@ -188,6 +215,8 @@ public class ContactDetailActivity extends AppCompatActivity {
             RegistrationSubTypeId= bundle.getString("RegistrationSubTypeId");
             CategoryName= bundle.getString("Name");
         }
+
+
     /*    imageView_addFarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -325,10 +354,10 @@ public class ContactDetailActivity extends AppCompatActivity {
             setTitle(CategoryName);
         }
 
-        ContactDetailActivity.AsyncTaskRunner runner = new ContactDetailActivity.AsyncTaskRunner();
+  /*      ContactDetailActivity.AsyncTaskRunner runner = new ContactDetailActivity.AsyncTaskRunner();
         String sleepTime = "1";
         runner.execute(sleepTime);
-
+*/
         initAdapter();
         initScrollListener();
         myLocale = getResources().getConfiguration().locale;
@@ -502,6 +531,18 @@ public class ContactDetailActivity extends AppCompatActivity {
                 TalukaId = "0";
             }
 
+            if (Latitude != null) {
+                if (Latitude.equals(""))
+                    Latitude = "0";
+            } else {
+                Latitude = "0";
+            }
+            if (Longitude != null) {
+                if (Longitude.equals(""))
+                    Longitude = "0";
+            } else {
+                Longitude = "0";
+            }
             if (RegistrationSubTypeId != null) {
                 if (RegistrationSubTypeId.equals(""))
                     RegistrationSubTypeId = "0";
@@ -509,7 +550,7 @@ public class ContactDetailActivity extends AppCompatActivity {
                 RegistrationSubTypeId = "0";
             }
 
-            StringRequest stringRequest = new StringRequest(Request.Method.GET,URLs.URL_CONTACTDET + "StartIndex="+currentPage+"&PageSize="+PageSize + "&RegistrationTypeId=" + ItemTypeId  + "&RegistrationSubTypeId=" + RegistrationSubTypeId+ "&StateId=" + StatesID + "&DistrictId=" + DistrictId + "&TalukaId=" + TalukaId + "&Language=en",
+            StringRequest stringRequest = new StringRequest(Request.Method.GET,URLs.URL_CONTACTDET + "StartIndex="+currentPage+"&PageSize="+PageSize + "&RegistrationTypeId=" + ItemTypeId  + "&RegistrationSubTypeId=" + RegistrationSubTypeId+ "&StateId=" + StatesID + "&DistrictId=" + DistrictId + "&TalukaId=" + TalukaId + "&Language=en"+"&Lat=" + Latitude+"&Long=" + Longitude,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -747,5 +788,95 @@ public class ContactDetailActivity extends AppCompatActivity {
       Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
       startActivity(intent);
       finish();
+    }
+
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+    }
+
+    public List<Address> getAddress(Context ctx, double lat, double lng) {
+        String fullAdd = null;
+        List<Address> addresses = null;
+        try {
+            Geocoder geocoder = new Geocoder(ctx, Locale.getDefault());
+            addresses = geocoder.getFromLocation(lat, lng, 1);
+            if (addresses.size() > 0) {
+                Address address = addresses.get(0);
+                fullAdd = address.getAddressLine(0);
+
+                // if you want only city or pin code use following code //
+                   /* String Location = address.getLocality();
+                    String zip = address.getPostalCode();
+                    String Country = address.getCountryName(); */
+            }
+
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        return addresses;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_CODE: {
+                // When request is cancelled, the results array are empty
+                if (
+                        (grantResults.length > 0) &&
+                                (grantResults[0]
+                                        + grantResults[1]
+                                        + grantResults[2]
+                                        + grantResults[3]
+                                        + grantResults[4]
+                                        + grantResults[5]
+                                        == PackageManager.PERMISSION_GRANTED
+                                )
+                ) {
+                    // Permissions are granted
+                    Toast.makeText(ContactDetailActivity.this, "Permissions granted.", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Permissions are denied
+                    Toast.makeText(ContactDetailActivity.this, "Permissions denied.", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+        }
+    }
+
+    private void fetchLastLocation() {
+        if (ActivityCompat.checkSelfPermission(ContactDetailActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(ContactDetailActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        Task<Location> task = fusedLocationProviderClient.getLastLocation();
+        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    currentLocation = location;
+                    List<Address> addresses = getAddress(ContactDetailActivity.this, currentLocation.getLatitude(), currentLocation.getLongitude());
+
+
+                    if (addresses != null) {
+
+                        if (addresses.size() > 0) {
+                            Address address = addresses.get(0);
+                            Latitude=String.valueOf(address.getLatitude());
+                            Longitude=String.valueOf(address.getLongitude());
+
+                            ContactDetailActivity.AsyncTaskRunner runner = new ContactDetailActivity.AsyncTaskRunner();
+                            String sleepTime = "1";
+                            runner.execute(sleepTime);
+                        }
+                    }
+
+                } else {
+                    Toast.makeText(ContactDetailActivity.this, "No Location recorded", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

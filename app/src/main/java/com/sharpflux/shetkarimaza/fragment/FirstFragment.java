@@ -443,7 +443,7 @@ public class FirstFragment extends Fragment {
 
 
     private void GetUserDetails() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_REGISTRATIONGETUSERDETAILS + "&UserId=" + user.getId() + "&Language=" + currentLanguage,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_REGISTRATIONGETUSERDETAILS + "UserId=" + user.getId() + "&Language=" + currentLanguage,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -469,6 +469,12 @@ public class FirstFragment extends Fragment {
 
 
                                     mobileNo.setText(userJson.getString("MobileNo"));
+
+                                    if (!userJson.getString("RegistrationCategoryId").equals("0"))
+                                        hidSubCategoryId.setText(userJson.getString("RegistrationCategoryId"));
+
+                                    if (!userJson.getString("SubCategoryNameText").equals("0"))
+                                         editSubType.setText(userJson.getString("SubCategoryNameText"));
 
                                     if (!userJson.getString("AlternateMobile").equals("0"))
                                         AlternateMobile.setText(userJson.getString("AlternateMobile"));

@@ -90,7 +90,8 @@ public class SelfieFragment extends Fragment {
     private String address = "", city = "", district = "", state = "", companyname = "",
             license = "", companyregnno = "", gstno = "", names = "", registrationTypeId = "",
             registrationCategoryId = "", gender = "", mobile = "", alternateMobile = "", email = "",
-            accountname = "", bankname = "", branchcode = "", accno = "", ifsc = "", check = "", adhar = "", selfie = "",stateId = "", districtId = "", TalukaId = "",SubCategroyTypeId="";
+            accountname = "", bankname = "", branchcode = "", accno = "", ifsc = "", check = "", adhar = "", selfie = "",stateId = "", districtId = "", TalukaId = "",SubCategroyTypeId="",
+            Latitude="",Longitude="",GPSState="",GPSDistrict="",GPSTaluka="" ;
 
     private Intent iin;
     private Bundle bundle;
@@ -384,6 +385,12 @@ public class SelfieFragment extends Fragment {
 
             SubCategroyTypeId = bundle.getString("SubCategroyTypeId");
 
+            Latitude = bundle.getString("Latitude");
+            Longitude = bundle.getString("Longitude");
+            GPSState = bundle.getString("GPSState");
+            GPSDistrict = bundle.getString("GPSDistrict");
+            GPSTaluka = bundle.getString("GPSTaluka");
+
             bankname = "0";//bundle.getString("bankname");
             branchcode = "0";// bundle.getString("branchcode");
 
@@ -485,8 +492,6 @@ public class SelfieFragment extends Fragment {
                 }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-
-
                 Map<String, String> params = new HashMap<>();
                 params.put("UserId", UserId);
                 params.put("RegistrationTypeId", registrationTypeId);
@@ -497,9 +502,12 @@ public class SelfieFragment extends Fragment {
                 params.put("Address", address);
                 params.put("EmailId", email);
                 params.put("Gender", gender);
-                params.put("StateId", stateId);
+             /*   params.put("StateId", stateId);
                 params.put("CityId",districtId);
-                params.put("TahasilId", TalukaId);
+                params.put("TahasilId", TalukaId);*/
+                params.put("StateId", "0");
+                params.put("CityId","0");
+                params.put("TahasilId", "0");
                 params.put("CompanyFirmName", companyname);
                 params.put("LandLineNo", "1");
                 params.put("APMCLicence", license);
@@ -515,7 +523,11 @@ public class SelfieFragment extends Fragment {
                 params.put("UploadCancelledCheckUrl", "0");
                 params.put("UploadAdharCardPancardUrl", "0");
                 params.put("ImageUrl", "0");
-
+                params.put("Latitude", Latitude);
+                params.put("Longitude", Longitude);
+                params.put("GPSState", GPSState);
+                params.put("GPSDistrict", GPSDistrict);
+                params.put("GPSTaluka", GPSTaluka);
                 return params;
             }
 
@@ -565,14 +577,8 @@ public class SelfieFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
-
-
-
-
                 customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(getContext());
                 customDialogLoadingProgressBar.show();
-
-
         }
 
         @Override

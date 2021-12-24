@@ -162,7 +162,6 @@ public class ThirdFragment extends Fragment {
             stateId = bundle.getString("stateId");
             districtId = bundle.getString("districtId");
             TalukaId = bundle.getString("TalukaId");
-
             IsNewUser = bundle.getString("IsNewUser");
 
         }
