@@ -337,4 +337,7 @@
 
     <string name="enable_location">Enable Location</string>
     <string name="SearchNearbyLocation">Search by your Near Location</string>
+
+    <string name="label_month">MONTH</string>
+    <string name="label_year">YEAR</string>
 </resources>

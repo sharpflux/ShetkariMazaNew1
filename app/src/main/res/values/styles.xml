@@ -25,7 +25,9 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
-
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
     <style name="CustomDialogAnimation">
         <item name="android:windowEnterAnimation">@anim/slide_up_dialog</item>
         <item name="android:windowExitAnimation">@anim/slide_out_down</item>
@@ -43,7 +45,18 @@
         <item name="elevation">0dp</item>
     </style>
 
-
+    <style name="MonthPickerDialogStyle" >
+        <!-- Customize month picker theme here. -->
+        <!-- <item name="monthBgColor">#FFFFFF</item>
+         <item name="monthBgSelectedColor">#FF4081</item>
+         <item name="monthFontColorSelected">#ffffff</item>
+         <item name="monthFontColorNormal">#000000</item>
+         <item name="monthFontColorDisabled">#33000000</item>
+         <item name="headerBgColor">#FF4081</item>
+         <item name="headerFontColorSelected">#ffffff</item>
+         <item name="headerFontColorNormal">#85ffffff</item>
+         <item name="headerTitleColor">#ffffff</item>-->
+    </style>
     <style name="FieldName_TextView">
 
         <item name="android:layout_marginTop">18dp</item>

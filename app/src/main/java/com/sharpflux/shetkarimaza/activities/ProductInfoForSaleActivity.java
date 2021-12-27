@@ -5,11 +5,13 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.Instrumentation;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -53,9 +55,14 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -88,6 +95,7 @@ import com.sharpflux.shetkarimaza.adapter.RateAdapter;
 import com.sharpflux.shetkarimaza.adapter.SimilarListAdapter;
 import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
 import com.sharpflux.shetkarimaza.customviews.CustomRecyclerViewDialog;
+import com.sharpflux.shetkarimaza.customviews.MonthPickerDialog;
 import com.sharpflux.shetkarimaza.fragment.RateDialogFragment;
 import com.sharpflux.shetkarimaza.model.CouponModel;
 import com.sharpflux.shetkarimaza.model.Product;
@@ -256,11 +264,21 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
 
     LinearLayout linearAddress;
 
+
     @SuppressLint("WrongThread")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_info_for_sale);
+
+        if (savedInstanceState != null) {
+
+            edtproductType.setText(savedInstanceState.getString("productType"));
+            hidItemTypeId.setText(savedInstanceState.getString("productTypeId"));
+        }
+
+
+
         builder = new StringBuilder();
         builder.append("<?xml version=\"1.0\" ?>");
         org = "0";
@@ -364,23 +382,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
 
         linearAddress=findViewById(R.id.linearAddress);
 
-        linearAddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ProductInfoForSaleActivity.this, LocationActivityPlaces.class);
-                intent.putExtra("ActivityState", "started");
-                startActivity(intent);
-            }
-        });
 
-        tvCurrentAddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ProductInfoForSaleActivity.this, LocationActivityPlaces.class);
-                intent.putExtra("ActivityState", "started");
-                startActivity(intent);
-            }
-        });
 
         EnableRuntimePermission();
 
@@ -403,6 +405,27 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
             IsEdit=bundle.getBoolean("IsEdit");
             RequstId="0";
         }
+
+
+        linearAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProductInfoForSaleActivity.this, LocationActivityPlaces.class);
+                locationActivityLauncher.launch(intent);
+          /*      intent.putExtra("ProductId",ProductId);
+                startActivity(intent);*/
+            }
+        });
+
+        tvCurrentAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProductInfoForSaleActivity.this, LocationActivityPlaces.class);
+                locationActivityLauncher.launch(intent);
+                /*intent.putExtra("ProductId",ProductId);
+                startActivity(intent);*/
+            }
+        });
 
         //age
         if (ProductId.equals("15") || ProductId.equals("6") || ProductId.equals("8") || ProductId.equals("35")) {
@@ -646,33 +669,6 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
         });
 
 
-        edtavailablityInMonths.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Calendar cal = Calendar.getInstance();
-                year = cal.get(Calendar.YEAR);
-                month = cal.get(Calendar.MONTH);
-                day = cal.get(Calendar.DAY_OF_MONTH);
-
-                DatePickerDialog dialog = new DatePickerDialog(
-                        ProductInfoForSaleActivity.this,
-                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                        mDateSetListener,
-                        year, month, day);
-
-                int day = getApplicationContext().getResources().getIdentifier("android:id/day", null, null);
-                if (day != 0) {
-                    View yearPicker = dialog.getDatePicker().findViewById(day);
-                    if (yearPicker != null) {
-                        yearPicker.setVisibility(View.GONE);
-                    }
-                }
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                //dialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-                dialog.show();
-            }
-        });
-
         mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int yearSelected, int monthOfYear, int dayOfMonth) {
@@ -721,13 +717,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
 
         });
 
-     /*   btnFormSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                submitToDb();
-            }
-        });*/
         tv_rate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -1002,7 +992,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
             edtDays.setText(null);
         }
 
-
+        setNormalPicker();
         btnAddMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -1197,6 +1187,8 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
                 builder.append("<certificateno>" + certificateno + "</certificateno>");
                 builder.append("<SurveyNo>" + surveyNo + "</SurveyNo>");
                 builder.append("<AgeGroupId>" + hideAgeId.getText().toString() + "</AgeGroupId>");
+                builder.append("<Lat>" + Latitude + "</Lat>");
+                builder.append("<Long>" + Longitude + "</Long>");
                 builder.append("</Assign>");
                 builder.append("</Parent>");
                 AsyncTaskRunnerNewEntry runner = new AsyncTaskRunnerNewEntry();
@@ -1211,6 +1203,15 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
         fetchLastLocation();
 
     }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putString("productTypeId", hidItemTypeId.getText().toString());
+        savedInstanceState.putString("productType", edtproductType.getText().toString());
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
 
     private void initAdapter(List<RateData> rateDatalst) {
         rateAdapter = new RateAdapter(ProductInfoForSaleActivity.this, rateDatalst);
@@ -1509,6 +1510,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
         builder.show();
     }
 
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, requestCode, data);
         if (resultCode == Activity.RESULT_OK) {
@@ -1518,7 +1520,23 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
                 onCaptureImageResult(data);
         }
 
+
+
     }
+
+
+    ActivityResultLauncher<Intent> locationActivityLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if(result.getData().getExtras().getString("place")!=null)
+                         tvCurrentAddress.setText(result.getData().getExtras().getString("place"));
+                        Latitude=result.getData().getExtras().getString("lat");
+                        Longitude=result.getData().getExtras().getString("long");
+                }
+            });
+
 
     private void onSelectFromGalleryResult(Intent data) {
         Bitmap bitmaplocal = null;
@@ -2056,6 +2074,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_CODE: {
                 // When request is cancelled, the results array are empty
@@ -2080,6 +2099,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
             }
         }
     }
+
 
     private void fetchLastLocation() {
         if (ActivityCompat.checkSelfPermission(ProductInfoForSaleActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(ProductInfoForSaleActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -2123,4 +2143,115 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
             }
         });
     }
+
+
+
+
+
+    private void applyLocale() {
+        Locale locale = new Locale("hi");
+        Locale.setDefault(locale);
+
+        Resources res = getResources();
+        Configuration config = new Configuration(res.getConfiguration());
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
+    }
+
+    private void setNormalPicker() {
+        final Calendar today = Calendar.getInstance();
+        edtavailablityInMonths.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MonthPickerDialog.Builder builder = new MonthPickerDialog.Builder(ProductInfoForSaleActivity.this, new MonthPickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(int selectedMonth, int selectedYear) {
+                        //Log.d(TAG, "selectedMonth : " + selectedMonth + " selectedYear : " + selectedYear);
+                       // Toast.makeText(ProductInfoForSaleActivity.this, "Date set with month" + selectedMonth + " year " + selectedYear, Toast.LENGTH_SHORT).show();
+
+                        String MonthName="";
+                        switch(selectedMonth) {
+                            case 0:
+                                MonthName="January";
+                                break;
+                            case 1:
+                                MonthName="February";
+                                break;
+                            case 2:
+                                MonthName="March";
+                                break;
+                            case 3:
+                                MonthName="April";
+                                break;
+                            case 4:
+                                MonthName="May";
+                                break;
+                            case 5:
+                                MonthName="June";
+                                break;
+                            case 6:
+                                MonthName="July";
+                                break;
+                            case 7:
+                                MonthName="August";
+                                break;
+                            case 8:
+                                MonthName="September";
+                                break;
+                            case 9:
+                                MonthName="October";
+                                break;
+                            case 10:
+                                MonthName="November";
+                                break;
+                            case 11:
+                                MonthName="December";
+                                break;
+
+                        }
+                        edtavailablityInMonths.setText(MonthName+","+selectedYear);
+                    }
+                }, today.get(Calendar.YEAR), today.get(Calendar.MONTH));
+
+                builder.setActivatedMonth(Calendar.JULY)
+                        .setMinYear(1990)
+                        .setActivatedYear(2022)
+                        .setMaxYear(2025)
+                        .setMinMonth(Calendar.FEBRUARY)
+                        .setTitle("Select trading month")
+                        .setMonthRange(Calendar.FEBRUARY, Calendar.NOVEMBER)
+                        // .setMaxMonth(Calendar.OCTOBER)
+                        // .setYearRange(1890, 1890)
+                        // .setMonthAndYearRange(Calendar.FEBRUARY, Calendar.OCTOBER, 1890, 1890)
+                        //.showMonthOnly()
+                        // .showYearOnly()
+                        .setOnMonthChangedListener(new MonthPickerDialog.OnMonthChangedListener() {
+                            @Override
+                            public void onMonthChanged(int selectedMonth) {
+                                Log.d(TAG, "Selected month : " + selectedMonth);
+                                // Toast.makeText(ProductInfoForSaleActivity.this, " Selected month : " + selectedMonth, Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setOnYearChangedListener(new MonthPickerDialog.OnYearChangedListener() {
+                            @Override
+                            public void onYearChanged(int selectedYear) {
+                                Log.d(TAG, "Selected year : " + selectedYear);
+                                // Toast.makeText(ProductInfoForSaleActivity.this, " Selected year : " + selectedYear, Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .build()
+                        .show();
+
+            }
+        });
+
+
+    }
+
+
+
+    int choosenYear = 2017;
+
+
 }

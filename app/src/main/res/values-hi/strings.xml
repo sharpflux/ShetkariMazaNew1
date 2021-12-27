@@ -354,4 +354,7 @@
 स्थान सक्षम करें</string>
 
     <string name="SearchNearbyLocation">अपने नजदीकी स्थान के आधार पर खोजें</string>
+
+    <string name="label_month">MONTH</string>
+    <string name="label_year">YEAR</string>
 </resources>

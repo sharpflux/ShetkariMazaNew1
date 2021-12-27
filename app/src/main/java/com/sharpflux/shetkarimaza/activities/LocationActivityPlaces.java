@@ -1,10 +1,13 @@
 package com.sharpflux.shetkarimaza.activities;
 
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.GooglePlaceAdapter;
 import com.sharpflux.shetkarimaza.model.GooglePlaceModel;
+import com.sharpflux.shetkarimaza.utils.GeocodingLocation;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,7 +51,9 @@ public class LocationActivityPlaces extends AppCompatActivity {
     ArrayList<GooglePlaceModel> googlePlaceModels;
     ListView listView;
     String searchValue;
+    String ProductId;
 
+    String longitute,latitude;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +74,14 @@ public class LocationActivityPlaces extends AppCompatActivity {
         }
 */
         // speech to text
+
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+
+            ProductId = bundle.getString("ProductId");
+
+        }
         mic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,10 +103,18 @@ public class LocationActivityPlaces extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LocationActivityPlaces.this, HomeActivity.class);
+              /*  Intent intent = new Intent(LocationActivityPlaces.this, HomeActivity.class);
                 intent.putExtra("place", search.getText().toString());
-                startActivity(intent);
-                overridePendingTransition(0, 0);
+                intent.putExtra("ProductId",ProductId);
+                startActivityForResult(intent, 2);
+                overridePendingTransition(0, 0);*/
+                Intent intent=new Intent();
+                intent.putExtra("place", search.getText().toString());
+                intent.putExtra("lat", latitude);
+                intent.putExtra("long",longitute);
+                setResult(123, intent);
+              //  setResult(Activity.RESULT_OK,intent);
+                finish();//finishing activity
             }
         });
 
@@ -129,9 +151,20 @@ public class LocationActivityPlaces extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(!googlePlaceModels.get(position).getPlaceName().equalsIgnoreCase("Not Found")) {
-                    Intent intent = new Intent(LocationActivityPlaces.this, ProductInfoForSaleActivity.class);
+                   /* Intent intent = new Intent(LocationActivityPlaces.this, ProductInfoForSaleActivity.class);
                     intent.putExtra("place", googlePlaceModels.get(position).getPlaceName());
-                    startActivity(intent);
+                    intent.putExtra("ProductId",ProductId);
+                    startActivity(intent);*/
+
+
+                    Intent intent=new Intent();
+                    intent.putExtra("place", googlePlaceModels.get(position).getPlaceName());
+                    intent.putExtra("lat", latitude);
+                    intent.putExtra("long",longitute);
+                    setResult(123, intent);
+                  //  setResult(Activity.RESULT_OK,intent);
+                    finish();//finishing activity
+
                     overridePendingTransition(0, 0);
                 }
             }
@@ -159,6 +192,7 @@ public class LocationActivityPlaces extends AppCompatActivity {
             search.setText(result.get(0));
             search.setSelection(search.getText().toString().length());
         }
+
     }
 
     public class GooglePlaces extends AsyncTask<String, String, String> {
@@ -215,11 +249,21 @@ public class LocationActivityPlaces extends AppCompatActivity {
                 JSONObject jsonObj = new JSONObject(s);
                 JSONArray jsonArray = jsonObj.getJSONArray("predictions");
 
+
+
+
                 if (jsonObj.getString("status").equalsIgnoreCase("OK")) {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         GooglePlaceModel googlePlaceModel = new GooglePlaceModel();
                         googlePlaceModel.setPlaceName(jsonArray.getJSONObject(i).getString("description"));
+
+
+                        GeocodingLocation locationAddress = new GeocodingLocation();
+                        locationAddress.getAddressFromLocation(jsonArray.getJSONObject(i).getString("description"), getApplicationContext(), new GeocoderHandler());
+                        googlePlaceModel.setLatitude(latitude);
+                        googlePlaceModel.setLongitude(longitute);
                         googlePlaceModels.add(googlePlaceModel);
+
                     }
                 } else if   (jsonObj.getString("status").equalsIgnoreCase("OVER_QUERY_LIMIT")) {
                     Toast.makeText(getApplicationContext(), "You have exceeded your daily request quota for this API.", Toast.LENGTH_LONG).show();
@@ -237,6 +281,23 @@ public class LocationActivityPlaces extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+
+        }
+    }
+    private class GeocoderHandler extends Handler {
+        @Override
+        public void handleMessage(Message message) {
+            String locationAddress;
+            switch (message.what) {
+                case 1:
+                    Bundle bundle = message.getData();
+                    locationAddress = bundle.getString("address");
+                    latitude= bundle.getString("lat");
+                    longitute= bundle.getString("longi");
+                    break;
+                default:
+                    locationAddress = null;
+            }
 
         }
     }
