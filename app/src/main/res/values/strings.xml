@@ -103,6 +103,7 @@
     //////////////////////////////////////////
     <string name="registration_type">Registration Type *</string>
     <string name="registration_category">Registration Category *</string>
+    <string name="category">Category</string>
     <string name="name">Enter your full name *</string>
     <string name="mobile_no">Mobile No. *</string>
     <string name="email_id">Email id</string>
@@ -340,4 +341,6 @@
 
     <string name="label_month">MONTH</string>
     <string name="label_year">YEAR</string>
+    <string name="Buy">Buy</string>
+    <string name="Sell">Sell</string>
 </resources>

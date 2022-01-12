@@ -4,10 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
-
-
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -38,7 +35,7 @@
                 android:id="@+id/hidRegCagteId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="hidden value"
+                android:text="0"
                 android:textSize="20dp"
                 android:visibility="gone" />
 
@@ -81,7 +78,7 @@
                 android:id="@+id/hidSubCategoryId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="hidden value"
+                android:text="0"
                 android:textSize="20dp"
                 android:visibility="gone" />
             <com.google.android.material.textfield.TextInputLayout

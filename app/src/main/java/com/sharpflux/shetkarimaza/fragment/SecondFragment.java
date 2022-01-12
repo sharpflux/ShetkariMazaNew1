@@ -93,7 +93,7 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
     private static final int MY_PERMISSIONS_REQUEST_CODE = 123;
     private static final int LOCATION_REQUEST_CODE = 101;
     Button btnCurrentAddress;
-
+    boolean flagCurrentLocation=false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -161,6 +161,30 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
         }
 
         bundle = getArguments();
+        btnCurrentAddress.setVisibility(View.GONE);
+
+        btnCurrentAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!flagCurrentLocation){
+                    flagCurrentLocation=true;
+                    btnCurrentAddress.setText("Use");
+                    fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
+                    if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+                        return;
+                    }
+                    fetchLastLocation();
+                }
+                else {
+                    btnCurrentAddress.setText("Clear");
+                    flagCurrentLocation=false;
+                }
+
+            }
+        });
+
+
 
         if (bundle != null) {
             name = bundle.getString("Name");
@@ -174,7 +198,7 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
 
             IsNewUser = bundle.getString("IsNewUser");
 
-            if(registrationTypeId.contains("32")){
+            if(registrationTypeId.equals("32")){
                // companyname.setHint("Nursery Name");
                 TICompany.setHint("Nursery Name");
                 textLayoutAddress.setHint("Nursery Address");
@@ -185,7 +209,7 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
                 gstno.setVisibility(View.GONE);
                 companyregnno.setVisibility(View.GONE);
             }
-            else if(registrationTypeId.contains("36") || registrationTypeId.contains("37")){
+            else if(registrationTypeId.equals("36") || registrationTypeId.equals("37")){
                 // companyname.setHint("Nursery Name");
                 TICompany.setHint("Nursery Name");
                 TICompany.setVisibility(View.GONE);
@@ -196,6 +220,7 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
                 license.setVisibility(View.GONE);
                 gstno.setVisibility(View.GONE);
                 companyregnno.setVisibility(View.GONE);
+                btnCurrentAddress.setVisibility(View.VISIBLE);
             }
 
         }
@@ -297,6 +322,7 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
                 bundle.putString("GPSState", GPSState);
                 bundle.putString("GPSDistrict", GPSDistrict);
                 bundle.putString("GPSTaluka", GPSTaluka);
+                bundle.putBoolean("flagCurrentLocation", flagCurrentLocation);
 
                 FragmentTransaction transection =getActivity().getSupportFragmentManager().beginTransaction();
                 transection.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
@@ -348,17 +374,7 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
         }
 
 
-        btnCurrentAddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
-                if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
-                    return;
-                }
-                fetchLastLocation();
-            }
-        });
+
 
         return view;
 

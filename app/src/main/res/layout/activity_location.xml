@@ -57,13 +57,13 @@
         android:fontFamily="@font/sf_pro_display_bold"
         android:textAlignment="textStart"/>
     <TextView
-        android:visibility="gone"
+        android:visibility="visible"
         android:textSize="16sp"
         android:textColor="@color/green"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-
+        android:text="@string/enable_location"
         android:fontFamily="@font/sf_pro_display_semibold"/>
 </LinearLayout>

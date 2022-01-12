@@ -53,6 +53,7 @@ TabLayoutLogRegActivity extends AppCompatActivity  {
 
         Cursor cursor = mydatabase.LanguageGet(language);
         if(cursor.getCount()==0) {
+
             Intent intent = new Intent(TabLayoutLogRegActivity.this, SelectLanguageActivity.class);
             finish();
             startActivity(intent);

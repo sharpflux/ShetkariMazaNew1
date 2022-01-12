@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -29,6 +30,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class MachinHireActivity extends AppCompatActivity {
@@ -42,6 +44,7 @@ public class MachinHireActivity extends AppCompatActivity {
     MyCategoryType myCategoryType;
     private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
     String  ItemTypeId = "";
+    Locale myLocale;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,10 +54,11 @@ public class MachinHireActivity extends AppCompatActivity {
         customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(MachinHireActivity.this);
         categoryList = new ArrayList<>();
 
+        myLocale = getResources().getConfiguration().locale;
 
         mydatabase = new dbLanguage(MachinHireActivity.this);
-        Cursor cursor = mydatabase.LanguageGet("language");
-        mydatabase = new dbLanguage(MachinHireActivity.this);
+
+
 
         bundle = getIntent().getExtras();
         ItemTypeId="0";
@@ -68,6 +72,7 @@ public class MachinHireActivity extends AppCompatActivity {
         if(ItemTypeId.equals("37"))
             setTitle(getResources().getString(R.string.LabourforAgri));
 
+        Cursor cursor = mydatabase.LanguageGet("language");
         if(cursor.getCount()==0) {
             currentLanguage="en";
         }
@@ -78,7 +83,7 @@ public class MachinHireActivity extends AppCompatActivity {
                 {
                     currentLanguage="en";
                 }
-
+                changeLang(cursor.getString(0));
             }
         }
 
@@ -92,7 +97,16 @@ public class MachinHireActivity extends AppCompatActivity {
 
         setDynamicFragmentToTabLayout(1);
     }
-
+    public void changeLang(String lang) {
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        if (!"".equals(lang) && !config.locale.getLanguage().equals(lang)) {
+            myLocale = new Locale(lang);
+            Locale.setDefault(myLocale);
+            Configuration conf = new Configuration(config);
+            conf.locale = myLocale;
+            getBaseContext().getResources().updateConfiguration(conf, getBaseContext().getResources().getDisplayMetrics());
+        }
+    }
     private void setDynamicFragmentToTabLayout(Integer PageSize) {
         //SUPPLIED PageSize=99 for detect show the categories whose are usefull for Home Page (IsHomePageCategory)
         StringRequest stringRequest = new StringRequest(Request.Method.GET,  URLs.URL_MasterSubCategoriesGET+"Language="+currentLanguage+"&CategoryId="+ItemTypeId,

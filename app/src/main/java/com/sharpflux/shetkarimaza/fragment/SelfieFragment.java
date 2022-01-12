@@ -378,11 +378,16 @@ public class SelfieFragment extends Fragment {
             gstno = bundle.getString("gstno");
             accountname ="0"; //bundle.getString("accountname");
 
-
-            stateId = bundle.getString("stateId");
-            districtId = bundle.getString("districtId");
-            TalukaId = bundle.getString("TalukaId");
-
+            if(!bundle.getBoolean("flagCurrentLocation")) {
+                stateId = bundle.getString("stateId");
+                districtId = bundle.getString("districtId");
+                TalukaId = bundle.getString("TalukaId");
+            }
+            else {
+                stateId ="0";
+                districtId = "0";
+                TalukaId ="0";
+            }
             SubCategroyTypeId = bundle.getString("SubCategroyTypeId");
 
             Latitude = bundle.getString("Latitude");
@@ -390,6 +395,19 @@ public class SelfieFragment extends Fragment {
             GPSState = bundle.getString("GPSState");
             GPSDistrict = bundle.getString("GPSDistrict");
             GPSTaluka = bundle.getString("GPSTaluka");
+
+
+            if(Latitude.equals(""))
+                Latitude="0";
+            if(Longitude.equals(""))
+                Longitude="0";
+            if(GPSState.equals(""))
+                GPSState="0";
+            if(GPSDistrict.equals(""))
+                GPSDistrict="0";
+            if(GPSTaluka.equals(""))
+                GPSTaluka="0";
+
 
             bankname = "0";//bundle.getString("bankname");
             branchcode = "0";// bundle.getString("branchcode");
@@ -502,12 +520,9 @@ public class SelfieFragment extends Fragment {
                 params.put("Address", address);
                 params.put("EmailId", email);
                 params.put("Gender", gender);
-             /*   params.put("StateId", stateId);
+               params.put("StateId", stateId);
                 params.put("CityId",districtId);
-                params.put("TahasilId", TalukaId);*/
-                params.put("StateId", "0");
-                params.put("CityId","0");
-                params.put("TahasilId", "0");
+                params.put("TahasilId", TalukaId);
                 params.put("CompanyFirmName", companyname);
                 params.put("LandLineNo", "1");
                 params.put("APMCLicence", license);

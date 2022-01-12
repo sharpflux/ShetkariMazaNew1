@@ -21,7 +21,7 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.Single
     private Context context;
     private ArrayList<MyLanguage> employees;
     public int checkedPosition = -1;
-
+    private int lastSelectedPosition = -1;
     public LanguageAdapter(Context context, ArrayList<MyLanguage> employees) {
         this.context = context;
         this.employees = employees;
@@ -42,7 +42,45 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.Single
 
     @Override
     public void onBindViewHolder(@NonNull SingleViewHolder singleViewHolder, int position) {
-        singleViewHolder.bind(employees.get(position));
+         // singleViewHolder.bind(employees.get(position));
+
+      singleViewHolder.textView.setText(employees.get(position).getLanguageName());
+        if (position == -1) {
+            singleViewHolder.imageView.setVisibility(View.GONE);
+        } else {
+            if(employees.get(position).isSelected()){
+                singleViewHolder.imageView.setVisibility(View.VISIBLE);
+            }
+            else {
+                singleViewHolder.imageView.setVisibility(View.GONE);
+            }
+        }
+
+        singleViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+
+                   // employees.get(position).setSelected(true);
+                    checkedPosition = position;
+                    for(int i=0;i<=employees.size()-1;i++){
+                        if(position!=i) {
+                            employees.get(i).setSelected(false);
+                            //singleViewHolder.imageView.setVisibility(View.VISIBLE);
+                        }
+                        else {
+                            //singleViewHolder.imageView.setVisibility(View.GONE);
+
+                            employees.get(i).setSelected(true);
+                        }
+                    }
+                    notifyDataSetChanged();
+
+
+
+            }
+        });
 
     }
 
@@ -65,11 +103,14 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.Single
         void bind(final MyLanguage employee) {
             if (checkedPosition == -1) {
                 imageView.setVisibility(View.GONE);
+                employee.setSelected(false);
             } else {
                 if (checkedPosition == getAdapterPosition()) {
                     imageView.setVisibility(View.VISIBLE);
+                    employee.setSelected(true);
                 } else {
                     imageView.setVisibility(View.GONE);
+                    employee.setSelected(false);
                 }
             }
             textView.setText(employee.getLanguageName());
@@ -80,6 +121,7 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.Single
                     imageView.setVisibility(View.VISIBLE);
                     if (checkedPosition != getAdapterPosition()) {
                         notifyItemChanged(checkedPosition);
+                        employee.setSelected(true);
                         checkedPosition = getAdapterPosition();
                     }
                 }
@@ -89,8 +131,10 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.Single
 
     public MyLanguage getSelected() {
         if (checkedPosition != -1) {
+
             return employees.get(checkedPosition);
         }
         return null;
     }
+
 }

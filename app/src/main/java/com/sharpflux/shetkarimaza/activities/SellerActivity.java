@@ -2,6 +2,7 @@ package com.sharpflux.shetkarimaza.activities;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -97,23 +98,38 @@ public class SellerActivity extends AppCompatActivity {
         myLocale = getResources().getConfiguration().locale;
         language = user.getLanguage();
 
+        mydatabase = new dbLanguage(getApplicationContext());
         Cursor cursor = mydatabase.LanguageGet(language);
-
-        while (cursor.moveToNext()) {
-            currentLanguage = cursor.getString(0);
-
+        if(cursor.getCount()==0) {
+            currentLanguage="en";
+        }
+        else{
+            while (cursor.moveToNext()) {
+                currentLanguage = cursor.getString(0);
+                if( currentLanguage==null)
+                {
+                    currentLanguage="en";
+                }
+                changeLang(cursor.getString(0));
+            }
         }
 
         // setDynamicFragmentToTabLayout();
         SellerActivity.AsyncTaskRunner runner = new SellerActivity.AsyncTaskRunner();
         String sleepTime = "1";
         runner.execute(sleepTime);
-
-
-
     }
 
-
+    public void changeLang(String lang) {
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        if (!"".equals(lang) && !config.locale.getLanguage().equals(lang)) {
+            myLocale = new Locale(lang);
+            Locale.setDefault(myLocale);
+            Configuration conf = new Configuration(config);
+            conf.locale = myLocale;
+            getBaseContext().getResources().updateConfiguration(conf, getBaseContext().getResources().getDisplayMetrics());
+        }
+    }
     private void setDynamicFragmentToTabLayout() {
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,

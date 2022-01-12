@@ -160,16 +160,6 @@ public class HomeActivity extends AppCompatActivity
         }
 
 
-
-
-
-
-
-
-       // searchView = findViewById(R.id.searchViewHome);
-
-        //saleButton = findViewById(R.id.saleButton);
-
         if (!CheckDeviceIsOnline.isNetworkConnected(this)) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -200,12 +190,14 @@ public class HomeActivity extends AppCompatActivity
         header = navigationView.getHeaderView(0);
 
 
-
-
-
         if (!SharedPrefManager.getInstance(this).isLoggedIn()) {
+
+            Intent intent = new Intent(HomeActivity.this, TabLayoutLogRegActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                    Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
             finish();
-            startActivity(new Intent(this, TabLayoutLogRegActivity.class));
             return;
         }
 

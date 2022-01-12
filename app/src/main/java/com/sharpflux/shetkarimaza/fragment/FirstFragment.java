@@ -193,11 +193,16 @@ public class FirstFragment extends Fragment {
                     return;
                 }
 
-              /*  if (TextUtils.isEmpty(regCategory)) {
-                    Rcategory_edit.setError("Please enter your quality");
-                    Rcategory_edit.requestFocus();
-                    return;
-                }*/
+
+                if(hidRegTypeId.getText().toString().equals("36")||hidRegTypeId.getText().toString().equals("37")||hidRegTypeId.getText().toString().equals("1")||hidRegTypeId.getText().toString().equals("3")||hidRegTypeId.getText().toString().equals("24")){
+
+                    if (hidSubCategoryId.getText().toString().equals("0")) {
+                        editSubType.setError("Please select type");
+                        editSubType.requestFocus();
+                        return;
+                    }
+
+                }
 
                 //int id = rg.getCheckedRadioButtonId();
                 if (!rb1.isChecked() || !rb2.isChecked()) {//Grp is your radio group object
@@ -265,10 +270,18 @@ public class FirstFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                FirstFragment.AsyncTaskRunner runner = new FirstFragment.AsyncTaskRunner();
-                String sleepTime = "SubCate";
-                runner.execute(sleepTime);
+                if(hidRegTypeId.getText().toString().equals("23")|| hidRegTypeId.toString().trim().equals("37")||hidRegTypeId.getText().toString().equals("1") ||hidRegTypeId.getText().toString().equals("24")||hidRegTypeId.getText().toString().equals("3")) {
+                    FirstFragment.AsyncTaskRunner runner = new FirstFragment.AsyncTaskRunner();
+                    String sleepTime = "Category";
+                    runner.execute(sleepTime);
+                }
+                else {
 
+                    FirstFragment.AsyncTaskRunner runner = new FirstFragment.AsyncTaskRunner();
+                    String sleepTime = "SubCate";
+                    runner.execute(sleepTime);
+
+                }
 
             }
         });
@@ -296,7 +309,7 @@ public class FirstFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start,  int before, int count) {
 
-                if(s.toString().trim().equals("36") || s.toString().trim().equals("37")){
+                if(s.toString().trim().equals("36") || s.toString().trim().equals("37")||hidRegTypeId.getText().toString().equals("24")||hidRegTypeId.getText().toString().equals("26")|| s.toString().trim().equals("37")||hidRegTypeId.getText().toString().equals("1")|| s.toString().trim().equals("23")|| s.toString().trim().equals("3")){
                     tabSubCategoryType.setVisibility(View.VISIBLE);
                 }
                 else {
@@ -308,11 +321,16 @@ public class FirstFragment extends Fragment {
 
                     //tabSubCategoryType.setHint(getResources().getString(R.string.WhichMachine));
                 }
-                if(s.equals("37")) {
+                if(s.equals("23") || s.equals("3")) {
                     ModelName = getResources().getString(R.string.LabourforAgri);
-                    //tabSubCategoryType.setHint(getResources().getString(R.string.WhoYouAre));
                     editSubType.setHint( getResources().getString(R.string.WhoYouAre));
                 }
+                if(s.equals("26")) {
+                    ModelName = getResources().getString(R.string.LabourforAgri);
+                    editSubType.setHint( getResources().getString(R.string.WhoYouAre));
+                }
+
+
 
                 editSubType.setText("");
                 hidSubCategoryId.setText("");
@@ -392,11 +410,14 @@ public class FirstFragment extends Fragment {
             try {
 
                 if (params[0].toString() == "type")
-                    fetcher.loadList("RegistrationType", Rtype_edit, URLs.URL_RType + "1&PageSize=15&Language=" + currentLanguage + "&UserId=0",
+                    fetcher.loadList("RegistrationType", Rtype_edit, URLs.URL_RType + "1&PageSize=100&Language=" + currentLanguage + "&UserId=0",
                             "RegistrationTypeId", hidRegTypeId, "", "", "Registration Type", "", null, null, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "SubCate")
                     fetcher.loadList("SubCategoriesName", editSubType, URLs.URL_MasterSubCategoriesGET + "Language=" + currentLanguage + "&CategoryId="+hidRegTypeId.getText(),
                             "MasterSubCategoriesId", hidSubCategoryId, "", "", ModelName, "", null, null, customDialogLoadingProgressBar);
+                else if (params[0].toString() == "Category")
+                    fetcher.loadList("CategoryName_EN", editSubType, URLs.URL_RECYCLER+ currentLanguage,
+                            "CategoryId", hidSubCategoryId, "", "", getResources().getString(R.string.category), "", null, null, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "cate")
                     fetcher.loadList("SubCategoriesName",
                             Rcategory_edit, URLs.URL_RCategary, "MasterSubCategoriesId", hidSubCategoryId,
@@ -467,6 +488,17 @@ public class FirstFragment extends Fragment {
                                             rb2.setChecked(true);
                                     }
 
+                                    Rtype_edit.setEnabled(false);
+                                    editSubType.setEnabled(false);
+                                    Rtype_edit.setTextColor(getResources().getColor(R.color.gray));
+                                    editSubType.setTextColor(getResources().getColor(R.color.gray));
+                                    editfullname.setTextColor(getResources().getColor(R.color.gray));
+                                    editfullname.setEnabled(false);
+                                    mobileNo.setEnabled(false);
+                                    mobileNo.setTextColor(getResources().getColor(R.color.gray));
+                                 //   rb1.setEnabled(false);
+                                   // rb2.setEnabled(false);
+                                    rg.setEnabled(false);
 
                                     mobileNo.setText(userJson.getString("MobileNo"));
 

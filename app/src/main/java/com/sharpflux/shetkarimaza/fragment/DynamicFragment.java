@@ -348,7 +348,8 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
                                 }
 
                                 else {
-                                    customDialogLoadingProgressBar.dismiss();
+                                    if(customDialogLoadingProgressBar!=null && customDialogLoadingProgressBar.isShowing())
+                                        customDialogLoadingProgressBar.dismiss();
                                     Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                                 }
 
@@ -357,18 +358,23 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
                             myAdapter.notifyDataSetChanged();
                             isLoading = false;
                             progressBar.setVisibility(View.GONE);
-                            customDialogLoadingProgressBar.dismiss();
+
+                            if(customDialogLoadingProgressBar!=null && customDialogLoadingProgressBar.isShowing())
+                                customDialogLoadingProgressBar.dismiss();
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            customDialogLoadingProgressBar.dismiss();
+                            if(customDialogLoadingProgressBar!=null && customDialogLoadingProgressBar.isShowing())
+                                customDialogLoadingProgressBar.dismiss();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        customDialogLoadingProgressBar.dismiss();
+                        if(customDialogLoadingProgressBar!=null && customDialogLoadingProgressBar.isShowing())
+                            customDialogLoadingProgressBar.dismiss();
                     }
                 }) {
             @Override
@@ -381,9 +387,6 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
-
-
-
 
 
     @Override

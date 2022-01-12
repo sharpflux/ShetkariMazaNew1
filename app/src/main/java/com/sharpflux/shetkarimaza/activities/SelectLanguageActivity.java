@@ -46,6 +46,7 @@ public class SelectLanguageActivity extends AppCompatActivity {
     User user;
     dbLanguage mydatabase;
     LanguageModal language;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,9 +122,25 @@ public class SelectLanguageActivity extends AppCompatActivity {
     private void createList() {
         employees = new ArrayList<>();
 
-        employees.add(new MyLanguage("English"));
-        employees.add(new MyLanguage("हिन्दी"));
-        employees.add(new MyLanguage("मराठी"));
+        User user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+        myLocale = getResources().getConfiguration().locale;
+        currentLang = user.getLanguage();
+        boolean en=false,hi=false,mr=false;
+
+        if(currentLang==null)
+            en=true;
+        else {
+            if (currentLang.equals("en"))
+                en = true;
+            if (currentLang.equals("mr"))
+                mr = true;
+            if (currentLang.equals("hi"))
+                hi = true;
+        }
+
+        employees.add(new MyLanguage("English",en));
+        employees.add(new MyLanguage("हिन्दी",hi));
+        employees.add(new MyLanguage("मराठी",mr));
 
         adapter.setEmployees(employees);
     }

@@ -286,12 +286,19 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
         orgnic = "";
         ClickedImage = "";
         mydatabase = new dbLanguage(getApplicationContext());
-
         Cursor cursor = mydatabase.LanguageGet(language);
-
-        while (cursor.moveToNext()) {
-            currentLanguage = cursor.getString(0);
-
+        if(cursor.getCount()==0) {
+            currentLanguage="en";
+        }
+        else{
+            while (cursor.moveToNext()) {
+                currentLanguage = cursor.getString(0);
+                if( currentLanguage==null)
+                {
+                    currentLanguage="en";
+                }
+                changeLang(cursor.getString(0));
+            }
         }
         customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(ProductInfoForSaleActivity.this);
         User user = SharedPrefManager.getInstance(this).getUser();
@@ -1905,7 +1912,16 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
 
     }
 
-
+    public void changeLang(String lang) {
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        if (!"".equals(lang) && !config.locale.getLanguage().equals(lang)) {
+            myLocale = new Locale(lang);
+            Locale.setDefault(myLocale);
+            Configuration conf = new Configuration(config);
+            conf.locale = myLocale;
+            getBaseContext().getResources().updateConfiguration(conf, getBaseContext().getResources().getDisplayMetrics());
+        }
+    }
 
     private void RateGuide(final Integer currentPage) {
 

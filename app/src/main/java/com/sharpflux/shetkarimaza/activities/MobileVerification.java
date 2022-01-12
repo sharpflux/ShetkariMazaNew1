@@ -523,8 +523,13 @@ public class MobileVerification extends AppCompatActivity implements OtpReceived
                                     );
 
                                     SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
-                                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
 
+                                    Intent intent = new Intent(MobileVerification.this, HomeActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|
+                                            Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                                            Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
+                                    finish();
                                 }
                             }
 

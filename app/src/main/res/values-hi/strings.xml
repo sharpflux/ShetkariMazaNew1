@@ -354,7 +354,10 @@
 स्थान सक्षम करें</string>
 
     <string name="SearchNearbyLocation">अपने नजदीकी स्थान के आधार पर खोजें</string>
-
+    <string name="category">वर्ग</string>
     <string name="label_month">MONTH</string>
     <string name="label_year">YEAR</string>
+    <string name="Buy">खरीदना</string>
+    <string name="Sell">
+बेचना</string>
 </resources>

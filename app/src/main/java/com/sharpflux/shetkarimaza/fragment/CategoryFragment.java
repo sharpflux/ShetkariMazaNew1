@@ -270,12 +270,22 @@ public class CategoryFragment extends Fragment {
 
                                 if (!userJson.getBoolean("error")) {
 
-                                   // String imageUrl = userJson.getString("ImageUrl")
-                                    //       .substring(oldAPI.length(), userJson.getString("ImageUrl").length());
+
+                                    String RegistrationType;
+
+                                    if(userJson.getString("RegistrationTypeId").equals("2")){
+                                        RegistrationType=getResources().getString(R.string.sell);
+                                    }
+                                    else if(userJson.getString("RegistrationTypeId").equals("3")) {
+                                        RegistrationType=getResources().getString(R.string.Buy);
+                                    }
+                                    else {
+                                        RegistrationType= userJson.getString("RegistrationType");
+                                    }
 
                                         myCategoryType = new MyCategoryType
                                             (      userJson.getString("ImageUrl"),
-                                                    userJson.getString("RegistrationType"),
+                                                    RegistrationType,
                                                     userJson.getString("RegistrationTypeId"),
                                                     userJson.getString("UserRegistrationTypeId")
                                             );
