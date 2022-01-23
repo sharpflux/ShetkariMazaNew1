@@ -75,6 +75,7 @@ public class MachineAdapter extends RecyclerView.Adapter<MachineAdapter.ViewHold
                 ((ViewHolder) holder).categoryId = mList.get(position).getCategoryTypeId();
                 ((ViewHolder) holder).mTitle.setText(mList.get(position).getCategoryTypeName());
                 ((ViewHolder) holder).CategoryName=mList.get(position).getCategoryTypeName();
+                ((ViewHolder) holder).ItemTypeId=mList.get(position).getUserRegistrationTypeId();
 
             } catch (Exception d) {
 
@@ -108,7 +109,7 @@ public class MachineAdapter extends RecyclerView.Adapter<MachineAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView mImage;
         TextView mTitle;
-        String categoryId = "",CategoryName="";
+        String categoryId = "",CategoryName="",ItemTypeId;
         List<SubCategoryFilter> mlist;
 
         public ViewHolder(View itemView) {
@@ -122,7 +123,7 @@ public class MachineAdapter extends RecyclerView.Adapter<MachineAdapter.ViewHold
         public void onClick(View view) {
             Context context = view.getContext();
             Intent intent = new Intent(context, ContactDetailActivity.class);
-            intent.putExtra("ProductId", "0");
+            intent.putExtra("ProductId", ItemTypeId);
             intent.putExtra("RegistrationSubTypeId", categoryId);
             intent.putExtra("IsSubCategory", true);
             intent.putExtra("Name", CategoryName);

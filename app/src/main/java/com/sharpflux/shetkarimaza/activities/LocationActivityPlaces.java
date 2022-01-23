@@ -284,7 +284,7 @@ public class LocationActivityPlaces extends AppCompatActivity {
 
         }
     }
-    private class GeocoderHandler extends Handler {
+    public class GeocoderHandler extends Handler {
         @Override
         public void handleMessage(Message message) {
             String locationAddress;

@@ -102,6 +102,14 @@ public class Filter1Activity extends AppCompatActivity implements View.OnClickLi
             size_color.setVisibility(View.INVISIBLE);
             vehicle_color.setVisibility(View.VISIBLE);
         }
+
+
+        if(bundle.getString("ProductId").equals("36") || bundle.getString("ProductId").equals("37")){
+            findViewById(R.id.buttonOk).setVisibility(View.VISIBLE);
+        }
+        else {
+            findViewById(R.id.buttonOk).setVisibility(View.GONE);
+        }
         myFragment.setArguments(bundle);
         activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).addToBackStack(null).commit();
 

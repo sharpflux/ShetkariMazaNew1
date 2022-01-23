@@ -138,8 +138,8 @@ public class BuyerActivity extends AppCompatActivity implements TabLayout.OnTabS
 
         @Override
         protected void onPreExecute() {
-            customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(BuyerActivity.this);
-            customDialogLoadingProgressBar.show();
+          //  customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(BuyerActivity.this);
+           // customDialogLoadingProgressBar.show();
         }
 
         @Override
@@ -178,11 +178,11 @@ public class BuyerActivity extends AppCompatActivity implements TabLayout.OnTabS
                                 } else {
                                     Toast.makeText(BuyerActivity.this, response, Toast.LENGTH_SHORT).show();
                                 }
-                                customDialogLoadingProgressBar.dismiss();
+                            //    customDialogLoadingProgressBar.dismiss();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            customDialogLoadingProgressBar.dismiss();
+                           // customDialogLoadingProgressBar.dismiss();
                         }
                     }
                 },
@@ -190,7 +190,7 @@ public class BuyerActivity extends AppCompatActivity implements TabLayout.OnTabS
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(BuyerActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-                        customDialogLoadingProgressBar.dismiss();
+                        //customDialogLoadingProgressBar.dismiss();
                     }
                 }) {
             @Override

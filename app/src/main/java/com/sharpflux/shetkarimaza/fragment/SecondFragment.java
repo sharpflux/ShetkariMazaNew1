@@ -1,6 +1,7 @@
 package com.sharpflux.shetkarimaza.fragment;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,16 +13,27 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.speech.RecognizerIntent;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
@@ -47,12 +59,16 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.DetailFormActivity;
 import com.sharpflux.shetkarimaza.activities.HomeActivity;
+import com.sharpflux.shetkarimaza.activities.LocationActivityPlaces;
+import com.sharpflux.shetkarimaza.adapter.GooglePlaceAdapter;
 import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
 import com.sharpflux.shetkarimaza.customviews.CustomRecyclerViewDialog;
+import com.sharpflux.shetkarimaza.model.GooglePlaceModel;
 import com.sharpflux.shetkarimaza.model.Product;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.utils.DataFetcher;
+import com.sharpflux.shetkarimaza.utils.GeocodingLocation;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
@@ -61,12 +77,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class SecondFragment extends DialogFragment implements OnMapReadyCallback {
@@ -94,6 +117,15 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
     private static final int LOCATION_REQUEST_CODE = 101;
     Button btnCurrentAddress;
     boolean flagCurrentLocation=false;
+    String longitute,latitude;
+
+    private static final String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
+    private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
+    private static final String OUT_JSON = "/json";
+    private static final String API_KEY = "AIzaSyAIgg-7oWclBcQYqkg_fSAoSb1ZNCm1R0A&libraries=places";
+    EditText search;
+    ArrayList<GooglePlaceModel> googlePlaceModels;
+    ListView listView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -142,6 +174,12 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
         User user = SharedPrefManager.getInstance(getContext()).getUser();
         myLocale = getResources().getConfiguration().locale;
         language = user.getLanguage();
+
+
+
+        googlePlaceModels = new ArrayList<>();
+        search = (EditText) view.findViewById(R.id.search);
+        listView = (ListView)view.findViewById(R.id.listView);
 
         Cursor cursor = mydatabase.LanguageGet(language);
 
@@ -374,7 +412,56 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
         }
 
 
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openYourActivity();
+            }
+        });
 
+       /* search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if(s.toString().isEmpty()) {
+                    googlePlaceModels.clear();
+                    setAdapter();
+                } else {
+                    new SecondFragment.GooglePlaces().execute(String.valueOf(s));
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });*/
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(!googlePlaceModels.get(position).getPlaceName().equalsIgnoreCase("Not Found")) {
+                   /* Intent intent = new Intent(LocationActivityPlaces.this, ProductInfoForSaleActivity.class);
+                    intent.putExtra("place", googlePlaceModels.get(position).getPlaceName());
+                    intent.putExtra("ProductId",ProductId);
+                    startActivity(intent);*/
+
+
+               /*     Intent intent=new Intent();
+                    intent.putExtra("place", googlePlaceModels.get(position).getPlaceName());
+                    intent.putExtra("lat", latitude);
+                    intent.putExtra("long",longitute);
+                    getContext().setResult(123, intent);
+                    //  setResult(Activity.RESULT_OK,intent);
+                    finish();//finishing activity
+
+                    overridePendingTransition(0, 0);*/
+                }
+            }
+        });
 
         return view;
 
@@ -664,5 +751,151 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==1 && resultCode == RESULT_OK && null != data) {
+            ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            search.setText(result.get(0));
+            search.setSelection(search.getText().toString().length());
+        }
+
+    }
+
+    public class GooglePlaces extends AsyncTask<String, String, String> {
+
+        @Override
+        public void onPreExecute() {
+            super .onPreExecute();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String result = null;
+            try {
+                // Your API key
+                String key="?key=" + API_KEY;
+                // components type
+                String components="&components=country:in";
+                // set input type
+                String input="&input=" + URLEncoder.encode(params[0], "utf8");
+                // Building the url to the web service
+                String strURL = PLACES_API_BASE+TYPE_AUTOCOMPLETE+OUT_JSON+key+components+input;
+
+
+                URL url = new URL(strURL);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.connect();
+
+                if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    InputStreamReader inputStreamReader = new InputStreamReader(conn.getInputStream());
+                    BufferedReader reader = new BufferedReader(inputStreamReader);
+                    StringBuilder stringBuilder = new StringBuilder();
+                    String temp;
+
+                    while ((temp = reader.readLine()) != null) {
+                        stringBuilder.append(temp);
+                    }
+                    result = stringBuilder.toString();
+                }else  {
+                    result = "error";
+                }
+
+            } catch (Exception  e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
+
+        @Override
+        public void onPostExecute(String s) {
+            super .onPostExecute(s);
+            googlePlaceModels.clear();
+            try {
+                JSONObject jsonObj = new JSONObject(s);
+                JSONArray jsonArray = jsonObj.getJSONArray("predictions");
+
+
+
+
+                if (jsonObj.getString("status").equalsIgnoreCase("OK")) {
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        GooglePlaceModel googlePlaceModel = new GooglePlaceModel();
+                        googlePlaceModel.setPlaceName(jsonArray.getJSONObject(i).getString("description"));
+
+
+                        GeocodingLocation locationAddress = new GeocodingLocation();
+                        locationAddress.getAddressFromLocation(jsonArray.getJSONObject(i).getString("description"), getContext(), new SecondFragment.GeocoderHandler());
+                        googlePlaceModel.setLatitude(latitude);
+                        googlePlaceModel.setLongitude(longitute);
+                        googlePlaceModels.add(googlePlaceModel);
+
+                    }
+                } else if   (jsonObj.getString("status").equalsIgnoreCase("OVER_QUERY_LIMIT")) {
+                    Toast.makeText(getContext(), "You have exceeded your daily request quota for this API.", Toast.LENGTH_LONG).show();
+                    GooglePlaceModel googlePlaceModel = new GooglePlaceModel();
+                    googlePlaceModel.setPlaceName("Not Found");
+                    googlePlaceModels.add(googlePlaceModel);
+                } else {
+                    GooglePlaceModel googlePlaceModel = new GooglePlaceModel();
+                    googlePlaceModel.setPlaceName("Not Found");
+                    googlePlaceModels.add(googlePlaceModel);
+                }
+                // set adapter
+                setAdapter();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+    }
+    private class GeocoderHandler extends Handler {
+        @Override
+        public void handleMessage(Message message) {
+            String locationAddress;
+            switch (message.what) {
+                case 1:
+                    Bundle bundle = message.getData();
+                    locationAddress = bundle.getString("address");
+                    latitude= bundle.getString("lat");
+                    longitute= bundle.getString("longi");
+                    break;
+                default:
+                    locationAddress = null;
+            }
+
+        }
+    }
+
+    public void setAdapter() {
+        GooglePlaceAdapter adapter = new GooglePlaceAdapter(getContext(), googlePlaceModels);
+        listView.setAdapter(adapter);
+    }
+
+    ActivityResultLauncher<Intent> launchSomeActivity = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == 123) {
+                        Intent data = result.getData();
+
+                        Bundle bundle =data.getExtras();
+
+                        search.setText(bundle.getString("place"));
+                        longitute=bundle.getString("lat");
+                        longitute=bundle.getString("long");
+                        // your operation....
+                    }
+                }
+            });
+
+    public void openYourActivity() {
+        Intent intent = new Intent(getContext(), LocationActivityPlaces.class);
+        launchSomeActivity.launch(intent);
+        getActivity().overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+    }
 
 }

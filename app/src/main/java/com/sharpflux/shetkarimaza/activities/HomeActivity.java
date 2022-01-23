@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import android.provider.Settings;
@@ -292,7 +293,14 @@ public class HomeActivity extends AppCompatActivity
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     //if user pressed "yes", then he is allowed to exit from application
-                    finish();
+
+                    if(Build.VERSION.SDK_INT>=16 && Build.VERSION.SDK_INT<21){
+                        finishAffinity();
+                    } else if(Build.VERSION.SDK_INT>=21){
+                        finishAndRemoveTask();
+                    }
+                    System.exit(0);
+
                 }
             });
             builder.setNegativeButton("No", new DialogInterface.OnClickListener() {

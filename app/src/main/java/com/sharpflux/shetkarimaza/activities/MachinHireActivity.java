@@ -128,7 +128,7 @@ public class MachinHireActivity extends AppCompatActivity {
                                             (      userJson.getString("ImageUrl"),
                                                     userJson.getString("SubCategoriesName"),
                                                     userJson.getString("MasterSubCategoriesId"),
-                                                    "0"
+                                                    ItemTypeId
                                             );
                                     categoryList.add(myCategoryType);
                                 } else {
