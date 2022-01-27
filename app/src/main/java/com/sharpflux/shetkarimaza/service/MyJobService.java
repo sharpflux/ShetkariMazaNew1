@@ -186,143 +186,26 @@ public class MyJobService extends JobService {
         return true;
     }
 
-    private void AssignVariables()
-    {
-        ItemTypeId = "";
-        TalukaId = "";
-        VarityId = "";
-        QualityId ="";
-        StatesID ="";
-        DistrictId ="";
-        priceids="";
-    }
 
 
 
     public void SetDynamicDATA(final JobParameters parameters) {
 
-                    Cursor AVAILABLEMONTHCursor = myDatabaseBuyer.FilterGetByFilterName("AVAILABLEMONTH");
-                    Cursor VARIETYCursor = myDatabaseBuyer.FilterGetByFilterName("VARIETY");
-                    Cursor QUALITYCursor = myDatabaseBuyer.FilterGetByFilterName("QUALITY");
-                    Cursor STATECursor = myDatabaseBuyer.FilterGetByFilterName("STATE");
-                    Cursor DISTRICTCursor = myDatabaseBuyer.FilterGetByFilterName("DISTRICT");
-                    Cursor TALUKACursor = myDatabaseBuyer.FilterGetByFilterName("TALUKA");
-                    Cursor AGECursor = myDatabaseBuyer.FilterGetByFilterName("AGE");
 
-                    priceids=bundle.getString("SortBy");
+        bundle = parameters.getExtras();
 
-                    while (AGECursor.moveToNext()) {
-                        if (Age == null) {
-                            Age = "";
-                        }
-                        Age = Age + AGECursor.getString(0) + ",";
-                    }
+        ItemTypeId = bundle.getString("ItemTypeId");
+        VarityId = bundle.getString("VarityId");
+        StatesID = bundle.getString("StatesID");
+        DistrictId = bundle.getString("DistrictId");
+        QualityId = bundle.getString("QualityId");
+        TalukaId = bundle.getString("TalukaId");
+        currentLanguage = bundle.getString("currentLanguage");
+        priceids = bundle.getString("SortByRate");
+        AvailableMonth = bundle.getString("AvailableMonths");
 
-
-
-                    while (AVAILABLEMONTHCursor.moveToNext()) {
-                        if(AvailableMonth==null)
-                        {
-                            AvailableMonth="";
-                        }
-                        AvailableMonth = AvailableMonth + AVAILABLEMONTHCursor.getString(0) + ",";
-                    }
-
-
-
-                    while (VARIETYCursor.moveToNext()) {
-                        if(VarityId==null)
-                        {
-                            VarityId="";
-                        }
-                        VarityId = VarityId + VARIETYCursor.getString(0) + ",";
-                    }
-                    while (QUALITYCursor.moveToNext()) {
-                        if(QualityId==null)
-                        {
-                            QualityId="";
-                        }
-                        QualityId = QualityId + QUALITYCursor.getString(0) + ",";
-                    }
-                    while (STATECursor.moveToNext()) {
-                        StatesID = StatesID + STATECursor.getString(0) + ",";
-                    }
-                    while (DISTRICTCursor.moveToNext()) {
-                        if(DistrictId==null)
-                        {
-                            DistrictId="";
-                        }
-                        DistrictId = DistrictId + DISTRICTCursor.getString(0) + ",";
-                    }
-                    while (TALUKACursor.moveToNext()) {
-                        if(TalukaId==null)
-                        {
-                            TalukaId="";
-                        }
-                        TalukaId = TalukaId + TALUKACursor.getString(0) + ",";
-                    }
-
-
-
-
-            if (TalukaId != null) {
-                if (TalukaId.equals(""))
-                    TalukaId = "0";
-            } else {
-                TalukaId = "0";
-            }
-
-            if (VarityId != null) {
-                if (VarityId.equals(""))
-                    VarityId = "0";
-            } else {
-                VarityId = "0";
-            }
-            if (QualityId != null) {
-                if (QualityId.equals(""))
-                    QualityId = "0";
-            } else {
-                QualityId = "0";
-            }
-            if (StatesID != null) {
-                if (StatesID.equals(""))
-                    StatesID = "0";
-            } else {
-                StatesID = "0";
-            }
-            if (DistrictId != null) {
-                if (DistrictId.equals(""))
-                    DistrictId = "0";
-            } else {
-                DistrictId = "0";
-            }
-            if (TalukaId != null) {
-                if (TalukaId.equals(""))
-                    TalukaId = "0";
-            } else {
-                TalukaId = "0";
-            }
-            if (priceids != null) {
-                if (priceids.equals(""))
-                    priceids = "0";
-            } else {
-                priceids = "0";
-            }
-
-            if (AvailableMonth != null) {
-                if (AvailableMonth.equals(""))
-                    AvailableMonth = "0";
-            } else {
-                AvailableMonth = "0";
-            }
-
-            if (Age != null) {
-                if (Age.equals(""))
-                    Age = "0";
-            } else {
-                Age = "0";
-            }
-
+        ItemName = bundle.getString("ItemName");
+        categoryId = bundle.getString("categoryId");
 
 
         if(ItemTypeId==null)
@@ -340,12 +223,13 @@ public class MyJobService extends JobService {
             }
 
 
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                URLs.URL_REQESTS + "?StartIndex=" + 1 + "&PageSize=" + 1000000 +
+                        "&ItemTypeId=" + ItemTypeId + "&VarityId=" + VarityId + "&StateId=" + StatesID +
+                        "&DistrictId=" + DistrictId + "&QualityId=" + QualityId + "&TalukaId="
+                        + TalukaId + "&Language=" + currentLanguage + "&SortByRate=" + priceids + "&AvailableMonths=" + AvailableMonth+ "&Age=" + Age,
 
-            StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                    URLs.URL_REQESTS + "?StartIndex=" + 1 + "&PageSize=" + 100000 +
-                            "&ItemTypeId=" + ItemTypeId + "&VarityId=" + VarityId + "&StateId=" + StatesID +
-                            "&DistrictId=" + DistrictId + "&QualityId=" + QualityId + "&TalukaId="
-                            + TalukaId+"&Language="+currentLanguage+"&SortByRate="+priceids+"&AvailableMonths="+AvailableMonth+ "&Age=" + Age,
+
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {

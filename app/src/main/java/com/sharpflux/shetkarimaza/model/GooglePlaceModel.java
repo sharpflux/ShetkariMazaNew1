@@ -3,7 +3,7 @@ package com.sharpflux.shetkarimaza.model;
 
 public class GooglePlaceModel {
 
-    String placeName,Latitude,Longitude;
+    String placeName, secondary_text,Latitude,Longitude;
 
     public String getLatitude() {
         return Latitude;
@@ -29,4 +29,11 @@ public class GooglePlaceModel {
         this.placeName = placeName;
     }
 
+    public String getSecondary_text() {
+        return secondary_text;
+    }
+
+    public void setSecondary_text(String secondary_text) {
+        this.secondary_text = secondary_text;
+    }
 }

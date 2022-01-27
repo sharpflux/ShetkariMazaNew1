@@ -332,7 +332,7 @@
     <string name="let_s_first_check_that_we_deliver_to_nyour_address">Let’s first check your address</string>
     <string name="choose_location">Choose Location</string>
     <string name="choose_your_location_and_nstart_shopping">Choose your location and start</string>
-    <string name="use_current_location">Use Current Location</string>
+    <string name="use_current_location">Choose Current Location</string>
     <string name="viewing">Viewing Record:</string>
     <string name="RateUs">Rate us</string>
 
@@ -343,4 +343,9 @@
     <string name="label_year">YEAR</string>
     <string name="Buy">Buy</string>
     <string name="Sell">Sell</string>
+
+    <string name="slide1Title">Get Expected Price for your Agri Commodity</string>
+
+    <string name="slide1Desc">Start your own buisness with less Investment</string>
+
 </resources>

@@ -128,6 +128,8 @@ public class Filter1Activity extends AppCompatActivity implements View.OnClickLi
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("Search", "Filter");
                         intent.putExtra("ProductId", bundle.getString("ProductId"));
+                        intent.putExtra("UseLatLong", false);
+                        intent.putExtra("RegistrationSubTypeId", bundle.getString("RegistrationSubTypeId"));
                         startActivity(intent);
                     }
                     if(bundle.getString("Activity").equals("TransporterViewActivity")){
@@ -155,6 +157,8 @@ public class Filter1Activity extends AppCompatActivity implements View.OnClickLi
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("Search", "Filter");
                         intent.putExtra("ProductId", bundle.getString("ProductId"));
+                        intent.putExtra("UseLatLong", false);
+                        intent.putExtra("RegistrationSubTypeId", bundle.getString("RegistrationSubTypeId"));
                         startActivity(intent);
                     }
                     if(bundle.getString("Activity").equals("TransporterViewActivity")){
@@ -178,12 +182,15 @@ public class Filter1Activity extends AppCompatActivity implements View.OnClickLi
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("Search", "Filter");
                     intent.putExtra("ProductId", bundle.getString("ProductId"));
+                    intent.putExtra("UseLatLong", true);
+                    intent.putExtra("RegistrationSubTypeId", bundle.getString("RegistrationSubTypeId"));
                     startActivity(intent);
                 }
                 if(bundle.getString("Activity").equals("TransporterViewActivity")){
                     Intent intent = new Intent(Filter1Activity.this, TransporterViewActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("Search", "Filter");
+                    intent.putExtra("ProductId", bundle.getString("ProductId"));
                     startActivity(intent);
                 }
             }
@@ -199,6 +206,8 @@ public class Filter1Activity extends AppCompatActivity implements View.OnClickLi
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("Search", "Filter");
                 intent.putExtra("ProductId", bundle.getString("ProductId"));
+                intent.putExtra("UseLatLong", false);
+                intent.putExtra("RegistrationSubTypeId", bundle.getString("RegistrationSubTypeId"));
                 startActivity(intent);
             }
             if(bundle.getString("Activity").equals("TransporterViewActivity")){

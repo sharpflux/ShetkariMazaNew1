@@ -127,6 +127,7 @@ public class MachineAdapter extends RecyclerView.Adapter<MachineAdapter.ViewHold
             intent.putExtra("RegistrationSubTypeId", categoryId);
             intent.putExtra("IsSubCategory", true);
             intent.putExtra("Name", CategoryName);
+            intent.putExtra("Heading", mTitle.getText().toString());
             context.startActivity(intent);
         }
     }

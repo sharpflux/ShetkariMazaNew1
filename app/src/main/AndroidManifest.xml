@@ -14,19 +14,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.ReviewActivity"
+
+        <activity android:name=".activities.LocActivity"  android:launchMode="singleTop"></activity>
+        <activity
+            android:name=".activities.ReviewActivity"
             android:parentActivityName=".activities.HomeActivity"
-            android:theme="@style/SellerDarkAppTheme"
-            ></activity>
+            android:theme="@style/SellerDarkAppTheme" />
         <activity
             android:name=".activities.MachinHireActivity"
             android:parentActivityName=".activities.HomeActivity"
             android:theme="@style/SellerDarkAppTheme" />
-
         <activity
+            android:name=".activities.LocationActivityPlaces"
             android:launchMode="singleTop"
-            android:parentActivityName=".activities.ProductInfoForSaleActivity"
-            android:name=".activities.LocationActivityPlaces" />
+            android:parentActivityName=".activities.ProductInfoForSaleActivity" />
         <activity
             android:name=".activities.LocationActivity"
             android:noHistory="true" />

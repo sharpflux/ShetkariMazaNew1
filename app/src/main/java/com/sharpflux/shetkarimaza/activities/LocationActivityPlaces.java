@@ -11,6 +11,7 @@ import android.os.Message;
 import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -21,10 +22,16 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.Gson;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.GooglePlaceAdapter;
 import com.sharpflux.shetkarimaza.model.GooglePlaceModel;
 import com.sharpflux.shetkarimaza.utils.GeocodingLocation;
+import com.sharpflux.shetkarimaza.utils.PlacesDetails;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,15 +52,21 @@ public class LocationActivityPlaces extends AppCompatActivity {
     private static final String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
     private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
     private static final String OUT_JSON = "/json";
-    private static final String API_KEY = "AIzaSyAIgg-7oWclBcQYqkg_fSAoSb1ZNCm1R0A&libraries=places";
+ //   private static final String API_KEY = "AIzaSyAIgg-7oWclBcQYqkg_fSAoSb1ZNCm1R0A&libraries=places";
+     private static final String API_KEY = "AIzaSyABy4YAQGzriK4MmpeEcM9ORxf6L_XT_uI&libraries=places";
     EditText search;
     ImageView mic, clear, back;
     ArrayList<GooglePlaceModel> googlePlaceModels;
     ListView listView;
     String searchValue;
     String ProductId;
-
+    RequestQueue queue;
     String longitute,latitude;
+
+    PlacesDetails pl = new PlacesDetails();
+    ArrayList < Double > list = new ArrayList < Double > ();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -159,10 +172,9 @@ public class LocationActivityPlaces extends AppCompatActivity {
 
                     Intent intent=new Intent();
                     intent.putExtra("place", googlePlaceModels.get(position).getPlaceName());
-                    intent.putExtra("lat", latitude);
-                    intent.putExtra("long",longitute);
+                    intent.putExtra("lat", googlePlaceModels.get(position).getLatitude());
+                    intent.putExtra("long",googlePlaceModels.get(position).getLongitude());
                     setResult(123, intent);
-                  //  setResult(Activity.RESULT_OK,intent);
                     finish();//finishing activity
 
                     overridePendingTransition(0, 0);
@@ -249,23 +261,21 @@ public class LocationActivityPlaces extends AppCompatActivity {
                 JSONObject jsonObj = new JSONObject(s);
                 JSONArray jsonArray = jsonObj.getJSONArray("predictions");
 
-
-
-
                 if (jsonObj.getString("status").equalsIgnoreCase("OK")) {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         GooglePlaceModel googlePlaceModel = new GooglePlaceModel();
                         googlePlaceModel.setPlaceName(jsonArray.getJSONObject(i).getString("description"));
-
-
-                        GeocodingLocation locationAddress = new GeocodingLocation();
-                        locationAddress.getAddressFromLocation(jsonArray.getJSONObject(i).getString("description"), getApplicationContext(), new GeocoderHandler());
+                        googlePlaceModel.setSecondary_text(jsonArray.getJSONObject(i).getJSONObject("structured_formatting").getString("secondary_text"));
+                       // GeocodingLocation locationAddress = new GeocodingLocation();
+                       // locationAddress.getAddressFromLocation(jsonArray.getJSONObject(i).getString("description"), getApplicationContext(), new GeocoderHandler());
                         googlePlaceModel.setLatitude(latitude);
                         googlePlaceModel.setLongitude(longitute);
                         googlePlaceModels.add(googlePlaceModel);
-
+                        list = pl.placeDetail(jsonArray.getJSONObject(i).getString("place_id"));
+                        
                     }
-                } else if   (jsonObj.getString("status").equalsIgnoreCase("OVER_QUERY_LIMIT")) {
+                }
+                else if  (jsonObj.getString("status").equalsIgnoreCase("OVER_QUERY_LIMIT")) {
                     Toast.makeText(getApplicationContext(), "You have exceeded your daily request quota for this API.", Toast.LENGTH_LONG).show();
                     GooglePlaceModel googlePlaceModel = new GooglePlaceModel();
                     googlePlaceModel.setPlaceName("Not Found");
@@ -284,6 +294,36 @@ public class LocationActivityPlaces extends AppCompatActivity {
 
         }
     }
+
+
+
+    private void geocodePlace(String placeID) {
+        // Construct the request URL
+        String apiKey = "AIzaSyABy4YAQGzriK4MmpeEcM9ORxf6L_XT_uI"; // Your GMP API key
+        String url = "https://maps.googleapis.com/maps/api/geocode/json?place_id=%s&key=%s";
+        String requestURL = String.format(url, placeID, apiKey);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, requestURL, null,
+                response -> {
+                    try {
+
+                        JSONArray results = response.getJSONArray("results");
+                        if (results.length() == 0) {
+                            Log.w("TAG", "No results from geocoding request.");
+                            return;
+                        }
+
+                        Log.d("TAG", "LatLng for geocoded place: " + results);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }, error -> Log.e("TAG", "Request failed"));
+
+        // Add the request to the Request queue.
+        queue.add(request);
+    }
+
+
     public class GeocoderHandler extends Handler {
         @Override
         public void handleMessage(Message message) {

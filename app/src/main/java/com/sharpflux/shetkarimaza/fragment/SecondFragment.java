@@ -59,6 +59,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.DetailFormActivity;
 import com.sharpflux.shetkarimaza.activities.HomeActivity;
+import com.sharpflux.shetkarimaza.activities.LocActivity;
 import com.sharpflux.shetkarimaza.activities.LocationActivityPlaces;
 import com.sharpflux.shetkarimaza.adapter.GooglePlaceAdapter;
 import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
@@ -98,8 +99,7 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
     ArrayList<Product> list;
     LinearLayout btn_next;
     Bundle bundle;
-    String name = "", registrationTypeId = "", registrationCategoryId = "", gender = "", mobile = "", alternateMobile = "", email = "",SubCategroyTypeId=""
-    ,Latitude="",Longitude="",GPSState="",GPSDistrict="",GPSTaluka="" ;
+    String name = "", registrationTypeId = "", registrationCategoryId = "", gender = "", mobile = "", alternateMobile = "", email = "",SubCategroyTypeId="",GPSState="",GPSDistrict="",GPSTaluka="" ;
     DataFetcher fetcher;
     private CustomRecyclerViewDialog customDialog;
     Product sellOptions;
@@ -122,7 +122,8 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
     private static final String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
     private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
     private static final String OUT_JSON = "/json";
-    private static final String API_KEY = "AIzaSyAIgg-7oWclBcQYqkg_fSAoSb1ZNCm1R0A&libraries=places";
+   // private static final String API_KEY = "AIzaSyAIgg-7oWclBcQYqkg_fSAoSb1ZNCm1R0A&libraries=places";
+   private static final String API_KEY = "AIzaSyABy4YAQGzriK4MmpeEcM9ORxf6L_XT_uI&libraries=places";
     EditText search;
     ArrayList<GooglePlaceModel> googlePlaceModels;
     ListView listView;
@@ -201,7 +202,7 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
         bundle = getArguments();
         btnCurrentAddress.setVisibility(View.GONE);
 
-        btnCurrentAddress.setOnClickListener(new View.OnClickListener() {
+      /*  btnCurrentAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(!flagCurrentLocation){
@@ -220,7 +221,7 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
                 }
 
             }
-        });
+        });*/
 
 
 
@@ -258,7 +259,7 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
                 license.setVisibility(View.GONE);
                 gstno.setVisibility(View.GONE);
                 companyregnno.setVisibility(View.GONE);
-                btnCurrentAddress.setVisibility(View.VISIBLE);
+               // btnCurrentAddress.setVisibility(View.VISIBLE);
             }
 
         }
@@ -285,9 +286,9 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
 
 
                 if (TextUtils.isEmpty(addresss)) {
-                    address.setError("Please enter your address");
-                    address.requestFocus();
-                    return;
+                   // address.setError("Please enter your address");
+                   // address.requestFocus();
+                    //return;
                 }
 
                 if (TextUtils.isEmpty(state)) {
@@ -342,7 +343,7 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
                 bundle.putString("Mobile", mobile);
                 bundle.putString("AlternateMobile", alternateMobile);
                 bundle.putString("Email", email);
-                bundle.putString("address", address.getText().toString());
+                bundle.putString("address",search.getText().toString());// address.getText().toString()
                 bundle.putString("city","0" ); //city.getText().toString()
                 bundle.putString("TalukaId", hideTalukaId.getText().toString());
                 bundle.putString("district", edtdistrict.getText().toString());
@@ -355,8 +356,8 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
                 bundle.putString("gstno",gst);//gstno.getText().toString()
                 bundle.putString("IsNewUser", IsNewUser);
                 bundle.putString("SubCategroyTypeId", SubCategroyTypeId);
-                bundle.putString("Latitude", Latitude);
-                bundle.putString("Longitude", Longitude);
+                bundle.putString("Latitude", latitude);
+                bundle.putString("Longitude", longitute);
                 bundle.putString("GPSState", GPSState);
                 bundle.putString("GPSDistrict", GPSDistrict);
                 bundle.putString("GPSTaluka", GPSTaluka);
@@ -419,49 +420,8 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
             }
         });
 
-       /* search.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                if(s.toString().isEmpty()) {
-                    googlePlaceModels.clear();
-                    setAdapter();
-                } else {
-                    new SecondFragment.GooglePlaces().execute(String.valueOf(s));
-                }
-            }
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });*/
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(!googlePlaceModels.get(position).getPlaceName().equalsIgnoreCase("Not Found")) {
-                   /* Intent intent = new Intent(LocationActivityPlaces.this, ProductInfoForSaleActivity.class);
-                    intent.putExtra("place", googlePlaceModels.get(position).getPlaceName());
-                    intent.putExtra("ProductId",ProductId);
-                    startActivity(intent);*/
 
 
-               /*     Intent intent=new Intent();
-                    intent.putExtra("place", googlePlaceModels.get(position).getPlaceName());
-                    intent.putExtra("lat", latitude);
-                    intent.putExtra("long",longitute);
-                    getContext().setResult(123, intent);
-                    //  setResult(Activity.RESULT_OK,intent);
-                    finish();//finishing activity
-
-                    overridePendingTransition(0, 0);*/
-                }
-            }
-        });
 
         return view;
 
@@ -521,56 +481,6 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
                 return;
             }
         }
-    }
-
-    private void fetchLastLocation() {
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        Task<Location> task = fusedLocationProviderClient.getLastLocation();
-        task.addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null) {
-                    currentLocation = location;
-                    List<Address> addresses = getAddress(getContext(), currentLocation.getLatitude(), currentLocation.getLongitude());
-
-
-                    if (addresses != null) {
-
-                        if (addresses.size() > 0) {
-                            Address address = addresses.get(0);
-                            edtaddress.setText(addresses.get(0).getAddressLine(0));
-                            edtstate.setText(address.getAdminArea());
-                            edtdistrict.setText(address.getSubAdminArea());
-                            edttaluka.setText(address.getLocality()+ " " + address.getSubLocality());
-
-
-                            Latitude=String.valueOf(address.getLatitude());
-                            Longitude=String.valueOf(address.getLongitude());
-                            GPSState=address.getAdminArea();
-                            GPSDistrict=address.getSubAdminArea();
-                            GPSTaluka=address.getSubAdminArea();
-
-                           // edt_address2.setText(addresses.get(0).getAddressLine(1));
-                          //  edt_pinCode.setText(address.getPostalCode());
-                          //  edt_city.setText(address.getLocality() + " " + address.getSubLocality());
-                         //   edt_state.setText(address.getAdminArea() +" "+ address.getSubAdminArea() );
-                           // DeliveryLocation=new LatLng(address.getLatitude(),address.getLongitude());
-                        }
-
-
-
-                    }
-
-
-
-
-                } else {
-                    Toast.makeText(getContext(), "No Location recorded", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
 
 
@@ -712,8 +622,8 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
                                     hideStateId.setText(String.valueOf(userJson.getInt("StateId")));
                                     hideTalukaId.setText(String.valueOf(userJson.getInt("TalukaId")));
 
-                                    Latitude=userJson.getString("Latitude");
-                                    Longitude=userJson.getString("Longitude");
+                                    latitude=userJson.getString("Latitude");
+                                    longitute=userJson.getString("Longitude");
                                     
                                     GPSState=userJson.getString("StatesName");
                                     GPSDistrict=userJson.getString("DistrictName");
@@ -762,112 +672,7 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
 
     }
 
-    public class GooglePlaces extends AsyncTask<String, String, String> {
 
-        @Override
-        public void onPreExecute() {
-            super .onPreExecute();
-
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            String result = null;
-            try {
-                // Your API key
-                String key="?key=" + API_KEY;
-                // components type
-                String components="&components=country:in";
-                // set input type
-                String input="&input=" + URLEncoder.encode(params[0], "utf8");
-                // Building the url to the web service
-                String strURL = PLACES_API_BASE+TYPE_AUTOCOMPLETE+OUT_JSON+key+components+input;
-
-
-                URL url = new URL(strURL);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.connect();
-
-                if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                    InputStreamReader inputStreamReader = new InputStreamReader(conn.getInputStream());
-                    BufferedReader reader = new BufferedReader(inputStreamReader);
-                    StringBuilder stringBuilder = new StringBuilder();
-                    String temp;
-
-                    while ((temp = reader.readLine()) != null) {
-                        stringBuilder.append(temp);
-                    }
-                    result = stringBuilder.toString();
-                }else  {
-                    result = "error";
-                }
-
-            } catch (Exception  e) {
-                e.printStackTrace();
-            }
-            return result;
-        }
-
-        @Override
-        public void onPostExecute(String s) {
-            super .onPostExecute(s);
-            googlePlaceModels.clear();
-            try {
-                JSONObject jsonObj = new JSONObject(s);
-                JSONArray jsonArray = jsonObj.getJSONArray("predictions");
-
-
-
-
-                if (jsonObj.getString("status").equalsIgnoreCase("OK")) {
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        GooglePlaceModel googlePlaceModel = new GooglePlaceModel();
-                        googlePlaceModel.setPlaceName(jsonArray.getJSONObject(i).getString("description"));
-
-
-                        GeocodingLocation locationAddress = new GeocodingLocation();
-                        locationAddress.getAddressFromLocation(jsonArray.getJSONObject(i).getString("description"), getContext(), new SecondFragment.GeocoderHandler());
-                        googlePlaceModel.setLatitude(latitude);
-                        googlePlaceModel.setLongitude(longitute);
-                        googlePlaceModels.add(googlePlaceModel);
-
-                    }
-                } else if   (jsonObj.getString("status").equalsIgnoreCase("OVER_QUERY_LIMIT")) {
-                    Toast.makeText(getContext(), "You have exceeded your daily request quota for this API.", Toast.LENGTH_LONG).show();
-                    GooglePlaceModel googlePlaceModel = new GooglePlaceModel();
-                    googlePlaceModel.setPlaceName("Not Found");
-                    googlePlaceModels.add(googlePlaceModel);
-                } else {
-                    GooglePlaceModel googlePlaceModel = new GooglePlaceModel();
-                    googlePlaceModel.setPlaceName("Not Found");
-                    googlePlaceModels.add(googlePlaceModel);
-                }
-                // set adapter
-                setAdapter();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-
-        }
-    }
-    private class GeocoderHandler extends Handler {
-        @Override
-        public void handleMessage(Message message) {
-            String locationAddress;
-            switch (message.what) {
-                case 1:
-                    Bundle bundle = message.getData();
-                    locationAddress = bundle.getString("address");
-                    latitude= bundle.getString("lat");
-                    longitute= bundle.getString("longi");
-                    break;
-                default:
-                    locationAddress = null;
-            }
-
-        }
-    }
 
     public void setAdapter() {
         GooglePlaceAdapter adapter = new GooglePlaceAdapter(getContext(), googlePlaceModels);
@@ -885,7 +690,7 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
                         Bundle bundle =data.getExtras();
 
                         search.setText(bundle.getString("place"));
-                        longitute=bundle.getString("lat");
+                        latitude=bundle.getString("lat");
                         longitute=bundle.getString("long");
                         // your operation....
                     }
@@ -893,7 +698,7 @@ public class SecondFragment extends DialogFragment implements OnMapReadyCallback
             });
 
     public void openYourActivity() {
-        Intent intent = new Intent(getContext(), LocationActivityPlaces.class);
+        Intent intent = new Intent(getContext(), LocActivity.class);
         launchSomeActivity.launch(intent);
         getActivity().overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }

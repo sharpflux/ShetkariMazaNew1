@@ -64,13 +64,13 @@ public class MachinHireActivity extends AppCompatActivity {
         ItemTypeId="0";
         if (bundle != null) {
             ItemTypeId = bundle.getString("ProductId");
-
+            setTitle(bundle.getString("Heading"));
         }
 
-        if(ItemTypeId.equals("36"))
+      /*  if(ItemTypeId.equals("36"))
             setTitle(getResources().getString(R.string.HiringMachinery));
         if(ItemTypeId.equals("37"))
-            setTitle(getResources().getString(R.string.LabourforAgri));
+            setTitle(getResources().getString(R.string.LabourforAgri));*/
 
         Cursor cursor = mydatabase.LanguageGet("language");
         if(cursor.getCount()==0) {

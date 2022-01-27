@@ -360,4 +360,7 @@
     <string name="Buy">खरीदना</string>
     <string name="Sell">
 बेचना</string>
+
+    <string name="slide1Title">Get Expected Price for your Agri Commodity</string>
+    <string name="slide1Desc">Start your own buisness with less Investment</string>
 </resources>

@@ -45,9 +45,11 @@ public class GooglePlaceAdapter extends BaseAdapter {
         if (convertView ==  null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.place_list, parent, false);
         }
-        TextView name;
+        TextView name,tvAddressDetail;
         name = (TextView) convertView.findViewById(R.id.name);
+        tvAddressDetail = (TextView) convertView.findViewById(R.id.tvAddressDetail);
         name.setText(arrayList.get(position).getPlaceName());
+        tvAddressDetail.setText(arrayList.get(position).getSecondary_text());
         return convertView;
     }
 }

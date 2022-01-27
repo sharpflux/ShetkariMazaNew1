@@ -100,7 +100,7 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
     Bundle bundle;
     String TalukaId = "", VarityId = "", QualityId = "", ItemTypeId = "", StatesID = "", DistrictId = "",SortBy="0",RegistrationSubTypeId="0",CategoryName="0",Latitude="0",Longitude="0";
 
-    boolean isLoading = false;
+    boolean isLoading = false,UseLatLong=false;
     int currentItems;
     int totalItems;
     int scrollOutItems;
@@ -214,6 +214,9 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
             IsSubCategory=bundle.getBoolean("IsSubCategory");
             RegistrationSubTypeId= bundle.getString("RegistrationSubTypeId");
             CategoryName= bundle.getString("Name");
+
+            ToolbartvItemName.setText(bundle.getString("Heading"));
+            setTitle(bundle.getString("Heading"));
         }
 
 
@@ -270,7 +273,10 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
             }
         });*/
 
-        if (ItemTypeId.equals("1")) {
+
+
+
+    /*    if (ItemTypeId.equals("1")) {
             ToolbartvItemName.setText("Processor");
             setTitle("Processor");
         } else if (ItemTypeId.equals("4")) {
@@ -352,7 +358,7 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
         else {
             ToolbartvItemName.setText(CategoryName);
             setTitle(CategoryName);
-        }
+        }*/
 
   /*      ContactDetailActivity.AsyncTaskRunner runner = new ContactDetailActivity.AsyncTaskRunner();
         String sleepTime = "1";
@@ -380,6 +386,7 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
                 Intent intent = new Intent(ContactDetailActivity.this, Filter1Activity.class);
                 intent.putExtra("Activity","ContactDetailActivity");
                 intent.putExtra("ProductId",ItemTypeId);
+                intent.putExtra("RegistrationSubTypeId",RegistrationSubTypeId);
                 startActivity(intent);
             }
         });
@@ -462,6 +469,9 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
                     Cursor DISTRICTCursor = myDatabase.FilterGetByFilterName("DISTRICT");
                     Cursor TALUKACursor = myDatabase.FilterGetByFilterName("TALUKA");
 
+                    UseLatLong=bundle.getBoolean("UseLatLong");
+                    RegistrationSubTypeId=bundle.getString("RegistrationSubTypeId");
+
                     while (STATECursor.moveToNext()) {
                         if(StatesID==null)
                         {
@@ -530,19 +540,26 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
             } else {
                 TalukaId = "0";
             }
-
-            if (Latitude != null) {
-                if (Latitude.equals(""))
+            if(UseLatLong) {
+                if (Latitude != null) {
+                    if (Latitude.equals(""))
+                        Latitude = "0";
+                } else {
                     Latitude = "0";
-            } else {
-                Latitude = "0";
+                }
+
+                    if (Longitude != null) {
+                        if (Longitude.equals(""))
+                            Longitude = "0";
+                    } else {
+                        Longitude = "0";
+                    }
             }
-            if (Longitude != null) {
-                if (Longitude.equals(""))
-                    Longitude = "0";
-            } else {
+            else {
+                Latitude = "0";
                 Longitude = "0";
             }
+
             if (RegistrationSubTypeId != null) {
                 if (RegistrationSubTypeId.equals(""))
                     RegistrationSubTypeId = "0";

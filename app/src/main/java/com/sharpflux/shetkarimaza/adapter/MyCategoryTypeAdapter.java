@@ -168,6 +168,7 @@ class MyCategoryTypeHolder extends RecyclerView.ViewHolder implements View.OnCli
         else if (categoryId.equals("36") || categoryId.equals("37")|| categoryId.equals("26")) {
             Intent intent = new Intent(context, MachinHireActivity.class);
             intent.putExtra("ProductId", categoryId);
+            intent.putExtra("Heading", mTitle.getText().toString());
             context.startActivity(intent);
         }
         else
@@ -177,6 +178,7 @@ class MyCategoryTypeHolder extends RecyclerView.ViewHolder implements View.OnCli
             intent.putExtra("RegistrationSubTypeId", "0");
             intent.putExtra("IsSubCategory", false);
             intent.putExtra("Name", "No");
+            intent.putExtra("Heading", mTitle.getText().toString());
             context.startActivity(intent);
         }
     }

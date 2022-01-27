@@ -581,7 +581,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                                         }
                                         lr_filterbtn.setVisibility(View.VISIBLE);
                                         customDialogLoadingProgressBar.dismiss();
-                                        //isLoading = false;
+                                        isLoading = false;
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -970,14 +970,17 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
                     PersistableBundle extras = new PersistableBundle();
                     extras.putString("ItemTypeId", ItemTypeId);
-                    extras.putString("TalukaId", TalukaId);
-                    extras.putString("VarietyId", VarityId);
-                    extras.putString("QualityId", QualityId);
+                    extras.putString("VarityId", VarityId);
                     extras.putString("StatesID", StatesID);
                     extras.putString("DistrictId", DistrictId);
-                    extras.putString("priceids", priceids);
+                    extras.putString("QualityId", QualityId);
+                    extras.putString("TalukaId", TalukaId);
+                    extras.putString("currentLanguage", currentLanguage);
+                    extras.putString("SortByRate", priceids);
+                    extras.putString("AvailableMonths", AvailableMonth);
                     extras.putString("categoryId", categoryId);
                     extras.putString("ItemName", ItemName);
+
 
                     JobInfo.Builder builder = new JobInfo.Builder(0, new ComponentName(getApplicationContext(), MyJobService.class));
                     builder.setPersisted(true).setExtras(extras);
