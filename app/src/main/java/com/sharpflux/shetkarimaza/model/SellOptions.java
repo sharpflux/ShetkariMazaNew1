@@ -10,6 +10,7 @@ public class SellOptions {
     private  String ItemName;
     private boolean IsVarietyAvailable;
     private boolean IsGroupItem;
+
     public SellOptions(String image, String productlist, String productId) {
         this.image = image;
         this.productlist = productlist;

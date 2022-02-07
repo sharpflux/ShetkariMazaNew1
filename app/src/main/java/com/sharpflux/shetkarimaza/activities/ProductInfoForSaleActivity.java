@@ -414,12 +414,26 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
         }
 
 
+
+
         linearAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ProductInfoForSaleActivity.this, LocationActivityPlaces.class);
+                Intent intent = new Intent(ProductInfoForSaleActivity.this, LocActivity.class);
                 locationActivityLauncher.launch(intent);
           /*      intent.putExtra("ProductId",ProductId);
+                startActivity(intent);*/
+            }
+        });
+
+
+
+        edtaddres.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProductInfoForSaleActivity.this, LocActivity.class);
+                locationActivityLauncher.launch(intent);
+                /*intent.putExtra("ProductId",ProductId);
                 startActivity(intent);*/
             }
         });
@@ -427,7 +441,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
         tvCurrentAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ProductInfoForSaleActivity.this, LocationActivityPlaces.class);
+                Intent intent = new Intent(ProductInfoForSaleActivity.this, LocActivity.class);
                 locationActivityLauncher.launch(intent);
                 /*intent.putExtra("ProductId",ProductId);
                 startActivity(intent);*/
@@ -1424,18 +1438,11 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
                     submitToDb();
                 }
 
-
-
-
-
-
             /*    else if (params[0].toString() == "Rate") {
                     loadProducts();
                 }*/
-                Thread.sleep(1000);
-
+                Thread.sleep(100);
                 resp = "Slept for " + params[0] + " seconds";
-
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -1443,7 +1450,6 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
             }
             return resp;
         }
-
 
         @Override
         protected void onPostExecute(String result) {
@@ -1538,9 +1544,11 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if(result.getData().getExtras().getString("place")!=null)
-                         tvCurrentAddress.setText(result.getData().getExtras().getString("place"));
+                        tvCurrentAddress.setText(result.getData().getExtras().getString("place"));
                         Latitude=result.getData().getExtras().getString("lat");
                         Longitude=result.getData().getExtras().getString("long");
+
+                     edtaddres.setText(result.getData().getExtras().getString("place"));
                 }
             });
 
@@ -1835,12 +1843,8 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
 
         //  requestQueue.add(stringRequest);
 
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS *
-                2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleySingleton.getInstance(ProductInfoForSaleActivity.this).addToRequestQueue(stringRequest);
-
-
     }
 
 
@@ -2231,7 +2235,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
                 }, today.get(Calendar.YEAR), today.get(Calendar.MONTH));
 
                 builder.setActivatedMonth(Calendar.JULY)
-                        .setMinYear(1990)
+                        .setMinYear(2022)
                         .setActivatedYear(2022)
                         .setMaxYear(2025)
                         .setMinMonth(Calendar.FEBRUARY)

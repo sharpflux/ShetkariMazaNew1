@@ -197,8 +197,6 @@ public class SelectLanguageActivity extends AppCompatActivity {
             Intent refresh = new Intent(SelectLanguageActivity.this, HomeActivity.class);
             refresh.putExtra(currentLang, localeName);
             startActivity(refresh);
-
-
             finish();
            /* SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
             finish();*/

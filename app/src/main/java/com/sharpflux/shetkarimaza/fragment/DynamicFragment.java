@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
@@ -32,7 +35,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.Interface.RecyclerViewClickListener;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.MyBuyerAdapter;
+import com.sharpflux.shetkarimaza.adapter.MyCategoryTypeAdapter;
 import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
+import com.sharpflux.shetkarimaza.model.MyCategoryType;
 import com.sharpflux.shetkarimaza.model.SellOptions;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.sqlite.dbBuyerFilter;
@@ -64,7 +69,7 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
     boolean isLoading = false;
     int currentItems,totalItems,scrollOutItems;
     GridLayoutManager mGridLayoutManager;
-
+    int currentPage = 1;
     dbLanguage mydatabase;
     String currentLanguage,language;
 
@@ -76,6 +81,7 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
     String SubCategoryName="";
     ImageView imgBack;
     dbBuyerFilter myFilter;
+    Boolean IsVarietyApplicable;
     private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
 
 
@@ -104,6 +110,10 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
         mRecyclerView.setAdapter(myAdapter);
         progressBar = view.findViewById(R.id.progressBar);
         CategoryId = String.valueOf(getArguments().getString("CategoryId"));
+        IsVarietyApplicable=getArguments().getBoolean("IsVarietyApplicable");
+
+        customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(getContext());
+        customDialogLoadingProgressBar.setCancelable(false);
 
         searchView = view.findViewById(R.id.searchViewone);
         subcategoryLinear=view.findViewById(R.id.subcategoryLinear);
@@ -175,25 +185,59 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
 
 
         txt_nurseryName=view.findViewById(R.id.txt_group);
-        DynamicFragment.AsyncTaskRunner runner = new DynamicFragment.AsyncTaskRunner();
-        runner.execute("1");
+      /*  DynamicFragment.AsyncTaskRunner runner = new DynamicFragment.AsyncTaskRunner();
+        runner.execute("1");*/
 
-
+        loadMore(currentPage);
         mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListenerOld(mGridLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
-                isLoading = true;
-                int currentSize = myAdapter.getItemCount();
-                AsyncTaskRunner runner = new AsyncTaskRunner();
-                sleepTime = String.valueOf(page+1);
-                runner.execute(sleepTime);
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+                if (!isLoading) {
+                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == productlist.size() - 1) {
+                        //bottom of list!
+                        currentPage++;
+                        loadMore(currentPage);
+                        isLoading = true;
+                    }
+                }
+
             }
         });
 
-
-
-
         return view;
+    }
+
+
+
+    private void loadMore(final Integer currentPage) {
+
+
+        customDialogLoadingProgressBar.show();
+        if (!currentPage.equals(1)) {
+            customDialogLoadingProgressBar.dismiss();
+            productlist.add(null);
+            myAdapter.notifyItemInserted(productlist.size() - 1);
+        }
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (!currentPage.equals(1)) {
+                    productlist.remove(productlist.size() - 1);
+                    int scrollPosition = productlist.size();
+                    myAdapter.notifyItemRemoved(scrollPosition);
+                    final int currentSize = scrollPosition;
+                    final int nextLimit = currentSize + 10;
+                }
+
+                setDynamicFragmentToTabLayout(currentPage);
+
+            }
+        }, 500);
+
+
     }
 
     public void setDynamicFragmentToTabLayout(Integer PageSize) {
@@ -223,14 +267,14 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
                                     }
                                     else {
 
-
+                                        //REMOVED  userJson.getBoolean("IsVarietyAvailable") from and added IsVarietyApplicable
                                         sellOptions = new SellOptions
                                                 (userJson.getString("ImageUrl"),
                                                         userJson.getString("ItemName"),
                                                         userJson.getString("ItemTypeId"),
                                                         CategoryId,
                                                         "",
-                                                        userJson.getBoolean("IsVarietyAvailable"),
+                                                        IsVarietyApplicable,
                                                         userJson.getBoolean("IsGroup")
                                                         );
 
@@ -256,91 +300,6 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
 
                                             }
                                         });
-
-
-                                      /*  Handler handler = new Handler(Looper.getMainLooper());
-                                        handler.post(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                myAdapter.notifyDataSetChanged();
-                                            }
-                                        });*/
-
-                                        /*mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                                            @Override
-                                            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                                                super.onScrollStateChanged(recyclerView, newState);
-                                                if(newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
-                                                    isLoading = true;
-                                                }
-
-
-                                            }
-
-                                            @Override
-                                            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                                                super.onScrolled(recyclerView, dx, dy);
-
-                                                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-                                                linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
-
-                                                //LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-
-                                                if (!isLoading) {
-                                                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == productlist.size() - 1) {
-
-                                                        productlist.add(null);
-                                                        myAdapter.notifyItemInserted(productlist.size() - 1);
-
-                                                        Handler handler = new Handler();
-
-                                                        handler.postDelayed(new Runnable() {
-                                                            @Override
-                                                            public void run() {
-                                                                //productlist.remove(productlist.size() - 1);
-                                                                int scrollPosition = productlist.size();
-                                                                myAdapter.notifyItemRemoved(scrollPosition);
-                                                                int currentSize = scrollPosition;
-                                                                int nextLimit = currentSize + 3;
-
-                                                                while (currentSize - 1 < nextLimit) {
-                                                                    // productlist.add(sellOptions);
-                                                                    currentSize++;
-                                                                }
-
-                                                                myAdapter.notifyDataSetChanged();
-                                                                isLoading = false;
-                                                            }
-                                                        }, 1000);
-
-                                                        isLoading = true;
-                                                    }
-                                                }
-                                            }
-                                        });*/
-                                      /*  searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                                            @Override
-                                            public boolean onQueryTextSubmit(String query) {
-
-                                                return false;
-                                            }
-
-                                            @Override
-                                            public boolean onQueryTextChange(String newText) {
-
-                                                myAdapter.getFilter().filter(newText);
-                                                return false;
-
-                                            }
-                                        });*/
-
-
-
-
-
-
-
 
 
 

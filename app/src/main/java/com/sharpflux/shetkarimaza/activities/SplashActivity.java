@@ -176,35 +176,39 @@ public class SplashActivity extends AppCompatActivity {
         SharedPreferences myPref = getSharedPreferences("prefName", Context.MODE_PRIVATE);
         boolean firstLaunch = myPref.getBoolean("firstLaunch", true);
 
-        if(!firstLaunch){
+    /*    if(!firstLaunch){*/
 
             if (SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
-                finish();
                 startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                finish();
             }
             else {
 
                 Cursor cursor = mydatabase.LanguageGet(language);
                 if(cursor.getCount()==0) {
-                    Intent intent = new Intent(SplashActivity.this, SelectLanguageActivity.class);
-                    intent.putExtra("ActivityState", "started");
-                    finish();
+                    Intent intent = new Intent(SplashActivity.this,SelectLanguageActivity.class);
                     startActivity(intent);
+                    finish();
+
+                  /*  Intent intent = new Intent(SplashActivity.this, SelectLanguageActivity.class);
+                    intent.putExtra("ActivityState", "started");
+                    startActivity(intent);
+                    finish();*/
                 }
                 else {
-                    finish();
                     startActivity(new Intent(getApplicationContext(), TabLayoutLogRegActivity.class));
+                    finish();
                 }
             }
 
 
-        }
+       /* }
         else {
             myPref.edit().putBoolean("firstLaunch", false).commit();
             Intent intent = new Intent(SplashActivity.this,WelcomeActivity.class);
             startActivity(intent);
 
-        }
+        }*/
 
 
     }

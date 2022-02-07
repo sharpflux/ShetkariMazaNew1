@@ -146,7 +146,7 @@
             android:parentActivityName=".activities.SellerActivity"
             android:theme="@style/SellerDarkAppTheme" />
         <activity android:name=".activities.ChooseActivity" />
-        <activity android:name=".activities.WelcomeActivity" />
+        <activity android:name=".activities.SplashActivity" />
         <activity android:name=".activities.HomeActivity" />
         <activity android:name=".activities.ForgotPasswordActivity" />
         <activity
@@ -154,7 +154,7 @@
             android:label="Select your Language"
             android:noHistory="true"
             android:theme="@style/SellerDarkAppTheme" />
-        <activity android:name=".activities.SplashActivity">
+        <activity android:name=".activities.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -330,7 +330,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
             // QualityId = bundle.getString("QualityId");
             //StatesID = bundle.getString("StatesID");
             //DistrictId = bundle.getString("DistrictId");
-            //priceids=bundle.getString("priceids");
+            priceids=bundle.getString("SortBy");
 
         }
 
@@ -985,11 +985,11 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                     JobInfo.Builder builder = new JobInfo.Builder(0, new ComponentName(getApplicationContext(), MyJobService.class));
                     builder.setPersisted(true).setExtras(extras);
                     builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
-                    if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.N){
+                 /*   if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.N){
                             builder.setPeriodic(1*60*1000,60*60*10000);
                         }else {
                             builder.setPeriodic(1*60*1000);
-                        }
+                        }*/
 
                     // Start the job
                     JobScheduler scheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
@@ -1192,12 +1192,11 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                         JobInfo.Builder builder = new JobInfo.Builder(0, new ComponentName(getApplicationContext(), MyJobService.class));
                         builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
                         builder.setPersisted(true).setExtras(extras);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                       /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                             builder.setPeriodic(1 * 60 * 1000, 60 * 60 * 10000);
                         } else {
                             builder.setPeriodic(1 * 60 * 1000);
-                        }
-
+                        }*/
                         // Start the job
                         JobScheduler scheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
                         // start and get the result

@@ -344,8 +344,9 @@
     <string name="Buy">Buy</string>
     <string name="Sell">Sell</string>
 
-    <string name="slide1Title">Get Expected Price for your Agri Commodity</string>
-
+    <string name="slide1Title">Get Expected Price for your Agriculture produce start your own Agri business with less Investment</string>
+    <string name="slide2Title">Start your own Agro Processing unit with help of project consultant</string>
+    <string name="slide3Title">Get Agro commodity -Quality wise &amp; Verity wise</string>
     <string name="slide1Desc">Start your own buisness with less Investment</string>
 
 </resources>

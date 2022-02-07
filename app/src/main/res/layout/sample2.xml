@@ -73,7 +73,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/arima_madurai_medium"
-            android:text="Fresh Fruits And Veggies"
+            android:text="@string/slide1Title"
             android:textAlignment="center"
             android:textColor="#008000"
 
@@ -85,6 +85,7 @@
             app:layout_constraintTop_toBottomOf="@+id/viewPager" />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/tvDesOne"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

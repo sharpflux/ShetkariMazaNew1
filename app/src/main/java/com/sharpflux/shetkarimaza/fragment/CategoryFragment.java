@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sharpflux.shetkarimaza.R;
+import com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity;
 import com.sharpflux.shetkarimaza.activities.Membership;
 import com.sharpflux.shetkarimaza.activities.SubscriptionPlanActivity;
 import com.sharpflux.shetkarimaza.adapter.BannerAdapter;
@@ -39,6 +41,7 @@ import com.sharpflux.shetkarimaza.adapter.MyCategoryTypeAdapter;
 import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
 import com.sharpflux.shetkarimaza.model.ListModel;
 import com.sharpflux.shetkarimaza.model.MyCategoryType;
+import com.sharpflux.shetkarimaza.model.SimilarList;
 import com.sharpflux.shetkarimaza.model.User;
 import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.utils.EndlessRecyclerViewScrollListenerOld;
@@ -80,7 +83,7 @@ public class CategoryFragment extends Fragment {
     Handler handler;
    // ShimmerFrameLayout parentShimmerLayout;
    Runnable runnable_viewPager;
-    int currentPage = 0;
+    int currentPage = 1;
     User user;
     RecyclerView recyclerView2;
     ArrayList<ListModel> listModels1;
@@ -202,20 +205,28 @@ public class CategoryFragment extends Fragment {
                 getContext().startActivity(intent);
             }
         });
+        loadMore(currentPage);
 
-
-        AsyncTaskRunner runner = new AsyncTaskRunner();
-        runner.execute("1");
+       // AsyncTaskRunner runner = new AsyncTaskRunner();
+        //runner.execute("1");
 
 
         mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListenerOld(mGridLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
-                isLoading = true;
-                int currentSize = myCategoryTypeAdapter.getItemCount();
-                CategoryFragment.AsyncTaskRunner runner = new CategoryFragment.AsyncTaskRunner();
-                String sleepTime = String.valueOf(page+1);
-                runner.execute(sleepTime);
+
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+                if (!isLoading) {
+                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == categoryList.size() - 1) {
+                        //bottom of list!
+                        currentPage++;
+                        loadMore(currentPage);
+                        isLoading = true;
+                    }
+                }
+
+
+
             }
         });
 
@@ -250,91 +261,128 @@ public class CategoryFragment extends Fragment {
         }
     }
 
+
+    private void loadMore(final Integer currentPage) {
+
+
+        customDialogLoadingProgressBar.show();
+        if (!currentPage.equals(1)) {
+            customDialogLoadingProgressBar.dismiss();
+            categoryList.add(null);
+            myCategoryTypeAdapter.notifyItemInserted(categoryList.size() - 1);
+        }
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (!currentPage.equals(1)) {
+                    categoryList.remove(categoryList.size() - 1);
+                    int scrollPosition = categoryList.size();
+                    myCategoryTypeAdapter.notifyItemRemoved(scrollPosition);
+                    final int currentSize = scrollPosition;
+                    final int nextLimit = currentSize + 10;
+                }
+
+
+                isLoading = true;
+                //SUPPLIED PageSize=99 for detect show the categories whose are usefull for Home Page (IsHomePageCategory)
+                StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                        URLs.URL_RType+currentPage+"&PageSize=99&Language="+currentLanguage+"&UserId="+user.getId(),
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+
+                                try {
+                                    JSONArray obj = new JSONArray(response);
+
+
+
+                                    for (int i = 0; i < obj.length(); i++) {
+                                        JSONObject userJson = obj.getJSONObject(i);
+
+                                        if (!userJson.getBoolean("error")) {
+
+
+                                            String RegistrationType;
+
+                                            if (userJson.getString("RegistrationTypeId").equals("2")) {
+                                                RegistrationType = getResources().getString(R.string.sell);
+                                            } else if (userJson.getString("RegistrationTypeId").equals("3")) {
+                                                RegistrationType = getResources().getString(R.string.Buy);
+                                            } else {
+                                                RegistrationType = userJson.getString("RegistrationType");
+                                            }
+
+                                            myCategoryType = new MyCategoryType
+                                                    (userJson.getString("ImageUrl"),
+                                                            RegistrationType,
+                                                            userJson.getString("RegistrationTypeId"),
+                                                            userJson.getString("UserRegistrationTypeId")
+                                                    );
+                                            categoryList.add(myCategoryType);
+                                        } else {
+                                            // Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+                                        }
+                                        myCategoryTypeAdapter = new MyCategoryTypeAdapter(getContext(), categoryList);
+                                        mRecyclerView.setAdapter(myCategoryTypeAdapter);
+                                    }
+
+                                    myCategoryTypeAdapter.notifyDataSetChanged();
+                                    isLoading = false;
+                                    customDialogLoadingProgressBar.dismiss();
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    customDialogLoadingProgressBar.dismiss();
+                                }
+                            }
+                        },
+
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                customDialogLoadingProgressBar.dismiss();
+                            }
+                        }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        return params;
+                    }
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> headers = new HashMap<String, String>();
+                        headers.put("Content-Type", "application/json; charset=utf-8");
+                        return headers;
+                    }
+                };
+                stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2,
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+
+
+            }
+        }, 10);
+
+
+    }
+
+
+
+
+
+
     private void setDynamicFragmentToTabLayout(Integer PageSize) {
 
 
-        //SUPPLIED PageSize=99 for detect show the categories whose are usefull for Home Page (IsHomePageCategory)
-       StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URLs.URL_RType+PageSize+"&PageSize=99&Language="+currentLanguage+"&UserId="+user.getId(),
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        try {
-                            JSONArray obj = new JSONArray(response);
-
-
-
-                            for (int i = 0; i < obj.length(); i++) {
-                                JSONObject userJson = obj.getJSONObject(i);
-
-                                if (!userJson.getBoolean("error")) {
-
-
-                                    String RegistrationType;
-
-                                    if(userJson.getString("RegistrationTypeId").equals("2")){
-                                        RegistrationType=getResources().getString(R.string.sell);
-                                    }
-                                    else if(userJson.getString("RegistrationTypeId").equals("3")) {
-                                        RegistrationType=getResources().getString(R.string.Buy);
-                                    }
-                                    else {
-                                        RegistrationType= userJson.getString("RegistrationType");
-                                    }
-
-                                        myCategoryType = new MyCategoryType
-                                            (      userJson.getString("ImageUrl"),
-                                                    RegistrationType,
-                                                    userJson.getString("RegistrationTypeId"),
-                                                    userJson.getString("UserRegistrationTypeId")
-                                            );
-                                        categoryList.add(myCategoryType);
-                                } else {
-                                    Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
-                                }
-
-                                myCategoryTypeAdapter = new MyCategoryTypeAdapter(getContext(), categoryList);
-                                mRecyclerView.setAdapter(myCategoryTypeAdapter);
-
-                            }
-
-                            myCategoryTypeAdapter.notifyDataSetChanged();
-                            isLoading = false;
-                            customDialogLoadingProgressBar.dismiss();
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            customDialogLoadingProgressBar.dismiss();
-                        }
-                    }
-                },
-
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        customDialogLoadingProgressBar.dismiss();
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                return params;
-            }
-
-           @Override
-           public Map<String, String> getHeaders() throws AuthFailureError {
-               HashMap<String, String> headers = new HashMap<String, String>();
-               headers.put("Content-Type", "application/json; charset=utf-8");
-               return headers;
-           }
-        };
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
-
+    public boolean isAttachedToActivity() {
+        boolean attached = isVisible() && getActivity() != null;
+        return attached;
+    }
     private class AsyncTaskRunner extends AsyncTask<String, String, String> {
 
         private String resp;

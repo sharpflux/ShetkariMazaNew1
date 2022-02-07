@@ -388,6 +388,7 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
                 intent.putExtra("ProductId",ItemTypeId);
                 intent.putExtra("RegistrationSubTypeId",RegistrationSubTypeId);
                 startActivity(intent);
+             //   finish();
             }
         });
 

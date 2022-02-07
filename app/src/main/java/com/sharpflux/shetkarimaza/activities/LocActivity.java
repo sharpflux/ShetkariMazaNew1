@@ -60,16 +60,19 @@ public class LocActivity extends AppCompatActivity {
                 getSupportFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
 
         autocompleteFragment.setCountry("IN");
-      //  autocompleteFragment.setTypeFilter(TypeFilter.CITIES);
+        //autocompleteFragment.setTypeFilter(TypeFilter.ADDRESS);
+        autocompleteFragment.setTypeFilter(TypeFilter.CITIES);
+
        // autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.PHOTO_METADATAS));
-        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME,Place.Field.LAT_LNG));
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.ADDRESS,Place.Field.LAT_LNG));
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NonNull Place place) {
                 // TODO: Get info about the selected place.
                 Toast.makeText(getApplicationContext(), getAddress(getApplicationContext(),place.getLatLng().latitude ,place.getLatLng().longitude), Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent();
-                intent.putExtra("place",getAddress(getApplicationContext(),place.getLatLng().latitude ,place.getLatLng().longitude));
+                //intent.putExtra("place",getAddress(getApplicationContext(),place.getLatLng().latitude ,place.getLatLng().longitude));
+                intent.putExtra("place",String.valueOf( place.getAddress()));
                 intent.putExtra("lat",String.valueOf( place.getLatLng().latitude));
                 intent.putExtra("long", String.valueOf(place.getLatLng().longitude));
                 setResult(123, intent);

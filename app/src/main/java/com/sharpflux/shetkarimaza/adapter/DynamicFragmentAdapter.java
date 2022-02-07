@@ -45,7 +45,7 @@ public class DynamicFragmentAdapter extends FragmentStatePagerAdapter {
             JSONObject jObject = arrayObj.getJSONObject(position);
             b.putString("CategoryName_EN", jObject.getString("CategoryName_EN"));;
             b.putString("CategoryId",jObject.getString("CategoryId"));
-
+            b.putBoolean("IsVarietyApplicable",jObject.getBoolean("IsVarietyApplicable"));
         } catch (JSONException e) {
             e.printStackTrace();
         }

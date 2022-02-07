@@ -4,6 +4,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
@@ -19,6 +20,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.adapter.ViewPagerAdapter;
+import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
 
 public class WelcomeActivity extends AppCompatActivity {
@@ -29,23 +31,27 @@ public class WelcomeActivity extends AppCompatActivity {
     private ImageView[] dots;
     Button btn_skip;
     TextView tvTitleOne,tvDesOne;
-
-    //Hello from Aparna////
+    dbLanguage mydatabase;
+    String currentLanguage,language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sample2);
 
+        mydatabase = new dbLanguage(getApplicationContext());
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         SliderDots = (LinearLayout) findViewById(R.id.SliderDots);
         tvTitleOne=findViewById(R.id.tvTitleOne);
-          tvDesOne=findViewById(R.id.tvDesOne);
-       btn_skip= findViewById(R.id.btn_skip);
+        tvDesOne=findViewById(R.id.tvDesOne);
+        btn_skip= findViewById(R.id.btn_skip);
 
+        if (SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
+            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+            finish();
+        }
 
-
-/*        SharedPreferences myPref = this.getSharedPreferences("prefName", Context.MODE_PRIVATE);
+       /* SharedPreferences myPref = this.getSharedPreferences("prefName", Context.MODE_PRIVATE);
         boolean firstLaunch = myPref.getBoolean("firstLaunch", true);
 
         if(!firstLaunch){
@@ -55,14 +61,38 @@ public class WelcomeActivity extends AppCompatActivity {
         }
         myPref.edit().putBoolean("firstLaunch", false).commit();*/
         CallData();
-
-
         btn_skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-               Intent i = new Intent(WelcomeActivity.this, SelectLanguageActivity.class);//Activity to be  launched For the First time
-                startActivity(i);
+                if (SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
+                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                    finish();
+                }
+                else {
+
+                    Cursor cursor = mydatabase.LanguageGet(language);
+                    if(cursor.getCount()==0) {
+                        Intent intent = new Intent(WelcomeActivity.this,SelectLanguageActivity.class);
+                        startActivity(intent);
+                        finish();
+
+                  /*  Intent intent = new Intent(SplashActivity.this, SelectLanguageActivity.class);
+                    intent.putExtra("ActivityState", "started");
+                    startActivity(intent);
+                    finish();*/
+                    }
+                    else {
+                        startActivity(new Intent(getApplicationContext(), TabLayoutLogRegActivity.class));
+                        finish();
+                    }
+                }
+
+
+
+
+             /*   Intent i = new Intent(WelcomeActivity.this, SelectLanguageActivity.class);//Activity to be  launched For the First time
+                startActivity(i);*/
               //  finish();
 
 
@@ -86,11 +116,6 @@ public class WelcomeActivity extends AppCompatActivity {
 
             }
         }) ;
-
-
-
-
-
     }
 
 
@@ -153,14 +178,17 @@ public class WelcomeActivity extends AppCompatActivity {
 
                 dots[position].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
 
-
+                if(position==0){
+                    tvTitleOne.setText(getResources().getString(R.string.slide1Title));
+                    //    tvDesOne.setText("With Fast Transaction ");
+                }
                 if(position==1){
-                    tvTitleOne.setText("Get your order");
-                    tvDesOne.setText("With Fast Transaction ");
+                    tvTitleOne.setText(getResources().getString(R.string.slide2Title));
+                //    tvDesOne.setText("With Fast Transaction ");
                 }
                 if(position==2){
-                    tvTitleOne.setText("Get your order");
-                    tvDesOne.setText("With Fast Transaction ");
+                    tvTitleOne.setText(getResources().getString(R.string.slide3Title));
+                   // tvDesOne.setText("With Fast Transaction ");
                 }
 
                 final float startSize = 00; // Size in pixels

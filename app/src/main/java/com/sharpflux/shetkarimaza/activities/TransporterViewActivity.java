@@ -65,7 +65,7 @@ public class TransporterViewActivity extends AppCompatActivity implements SwipeR
    private RecyclerView recyclerView;
     List<ContactDetail> contactlist;
     Bundle bundle;
-    String TalukaId = "", VarityId = "", QualityId = "", ItemTypeId = "", VehicleTypeId = "",StatesID = "", DistrictId = "",SortBy="0";
+    String TalukaId = "", VarityId = "", QualityId = "", ItemTypeId = "",priceids = "", VehicleTypeId = "",StatesID = "", DistrictId = "",SortBy="0";
     boolean isLoading = false;
 
 
@@ -103,6 +103,16 @@ public class TransporterViewActivity extends AppCompatActivity implements SwipeR
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+        bundle = getIntent().getExtras();
+
+
+        if (bundle != null) {
+
+            SortBy=bundle.getString("SortBy");
+
+        }
+
+
         txt_emptyView = findViewById(R.id.txt_emptyView);
         lr_filterbtn = (LinearLayout) findViewById(R.id.lr_filterbtn);
 
@@ -132,7 +142,6 @@ public class TransporterViewActivity extends AppCompatActivity implements SwipeR
 
         myDatabase = new dbFilter(TransporterViewActivity.this);
 
-        bundle = getIntent().getExtras();
 
         mItemList=new ArrayList<>();
 
@@ -176,7 +185,11 @@ public class TransporterViewActivity extends AppCompatActivity implements SwipeR
             public void onClick(View v) {
                 Intent intent = new Intent(TransporterViewActivity.this, Filter1Activity.class);
                 intent.putExtra("Activity","TransporterViewActivity");
+                intent.putExtra("ProductId",ItemTypeId);
+                intent.putExtra("RegistrationSubTypeId","0");
+                intent.putExtra("SortBy", SortBy);
                 startActivity(intent);
+                //finish();
             }
         });
 
@@ -248,11 +261,14 @@ public class TransporterViewActivity extends AppCompatActivity implements SwipeR
 
                 if(bundle.getString("Search")!=null) {
                     if (bundle.getString("Search").contains("Filter")) {
-
                         Cursor VEHICLETYPECursor = myDatabase.FilterGetByFilterName("VEHICLE");
                         Cursor STATECursor = myDatabase.FilterGetByFilterName("STATE");
                         Cursor DISTRICTCursor = myDatabase.FilterGetByFilterName("DISTRICT");
                         Cursor TALUKACursor = myDatabase.FilterGetByFilterName("TALUKA");
+
+
+                        priceids = bundle.getString("SortBy");
+
 
                         while (VEHICLETYPECursor.moveToNext()) {
                             if(VehicleTypeId==null)

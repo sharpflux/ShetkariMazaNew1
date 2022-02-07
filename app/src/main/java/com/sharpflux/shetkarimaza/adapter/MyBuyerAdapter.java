@@ -255,6 +255,7 @@ class FlowerViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         intent.putExtra("ItemName",ItemName);
         intent.putExtra("IsVarietyAvailable",IsVarietyAvailable);
         intent.putExtra("IsGroup",IsGroup.toString());
+        intent.putExtra("SortBy","ASC");
         context.startActivity(intent);
 
 

@@ -137,11 +137,13 @@ class MyCategoryTypeHolder extends RecyclerView.ViewHolder implements View.OnCli
             if(UserRegistrationTypeId.equals("27")){
                 Intent intent = new Intent(context, TransporterVehicleAddActivity.class);
                 intent.putExtra("ProductId", categoryId);
+                intent.putExtra("SortBy", "ASC");
                 context.startActivity(intent);
             }
             else {
                 Intent intent = new Intent(context, SellerActivity.class);
                 intent.putExtra("ProductId", categoryId);
+                intent.putExtra("SortBy", "ASC");
                 context.startActivity(intent);
             }
 
@@ -149,18 +151,21 @@ class MyCategoryTypeHolder extends RecyclerView.ViewHolder implements View.OnCli
         } else if (categoryId.equals("3") ) {
                 Intent intent = new Intent(context, BuyerActivity.class);
                 intent.putExtra("ProductId", categoryId);
+                 intent.putExtra("SortBy", "ASC");
                 context.startActivity(intent);
 
         }
         else if (categoryId.equals("27") ) {
             Intent intent = new Intent(context, TransporterViewActivity.class);
             intent.putExtra("ProductId", categoryId);
+            intent.putExtra("SortBy", "ASC");
             context.startActivity(intent);
 
         }
         else if (categoryId.equals("33") ) {
             Intent intent = new Intent(context, GovtDepartmentActivity.class);
             intent.putExtra("ProductId", categoryId);
+            intent.putExtra("SortBy", "ASC");
             context.startActivity(intent);
 
         }
@@ -169,6 +174,7 @@ class MyCategoryTypeHolder extends RecyclerView.ViewHolder implements View.OnCli
             Intent intent = new Intent(context, MachinHireActivity.class);
             intent.putExtra("ProductId", categoryId);
             intent.putExtra("Heading", mTitle.getText().toString());
+            intent.putExtra("SortBy", "ASC");
             context.startActivity(intent);
         }
         else
@@ -179,6 +185,7 @@ class MyCategoryTypeHolder extends RecyclerView.ViewHolder implements View.OnCli
             intent.putExtra("IsSubCategory", false);
             intent.putExtra("Name", "No");
             intent.putExtra("Heading", mTitle.getText().toString());
+            intent.putExtra("SortBy", "ASC");
             context.startActivity(intent);
         }
     }

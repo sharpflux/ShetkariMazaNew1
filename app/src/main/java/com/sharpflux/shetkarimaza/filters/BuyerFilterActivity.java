@@ -98,6 +98,25 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
         age_linear.setOnClickListener(this);
         linearAvailableMonth.setOnClickListener(this);
 
+
+        varity_color.setVisibility(View.GONE);
+        quality_color.setVisibility(View.INVISIBLE);
+        category_color.setVisibility(View.INVISIBLE);
+        size_color.setVisibility(View.INVISIBLE);
+        brands_color.setVisibility(View.INVISIBLE);
+        month_color.setVisibility(View.INVISIBLE);
+        age_color.setVisibility(View.INVISIBLE);
+
+        quality_linear.setVisibility(View.GONE);
+
+
+
+        //It is used to already have a selected fragment on the screen
+        AppCompatActivity activity;
+        activity = BuyerFilterActivity.this;
+        Fragment myFragment = new BuyerFilterFragment();
+
+
         bundle = getIntent().getExtras();
         // bundle.getString("ItemTypeId");
         if (bundle != null) {
@@ -111,55 +130,42 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
             IsVarietyAvailable=bundle.getBoolean("IsVarietyAvailable");
             categoryId=bundle.getString("categoryId");
             ItemName=bundle.getString("ItemName");
-        }
-
-        //It is used to already have a selected fragment on the screen
-        AppCompatActivity activity;
-        activity = BuyerFilterActivity.this;
-        Fragment myFragment = new BuyerFilterFragment();
 
 
-        varity_color.setVisibility(View.VISIBLE);
-        quality_color.setVisibility(View.INVISIBLE);
-        category_color.setVisibility(View.INVISIBLE);
-        size_color.setVisibility(View.INVISIBLE);
-        brands_color.setVisibility(View.INVISIBLE);
-        month_color.setVisibility(View.INVISIBLE);
-        age_color.setVisibility(View.INVISIBLE);
+            if (categoryId.equals("1") || categoryId.equals("2") || categoryId.equals("3") || categoryId.equals("4") || categoryId.equals("6") || categoryId.equals("17")|| categoryId.equals("42")) {
+                age_linear.setVisibility(View.GONE);
 
-        quality_linear.setVisibility(View.GONE);
+                if(!bundle.getBoolean("IsVarietyAvailable")){
+                    varity_linear.setVisibility(View.GONE);
+                    varity_color.setVisibility(View.GONE);
+                    quality_linear.setVisibility(View.VISIBLE);
+                    quality_color.setVisibility(View.VISIBLE);
+                    bundle.putString("Filter", Constant.QUALITY);
+                    myFragment.setArguments(bundle);
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).commit();
+                }
+                else {
+                    varity_color.setVisibility(View.VISIBLE);
+                    bundle.putString("Filter",Constant.VARIETY);
+                    myFragment.setArguments(bundle);
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).commit();
+                }
 
-        if (categoryId.equals("1") || categoryId.equals("2") || categoryId.equals("3") || categoryId.equals("4") || categoryId.equals("6") || categoryId.equals("17")|| categoryId.equals("42")) {
-            age_linear.setVisibility(View.GONE);
-
-            if(!IsVarietyAvailable){
-                varity_linear.setVisibility(View.GONE);
-                bundle.putString("Filter", Constant.QUALITY);
-                myFragment.setArguments(bundle);
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).
-                        commit();
             }
+
             else {
-                bundle.putString("Filter",Constant.VARIETY);
-                myFragment.setArguments(bundle);
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).commit();
-            }
-
-        }
-
-        else {
                 age_linear.setVisibility(View.VISIBLE);
                 varity_linear.setVisibility(View.GONE);
                 age_color.setVisibility(View.VISIBLE);
                 bundle.putString("Filter",Constant.AGE);
                 myFragment.setArguments(bundle);
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).commit();
+            }
+
         }
 
 
-        if (categoryId.equals("1") || categoryId.equals("2") ||categoryId.equals("4") || categoryId.equals("14") || categoryId.equals("17") || categoryId.equals("42") || categoryId.equals("7")) {
-            quality_linear.setVisibility(View.VISIBLE);
-        }
+
 
 
        /*price_color.setVisibility(View.INVISIBLE);
@@ -182,6 +188,8 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
                     priceids=bundle.getString("priceids");
                     categoryId=bundle.getString("categoryId");
                     ItemName=bundle.getString("ItemName");
+
+
 
                 }
 
@@ -283,7 +291,7 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
                 category_color.setVisibility(View.INVISIBLE);
                 size_color.setVisibility(View.INVISIBLE);
                 month_color.setVisibility(View.INVISIBLE);
-               // age_color.setVisibility(View.INVISIBLE);
+                age_color.setVisibility(View.INVISIBLE);
                 break;
 
             case R.id.quality_linear:
@@ -386,3 +394,56 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
         }
     }
 }
+
+
+
+/*
+        if (categoryId.equals("1") || categoryId.equals("2") || categoryId.equals("3") || categoryId.equals("4") || categoryId.equals("6") || categoryId.equals("17")|| categoryId.equals("42")) {
+                age_linear.setVisibility(View.GONE);
+
+                if(!IsVarietyAvailable){
+                varity_linear.setVisibility(View.GONE);
+                varity_color.setVisibility(View.GONE);
+                bundle.putString("Filter", Constant.QUALITY);
+                myFragment.setArguments(bundle);
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).
+                commit();
+                }
+                else {
+                varity_color.setVisibility(View.VISIBLE);
+                bundle.putString("Filter",Constant.VARIETY);
+                myFragment.setArguments(bundle);
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).commit();
+                }
+
+                }
+
+                else {
+                age_linear.setVisibility(View.VISIBLE);
+                varity_linear.setVisibility(View.GONE);
+                age_color.setVisibility(View.VISIBLE);
+                bundle.putString("Filter",Constant.AGE);
+                myFragment.setArguments(bundle);
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).commit();
+                }
+
+
+                if (categoryId.equals("1") || categoryId.equals("2") || categoryId.equals("3")||categoryId.equals("4") || categoryId.equals("14") || categoryId.equals("17") || categoryId.equals("42") || categoryId.equals("7") || categoryId.equals("35")) {
+                if(!IsVarietyAvailable) {
+                quality_color.setVisibility(View.VISIBLE);
+                quality_linear.setVisibility(View.VISIBLE);
+                }
+                else{
+
+                bundle.putString("Filter",Constant.VARIETY);
+                myFragment.setArguments(bundle);
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).commit();
+                varity_linear.setVisibility(View.VISIBLE);
+                varity_color.setVisibility(View.VISIBLE);
+                quality_color.setVisibility(View.GONE);
+                age_color.setVisibility(View.GONE);
+                }
+
+                }
+*/
+

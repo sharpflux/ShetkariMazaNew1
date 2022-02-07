@@ -55,13 +55,9 @@ public class DataFetcher {
 
     }
 
-    public void loadList(final String ColumnName, final EditText editText, final  String URL, final String id, final TextView hiddenText,
-                         final String ParameterName, final String ParameterValue, final String Title, final  String BotinicalName, final EditText name_botanical, final TextInputLayout edtproductVariety, final CustomDialogLoadingProgressBar customDialogLoadingProgressBar) {
+    public void loadList(final String ColumnName, final EditText editText, final  String URL, final String id, final TextView hiddenText,  final String ParameterName, final String ParameterValue, final String Title, final  String BotinicalName, final EditText name_botanical, final TextInputLayout edtproductVariety, final CustomDialogLoadingProgressBar customDialogLoadingProgressBar) {
         list.clear();
-
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,URL,
-                new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,URL, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
 
@@ -103,11 +99,17 @@ public class DataFetcher {
                                 @Override
                                 public void clickOnItem(Product data) {
 
-
                                     editText.setText(data.getName());
                                     if(name_botanical!=null) {
                                         name_botanical.setText(data.getBotanicalName());
+
+                                        if(String.valueOf(data.getBotanicalName()).equals("")){
+                                            name_botanical.setText("Not updated");
+                                        }
                                     }
+                                   /* else {
+                                       // name_botanical.setText("Not updated");
+                                    }*/
                                     // name_botanical.setText("Test");
                                     hiddenText.setText(data.getProductId());
 
@@ -140,16 +142,13 @@ public class DataFetcher {
                             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                                 @Override
                                 public boolean onQueryTextSubmit(String query) {
-
                                     return false;
                                 }
 
                                 @Override
                                 public boolean onQueryTextChange(String newText) {
-
                                     dataAdapter.getFilter().filter(newText);
                                     return false;
-
                                 }
                             });
 
@@ -159,8 +158,6 @@ public class DataFetcher {
                             e.printStackTrace();
                             customDialogLoadingProgressBar.dismiss();
                         }
-
-
                     }
                 },
                 new Response.ErrorListener() {
@@ -177,10 +174,8 @@ public class DataFetcher {
                 return params;
             }
         };
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS *
-                2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleySingleton.getInstance(context).addToRequestQueue(stringRequest);
-
 
     }
 

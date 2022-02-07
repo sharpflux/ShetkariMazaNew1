@@ -41,7 +41,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="11.7dp"
         android:layout_marginTop="11.7dp"
-        android:background="@color/white"
         android:elevation="1dp"
         android:orientation="horizontal">
 
