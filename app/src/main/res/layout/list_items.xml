@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/textViewName"
         android:text="State Names"
+        android:fontFamily="@font/sfpro_display_semibold"
         android:textSize="15.2sp"
         android:textColor="@color/text_black"
         android:layout_marginStart="25dp"

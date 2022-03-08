@@ -159,27 +159,17 @@ public class BuyerActivity extends AppCompatActivity implements TabLayout.OnTabS
                     public void onResponse(String response) {
                         try {
 
-                            // CustomProgressDialog.removeSimpleProgressDialog();
                             JSONArray obj = new JSONArray(response);
                             for (int i = 0; i < obj.length(); i++) {
-
                                 JSONObject userJson = obj.getJSONObject(i);
-
                                 if (!userJson.getBoolean("error")) {
                                     mTabLayout.addTab(mTabLayout.newTab().setText(userJson.getString("CategoryName_EN")));
-
-
-                                    DynamicFragmentAdapter mDynamicFragmentAdapter = new DynamicFragmentAdapter(getSupportFragmentManager(),
-                                            mTabLayout.getTabCount(), obj, BuyerActivity.this);
-
-                                    viewPager.setAdapter(mDynamicFragmentAdapter);
-
-                                    viewPager.setCurrentItem(0);
-                                } else {
-                                    Toast.makeText(BuyerActivity.this, response, Toast.LENGTH_SHORT).show();
                                 }
-                            //    customDialogLoadingProgressBar.dismiss();
                             }
+                            DynamicFragmentAdapter mDynamicFragmentAdapter = new DynamicFragmentAdapter(getSupportFragmentManager(),  mTabLayout.getTabCount(), obj, BuyerActivity.this);
+                            viewPager.setAdapter(mDynamicFragmentAdapter);
+                            viewPager.setCurrentItem(0);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                            // customDialogLoadingProgressBar.dismiss();
@@ -202,7 +192,7 @@ public class BuyerActivity extends AppCompatActivity implements TabLayout.OnTabS
             }
         };
 
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2,
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(0,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
     }

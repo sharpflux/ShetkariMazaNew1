@@ -500,8 +500,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
         }
 
         //Botanical Name
-        if (ProductId.equals("4") || ProductId.equals("6") || ProductId.equals("10") || ProductId.equals("35")
-                || ProductId.equals("14") || ProductId.equals("42") || ProductId.equals("43") || ProductId.equals("7")) {
+        if (ProductId.equals("4") || ProductId.equals("6") || ProductId.equals("10") || ProductId.equals("35")|| ProductId.equals("14") || ProductId.equals("42") || ProductId.equals("43") || ProductId.equals("7")) {
             lr_botanicalName.setVisibility(View.GONE);
 
 
@@ -1417,7 +1416,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
 
 
                 if (params[0].toString() == "ItemName")
-                    fetcher.loadList("ItemName", edtproductType, URLs.URL_NAME + "1&PageSize=500&CategoryId=" + ProductId + "&Language=" + currentLanguage, "ItemTypeId", hidItemTypeId, "CategoryId", ProductId, TittleName, "BotanicalName", name_botanical, lr_variety, customDialogLoadingProgressBar);
+                    fetcher.loadList("ItemName", edtproductType, URLs.URL_NAME + "1&PageSize=700&CategoryId=" + ProductId + "&Language=" + currentLanguage, "ItemTypeId", hidItemTypeId, "CategoryId", ProductId, TittleName, "BotanicalName", name_botanical, lr_variety, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "Variety")
                     fetcher.loadList("VarietyName", edtproductVariety, URLs.URL_VARIATY + hidItemTypeId.getText() + "&Language=" + currentLanguage, "VarietyId", hidVarietyId, "", "", "Variety", "", null, null, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "Quality")
@@ -1543,12 +1542,15 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    if(result.getData().getExtras().getString("place")!=null)
-                        tvCurrentAddress.setText(result.getData().getExtras().getString("place"));
-                        Latitude=result.getData().getExtras().getString("lat");
-                        Longitude=result.getData().getExtras().getString("long");
 
-                     edtaddres.setText(result.getData().getExtras().getString("place"));
+                    if (result.getData()!= null) {
+                        if (result.getData().getExtras().getString("place") != null) {
+                            tvCurrentAddress.setText(result.getData().getExtras().getString("place"));
+                            Latitude = result.getData().getExtras().getString("lat");
+                            Longitude = result.getData().getExtras().getString("long");
+                            edtaddres.setText(result.getData().getExtras().getString("place"));
+                        }
+                    }
                 }
             });
 
@@ -1843,7 +1845,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
 
         //  requestQueue.add(stringRequest);
 
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleySingleton.getInstance(ProductInfoForSaleActivity.this).addToRequestQueue(stringRequest);
     }
 

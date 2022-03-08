@@ -89,6 +89,8 @@ public class MyBuyerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     ((FlowerViewHolder) holder).categoryId = mList.get(position).getCategoryId();
                     ((FlowerViewHolder) holder).ItemName=mList.get(position).getProductlist();
                     ((FlowerViewHolder) holder).IsVarietyAvailable=mList.get(position).isVarietyAvailable();
+                    ((FlowerViewHolder) holder).IsQuality=mList.get(position).isQuality();
+                    ((FlowerViewHolder) holder).IsAge=mList.get(position).isAge();
                     ((FlowerViewHolder) holder).IsGroup = mList.get(position).isGroupItem();
                     ((FlowerViewHolder) holder).myFilter=this.myFilter;
 
@@ -228,7 +230,7 @@ class FlowerViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
     TextView mTitle;
     String ItemTypeId,categoryId,ItemName;
     List<SubCategoryFilter> mlist;
-    Boolean IsVarietyAvailable,IsGroup;
+    Boolean IsVarietyAvailable,IsGroup,IsAge,IsQuality;
     dbBuyerFilter myFilter;
     CardView cardView;
 
@@ -254,6 +256,8 @@ class FlowerViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         intent.putExtra("categoryId",categoryId);
         intent.putExtra("ItemName",ItemName);
         intent.putExtra("IsVarietyAvailable",IsVarietyAvailable);
+        intent.putExtra("IsQuality",IsQuality);
+        intent.putExtra("IsAge",IsAge);
         intent.putExtra("IsGroup",IsGroup.toString());
         intent.putExtra("SortBy","ASC");
         context.startActivity(intent);

@@ -47,6 +47,8 @@ public class BottomSheetDialogSorting extends BottomSheetDialogFragment implemen
                     i.putExtra("DistrictId",bundle.getString("DistrictId"));
                     i.putExtra("categoryId",bundle.getString("categoryId"));
                     i.putExtra("IsVarietyAvailable", bundle.getBoolean("IsVarietyAvailable"));
+                    i.putExtra("IsQuality",bundle.getBoolean("IsQuality"));
+                    i.putExtra("IsAge",bundle.getBoolean("IsAge"));
                     i.putExtra("ItemName", bundle.getString("ItemName"));
                     startActivity(i);
                 }
@@ -70,6 +72,8 @@ public class BottomSheetDialogSorting extends BottomSheetDialogFragment implemen
                     i.putExtra("DistrictId",bundle.getString("DistrictId"));
                     i.putExtra("categoryId",bundle.getString("categoryId"));
                     i.putExtra("IsVarietyAvailable", bundle.getBoolean("IsVarietyAvailable"));
+                    i.putExtra("IsQuality",bundle.getBoolean("IsQuality"));
+                    i.putExtra("IsAge",bundle.getBoolean("IsAge"));
                     i.putExtra("ItemName", bundle.getString("ItemName"));
                     startActivity(i);
 

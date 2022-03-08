@@ -359,7 +359,7 @@ public class CategoryFragment extends Fragment {
                         return headers;
                     }
                 };
-                stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2,
+                stringRequest.setRetryPolicy(new DefaultRetryPolicy(0,
                         DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                 VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
 

@@ -50,7 +50,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/white"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -58,7 +57,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-
             android:gravity="center"
             android:paddingBottom="14.7dp"
             android:paddingTop="15.3dp">
@@ -130,7 +128,6 @@
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:paddingBottom="10dp"
-            android:background="@color/white"
             android:orientation="vertical"
             android:gravity="center"
             >
@@ -140,7 +137,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/recyclerView_addFarm"
-                android:background="@color/white"
                 />
 
 

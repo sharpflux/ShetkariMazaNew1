@@ -79,6 +79,7 @@ public class DataFetcher {
 
                                     if(userJson.has("IsVarietyAvailable")) {
                                         IsVarietyAvailable = userJson.getBoolean("IsVarietyAvailable");
+
                                     }
                                     prod = new Product(
                                             userJson.getString(ColumnName),
@@ -174,7 +175,7 @@ public class DataFetcher {
                 return params;
             }
         };
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleySingleton.getInstance(context).addToRequestQueue(stringRequest);
 
     }

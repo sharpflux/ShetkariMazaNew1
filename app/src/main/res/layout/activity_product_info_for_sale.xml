@@ -56,6 +56,7 @@
                     android:inputType="none"
                     android:clickable="false"
                     android:focusable="false"
+                    android:fontFamily="@font/sfpro_display_semibold"
                     android:textColor="@color/text_black"
                     android:textSize="15sp"
                     android:onClick="clickHere"/>
@@ -200,6 +201,7 @@
                     android:hint="@string/botanical_name"
                     android:inputType="none"
                     android:clickable="false"
+                    android:fontFamily="@font/sfpro_display_semibold"
                     android:focusable="false"
                     android:textColor="@color/text_black"
                     android:textSize="15sp" />
@@ -248,6 +250,7 @@
                     android:clickable="false"
                     android:focusable="false"
                     android:textColor="@color/text_black"
+                    android:fontFamily="@font/sfpro_display_semibold"
                     android:textSize="15sp"
                     android:onClick="clickHereVariety"/>
 
@@ -296,6 +299,7 @@
                     android:clickable="false"
                     android:focusable="false"
                     android:textColor="@color/text_black"
+                    android:fontFamily="@font/sfpro_display_semibold"
                     android:onClick="clickHereQuality"
                     android:textSize="15sp" />
 
@@ -343,6 +347,7 @@
                     android:focusable="false"
                     android:textColor="@color/text_black"
                     android:onClick="clickHereAge"
+                    android:fontFamily="@font/sfpro_display_semibold"
                     android:textSize="15sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -388,6 +393,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="@string/OrganicInorganic"
+                    android:fontFamily="@font/sfpro_display_semibold"
                     android:textColorHint="@color/text_black"
                     />
 
@@ -405,6 +411,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:hint="@string/Organic"
+                        android:fontFamily="@font/sfpro_display_semibold"
                         android:textSize="15sp"
                         android:textColorHint="@color/text_black"/>
 
@@ -415,6 +422,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:hint="@string/Inorganic"
+                        android:fontFamily="@font/sfpro_display_semibold"
                         android:textSize="15sp"
                         android:textColorHint="@color/text_black"/>
 
@@ -442,6 +450,7 @@
                     android:id="@+id/edtcertifiedno"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfpro_display_semibold"
                     android:hint="Organic certifing agency and certificate number"
                     android:inputType="text"
                     android:textColor="@color/text_black"
@@ -485,6 +494,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/seller_available_month"
+                    android:fontFamily="@font/sfpro_display_semibold"
                     android:inputType="none"
                     android:textColor="@color/text_black"
                     android:clickable="false"
@@ -516,6 +526,7 @@
                         android:maxLength="5"
                         android:textColor="@color/text_black"
                         android:inputType="number"
+                        android:fontFamily="@font/sfpro_display_semibold"
                         android:textSize="15sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -566,6 +577,7 @@
                         android:hint="@string/seller_available_unit"
                         android:textColor="@color/text_black"
                         android:inputType="none"
+                        android:fontFamily="@font/sfpro_display_semibold"
                         android:onClick="clickHereUnit"
                         android:textSize="15sp" />
 
@@ -642,7 +654,7 @@
                         android:inputType="number"
                         android:maxLength="5"
                         android:textColor="@color/text_black"
-
+                        android:fontFamily="@font/sfpro_display_semibold"
                         android:textSize="15sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -686,6 +698,7 @@
                         android:inputType="none"
                         android:textColor="@color/text_black"
                         android:clickable="false"
+                        android:fontFamily="@font/sfpro_display_semibold"
                         android:focusable="false"
                         android:textSize="15sp" />
 
@@ -789,6 +802,7 @@
                     android:clickable="false"
                     android:hint="@string/farmaddress"
                     android:inputType="text"
+                    android:fontFamily="@font/sfpro_display_semibold"
                     android:textColor="@color/text_black"
                     android:textSize="15sp" />
 
@@ -818,7 +832,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:fontFamily="@font/sfpro_display_semibold"
                 android:layout_marginTop="15dp"
                 style="@style/formTextInputLayout"
                 >
@@ -828,6 +842,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/farmssurveyno"
+                    android:fontFamily="@font/sfpro_display_semibold"
                     android:inputType="text"
                     android:textColor="@color/text_black"
                     android:textSize="15sp" />
@@ -871,6 +886,7 @@
                     android:inputType="none"
                     android:clickable="false"
                     android:focusable="false"
+                    android:fontFamily="@font/sfpro_display_semibold"
                     android:textColor="@color/text_black"
                     android:textSize="15sp"
                     />
@@ -911,6 +927,7 @@
                     android:hint="@string/dist"
                     android:inputType="none"
                     android:clickable="false"
+                    android:fontFamily="@font/sfpro_display_semibold"
                     android:focusable="false"
                     android:textColor="@color/text_black"
                     android:textSize="15sp"
@@ -954,6 +971,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/Name_of_Taluka"
                     android:inputType="none"
+                    android:fontFamily="@font/sfpro_display_semibold"
                     android:clickable="false"
                     android:focusable="false"
                     android:textColor="@color/text_black"
@@ -999,6 +1017,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/enter_your_village_Name"
                     android:inputType="text"
+                    android:fontFamily="@font/sfpro_display_semibold"
                     android:textColor="@color/text_black"
                     android:textSize="15sp"
                     />
@@ -1039,6 +1058,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/enter_your_area_in_hector"
                     android:inputType="number"
+                    android:fontFamily="@font/sfpro_display_semibold"
                     android:textColor="@color/text_black"
                     android:textSize="15sp"
                     />
@@ -1102,6 +1122,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:minWidth="150.0dip"
+                android:fontFamily="@font/sfpro_display_semibold"
                 android:textColor="@color/white"
                 android:text="@string/take_photo"
                 android:drawableLeft="@drawable/ic_photo_camera_black_24dp"
@@ -1214,7 +1235,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="@font/arima_madurai_medium"
+                android:fontFamily="@font/sfpro_display_semibold"
                 android:gravity="center"
                 android:text="@string/Submuit"
                 android:textColor="@color/white"

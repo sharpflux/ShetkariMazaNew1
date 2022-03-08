@@ -81,7 +81,7 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
     String SubCategoryName="";
     ImageView imgBack;
     dbBuyerFilter myFilter;
-    Boolean IsVarietyApplicable;
+    Boolean IsVarietyApplicable,IsAge,IsQuality;
     private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
 
 
@@ -111,6 +111,8 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
         progressBar = view.findViewById(R.id.progressBar);
         CategoryId = String.valueOf(getArguments().getString("CategoryId"));
         IsVarietyApplicable=getArguments().getBoolean("IsVarietyApplicable");
+        IsQuality=getArguments().getBoolean("IsQuality");
+        IsAge=getArguments().getBoolean("IsAge");
 
         customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(getContext());
         customDialogLoadingProgressBar.setCancelable(false);
@@ -235,7 +237,7 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
                 setDynamicFragmentToTabLayout(currentPage);
 
             }
-        }, 500);
+        }, 50);
 
 
     }
@@ -269,14 +271,17 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
 
                                         //REMOVED  userJson.getBoolean("IsVarietyAvailable") from and added IsVarietyApplicable
                                         sellOptions = new SellOptions
-                                                (userJson.getString("ImageUrl"),
+                                                (
+                                                        userJson.getString("ImageUrl"),
                                                         userJson.getString("ItemName"),
                                                         userJson.getString("ItemTypeId"),
                                                         CategoryId,
                                                         "",
-                                                        IsVarietyApplicable,
+                                                        userJson.getBoolean("IsVarietyAvailable"),
+                                                        userJson.getBoolean("IsQuality"),
+                                                        userJson.getBoolean("IsAge"),
                                                         userJson.getBoolean("IsGroup")
-                                                        );
+                                                );
 
                                         productlist.add(sellOptions);
                                         String ItemTypeId =userJson.getString("ItemTypeId");
@@ -284,8 +289,6 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
 
                                      tempProductList.add(sellOptions);
                                        // myAdapter = new MyBuyerAdapter(getContext(), productlist,tempProductList);
-
-
                                         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                                             @Override
                                             public boolean onQueryTextSubmit(String s) {
@@ -300,8 +303,6 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
 
                                             }
                                         });
-
-
 
                                     }
                                 }
@@ -342,7 +343,7 @@ public class DynamicFragment extends Fragment implements RecyclerViewClickListen
                 return params;
             }
         };
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2,
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(0,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }

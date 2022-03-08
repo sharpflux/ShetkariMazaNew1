@@ -107,7 +107,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
     Bundle bundle;
 
     String TalukaId = "", VarityId = "", AvailableMonth = "", Age = "",QualityId = "", ItemTypeId = "", StatesID = "", DistrictId = "", priceids = "", ItemName, categoryId = "";
-    boolean IsVarietyAvailable;
+    boolean IsVarietyAvailable,IsQuality,IsAge;
     boolean isLoading = false;
     int currentItems;
     int totalItems;
@@ -270,6 +270,8 @@ public class AllSimilarDataActivity extends AppCompatActivity {
                 intent.putExtra("DistrictId", DistrictId);
                 intent.putExtra("priceids", priceids);
                 intent.putExtra("IsVarietyAvailable", IsVarietyAvailable);
+                intent.putExtra("IsQuality",IsQuality);
+                intent.putExtra("IsAge",IsAge);
                 intent.putExtra("categoryId", categoryId);
                 intent.putExtra("ItemName", ItemName);
                 startActivity(intent);
@@ -325,6 +327,8 @@ public class AllSimilarDataActivity extends AppCompatActivity {
             ItemName = bundle.getString("ItemName");
             categoryId = bundle.getString("categoryId");
             IsVarietyAvailable = bundle.getBoolean("IsVarietyAvailable");
+            IsQuality= bundle.getBoolean("IsQuality");
+            IsAge= bundle.getBoolean("IsAge");;
             //TalukaId = bundle.getString("TalukaId");
             //VarityId = bundle.getString("VarietyId");
             // QualityId = bundle.getString("QualityId");

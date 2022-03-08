@@ -88,14 +88,14 @@
     <style name="formTextInputLayout">
         <!-- Hint color and label color in FALSE state -->
         <item name="android:textColorHint">@color/text_black</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:inputType">text</item>
         <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
         <item name="colorAccent">@color/black</item>
         <item name="colorControlNormal">#ebebeb</item>
         <item name="colorControlActivated">#9e2e90</item>
         <item name="android:layout_marginTop">10dp</item>
-        <item name="fontFamily">@font/arima_madurai_medium</item>
+        <item name="fontFamily">@font/poppins_bold</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

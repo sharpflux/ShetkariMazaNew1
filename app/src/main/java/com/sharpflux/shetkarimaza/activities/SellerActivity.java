@@ -224,7 +224,7 @@ public class SellerActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(SellerActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(SellerActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                         customDialogLoadingProgressBar.dismiss();
                     }
                 }) {
