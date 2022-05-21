@@ -176,7 +176,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
         txt_emptyView.setVisibility(View.GONE);
 
-        progressBar_filter = findViewById(R.id.progressBar_filter);
+     //   progressBar_filter = findViewById(R.id.progressBar_filter);
 
         recyclerView = findViewById(R.id.similar_rvProductList);
         layoutManager = new LinearLayoutManager(this);
@@ -1176,6 +1176,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
 
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case 0: {
                 //exportToExcel();

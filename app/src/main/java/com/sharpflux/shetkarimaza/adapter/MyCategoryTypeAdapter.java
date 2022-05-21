@@ -17,9 +17,12 @@ import com.bumptech.glide.Glide;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.BuyerActivity;
 import com.sharpflux.shetkarimaza.activities.ContactDetailActivity;
+import com.sharpflux.shetkarimaza.activities.Contacts;
 import com.sharpflux.shetkarimaza.activities.GovtDepartmentActivity;
 import com.sharpflux.shetkarimaza.activities.HomeActivity;
 import com.sharpflux.shetkarimaza.activities.MachinHireActivity;
+import com.sharpflux.shetkarimaza.activities.Scroll;
+import com.sharpflux.shetkarimaza.activities.Scroll2;
 import com.sharpflux.shetkarimaza.activities.SellerActivity;
 import com.sharpflux.shetkarimaza.activities.TransporterVehicleAddActivity;
 import com.sharpflux.shetkarimaza.activities.TransporterViewActivity;
@@ -179,7 +182,9 @@ class MyCategoryTypeHolder extends RecyclerView.ViewHolder implements View.OnCli
         }
         else
         {
-            Intent intent = new Intent(context, ContactDetailActivity.class);
+            //Intent intent = new Intent(context, ContactDetailActivity.class);
+           Intent intent = new Intent(context, Scroll.class);
+           // Intent intent = new Intent(context, Contacts.class);
             intent.putExtra("ProductId", categoryId);
             intent.putExtra("RegistrationSubTypeId", "0");
             intent.putExtra("IsSubCategory", false);

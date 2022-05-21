@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -16,6 +17,7 @@ public class TermsActivity extends AppCompatActivity {
 
     LinearLayout linearclose;
     ImageView back;
+    private WebView webView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,10 +25,19 @@ public class TermsActivity extends AppCompatActivity {
         linearclose=findViewById(R.id.linearclose);
         back=findViewById(R.id.back);
 
+        webView = (WebView) findViewById(R.id.webView1);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.loadUrl("file:///android_asset/Terms.html");
+
         linearclose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(TermsActivity.this, TabLayoutLogRegActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                        Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
                 finish();
             }
         });
@@ -34,6 +45,10 @@ public class TermsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(TermsActivity.this, TabLayoutLogRegActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                        Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
                 finish();
             }
         });

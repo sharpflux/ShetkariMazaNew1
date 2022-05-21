@@ -128,7 +128,7 @@ public class GovtDepartmentActivity extends AppCompatActivity {
             }
         }
 
-        progressBar_filter = findViewById(R.id.progressBar_filter);
+       // progressBar_filter = findViewById(R.id.progressBar_filter);
         //txt_emptyView = findViewById(R.id.txt_emptyView);
         lr_filterbtn = (LinearLayout) findViewById(R.id.lr_filterbtn);
 

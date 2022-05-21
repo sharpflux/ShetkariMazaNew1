@@ -39,6 +39,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -64,7 +65,9 @@ import com.sharpflux.shetkarimaza.filters.BottomSheetDialogSorting;
 import com.sharpflux.shetkarimaza.filters.Filter1Activity;
 import com.sharpflux.shetkarimaza.model.AddPersonModel;
 import com.sharpflux.shetkarimaza.model.ContactDetail;
+import com.sharpflux.shetkarimaza.model.Result;
 import com.sharpflux.shetkarimaza.sqlite.dbFilter;
+import com.sharpflux.shetkarimaza.utils.PaginationListener;
 import com.sharpflux.shetkarimaza.volley.URLs;
 import com.sharpflux.shetkarimaza.volley.VolleySingleton;
 
@@ -91,8 +94,9 @@ import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 
 import static com.android.volley.Request.Method.GET;
+import static com.sharpflux.shetkarimaza.Interface.PaginationListener.PAGE_START;
 
-public class ContactDetailActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class ContactDetailActivity extends AppCompatActivity implements OnMapReadyCallback , SwipeRefreshLayout.OnRefreshListener  {
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -116,7 +120,7 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
     TextView txt_emptyView;
     LinearLayout lr_filterbtn;
     List<ContactDetail> mList;
-    private int PageSize=50;
+    private int PageSize=5;
     private CustomDialogLoadingProgressBar customDialogLoadingProgressBar;
     private RecyclerView
             recyclerView_addFarm;
@@ -135,7 +139,7 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
     private FusedLocationProviderClient fusedLocationProviderClient;
     private static final int MY_PERMISSIONS_REQUEST_CODE = 123;
     private static final int LOCATION_REQUEST_CODE = 101;
-
+    private boolean isLastPage = false;
 
     //https://newbedev.com/how-to-show-an-empty-view-with-a-recyclerview
     @Override
@@ -154,9 +158,11 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
 
         recyclerView = findViewById(R.id.contact_Detail_rvProductList);
         customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(ContactDetailActivity.this);
+
+
         contactlist = new ArrayList<>();
         recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         mList = new ArrayList<>();
         myDatabase = new dbFilter(ContactDetailActivity.this);
@@ -191,13 +197,7 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
         ToolbartvItemName = findViewById(R.id.ToolbartvItemName);
         tvRecordsCount = findViewById(R.id.tvRecordsCount);
 
-     /*   recyclerView_addFarm = findViewById(R.id.recyclerView_addFarm);
-        addPersonAdapter_farm = new AddPersonAdapter(ContactDetailActivity.this, addPersonModelArrayList_farm,
-                "Farm");
-        recyclerView_addFarm.setAdapter(addPersonAdapter_farm);
-        recyclerView_addFarm.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager_farm = new LinearLayoutManager(ContactDetailActivity.this);
-        recyclerView_addFarm.setLayoutManager(linearLayoutManager_farm);*/
+
 
         ItemTypeId="0";
         bundle = getIntent().getExtras();
@@ -220,152 +220,39 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
         }
 
 
-    /*    imageView_addFarm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                if (ItemTypeId.equals("1")) {
-                    setTitle("Processor");
-                } else if (ItemTypeId.equals("4")) {
-                    setTitle("Producer");
-                } else if (ItemTypeId.equals("5")) {
-                    setTitle("Commission Agent");
-                } else if (ItemTypeId.equals("6")) {
-                    setTitle("Service Provider");
-                } else if (ItemTypeId.equals("16")) {
-                    setTitle("Individual Farmers");
-                } else if (ItemTypeId.equals("17")) {
-                    setTitle("Farmer Group");
-                } else if (ItemTypeId.equals("18")) {
-                    setTitle("Trader");
-                } else if (ItemTypeId.equals("20")) {
-                    setTitle("FPO/FPC");
-                } else if (ItemTypeId.equals("21")) {
-                    setTitle("Govt. Agency");
-                } else if (ItemTypeId.equals("22")) {
-                    setTitle("Individual Customer");
-                } else if (ItemTypeId.equals("23")) {
-                    setTitle("Exporter");
-                } else if (ItemTypeId.equals("24")) {
-                    setTitle("Retailer");
-                } else if (ItemTypeId.equals("26")) {
-                    setTitle("Warehouse");
-                    CustomDialogAddFarm customDialogAddFarm = new CustomDialogAddFarm(ContactDetailActivity.this, "0", "0", addPersonAdapter_farm, addPersonModelArrayList_farm, 0);
-                    customDialogAddFarm.show();
-
-                } else if (ItemTypeId.equals("27")) {
-                    setTitle("Transporter");
-                    CustomDialogAddVehicle customDialogAddVehicle = new CustomDialogAddVehicle(ContactDetailActivity.this, "0", "0", addPersonAdapter_farm, addPersonModelArrayList_farm, 0);
-                    customDialogAddVehicle.show();
-                } else if (ItemTypeId.equals("28")) {
-                    setTitle("Packer");
-                } else if (ItemTypeId.equals("29")) {
-                    setTitle("Franchise");
-                }else if (ItemTypeId.equals("30")) {
-                    setTitle("Bank Loan Consultants");
-                }else if (ItemTypeId.equals("31"))
-                {
-                    setTitle("Project Consultant");
-                } else if (ItemTypeId.equals("32")) {
-                    setTitle("Nursery Owner");
-                }
-            }
-        });*/
-
-
-
-
-    /*    if (ItemTypeId.equals("1")) {
-            ToolbartvItemName.setText("Processor");
-            setTitle("Processor");
-        } else if (ItemTypeId.equals("4")) {
-            ToolbartvItemName.setText("Producer");
-            setTitle("Producer");
-        } else if (ItemTypeId.equals("5")) {
-            ToolbartvItemName.setText("Commission Agent");
-            setTitle("Commission Agent");
-        } else if (ItemTypeId.equals("6")) {
-            ToolbartvItemName.setText("Service Provider");
-            setTitle("Service Provider");
-        } else if (ItemTypeId.equals("16")) {
-            ToolbartvItemName.setText("Individual Farmers");
-            setTitle("Individual Farmers");
-        } else if (ItemTypeId.equals("17")) {
-            ToolbartvItemName.setText("Farmer Group");
-            setTitle("Farmer Group");
-        } else if (ItemTypeId.equals("18")) {
-            ToolbartvItemName.setText("Trader");
-            setTitle("Trader");
-        } else if (ItemTypeId.equals("20")) {
-            ToolbartvItemName.setText("FPO/FPC");
-            setTitle("FPO/FPC");
-        } else if (ItemTypeId.equals("21")) {
-            ToolbartvItemName.setText("Govt. Agency");
-            setTitle("Govt. Agency");
-        } else if (ItemTypeId.equals("22")) {
-            ToolbartvItemName.setText("Individual Customer");
-            setTitle("Individual Customer");
-        } else if (ItemTypeId.equals("23")) {
-            ToolbartvItemName.setText("Exporter");
-            setTitle("Exporter");
-        } else if (ItemTypeId.equals("24")) {
-            ToolbartvItemName.setText("Processor");
-            setTitle("Retailer");
-        } else if (ItemTypeId.equals("26")) {
-            ToolbartvItemName.setText("Processor");
-            setTitle("Warehouse");
-        } else if (ItemTypeId.equals("27")) {
-            ToolbartvItemName.setText("Transporter");
-            setTitle("Transporter");
-        } else if (ItemTypeId.equals("28")) {
-            ToolbartvItemName.setText("Packer");
-            setTitle("Packer");
-        } else if (ItemTypeId.equals("29")) {
-            ToolbartvItemName.setText("Franchise");
-            setTitle("Franchise");
-        }else if (ItemTypeId.equals("30")) {
-            ToolbartvItemName.setText("Bank Loan Consultants");
-            setTitle("Bank Loan Consultants");
-        }else if (ItemTypeId.equals("31"))
-        {
-            ToolbartvItemName.setText("Project Consultant");
-            setTitle("Project Consultant");
-        } else if (ItemTypeId.equals("32")) {
-            ToolbartvItemName.setText("Nursery Owner");
-            setTitle("Nursery Owner");
-        }
-
-        else if (ItemTypeId.equals("35")) {
-            ToolbartvItemName.setText("Krushi Seva Kendra");
-            setTitle("Krushi Seva Kendra");
-        }
-
-        else if (ItemTypeId.equals("34")) {
-            ToolbartvItemName.setText("Insurance Agency");
-            setTitle("Insurance Agency");
-        }
-        else if (ItemTypeId.equals("36")) {
-            ToolbartvItemName.setText("Tracktors");
-            setTitle("Tracktors");
-        }
-
-        else if (ItemTypeId.equals("37")) {
-            ToolbartvItemName.setText("Krushi Kamgaar");
-            setTitle("Krushi Kamgaar");
-        }
-
-        else {
-            ToolbartvItemName.setText(CategoryName);
-            setTitle(CategoryName);
-        }*/
-
-  /*      ContactDetailActivity.AsyncTaskRunner runner = new ContactDetailActivity.AsyncTaskRunner();
-        String sleepTime = "1";
-        runner.execute(sleepTime);
-*/
         initAdapter();
-        initScrollListener();
+
+
+
+        recyclerView.addOnScrollListener(new PaginationListener(layoutManager) {
+
+            @Override
+            protected void Scrolling() {
+                int firstElementPosition=layoutManager.findFirstVisibleItemPosition();
+                int lastElementPosition=layoutManager.findLastVisibleItemPosition();
+                tvViewing.setText( getResources().getString(R.string.viewing)+  String.valueOf( firstElementPosition+1) +" - "+String.valueOf(  lastElementPosition+1));
+            }
+
+            @Override
+            protected void loadMoreItems() {
+                isLoading = true;
+                totalPage=150;
+                currentPage++;
+                SetDynamicDATA(currentPage);
+
+            }
+            @Override
+            public boolean isLastPage() {
+                return isLastPage;
+            }
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+
+
+        });
+
         myLocale = getResources().getConfiguration().locale;
         View showModalBottomSheet = findViewById(R.id.bottom);
 
@@ -395,32 +282,8 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
     }
 
     private void initScrollListener() {
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
 
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
 
-                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-
-                if (!isLoading) {
-                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == mList.size() - 1) {
-                        //bottom of list!
-                        currentPage++;
-                        loadMore(currentPage);
-                        isLoading = true;
-                    }
-                }
-
-                int firstElementPosition=linearLayoutManager.findFirstVisibleItemPosition();
-                int lastElementPosition=linearLayoutManager.findLastVisibleItemPosition();
-                tvViewing.setText( getResources().getString(R.string.viewing)+  String.valueOf( firstElementPosition+1) +" - "+String.valueOf(  lastElementPosition+1));
-            }
-        });
 
 
     }
@@ -451,7 +314,7 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
                     final int currentSize = scrollPosition;
                     final int nextLimit = currentSize + 10;
                 }
-
+                isLoading = true;
                 SetDynamicDATA(currentPage);
 
             }
@@ -574,45 +437,36 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
                         public void onResponse(String response) {
 
                             try {
-                                obj = new JSONArray(response);
-                                isFirstLoad = true;
-                                String oldAPI = "http://apimaza.supergo.in";
-                                for (int i = 0; i < obj.length(); i++) {
-                                    JSONObject userJson = obj.getJSONObject(i);
 
-                                    if (!userJson.getBoolean("error")) {
-                                        String imageUrl = userJson.getString("ImageUrl").substring(oldAPI.length(),userJson.getString("ImageUrl").length());
-                                        ContactDetail detail;
-                                        detail = new ContactDetail
-                                                (
-                                                        imageUrl,
-                                                        userJson.getString("FullName"),
-                                                        userJson.getString("Address"),
-                                                        userJson.getString("MobileNo"),
-                                                        userJson.getString("StatesName"),
-                                                        userJson.getString("DistrictName"),
-                                                        userJson.getString("TalukaName")
-                                                );
+                                JSONObject obj = new JSONObject(response);
+                                JSONArray array = obj.getJSONArray("results");
 
-                                        mList.add(detail);
-                                        mList.size();
+                                for (int i = 0; i < array.length(); i++) {
+                                    JSONObject userJson = array.getJSONObject(i);
+                                    String imageUrl = "0";
+                                    ContactDetail detail;
+                                    detail = new ContactDetail
+                                            (
+                                                    imageUrl,
+                                                    userJson.getString("FullName"),
+                                                    userJson.getString("Address"),
+                                                    userJson.getString("MobileNo"),
+                                                    userJson.getString("StatesName"),
+                                                    userJson.getString("DistrictName"),
+                                                    userJson.getString("TalukaName")
+                                            );
 
-                                    }
-                                    else {
-                                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
-                                    }
-                                    if (obj.length() > 0) {
-                                        tvRecordsCount.setText(obj.getJSONObject(0).getString("totalCount").toString() + " " + getResources().getString(R.string.recordsfound) + " | " + getResources().getString(R.string.showing) + String.valueOf(mList.size()));
-                                    } else {
-
-                                    }
-                                    myAdapter.notifyDataSetChanged();
-                                    isLoading = false;
-
-
-
-
+                                    mList.add(detail);
+                                    mList.size();
                                 }
+
+                                myAdapter.notifyDataSetChanged();
+                                isLoading = false;
+
+
+
+                                customDialogLoadingProgressBar.dismiss();
+
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -644,6 +498,11 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
                     DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
         }
+    }
+
+    @Override
+    public void onRefresh() {
+
     }
 
     class AsyncTaskRunner extends AsyncTask<String, String, String> {
@@ -840,6 +699,7 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_CODE: {
                 // When request is cancelled, the results array are empty

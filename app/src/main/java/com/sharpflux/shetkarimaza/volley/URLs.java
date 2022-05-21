@@ -2,7 +2,10 @@ package com.sharpflux.shetkarimaza.volley;
 
 public class URLs {
 
-    public static  final  String Main_URL="https://kisanmaza.sharpflux.com/";
+   public static  final  String Main_URL="https://kisanmaza.sharpflux.com/";
+
+   // public static  final  String Main_URL="https://supergodeliveryadmin.conveyor.cloud/";
+
 
     public static final String URL_REGISTER = Main_URL+"api/Registration/User";
     public static final String URL_LOGIN = Main_URL+"api/Users/Login";
@@ -33,15 +36,10 @@ public class URLs {
     public static String URL_SUBcATEGORY=Main_URL+"api/ItemMasterApi/Get_SubCatItems?ItemTypeId=";
     public static String URL_AGE=Main_URL+"api/AgeGroupAPI/GetAgeGroupAPI?";
     public static String URL_MasterSubCategoriesGET=Main_URL+"api/MasterSubCategoriesAPI/MasterSubCategoriesGET?";
-
-
-
     public static String URL_REGISTRATIONGETUSERDETAILS=Main_URL+"api/Registration/RegistrationGetUserDetails?";
-
     public static String URL_GETVEHICLE=Main_URL+"api/Registration/GetVehicle?";
     public static String URL_POSTVEHICLE=Main_URL+"api/TransporterAPI/TransportMasterInsertUpdateAndroid";
     public static String URL_GETTRANSPORTERS=Main_URL+"api/Registration/TransporterGet?";
-
     public static final String URL_GENERATEOTP=Main_URL+"api/Utilities/GetOtpAndAddUpdateUser";
     public static final String URL_VERIFYUSER=Main_URL+"api/Registration/RegistrationUpdateIsVerified" ;
     public static final String URL_GetAvailableMonthsDynamic=Main_URL+"api/RequestAPI/GetAvailableMonthsDynamic?StartIndex=0" ;

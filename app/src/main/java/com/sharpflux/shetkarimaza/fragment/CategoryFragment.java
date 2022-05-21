@@ -361,7 +361,7 @@ public class CategoryFragment extends Fragment {
                 };
                 stringRequest.setRetryPolicy(new DefaultRetryPolicy(0,
                         DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+                VolleySingleton.getInstance(getActivity().getApplicationContext()).addToRequestQueue(stringRequest);
 
 
             }
@@ -370,15 +370,11 @@ public class CategoryFragment extends Fragment {
 
     }
 
-
-
-
-
-
     private void setDynamicFragmentToTabLayout(Integer PageSize) {
 
-
     }
+
+
     public boolean isAttachedToActivity() {
         boolean attached = isVisible() && getActivity() != null;
         return attached;

@@ -20,6 +20,7 @@ import com.sharpflux.shetkarimaza.activities.ContactDetailActivity;
 import com.sharpflux.shetkarimaza.activities.GovtDepartmentActivity;
 import com.sharpflux.shetkarimaza.activities.MachinHireActivity;
 import com.sharpflux.shetkarimaza.activities.Membership;
+import com.sharpflux.shetkarimaza.activities.Scroll;
 import com.sharpflux.shetkarimaza.activities.SellerActivity;
 import com.sharpflux.shetkarimaza.activities.TransporterVehicleAddActivity;
 import com.sharpflux.shetkarimaza.activities.TransporterViewActivity;
@@ -122,7 +123,7 @@ public class MachineAdapter extends RecyclerView.Adapter<MachineAdapter.ViewHold
         @Override
         public void onClick(View view) {
             Context context = view.getContext();
-            Intent intent = new Intent(context, ContactDetailActivity.class);
+            Intent intent = new Intent(context, Scroll.class);
             intent.putExtra("ProductId", ItemTypeId);
             intent.putExtra("RegistrationSubTypeId", categoryId);
             intent.putExtra("IsSubCategory", true);

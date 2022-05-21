@@ -97,10 +97,7 @@ public class PostRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
   public class ViewHolder extends BaseViewHolder {
 
     TextView textViewTitle;
-
     TextView textViewDescription;
-
-
     ImageView mImage;
     TextView mfullname,mAddress,mMobNo,mState,mDistrict,mTaluka,tvCompanyName,tvPriceDetails,tvRateDescription;
     String name,mobileNo,address,state,district,taluka,ImageUrl;

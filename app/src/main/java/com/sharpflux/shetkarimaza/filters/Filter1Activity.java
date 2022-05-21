@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity;
 import com.sharpflux.shetkarimaza.activities.ContactDetailActivity;
+import com.sharpflux.shetkarimaza.activities.Scroll;
 import com.sharpflux.shetkarimaza.activities.TransporterViewActivity;
 import com.sharpflux.shetkarimaza.sqlite.dbFilter;
 import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
@@ -132,7 +133,7 @@ public class Filter1Activity extends AppCompatActivity implements View.OnClickLi
                 if (bundle != null) {
 
                     if(bundle.getString("Activity").equals("ContactDetailActivity")){
-                        Intent intent = new Intent(Filter1Activity.this, ContactDetailActivity.class);
+                        Intent intent = new Intent(Filter1Activity.this, Scroll.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("Search", "Filter");
                         intent.putExtra("ProductId", bundle.getString("ProductId"));
@@ -163,7 +164,7 @@ public class Filter1Activity extends AppCompatActivity implements View.OnClickLi
                 if (bundle != null) {
 
                     if(bundle.getString("Activity").equals("ContactDetailActivity")){
-                        Intent intent = new Intent(Filter1Activity.this, ContactDetailActivity.class);
+                        Intent intent = new Intent(Filter1Activity.this, Scroll.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("Search", "Filter");
                         intent.putExtra("ProductId", bundle.getString("ProductId"));
@@ -190,7 +191,7 @@ public class Filter1Activity extends AppCompatActivity implements View.OnClickLi
             public void onClick(View view) {
                 myDatabase.DeleteRecordAll();
                 if(bundle.getString("Activity").equals("ContactDetailActivity")){
-                    Intent intent = new Intent(Filter1Activity.this, ContactDetailActivity.class);
+                    Intent intent = new Intent(Filter1Activity.this, Scroll.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("Search", "Filter");
                     intent.putExtra("ProductId", bundle.getString("ProductId"));
@@ -216,7 +217,7 @@ public class Filter1Activity extends AppCompatActivity implements View.OnClickLi
         if (bundle != null) {
 
             if(bundle.getString("Activity").equals("ContactDetailActivity")){
-                Intent intent = new Intent(Filter1Activity.this, ContactDetailActivity.class);
+                Intent intent = new Intent(Filter1Activity.this, Scroll.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("Search", "Filter");
                 intent.putExtra("ProductId", bundle.getString("ProductId"));
