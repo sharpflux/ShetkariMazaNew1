@@ -140,6 +140,7 @@ public class Filter1Activity extends AppCompatActivity implements View.OnClickLi
                         intent.putExtra("UseLatLong", false);
                         intent.putExtra("RegistrationSubTypeId", bundle.getString("RegistrationSubTypeId"));
                         intent.putExtra("SortBy", SortBy);
+                        intent.putExtra("Heading",bundle.getString("Heading"));
                         startActivity(intent);
                     }
                     if(bundle.getString("Activity").equals("TransporterViewActivity")){
@@ -147,6 +148,7 @@ public class Filter1Activity extends AppCompatActivity implements View.OnClickLi
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("Search", "Filter");
                         intent.putExtra("SortBy", SortBy);
+                        intent.putExtra("Heading",bundle.getString("Heading"));
                         startActivity(intent);
                     }
                 }
@@ -171,6 +173,7 @@ public class Filter1Activity extends AppCompatActivity implements View.OnClickLi
                         intent.putExtra("UseLatLong", false);
                         intent.putExtra("RegistrationSubTypeId", bundle.getString("RegistrationSubTypeId"));
                         intent.putExtra("SortBy", SortBy);
+                        intent.putExtra("Heading",bundle.getString("Heading"));
                         startActivity(intent);
                     }
                     if(bundle.getString("Activity").equals("TransporterViewActivity")){
@@ -178,6 +181,7 @@ public class Filter1Activity extends AppCompatActivity implements View.OnClickLi
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("Search", "Filter");
                         intent.putExtra("SortBy", SortBy);
+                        intent.putExtra("Heading",bundle.getString("Heading"));
                         startActivity(intent);
                     }
                 }
@@ -198,6 +202,7 @@ public class Filter1Activity extends AppCompatActivity implements View.OnClickLi
                     intent.putExtra("UseLatLong", true);
                     intent.putExtra("RegistrationSubTypeId", bundle.getString("RegistrationSubTypeId"));
                     intent.putExtra("SortBy", SortBy);
+                    intent.putExtra("Heading",bundle.getString("Heading"));
                     startActivity(intent);
                 }
                 if(bundle.getString("Activity").equals("TransporterViewActivity")){
@@ -206,6 +211,7 @@ public class Filter1Activity extends AppCompatActivity implements View.OnClickLi
                     intent.putExtra("Search", "Filter");
                     intent.putExtra("ProductId", bundle.getString("ProductId"));
                     intent.putExtra("SortBy", SortBy);
+                    intent.putExtra("Heading",bundle.getString("Heading"));
                     startActivity(intent);
                 }
             }
@@ -224,6 +230,7 @@ public class Filter1Activity extends AppCompatActivity implements View.OnClickLi
                 intent.putExtra("UseLatLong", false);
                 intent.putExtra("RegistrationSubTypeId", bundle.getString("RegistrationSubTypeId"));
                 intent.putExtra("SortBy", SortBy);
+                intent.putExtra("Heading",bundle.getString("Heading"));
                 startActivity(intent);
             }
             if(bundle.getString("Activity").equals("TransporterViewActivity")){
@@ -231,6 +238,7 @@ public class Filter1Activity extends AppCompatActivity implements View.OnClickLi
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("Search", "Filter");
                 intent.putExtra("SortBy", SortBy);
+                intent.putExtra("Heading",bundle.getString("Heading"));
                 startActivity(intent);
             }
         }

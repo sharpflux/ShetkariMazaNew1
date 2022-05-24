@@ -183,13 +183,14 @@ public class WelcomeActivity extends AppCompatActivity {
                     //    tvDesOne.setText("With Fast Transaction ");
                 }
                 if(position==1){
+                    tvTitleOne.setText(getResources().getString(R.string.slide3Title));
+                    // tvDesOne.setText("With Fast Transaction ");
+                }
+                if(position==2){
                     tvTitleOne.setText(getResources().getString(R.string.slide2Title));
                 //    tvDesOne.setText("With Fast Transaction ");
                 }
-                if(position==2){
-                    tvTitleOne.setText(getResources().getString(R.string.slide3Title));
-                   // tvDesOne.setText("With Fast Transaction ");
-                }
+
 
                 final float startSize = 00; // Size in pixels
                 final float endSize = 25;

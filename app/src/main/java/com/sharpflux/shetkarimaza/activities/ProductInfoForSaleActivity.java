@@ -278,6 +278,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
         }
 
 
+        setTitle(getResources().getString(R.string.SelectProductType));
 
         builder = new StringBuilder();
         builder.append("<?xml version=\"1.0\" ?>");
@@ -786,7 +787,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
                 final  TextView tvHeadingDialog;
                 final String[] GenderSelected = new String[1];
                 slideDialog = new Dialog(context, R.style.CustomDialogAnimation);
-                slideDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                slideDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
                 // Setting dialogview
                 Window window = slideDialog.getWindow();
                 //  window.setGravity(Gravity.BOTTOM);
@@ -1418,7 +1419,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
                 if (params[0].toString() == "ItemName")
                     fetcher.loadList("ItemName", edtproductType, URLs.URL_NAME + "1&PageSize=700&CategoryId=" + ProductId + "&Language=" + currentLanguage, "ItemTypeId", hidItemTypeId, "CategoryId", ProductId, TittleName, "BotanicalName", name_botanical, lr_variety, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "Variety")
-                    fetcher.loadList("VarietyName", edtproductVariety, URLs.URL_VARIATY + hidItemTypeId.getText() + "&Language=" + currentLanguage, "VarietyId", hidVarietyId, "", "", "Variety", "", null, null, customDialogLoadingProgressBar);
+                    fetcher.loadList("VarietyName", edtproductVariety, URLs.URL_VARIATY + hidItemTypeId.getText() + "&Language=" + currentLanguage, "VarietyId", hidVarietyId, "", "", "Variety", "", name_botanical, null, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "Quality")
                     fetcher.loadList("QualityType", edtAQuality, URLs.URL_QUALITY + "?Language=" + currentLanguage + "&CategoryId=" + ProductId, "QualityId", hidQualityId, "", "", "Available Quality", "", null, null, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "Unit")
@@ -1432,7 +1433,7 @@ public class ProductInfoForSaleActivity extends AppCompatActivity  implements On
                 else if (params[0].toString() == "Age")
                     fetcher.loadList("AgeGroupName", edtDays, URLs.URL_AGE + "Language=" + currentLanguage+ "&CategoryId=" + ProductId+ "&itemTypeId=" + hidItemTypeId.getText() , "AgeGroupId", hideAgeId, "", "", "Age", "", null, null, customDialogLoadingProgressBar);
                 if (params[0].toString() == "CategoryName")
-                    fetcher.loadList("ItemName", sub_category_name, URLs.URL_NAME + "1&PageSize=500&CategoryId=" + hidItemTypeId.getText() + "&Language=" + currentLanguage, "ItemTypeId", hideSubCatId, "CategoryId", ProductId, "Category Name", "BotanicalName", null, null, customDialogLoadingProgressBar);
+                    fetcher.loadList("ItemName", sub_category_name, URLs.URL_NAME + "1&PageSize=500&CategoryId=" + hidItemTypeId.getText() + "&Language=" + currentLanguage, "ItemTypeId", hideSubCatId, "CategoryId", ProductId, "Category Name", "BotanicalName", name_botanical, null, customDialogLoadingProgressBar);
                 else if (params[0].toString() == "Update") {
                     submitToDb();
                 }

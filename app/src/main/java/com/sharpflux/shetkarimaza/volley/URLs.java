@@ -6,7 +6,7 @@ public class URLs {
 
    // public static  final  String Main_URL="https://supergodeliveryadmin.conveyor.cloud/";
 
-
+    public static final String URL_SLIDER_IMG=Main_URL+"api/SliderImageApi/SliderImgApiGET?Search=";
     public static final String URL_REGISTER = Main_URL+"api/Registration/User";
     public static final String URL_LOGIN = Main_URL+"api/Users/Login";
     public static final String URL_RECYCLER=Main_URL+"api/Categories/GetCategories?Language=";

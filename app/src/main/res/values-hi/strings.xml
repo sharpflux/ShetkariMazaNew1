@@ -18,11 +18,14 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">नेविगेशन हेडर</string>
     <string name="action_settings">सेटिंग्स</string>
-    <string name="OrganicInorganic">सेंद्रिय/गैर जैविक *</string>
+    <string name="OrganicInorganic">सेंद्रिय/नॉन ऑर्गेनिक *</string>
     <string name="header_category">श्रेणियाँ </string>
     <string name="Organic">जैविक</string>
-    <string name="Inorganic">गैर जैविक</string>
+    <string name="Inorganic">नॉन ऑर्गेनिक</string>
     <string name="menu_home">होम</string>
+    <string name="SelectProductType">अपना उत्पाद प्रकार चुनें !</string>
+    <string name="IncludeProductDetails">
+अपने उत्पाद विवरण शामिल करें !</string>
     <string name="menu_address">पता</string>
     <string name="menu_shopping">मेरी गाड़ी</string>
     <string name="menu_list">मेरा आदेश</string>
@@ -147,12 +150,12 @@
     <string name="address">पता</string>
     <string name="Cityorvillage">शहर / गाँव</string>
     <string name="Name_of_Taluka">तहसील का नाम</string>
-    <string name="dist">जिला</string>
-    <string name="state">राज्य</string>
+    <string name="dist">जिला *</string>
+    <string name="state">राज्य *</string>
     <string name="company_name">कंपनी का नाम / फर्म का नाम (ऐच्छिक)</string>
     <string name="Landlin_no">लैंडलाइन नंबर. (ऐच्छिक)</string>
     <string name="APMC_licance">एपीएमसी लाइसेंस (ऐच्छिक)</string>
-    <string name="Company_Regin_no">कंपनी क्षेत्र संख्या (ऐच्छिक)</string>
+    <string name="Company_Regin_no">कंपनी नोंदणी क्रमांक (ऐच्छिक)</string>
     <string name="GST_no">जीएसटी संख्या.(ऐच्छिक)</string>
     <string name="next">अगला</string>
     <string name="account_holder_name">खाताधारक का नाम पासबुक के अनुसार</string>
@@ -184,7 +187,7 @@
 
     <string name="call">कॉल</string>
     <string name="cancel">रद्द करना</string>
-    <string name="seller_available_unit">इकाई</string>
+    <string name="seller_available_unit">प्रमाण</string>
 
     <string name="string_internet_connection_not_available">इंटरनेट कनेक्शन उपलब्ध नहीं है</string>
     <string name="string_some_thing_wrong">कुछ गलत हो गया.</string>
@@ -195,7 +198,7 @@
     <string name="completeregiseration">यहाँ अपना नियम पूरा करें! *</string>
 
     <string name="language">भाषा बदले</string>
-    <string name="AlternateMob">वैकल्पिक मोबाइल नंबर दर्ज करें*</string>
+    <string name="AlternateMob">अतिरिक्त मोबाइल नंबर दर्ज करें</string>
 
     //selfie
 
@@ -217,7 +220,7 @@
     <string name="selfi_string_5">टीशर्ट / शर्ट पहने सेल्फी लें।</string>
     <string name="selfi_string_6">हैलो खाली टुकड़ा</string>
     <string name="farmaddress">फार्म का पता दर्ज करें *</string>
-    <string name="farmssurveyno">सर्वे नं *</string>
+    <string name="farmssurveyno">सर्वे नं /गट नं *</string>
     <string name="botonicalname">वानस्पतिक नाम दर्ज करें *</string>
 
 
@@ -276,9 +279,7 @@
     <string name="edit">संपादित करें</string>
     <string name="guide_your_rate_here"><u> दर गाइड!</u></string>
     <string name="update">अपडेट करें</string>
-
-
-    <string name="sort">तरह</string>
+    <string name="sort">चुनिए </string>
     <string name="profile">प्रोफ़ाइल</string>
     <string name="processor">प्रोसेसर </string>
     <string name="producer">निर्माता </string>
@@ -312,7 +313,7 @@
     <string name="verify_mobile_no">Verify Mobile No.</string>
     <string name="view_more">View more</string>
     <string name="available_quantity">Available Quantity</string>
-    <string name="variety">विविधता</string>
+    <string name="variety">वाण / जात</string>
     <string name="quantity_available_in">Quantity available in </string>
     <string name="quality">गुणवत्ता</string>
     <string name="qty">Qty.</string>
@@ -321,13 +322,13 @@
     <string name="i_want_to_sell">I want to sell</string>
     <string name="of">of</string>
     <string name="from">from</string>
-    <string name="taluka">तालुका</string>
+    <string name="taluka">तालुका *</string>
     <string name="half_yearly_plan">Half Yearly Plan</string>
     <string name="quaterly_plan">Quaterly Plan</string>
     <string name="yearly_plan">Yearly Plan</string>
     <string name="monthly_plan">Monthly Plan</string>
     <string name="apply">लागू करना</string>
-    <string name="clear">साफ करा</string>
+    <string name="clear">फिल्टर निकलीए </string>
     <string name="registersuccess">आप सफलतापूर्वक पंजीकृत हैं! आपका रजिस्टर नंबर है : </string>
     <string name="registered">सफलतापूर्वक पंजीकृत</string>
     <string name="AvailableInMonth">महीने में उपलब्ध</string>

@@ -193,6 +193,7 @@ public class AllSimilarDataActivity extends AppCompatActivity {
         ImgBack2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                myDatabaseBuyer.delete();
                 Intent intent = new Intent(AllSimilarDataActivity.this, BuyerActivity.class);
                 startActivity(intent);
                 finish();

@@ -313,7 +313,8 @@
     <string name="AvailableInMonth">Available in Month</string>
     <string name="recordsfound">Records found</string>
     <string name="showing">Showing Records : </string>
-
+    <string name="IncludeProductDetails">Include your product details !</string>
+    <string name="SelectProductType">Select your product type !</string>
     <string name="MessageItemSelect">कृपया पहले आइटम चुनें</string>
     <string name="SoldOut">Sold out</string>
     <string name="what_is_lorem_ipsum">What is Lorem Ipsum?</string>
@@ -344,9 +345,9 @@
     <string name="Buy">Buy</string>
     <string name="Sell">Sell</string>
 
-    <string name="slide1Title">Get Expected Price for your Agriculture produce start your own Agri business with less Investment</string>
+    <string name="slide1Title">Get Expected Price for your Agriculture produce. Start your own Agri business with less Investment</string>
     <string name="slide2Title">Start your own Agro Processing unit with help of project consultant</string>
-    <string name="slide3Title">Get Agro commodity -Quality wise &amp; Verity wise</string>
+    <string name="slide3Title">Get Agro commodity -Quality wise &amp; Variety wise in a good price</string>
     <string name="slide1Desc">Start your own buisness with less Investment</string>
 
 

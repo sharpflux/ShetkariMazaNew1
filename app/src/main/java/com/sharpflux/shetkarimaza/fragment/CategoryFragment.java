@@ -2,8 +2,11 @@ package com.sharpflux.shetkarimaza.fragment;
 
 
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,6 +34,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.material.tabs.TabLayout;
 import com.sharpflux.shetkarimaza.R;
 import com.sharpflux.shetkarimaza.activities.AllSimilarDataActivity;
 import com.sharpflux.shetkarimaza.activities.Membership;
@@ -38,11 +42,13 @@ import com.sharpflux.shetkarimaza.activities.SubscriptionPlanActivity;
 import com.sharpflux.shetkarimaza.adapter.BannerAdapter;
 import com.sharpflux.shetkarimaza.adapter.HomeSliderAdapter;
 import com.sharpflux.shetkarimaza.adapter.MyCategoryTypeAdapter;
+import com.sharpflux.shetkarimaza.adapter.SliderAdapter;
 import com.sharpflux.shetkarimaza.customviews.CustomDialogLoadingProgressBar;
 import com.sharpflux.shetkarimaza.model.ListModel;
 import com.sharpflux.shetkarimaza.model.MyCategoryType;
 import com.sharpflux.shetkarimaza.model.SimilarList;
 import com.sharpflux.shetkarimaza.model.User;
+import com.sharpflux.shetkarimaza.model.sliderModel;
 import com.sharpflux.shetkarimaza.sqlite.dbLanguage;
 import com.sharpflux.shetkarimaza.utils.EndlessRecyclerViewScrollListenerOld;
 import com.sharpflux.shetkarimaza.volley.SharedPrefManager;
@@ -57,6 +63,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import me.relex.circleindicator.CircleIndicator;
 
@@ -92,11 +100,18 @@ public class CategoryFragment extends Fragment {
     }
     BannerAdapter bannerAdapter;
     String[] txt_vegType;
-    ViewPager viewPager2;
+    ViewPager viewPager2,viewPagerSlider;
     LinearLayout li_line1;
     LinearLayout li_line2;
     LinearLayout li_line3;
     int CURRENTPAGE = 2;
+
+    ArrayList<Uri> arrayList_imageSlider;
+    ArrayList<sliderModel> sliderModelArrayList;
+    TabLayout indicator;
+    SliderAdapter sliderAdapter;
+    Context context;
+    Timer timer;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -119,12 +134,27 @@ public class CategoryFragment extends Fragment {
         this.bannerAdapter = bannerAdapter2;
         this.recyclerView2.setAdapter(bannerAdapter2);
 
+        context = getContext();
+
+        sliderModelArrayList=new ArrayList<>();
+        viewPagerSlider = view.findViewById(R.id.viewPagerSlider);
+        indicator = view.findViewById(R.id.indicatorSlider);
+
+
 
         mydatabase = new dbLanguage(getContext());
         customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(getContext());
         categoryList = new ArrayList<>();
+        setDynamicslider();
 
+        arrayList_imageSlider = new ArrayList<Uri>();
+        Uri uri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getResources().getResourcePackageName(R.drawable.logo_watermelon)
+                + "/" + context.getResources().getResourceTypeName(R.drawable.logo_mango)
+                + "/" + context.getResources().getResourceEntryName(R.drawable.logo_fruit));
 
+        for (int i = 0; i < 5; i++) {
+            arrayList_imageSlider.add(uri);
+        }
 
         this.li_line1 = (LinearLayout) view.findViewById(R.id.li_line1);
         this.li_line2 = (LinearLayout) view.findViewById(R.id.li_line2);
@@ -229,7 +259,7 @@ public class CategoryFragment extends Fragment {
 
             }
         });
-
+        autoScroll();
 
         return view;
     }
@@ -261,111 +291,212 @@ public class CategoryFragment extends Fragment {
         }
     }
 
+    private void setDynamicslider() {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_SLIDER_IMG,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+
+                            JSONArray obj = new JSONArray(response);
+                            for (int i = 0; i < obj.length(); i++)
+                            {
+                                //
+                                JSONObject userJson = obj.getJSONObject(i);
+                                if (!userJson.getBoolean("error")) {
+                                    sliderModel sellOptions=
+                                            new sliderModel
+                                                    (URLs.Main_URL +userJson.getString("SliderImgUrl"),
+                                                            userJson.getInt("SliderImgId")
+                                                    );
+
+                                    sliderModelArrayList.add(sellOptions);
+                                } else {
+                                    Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+                                }
+
+                                sliderAdapter = new SliderAdapter(getContext(), sliderModelArrayList);
+                                viewPagerSlider.setAdapter(sliderAdapter);
+                                indicator.setupWithViewPager(viewPagerSlider, true);
+
+                                viewPagerSlider.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                                    @Override
+                                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                                    }
+
+                                    @Override
+                                    public void onPageSelected(int position) {
+
+                                    }
+
+                                    @Override
+                                    public void onPageScrollStateChanged(int state) {
+
+                                    }
+                                });
+
+                                // mShimmerViewContainer.stopShimmerAnimation();
+                                //mShimmerViewContainer.setVisibility(View.GONE);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            //mShimmerViewContainer.stopShimmerAnimation();
+                            ///mShimmerViewContainer.setVisibility(View.GONE);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        // mShimmerViewContainer.stopShimmerAnimation();
+                        // mShimmerViewContainer.setVisibility(View.GONE);
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                return params;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+    }
+    private void autoScroll() {
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                if (viewPager.getCurrentItem() < sliderModelArrayList.size() - 1) {
+                    viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+                } else {
+                    viewPager.setCurrentItem(0);
+                }
+            }
+        };
+
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(runnable);
+            }
+        }, 4000, 6000);
+
+    }
 
     private void loadMore(final Integer currentPage) {
 
 
-        customDialogLoadingProgressBar.show();
-        if (!currentPage.equals(1)) {
-            customDialogLoadingProgressBar.dismiss();
-            categoryList.add(null);
-            myCategoryTypeAdapter.notifyItemInserted(categoryList.size() - 1);
-        }
+        try {
+            customDialogLoadingProgressBar.show();
+            if (!currentPage.equals(1)) {
+                customDialogLoadingProgressBar.dismiss();
+                categoryList.add(null);
+                myCategoryTypeAdapter.notifyItemInserted(categoryList.size() - 1);
+            }
 
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (!currentPage.equals(1)) {
-                    categoryList.remove(categoryList.size() - 1);
-                    int scrollPosition = categoryList.size();
-                    myCategoryTypeAdapter.notifyItemRemoved(scrollPosition);
-                    final int currentSize = scrollPosition;
-                    final int nextLimit = currentSize + 10;
-                }
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (!currentPage.equals(1)) {
+                        categoryList.remove(categoryList.size() - 1);
+                        int scrollPosition = categoryList.size();
+                        myCategoryTypeAdapter.notifyItemRemoved(scrollPosition);
+                        final int currentSize = scrollPosition;
+                        final int nextLimit = currentSize + 10;
+                    }
 
+                    isLoading = true;
+                    //SUPPLIED PageSize=99 for detect show the categories whose are usefull for Home Page (IsHomePageCategory)
+                    StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                            URLs.URL_RType+currentPage+"&PageSize=99&Language="+currentLanguage+"&UserId="+user.getId(),
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
 
-                isLoading = true;
-                //SUPPLIED PageSize=99 for detect show the categories whose are usefull for Home Page (IsHomePageCategory)
-                StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                        URLs.URL_RType+currentPage+"&PageSize=99&Language="+currentLanguage+"&UserId="+user.getId(),
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-
-                                try {
-                                    JSONArray obj = new JSONArray(response);
-
-
-
-                                    for (int i = 0; i < obj.length(); i++) {
-                                        JSONObject userJson = obj.getJSONObject(i);
-
-                                        if (!userJson.getBoolean("error")) {
+                                    try {
+                                        JSONArray obj = new JSONArray(response);
 
 
-                                            String RegistrationType;
 
-                                            if (userJson.getString("RegistrationTypeId").equals("2")) {
-                                                RegistrationType = getResources().getString(R.string.sell);
-                                            } else if (userJson.getString("RegistrationTypeId").equals("3")) {
-                                                RegistrationType = getResources().getString(R.string.Buy);
+                                        for (int i = 0; i < obj.length(); i++) {
+                                            JSONObject userJson = obj.getJSONObject(i);
+
+                                            if (!userJson.getBoolean("error")) {
+
+
+                                                String RegistrationType;
+
+                                                if (userJson.getString("RegistrationTypeId").equals("2")) {
+                                                    RegistrationType = getResources().getString(R.string.sell);
+                                                } else if (userJson.getString("RegistrationTypeId").equals("3")) {
+                                                    RegistrationType = getResources().getString(R.string.Buy);
+                                                } else {
+                                                    RegistrationType = userJson.getString("RegistrationType");
+                                                }
+
+                                                myCategoryType = new MyCategoryType
+                                                        (userJson.getString("ImageUrl"),
+                                                                RegistrationType,
+                                                                userJson.getString("RegistrationTypeId"),
+                                                                userJson.getString("UserRegistrationTypeId")
+                                                        );
+                                                categoryList.add(myCategoryType);
                                             } else {
-                                                RegistrationType = userJson.getString("RegistrationType");
+                                                // Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                                             }
-
-                                            myCategoryType = new MyCategoryType
-                                                    (userJson.getString("ImageUrl"),
-                                                            RegistrationType,
-                                                            userJson.getString("RegistrationTypeId"),
-                                                            userJson.getString("UserRegistrationTypeId")
-                                                    );
-                                            categoryList.add(myCategoryType);
-                                        } else {
-                                            // Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+                                            myCategoryTypeAdapter = new MyCategoryTypeAdapter(getContext(), categoryList);
+                                            mRecyclerView.setAdapter(myCategoryTypeAdapter);
                                         }
-                                        myCategoryTypeAdapter = new MyCategoryTypeAdapter(getContext(), categoryList);
-                                        mRecyclerView.setAdapter(myCategoryTypeAdapter);
+
+                                        myCategoryTypeAdapter.notifyDataSetChanged();
+                                        isLoading = false;
+                                        customDialogLoadingProgressBar.dismiss();
+
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                        customDialogLoadingProgressBar.dismiss();
                                     }
+                                }
+                            },
 
-                                    myCategoryTypeAdapter.notifyDataSetChanged();
-                                    isLoading = false;
-                                    customDialogLoadingProgressBar.dismiss();
-
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
                                     customDialogLoadingProgressBar.dismiss();
                                 }
-                            }
-                        },
+                            }) {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<>();
+                            return params;
+                        }
 
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                customDialogLoadingProgressBar.dismiss();
-                            }
-                        }) {
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<>();
-                        return params;
-                    }
-
-                    @Override
-                    public Map<String, String> getHeaders() throws AuthFailureError {
-                        HashMap<String, String> headers = new HashMap<String, String>();
-                        headers.put("Content-Type", "application/json; charset=utf-8");
-                        return headers;
-                    }
-                };
-                stringRequest.setRetryPolicy(new DefaultRetryPolicy(0,
-                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                VolleySingleton.getInstance(getActivity().getApplicationContext()).addToRequestQueue(stringRequest);
+                        @Override
+                        public Map<String, String> getHeaders() throws AuthFailureError {
+                            HashMap<String, String> headers = new HashMap<String, String>();
+                            headers.put("Content-Type", "application/json; charset=utf-8");
+                            return headers;
+                        }
+                    };
+                    stringRequest.setRetryPolicy(new DefaultRetryPolicy(0,
+                            DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                    VolleySingleton.getInstance(getActivity().getApplicationContext()).addToRequestQueue(stringRequest);
 
 
-            }
-        }, 10);
+                }
+            }, 10);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
     }

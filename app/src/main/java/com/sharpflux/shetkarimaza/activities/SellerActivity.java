@@ -62,6 +62,10 @@ public class SellerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_seller);
         myLocale = getResources().getConfiguration().locale;
         customDialogLoadingProgressBar = new CustomDialogLoadingProgressBar(SellerActivity.this);
+
+        setTitle(getResources().getString(R.string.SelectProductType));
+
+
         if (!CheckDeviceIsOnline.isNetworkConnected(this)/*||!CheckDeviceIsOnline.isWifiConnected(this)*/)
 
         { AlertDialog.Builder builder = new AlertDialog.Builder(this);

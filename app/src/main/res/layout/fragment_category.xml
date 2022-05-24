@@ -31,6 +31,30 @@
         android:orientation="vertical"
         >
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPagerSlider"
+                android:layout_width="match_parent"
+                android:layout_height="250dp" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/indicatorSlider"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignBottom="@id/viewPager"
+                android:layout_centerInParent="true"
+                android:layout_gravity="bottom|center"
+                android:layout_marginBottom="14.7dp"
+                app:layout_constraintBottom_toBottomOf="@id/viewPager"
+                app:tabBackground="@drawable/indicator_slider"
+                app:tabGravity="center"
+                app:tabIndicatorHeight="0dp" />
+
+
+        </FrameLayout>
 
         <FrameLayout
              android:visibility="gone"
@@ -64,6 +88,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerBanner"
+            android:visibility="gone"
             android:paddingLeft="16dp"
             android:clipToPadding="false"
             android:layout_width="match_parent"
@@ -97,7 +122,6 @@
 
 
         </FrameLayout>
-
         <LinearLayout
             android:id="@+id/filter_liner"
             android:layout_width="match_parent"
@@ -147,9 +171,6 @@
             android:layout_height="match_parent"
 
             />
-
-
-
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="match_parent"
@@ -161,7 +182,6 @@
             android:visibility="gone"
 
             />
-
 
     </LinearLayout>
     </androidx.core.widget.NestedScrollView>

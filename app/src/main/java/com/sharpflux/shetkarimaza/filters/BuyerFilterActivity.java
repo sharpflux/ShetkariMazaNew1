@@ -44,14 +44,14 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
     StringBuilder varity_builder_id;
     dbBuyerFilter myDatabase;
     String ItemName="",ItemTypeId = "",TalukaId = "",VarityId = "",QualityId = "",StatesID = "",DistrictId = "",priceids = "",categoryId="";
-    boolean IsVarietyAvailable,IsGroup,IsAge,IsQuality;;
+    boolean IsVarietyAvailable,IsGroup,IsAge,IsQuality,ShowFirst;;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buyer_filter);
 
-
+        ShowFirst=true;
         btnFilterData = findViewById(R.id.btnFilterData);
         btnClear = findViewById(R.id.btnClear);
         container = findViewById(R.id.container);
@@ -133,12 +133,22 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
             categoryId=bundle.getString("categoryId");
             ItemName=bundle.getString("ItemName");
 
+
+
             if(IsVarietyAvailable)
             {
                 varity_linear.setVisibility(View.VISIBLE);
+                varity_color.setVisibility(View.VISIBLE);
+                quality_color.setVisibility(View.INVISIBLE);
+                brands_color.setVisibility(View.INVISIBLE);
+                category_color.setVisibility(View.INVISIBLE);
+                size_color.setVisibility(View.INVISIBLE);
+                month_color.setVisibility(View.INVISIBLE);
+                age_color.setVisibility(View.INVISIBLE);
                 bundle.putString("Filter",Constant.VARIETY);
                 myFragment.setArguments(bundle);
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).commit();
+                ShowFirst=false;
             }
             else {
                 varity_linear.setVisibility(View.GONE);
@@ -146,7 +156,18 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
             if(IsAge)
             {
                 age_linear.setVisibility(View.VISIBLE);
-
+                if(ShowFirst) {
+                    bundle.putString("Filter", Constant.AGE);
+                    varity_color.setVisibility(View.INVISIBLE);
+                    quality_color.setVisibility(View.INVISIBLE);
+                    brands_color.setVisibility(View.INVISIBLE);
+                    category_color.setVisibility(View.INVISIBLE);
+                    size_color.setVisibility(View.INVISIBLE);
+                    month_color.setVisibility(View.INVISIBLE);
+                    age_color.setVisibility(View.VISIBLE);
+                    myFragment.setArguments(bundle);
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).commit();
+                }
             }
             else {
                 age_linear.setVisibility(View.GONE);
@@ -155,6 +176,18 @@ public class BuyerFilterActivity extends AppCompatActivity implements View.OnCli
             if(IsQuality)
             {
                 quality_linear.setVisibility(View.VISIBLE);
+                if(ShowFirst) {
+                    varity_color.setVisibility(View.INVISIBLE);
+                    quality_color.setVisibility(View.VISIBLE);
+                    brands_color.setVisibility(View.INVISIBLE);
+                    category_color.setVisibility(View.INVISIBLE);
+                    size_color.setVisibility(View.INVISIBLE);
+                    month_color.setVisibility(View.INVISIBLE);
+                    age_color.setVisibility(View.INVISIBLE);
+                    bundle.putString("Filter", Constant.QUALITY);
+                    myFragment.setArguments(bundle);
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).commit();
+                }
             }
             else {
                 quality_linear.setVisibility(View.GONE);

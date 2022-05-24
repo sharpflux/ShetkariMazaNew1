@@ -24,8 +24,10 @@
     <string name="menu_home">सेटिंग्ज</string>
     <string name="menu_address">पत्ता</string>
     <string name="Organic">सेंद्रिय</string>
-    <string name="Inorganic">गैर जैविक</string>
-    <string name="OrganicInorganic">सेंद्रिय/गैर जैविक *</string>
+    <string name="Inorganic">नॉन ऑर्गेनिक</string>
+    <string name="IncludeProductDetails">तुमचे उत्पादन तपशील समाविष्ट करा !</string>
+    <string name="SelectProductType">तुमचा उत्पादन प्रकार निवडा !</string>
+    <string name="OrganicInorganic">सेंद्रिय/नॉन ऑर्गेनिक *</string>
     <string name="menu_shopping">माझे कार्ट</string>
     <string name="menu_list">माझे ऑर्डर</string>
     <string name="header_category">श्रेणी </string>
@@ -142,12 +144,12 @@
     <string name="address">पत्ता</string>
     <string name="Cityorvillage">शहर / ग्राम</string>
     <string name="Name_of_Taluka">तहसीलचे नाव</string>
-    <string name="dist">जिल्हा</string>
-    <string name="state">राज्य</string>
+    <string name="dist">जिल्हा *</string>
+    <string name="state">राज्य *</string>
     <string name="company_name">कंपनीचे नाव / फर्मचे नाव (पर्यायी)</string>
     <string name="Landlin_no">लँडलाइन क्रमांक</string>
     <string name="APMC_licance">एपीएमसी परवाना (पर्यायी)</string>
-    <string name="Company_Regin_no">कंपनी क्षेत्र क्रमांक (पर्यायी)</string>
+    <string name="Company_Regin_no">कंपनी नोंदणी क्रमांक (पर्यायी)</string>
     <string name="GST_no">जीएसटी क्रमांक. (पर्यायी) </string>
     <string name="next">पुढे</string>
     <string name="account_holder_name">पासबुकनुसार खातेधारकाचे नाव</string>
@@ -179,7 +181,7 @@
 
     <string name="call">कॉल करा</string>
     <string name="cancel">रद्द करा</string>
-    <string name="seller_available_unit">एकक</string>
+    <string name="seller_available_unit">प्रमाण </string>
 
     <string name="string_internet_connection_not_available">इंटरनेट कनेक्शन उपलब्ध नाही</string>
     <string name="string_some_thing_wrong">काहीतरी चूक झाली.</string>
@@ -191,7 +193,7 @@
 
     <string name="language">भाषा बदला</string>
 
-    <string name="AlternateMob">वैकल्पिक मोबाइल नंबर प्रविष्ट करा*</string>
+    <string name="AlternateMob">दुसरा मोबाइल नंबर प्रविष्ट करा</string>
 
     //selfie
 
@@ -213,7 +215,7 @@
     <string name="selfi_string_5">टी-शर्ट / शर्ट परिधान करुन सेल्फी घ्या.</string>
     <string name="selfi_string_6">हॅलो रिक्त तुकडा</string>
     <string name="farmaddress">फार्मचा पत्ता प्रविष्ट करा*</string>
-    <string name="farmssurveyno">सर्व्हे क्र.*</string>
+    <string name="farmssurveyno">सर्व्हे क्र./गट नं *</string>
     <string name="botonicalname">बोटॅनिकल नाव प्रविष्ट करा*</string>
 
 
@@ -277,7 +279,7 @@
     <string name="update">अद्यतनित करा</string>
 
 
-    <string name="sort">क्रमवारी लावा</string>
+    <string name="sort">निवड करा </string>
     <string name="profile">प्रोफाइल</string>
     <string name="processor">प्रोसेसर </string>
     <string name="producer">निर्माता </string>
@@ -311,7 +313,7 @@
     <string name="verify_mobile_no">Verify Mobile No.</string>
     <string name="view_more">View more</string>
     <string name="available_quantity">Available Quantity</string>
-    <string name="variety">विविधता</string>
+    <string name="variety">वाण / जात </string>
     <string name="quantity_available_in">Quantity available in </string>
     <string name="quality">गुणवत्ता</string>
     <string name="qty">Qty.</string>
@@ -322,14 +324,14 @@
     <string name="i_want_to_sell">I want to sell</string>
     <string name="of">of</string>
     <string name="from">from</string>
-    <string name="taluka">तालुका</string>
+    <string name="taluka">तालुका *</string>
     <string name="half_yearly_plan">Half Yearly Plan</string>
     <string name="quaterly_plan">Quaterly Plan</string>
     <string name="yearly_plan">Yearly Plan</string>
     <string name="monthly_plan">Monthly Plan</string>
     <string name="apply">
 लागू करा</string>
-    <string name="clear">साफ करा</string>
+    <string name="clear">फिल्टर काढा</string>
     <string name="registersuccess">तुम्ही यशस्वीरित्या नोंदणीकृत आहात! तुमची नोंदणी क्रमांक आहे : </string>
     <string name="registered">यशस्वीरित्या नोंदणीकृत</string>
     <string name="AvailableInMonth">महिन्यात उपलब्ध</string>

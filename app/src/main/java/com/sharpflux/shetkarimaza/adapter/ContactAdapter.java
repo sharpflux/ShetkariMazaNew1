@@ -42,11 +42,9 @@ public class ContactAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
             case VIEW_TYPE_NORMAL:
-                return new ContactAdapter.ViewHolder(
-                        LayoutInflater.from(parent.getContext()).inflate(R.layout.item_registration, parent, false));
+                return new ContactAdapter.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_registration, parent, false));
             case VIEW_TYPE_LOADING:
-                return new ContactAdapter.ProgressHolder(
-                        LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading_new, parent, false));
+                return new ContactAdapter.ProgressHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading_new, parent, false));
             default:
                 return null;
         }
@@ -61,11 +59,14 @@ public class ContactAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        if (isLoaderVisible) {
+        //if (isLoaderVisible) {
             return position == mPostItems.size() - 1 ? VIEW_TYPE_LOADING : VIEW_TYPE_NORMAL;
-        } else {
-            return VIEW_TYPE_NORMAL;
-        }
+       // } else {
+            //return VIEW_TYPE_NORMAL;
+      //  }
+
+
+
     }
 
     @Override
@@ -87,14 +88,12 @@ public class ContactAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public void removeLoading() {
         isLoaderVisible = false;
         int position = mPostItems.size() - 1;
-
-        if(position>0) {
             contacts item = getItem(position);
             if (item != null) {
                 mPostItems.remove(position);
                 notifyItemRemoved(position);
             }
-        }
+
     }
 
     public void clear() {
@@ -137,27 +136,27 @@ public class ContactAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         public void onBind(int position) {
             super.onBind(position);
-            contacts item = mPostItems.get(position);
-            mfullname.setText(item.getFullName());
-            mAddress.setText(item.getAddress());
 
-            Glide.with(mContext).load(URLs.Main_URL+item.getImage())
-                    .placeholder(R.drawable.kisanmaza).into(mImage);
+                contacts item = mPostItems.get(position);
+                mfullname.setText(item.getFullName());
+                mAddress.setText(item.getAddress());
 
-            mfullname.setText(item.getFullName());
-            mAddress.setText(item.getAddress()+", "
-                    + item.getTaluka() + ", "
-                    + item.getDistrict() + ", "
-                    + item.getState() + "");
-            mMobNo.setText(item.getMobileNo());
+                Glide.with(mContext).load(URLs.Main_URL + item.getImage()).placeholder(R.drawable.kisanmaza).into(mImage);
 
-            mMobNo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", item.getMobileNo(), null));
-                    mContext.startActivity(intent);
-                }
-            });
+                mfullname.setText(item.getFullName());
+                mAddress.setText(item.getAddress() + ", "
+                        + item.getTaluka() + ", "
+                        + item.getDistrict() + ", "
+                        + item.getState() + "");
+                mMobNo.setText(item.getMobileNo());
+
+                mMobNo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", item.getMobileNo(), null));
+                        mContext.startActivity(intent);
+                    }
+                });
 
         }
     }
@@ -176,28 +175,5 @@ public class ContactAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         }
     }
 
-
-    private void populateItemRows(ContactAdapter.ViewHolder viewHolder, int position) {
-        Glide.with(mContext).load(URLs.Main_URL+mPostItems.get(position).getImage())
-                .placeholder(R.drawable.kisanmaza).into(viewHolder.mImage);
-
-        viewHolder.mfullname.setText(mPostItems.get(position).getFullName());
-        viewHolder.mAddress.setText(mPostItems.get(position).getAddress()+", "
-                + mPostItems.get(position).getTaluka() + ", "
-                + mPostItems.get(position).getDistrict() + ", "
-                + mPostItems.get(position).getState() + "");
-        viewHolder.mMobNo.setText(mPostItems.get(position).getMobileNo());
-
-        viewHolder.mMobNo.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", mPostItems.get(position).getMobileNo(), null));
-                mContext.startActivity(intent);
-            }
-        });
-
-
-    }
 
 }

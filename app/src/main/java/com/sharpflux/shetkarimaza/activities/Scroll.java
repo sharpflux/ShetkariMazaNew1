@@ -191,6 +191,7 @@ public class Scroll extends AppCompatActivity   implements SwipeRefreshLayout.On
                 intent.putExtra("Activity","ContactDetailActivity");
                 intent.putExtra("ProductId",ItemTypeId);
                 intent.putExtra("RegistrationSubTypeId",RegistrationSubTypeId);
+                intent.putExtra("Heading",bundle.getString("Heading"));
                 startActivity(intent);
                 //   finish();
             }
@@ -203,188 +204,200 @@ public class Scroll extends AppCompatActivity   implements SwipeRefreshLayout.On
             public void run() {
                 SetDynamicDATA(currentPage);
             }
-        }, 500);
+        }, 100);
     }
 
     private void SetDynamicDATA(Integer currentPage) {
-        if (bundle != null) {
-            if (bundle.getString("Search") != null) {
-                if (bundle.getString("Search").contains("Filter")) {
-                    Cursor STATECursor = myDatabase.FilterGetByFilterName("STATE");
-                    Cursor DISTRICTCursor = myDatabase.FilterGetByFilterName("DISTRICT");
-                    Cursor TALUKACursor = myDatabase.FilterGetByFilterName("TALUKA");
+        try {
+            if (bundle != null) {
+                if (bundle.getString("Search") != null) {
+                    if (bundle.getString("Search").contains("Filter")) {
+                        Cursor STATECursor = myDatabase.FilterGetByFilterName("STATE");
+                        Cursor DISTRICTCursor = myDatabase.FilterGetByFilterName("DISTRICT");
+                        Cursor TALUKACursor = myDatabase.FilterGetByFilterName("TALUKA");
 
-                    UseLatLong = bundle.getBoolean("UseLatLong");
-                    RegistrationSubTypeId = bundle.getString("RegistrationSubTypeId");
+                        UseLatLong = bundle.getBoolean("UseLatLong");
+                        RegistrationSubTypeId = bundle.getString("RegistrationSubTypeId");
 
-                    while (STATECursor.moveToNext()) {
-                        if (StatesID == null) {
-                            StatesID = "";
+                        while (STATECursor.moveToNext()) {
+                            if (StatesID == null) {
+                                StatesID = "";
+                            }
+                            StatesID = StatesID + STATECursor.getString(0) + ",";
                         }
-                        StatesID = StatesID + STATECursor.getString(0) + ",";
-                    }
 
-                    if (STATECursor.getCount() == 0) {
-                        myDatabase.DeleteDependantRecord("DISTRICT");
-                        myDatabase.DeleteDependantRecord("TALUKA");
-                    }
-                    while (DISTRICTCursor.moveToNext()) {
-                        if (DistrictId == null) {
-                            DistrictId = "";
+                        if (STATECursor.getCount() == 0) {
+                            myDatabase.DeleteDependantRecord("DISTRICT");
+                            myDatabase.DeleteDependantRecord("TALUKA");
                         }
-                        DistrictId = DistrictId + DISTRICTCursor.getString(0) + ",";
-                    }
-                    while (TALUKACursor.moveToNext()) {
-                        if (TalukaId == null) {
-                            TalukaId = "";
+                        while (DISTRICTCursor.moveToNext()) {
+                            if (DistrictId == null) {
+                                DistrictId = "";
+                            }
+                            DistrictId = DistrictId + DISTRICTCursor.getString(0) + ",";
                         }
-                        TalukaId = TalukaId + TALUKACursor.getString(0) + ",";
+                        while (TALUKACursor.moveToNext()) {
+                            if (TalukaId == null) {
+                                TalukaId = "";
+                            }
+                            TalukaId = TalukaId + TALUKACursor.getString(0) + ",";
+                        }
                     }
                 }
-            }
 
 
-            if (TalukaId != null) {
-                if (TalukaId.equals(""))
+                if (TalukaId != null) {
+                    if (TalukaId.equals(""))
+                        TalukaId = "0";
+                } else {
                     TalukaId = "0";
-            } else {
-                TalukaId = "0";
-            }
+                }
 
-            if (VarityId != null) {
-                if (VarityId.equals(""))
+                if (VarityId != null) {
+                    if (VarityId.equals(""))
+                        VarityId = "0";
+                } else {
                     VarityId = "0";
-            } else {
-                VarityId = "0";
-            }
-            if (QualityId != null) {
-                if (QualityId.equals(""))
+                }
+                if (QualityId != null) {
+                    if (QualityId.equals(""))
+                        QualityId = "0";
+                } else {
                     QualityId = "0";
-            } else {
-                QualityId = "0";
-            }
-            if (StatesID != null) {
-                if (StatesID.equals(""))
+                }
+                if (StatesID != null) {
+                    if (StatesID.equals(""))
+                        StatesID = "0";
+                } else {
                     StatesID = "0";
-            } else {
-                StatesID = "0";
-            }
-            if (DistrictId != null) {
-                if (DistrictId.equals(""))
+                }
+                if (DistrictId != null) {
+                    if (DistrictId.equals(""))
+                        DistrictId = "0";
+                } else {
                     DistrictId = "0";
-            } else {
-                DistrictId = "0";
-            }
-            if (TalukaId != null) {
-                if (TalukaId.equals(""))
+                }
+                if (TalukaId != null) {
+                    if (TalukaId.equals(""))
+                        TalukaId = "0";
+                } else {
                     TalukaId = "0";
-            } else {
-                TalukaId = "0";
-            }
-            if (UseLatLong) {
-                if (Latitude != null) {
-                    if (Latitude.equals(""))
+                }
+                if (UseLatLong) {
+                    if (Latitude != null) {
+                        if (Latitude.equals(""))
+                            Latitude = "0";
+                    } else {
                         Latitude = "0";
+                    }
+
+                    if (Longitude != null) {
+                        if (Longitude.equals(""))
+                            Longitude = "0";
+                    } else {
+                        Longitude = "0";
+                    }
                 } else {
                     Latitude = "0";
-                }
-
-                if (Longitude != null) {
-                    if (Longitude.equals(""))
-                        Longitude = "0";
-                } else {
                     Longitude = "0";
                 }
-            } else {
-                Latitude = "0";
-                Longitude = "0";
-            }
 
-            if (RegistrationSubTypeId != null) {
-                if (RegistrationSubTypeId.equals(""))
+                if (RegistrationSubTypeId != null) {
+                    if (RegistrationSubTypeId.equals(""))
+                        RegistrationSubTypeId = "0";
+                } else {
                     RegistrationSubTypeId = "0";
-            } else {
-                RegistrationSubTypeId = "0";
-            }
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_CONTACTDET + "StartIndex="+currentPage+"&PageSize="+totalPage + "&RegistrationTypeId=" + ItemTypeId  + "&RegistrationSubTypeId=" + RegistrationSubTypeId+ "&StateId=" + StatesID + "&DistrictId=" + DistrictId + "&TalukaId=" + TalukaId + "&Language=en"+"&Lat=" + Latitude+"&Long=" + Longitude,
-                    new com.android.volley.Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-
-                            try {
-
-                                JSONObject obj = new JSONObject(response);
-                                JSONArray array = obj.getJSONArray("results");
-
-
-                                final ArrayList<contacts> items = new ArrayList<>();
-
-
-                                for (int i = 0; i < array.length(); i++) {
-                                    JSONObject userJson = array.getJSONObject(i);
-
-                                    itemCount++;
-                                    contacts postItem = new contacts();
-                                    postItem.setImage(userJson.getString("UserId"));
-                                    postItem.setFullName(userJson.getString("FullName"));
-                                    postItem.setAddress(userJson.getString("Address"));
-                                    postItem.setMobileNo(userJson.getString("MobileNo"));
-                                    postItem.setState(userJson.getString("StatesName"));
-                                    postItem.setDistrict(userJson.getString("DistrictName"));
-                                    postItem.setTaluka(userJson.getString("TalukaName"));
-                                    items.add(postItem);
-
-
-                                }
-
-
-                                tvRecordsCount.setText(obj.getString("total_results")+" Rocord found");
-                                if (currentPage != PAGE_START) adapter.removeLoading();
-                                adapter.addItems(items);
-                                swipeRefresh.setRefreshing(false);
-                                // check weather is last page or not
-                                if (currentPage < totalPage) {
-                                    adapter.addLoading();
-                                } else {
-                                    isLastPage = true;
-                                }
-                                isLoading = false;
-
-                                if(obj.getString("total_results").equals("0")){
-                                    adapter.removeLoading();
-                                    error_layout.setVisibility(View.VISIBLE);
-                                    tvError.setText(getResources().getString (R.string.error_msg_no_data));
-                                }
-                                else {
-                                    error_layout.setVisibility(View.GONE);
-                                    tvError.setText(getResources().getString (R.string.error_msg_no_data));
-                                }
-
-
-
-                                customDialogLoadingProgressBar.dismiss();
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    },
-                    new com.android.volley.Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(Scroll.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }) {
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<>();
-                    params.put("UserId", "");
-                    return params;
                 }
-            };
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_CONTACTDET + "StartIndex="+currentPage+"&PageSize="+totalPage + "&RegistrationTypeId=" + ItemTypeId  + "&RegistrationSubTypeId=" + RegistrationSubTypeId+ "&StateId=" + StatesID + "&DistrictId=" + DistrictId + "&TalukaId=" + TalukaId + "&Language=en"+"&Lat=" + Latitude+"&Long=" + Longitude,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
 
-            stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            VolleySingleton.getInstance(Scroll.this).addToRequestQueue(stringRequest);
+                                try {
+
+                                    JSONObject obj = new JSONObject(response);
+                                    JSONArray array = obj.getJSONArray("results");
+
+
+                                    final ArrayList<contacts> items = new ArrayList<>();
+
+
+                                    for (int i = 0; i < array.length(); i++) {
+                                        JSONObject userJson = array.getJSONObject(i);
+
+                                        itemCount++;
+                                        contacts postItem = new contacts();
+                                        postItem.setImage(userJson.getString("UserId"));
+                                        postItem.setFullName(userJson.getString("FullName"));
+                                        postItem.setAddress(userJson.getString("Address"));
+                                        postItem.setMobileNo(userJson.getString("MobileNo"));
+                                        postItem.setState(userJson.getString("StatesName"));
+                                        postItem.setDistrict(userJson.getString("DistrictName"));
+                                        postItem.setTaluka(userJson.getString("TalukaName"));
+                                        items.add(postItem);
+
+
+                                    }
+
+
+                                    tvRecordsCount.setText(obj.getString("total_results")+" Rocord found");
+                                    if (currentPage != PAGE_START)
+                                        adapter.removeLoading();
+
+                                    adapter.addItems(items);
+
+                                    swipeRefresh.setRefreshing(false);
+                                    if (currentPage < totalPage) {
+                                        adapter.addLoading();
+                                    } else {
+                                        isLastPage = true;
+                                        adapter.removeLoading();
+                                    }
+                                    isLoading = false;
+
+                                    if(obj.getString("total_results").equals("0")){
+                                        adapter.removeLoading();
+                                        error_layout.setVisibility(View.VISIBLE);
+                                        tvError.setText(getResources().getString (R.string.error_msg_no_data));
+
+                                    }
+                                    else {
+                                        error_layout.setVisibility(View.GONE);
+                                    }
+
+                                    if(Integer.valueOf(obj.getString("total_results"))<totalPage){
+                                        isLastPage = true;
+                                        //adapter.removeLoading();
+                                    }
+
+
+
+                                    customDialogLoadingProgressBar.dismiss();
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(Scroll.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("UserId", "");
+                        return params;
+                    }
+                };
+
+                stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                VolleySingleton.getInstance(Scroll.this).addToRequestQueue(stringRequest);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
